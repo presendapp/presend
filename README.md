@@ -69,3 +69,9 @@ symbolique (dons), est envisagée : son tier gratuit interdit l'usage commercial
   deuxième usage (signal de parcours, cf. Niveau 2 du plan) ?
 - **Résultat** : à observer après publication.
 - **Prochain outil suggéré** (à confirmer selon la règle des 3 critères) : PDF Compress.
+
+## Publication
+
+- Publié le 5 juillet 2026 sur https://presendapp.netlify.app
+- Outils en ligne : EXIF Remover, PDF Metadata Remover
+
