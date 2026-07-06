@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://presendapp.netlify.app/</loc>
+  </url>
+  <url>
+    <loc>https://presendapp.netlify.app/tools/exif-remover.html</loc>
+  </url>
+  <url>
+    <loc>https://presendapp.netlify.app/tools/pdf-metadata-remover.html</loc>
+  </url>
+</urlset>

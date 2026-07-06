@@ -3,6 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta property="og:title" content="EXIF Remover — Presend">
+  <meta property="og:description" content="Remove hidden EXIF data (GPS location, camera model, timestamps) from a photo, entirely in your browser.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://presendapp.netlify.app/tools/exif-remover.html">
+  <meta name="twitter:card" content="summary">
 <title>EXIF Remover — Presend</title>
 <meta name="description" content="Remove hidden EXIF data (GPS location, camera model, timestamps) from a photo, entirely in your browser. Nothing is uploaded.">
 <link rel="stylesheet" href="../style.css">
@@ -156,5 +161,21 @@
 })();
 </script>
 
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "EXIF Remover",
+  "url": "https://presendapp.netlify.app/tools/exif-remover.html",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "Any (runs in browser)",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "description": "Remove hidden EXIF metadata (GPS, camera model, timestamps) from a photo entirely client-side."
+}
+</script>
 </body>
 </html>
