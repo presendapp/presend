@@ -13,7 +13,8 @@
 <title>EXIF Remover — Presend</title>
 <meta name="description" content="Remove hidden EXIF data (GPS location, camera model, timestamps) from a photo, entirely in your browser. Nothing is uploaded.">
   <link rel="icon" href="/favicon.ico">
-<link rel="stylesheet" href="../style.css">
+<link rel="preload" href="../style.css" as="style">
+    <link rel="stylesheet" href="../style.css">
 <link rel="canonical" href="https://presendapp.netlify.app/tools/exif-remover" />
 <meta name="twitter:card" content="summary_large_image">
 <script type="application/ld+json">
@@ -42,7 +43,8 @@
 
 <main class="wrap">
   <a class='tool-back' href='/'>← Back</a>
-  <h1>EXIF Remover</h1>
+  <!-- backlink --><p><a href="/">← Presend</a></p>
+    <h1>EXIF Remover</h1>
   <p class="lede">Photos can carry hidden data — GPS coordinates, camera model, the exact time it was taken. This strips all of it before you share the photo. The image is processed on your device only.</p>
 
   <span class="trust-badge">Your files are never sent to our servers</span>
