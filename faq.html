@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preload" href="style.css" as="style">
+  <link rel="stylesheet" href="style.css">
+  <link rel="canonical" href="https://presendapp.netlify.app/faq.html" />
+  <meta name="twitter:card" content="summary_large_image">
+  <meta property="og:title" content="FAQ — How Presend Works | Privacy-First File Tools">
+  <meta property="og:description" content="How to remove EXIF and PDF metadata without uploading your files. 100% browser-based, free, and private.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://presendapp.netlify.app/faq.html">
+  <meta property="og:image" content="https://presendapp.netlify.app/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="description" content="Frequently asked questions about removing EXIF and PDF metadata locally in your browser. No upload, no server, 100% private.">
+  <title>FAQ — How Presend Works | Privacy-First File Tools</title>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How can I remove EXIF data from a photo without uploading it?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Presend's EXIF Remover runs entirely in your browser using the HTML5 Canvas API. Your image is processed on your own device and never sent to any server. Simply drag and drop your photo, and the cleaned version downloads instantly."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is it safe to remove PDF metadata online?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Most online PDF tools upload your file to a remote server, which creates a privacy risk. Presend processes PDFs locally in your browser using the pdf-lib library. Your document never leaves your device, making it the safest way to strip author names, software versions, and creation dates from a PDF."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What EXIF data is removed from my photos?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Presend strips all embedded metadata including GPS coordinates, camera make and model, date and time the photo was taken, lens information, and editing software history. The output is a clean JPEG or PNG with zero metadata."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does Presend store or keep a copy of my files?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. Presend has no backend, no database, and no user accounts. Your files are processed in memory within your browser tab. Once you close the tab or refresh the page, nothing remains. We cannot access your files even if we wanted to."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is Presend free to use?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, Presend is completely free and open source under the MIT license. There are no paywalls, no registration requirements, and no usage limits. The tools are funded by nothing — they are a personal project built to solve a specific privacy problem."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Why should I remove metadata before sharing files?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Photos can reveal your exact GPS location, the camera you own, and when you took the picture. PDFs can expose the software used to create them, the author's name, and internal revision history. Removing this metadata before sharing protects your privacy and operational security."
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <header>
+    <a href="/">← Presend</a>
+    <h1>Frequently Asked Questions</h1>
+  </header>
+  <main>
+    <section class="faq-item">
+      <h2>How can I remove EXIF data from a photo without uploading it?</h2>
+      <p>Presend's EXIF Remover runs entirely in your browser using the HTML5 Canvas API. Your image is processed on your own device and never sent to any server. Simply drag and drop your photo, and the cleaned version downloads instantly.</p>
+    </section>
+    <section class="faq-item">
+      <h2>Is it safe to remove PDF metadata online?</h2>
+      <p>Most online PDF tools upload your file to a remote server, which creates a privacy risk. Presend processes PDFs locally in your browser using the <a href="https://github.com/Hopding/pdf-lib" target="_blank" rel="nofollow noopener">pdf-lib</a> library. Your document never leaves your device, making it the safest way to strip author names, software versions, and creation dates from a PDF.</p>
+    </section>
+    <section class="faq-item">
+      <h2>What EXIF data is removed from my photos?</h2>
+      <p>Presend strips all embedded metadata including GPS coordinates, camera make and model, date and time the photo was taken, lens information, and editing software history. The output is a clean JPEG or PNG with zero metadata.</p>
+    </section>
+    <section class="faq-item">
+      <h2>Does Presend store or keep a copy of my files?</h2>
+      <p>No. Presend has no backend, no database, and no user accounts. Your files are processed in memory within your browser tab. Once you close the tab or refresh the page, nothing remains. We cannot access your files even if we wanted to.</p>
+    </section>
+    <section class="faq-item">
+      <h2>Is Presend free to use?</h2>
+      <p>Yes, Presend is completely free and open source under the MIT license. There are no paywalls, no registration requirements, and no usage limits.</p>
+    </section>
+    <section class="faq-item">
+      <h2>Why should I remove metadata before sharing files?</h2>
+      <p>Photos can reveal your exact GPS location, the camera you own, and when you took the picture. PDFs can expose the software used to create them, the author's name, and internal revision history. Removing this metadata before sharing protects your privacy and operational security.</p>
+    </section>
+  </main>
+  <footer>
+    <p>Presend — free browser-based tools. Runs locally. No account, no tracking.</p>
+  </footer>
+</body>
+</html>
