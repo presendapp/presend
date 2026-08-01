@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta property="og:title" content="QR Code Generator — Presend">
+  <meta property="og:description" content="Turn any text or link into a QR code, entirely in your browser. No upload, no account.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://presendapp.netlify.app/tools/qr-code-generator">
+  <meta property="og:image" content="https://presendapp.netlify.app/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+<title>QR Code Generator — Presend</title>
+<meta name="description" content="Turn any text or link into a QR code, entirely in your browser. Nothing is sent anywhere.">
+  <link rel="icon" href="/favicon.ico">
+<link rel="preload" href="../style.css" as="style">
+    <link rel="stylesheet" href="../style.css">
+<link rel="canonical" href="https://presendapp.netlify.app/tools/qr-code-generator" />
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "QR Code Generator",
+  "url": "https://presendapp.netlify.app/tools/qr-code-generator",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "Any (runs in browser)",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "description": "Generate QR codes from any text or link entirely client-side, no server involved."
+}
+</script>
+</head>
+<body class="tool-page">
+
+<header class="site-header wrap">
+  <a class='brand' href='/'><span class="brand-mark">●</span> Presend</a>
+  <a class='nav-link' href='/'>All tools</a>
+</header>
+
+<main class="wrap">
+  <a class='tool-back' href='/'>← Back</a>
+  <h1>QR Code Generator</h1>
+  <p class="lede">Turn a link, a wifi password, or any text into a QR code. Generated instantly in your browser — nothing is ever sent anywhere.</p>
+
+  <span class="trust-badge">Your files are never sent to our servers</span>
+
+  <div style="margin-top: 2rem;">
+    <div style="background:var(--color-bg-raised); border:1px solid var(--color-line); border-radius:var(--radius); padding:1.2rem;">
+      <label for="textInput" style="display:block; font-size:0.9rem; color:var(--color-muted); margin-bottom:0.4rem;">Text or URL</label>
+      <textarea id="textInput" rows="3" placeholder="https://example.com" style="width:100%; font-family:var(--font-body); font-size:1rem; padding:0.6em; border:1px solid var(--color-line); border-radius:8px; resize:vertical; background:var(--color-bg);"></textarea>
+
+      <div style="margin-top:1rem;">
+        <label for="sizeSlider" style="display:flex; justify-content:space-between; font-size:0.9rem; color:var(--color-muted); margin-bottom:0.4rem;">
+          <span>Size</span>
+          <span id="sizeValue">300px</span>
+        </label>
+        <input type="range" id="sizeSlider" min="128" max="600" step="8" value="300" style="width:100%;">
+      </div>
+
+      <button class="btn" id="generateBtn" type="button" style="width:100%; margin-top:1rem;">Generate QR code</button>
+    </div>
+    <p class="error-msg" id="errorMsg"></p>
+
+    <div class="result" id="result" style="text-align:center;">
+      <div id="qrOutput" style="display:inline-block; background:#fff; padding:1rem; border-radius:var(--radius); margin:1.2rem 0;"></div>
+      <div>
+        <a class="btn" id="downloadLink" download>Download PNG</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer wrap">
+  <p>Presend — free browser-based tools. Runs locally. No account, no tracking.</p>
+</footer>
+
+<script src="../vendor/qrcode.min.js"></script>
+<script>
+(function () {
+  const textInput = document.getElementById('textInput');
+  const sizeSlider = document.getElementById('sizeSlider');
+  const sizeValue = document.getElementById('sizeValue');
+  const generateBtn = document.getElementById('generateBtn');
+  const errorMsg = document.getElementById('errorMsg');
+  const result = document.getElementById('result');
+  const qrOutput = document.getElementById('qrOutput');
+  const downloadLink = document.getElementById('downloadLink');
+
+  const MAX_LENGTH = 1500; // QR codes have a hard data ceiling; keep well under it
+
+  function showError(msg) {
+    errorMsg.textContent = msg;
+    errorMsg.classList.add('visible');
+  }
+  function clearError() {
+    errorMsg.textContent = '';
+    errorMsg.classList.remove('visible');
+  }
+
+  function generate() {
+    clearError();
+    result.classList.remove('visible');
+    qrOutput.innerHTML = '';
+
+    const text = textInput.value.trim();
+    if (!text) {
+      showError('Type some text or a link first.');
+      return;
+    }
+    if (text.length > MAX_LENGTH) {
+      showError('That text is too long for a reliable QR code (max ~' + MAX_LENGTH + ' characters).');
+      return;
+    }
+
+    const size = Number(sizeSlider.value);
+
+    try {
+      new QRCode(qrOutput, {
+        text: text,
+        width: size,
+        height: size,
+        correctLevel: QRCode.CorrectLevel.M
+      });
+
+      // qrcode.js renders async via an internal image; wait a tick before reading the canvas
+      setTimeout(() => {
+        const canvas = qrOutput.querySelector('canvas');
+        if (canvas) {
+          downloadLink.href = canvas.toDataURL('image/png');
+          downloadLink.download = 'qr-code.png';
+        }
+        result.classList.add('visible');
+      }, 100);
+    } catch (err) {
+      showError('Could not generate a QR code from this input.');
+    }
+  }
+
+  sizeSlider.addEventListener('input', () => {
+    sizeValue.textContent = sizeSlider.value + 'px';
+  });
+  generateBtn.addEventListener('click', generate);
+  textInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) generate();
+  });
+})();
+</script>
+</body>
+</html>
