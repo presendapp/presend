@@ -17,4 +17,16 @@
   <url><loc>https://presendapp.netlify.app/privacy</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://presendapp.netlify.app/tools/landings/remove-gps-from-photo</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://presendapp.netlify.app/tools/landings/clean-pdf-before-email</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://presendapp.netlify.app/tools/landings/remove-exif-iphone.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://presendapp.netlify.app/tools/landings/strip-metadata-pdf.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://presendapp.netlify.app/tools/landings/compress-image-email.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://presendapp.netlify.app/tools/landings/check-sha256-download.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://presendapp.netlify.app/tools/landings/convert-heic-jpg-online.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://presendapp.netlify.app/tools/landings/remove-video-location-data.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://presendapp.netlify.app/tools/landings/clean-word-document-metadata.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://presendapp.netlify.app/tools/landings/generate-strong-password.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://presendapp.netlify.app/tools/landings/create-qr-code-link.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://presendapp.netlify.app/tools/landings/shrink-pdf-online.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://presendapp.netlify.app/tools/landings/remove-photo-location-online.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://presendapp.netlify.app/tools/landings/pdf-metadata-remover-mac.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
 </urlset>
