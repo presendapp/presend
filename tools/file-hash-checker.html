@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta property="og:title" content="File Hash Checker — Presend">
+  <meta property="og:description" content="Calculate SHA-256, SHA-1 and SHA-512 checksums of any file, entirely in your browser. Verify downloads are authentic and untampered.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://presendapp.netlify.app/tools/file-hash-checker">
+  <meta property="og:image" content="https://presendapp.netlify.app/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+<title>File Hash Checker — Presend</title>
+<meta name="description" content="Calculate SHA-256, SHA-1 and SHA-512 checksums of any file, entirely in your browser. Nothing is uploaded.">
+  <link rel="icon" href="/favicon.ico">
+<link rel="preload" href="../style.css" as="style">
+    <link rel="stylesheet" href="../style.css">
+<link rel="canonical" href="https://presendapp.netlify.app/tools/file-hash-checker" />
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "File Hash Checker",
+  "url": "https://presendapp.netlify.app/tools/file-hash-checker",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "Any (runs in browser)",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "description": "Calculate SHA-256, SHA-1 and SHA-512 checksums of any file entirely client-side."
+}
+</script>
+</head>
+<body class="tool-page">
+
+<header class="site-header wrap">
+  <a class='brand' href='/'><span class="brand-mark">●</span> Presend</a>
+  <a class='nav-link' href='/'>All tools</a>
+</header>
+
+<main class="wrap">
+  <a class='tool-back' href='/'>← Back</a>
+  <h1>File Hash Checker</h1>
+  <p class="lede">Calculate the SHA-256, SHA-1 and SHA-512 checksum of any file to verify it hasn't been altered or corrupted. Everything runs on your device — the file is never uploaded.</p>
+
+  <span class="trust-badge">Your files are never sent to our servers</span>
+
+  <div style="margin-top: 2rem;">
+    <div class="dropzone" id="dropzone" tabindex="0" role="button" aria-label="Choose a file or drop it here">
+      <p class="primary">Drop a file here, or click to choose one</p>
+      <p class="secondary">Any file type. Nothing leaves your device.</p>
+      <input type="file" id="fileInput">
+    </div>
+    <p class="error-msg" id="errorMsg"></p>
+
+    <div class="result" id="result">
+      <div class="result-row">
+        <div>
+          <div class="filename" id="resultName"></div>
+          <div class="meta" id="resultMeta"></div>
+        </div>
+      </div>
+      <div id="hashList" style="display:flex; flex-direction:column; gap:0.6rem; margin-top:0.8rem;"></div>
+      <button class="btn ghost" id="resetBtn" type="button" style="margin-top:1rem;">Check another file</button>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer wrap">
+  <p>Presend — free browser-based tools. Runs locally. No account, no tracking.</p>
+</footer>
+
+<script>
+(function () {
+  const dropzone = document.getElementById('dropzone');
+  const fileInput = document.getElementById('fileInput');
+  const errorMsg = document.getElementById('errorMsg');
+  const result = document.getElementById('result');
+  const resultName = document.getElementById('resultName');
+  const resultMeta = document.getElementById('resultMeta');
+  const hashList = document.getElementById('hashList');
+  const resetBtn = document.getElementById('resetBtn');
+
+  const MAX_SIZE = 500 * 1024 * 1024; // 500MB, hashing is memory-bound in-browser
+  const ALGOS = [
+    { label: 'SHA-256', name: 'SHA-256' },
+    { label: 'SHA-1', name: 'SHA-1' },
+    { label: 'SHA-512', name: 'SHA-512' }
+  ];
+
+  function showError(msg) {
+    errorMsg.textContent = msg;
+    errorMsg.classList.add('visible');
+  }
+  function clearError() {
+    errorMsg.textContent = '';
+    errorMsg.classList.remove('visible');
+  }
+  function humanSize(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+  }
+  function bufToHex(buf) {
+    return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+  }
+
+  async function handleFile(file) {
+    clearError();
+    result.classList.remove('visible');
+    hashList.innerHTML = '';
+    if (!file) return;
+    if (file.size > MAX_SIZE) {
+      showError('This file is larger than 500MB. Try a smaller file.');
+      return;
+    }
+
+    resultName.textContent = file.name;
+    resultMeta.textContent = humanSize(file.size) + ' — hashing…';
+
+    try {
+      const buffer = await file.arrayBuffer();
+      for (const algo of ALGOS) {
+        const digest = await crypto.subtle.digest(algo.name, buffer);
+        const hex = bufToHex(digest);
+
+        const row = document.createElement('div');
+        row.style.cssText = 'background:var(--color-bg-raised); border:1px solid var(--color-line); border-radius:var(--radius); padding:0.7rem 0.9rem;';
+        row.innerHTML = `
+          <div style="display:flex; justify-content:space-between; align-items:center; gap:0.5rem;">
+            <span style="font-family:var(--font-mono); font-size:0.8rem; color:var(--color-muted);">${algo.label}</span>
+            <button class="btn ghost copy-btn" type="button" style="padding:0.3em 0.8em; font-size:0.8rem;">Copy</button>
+          </div>
+          <div style="font-family:var(--font-mono); font-size:0.82rem; word-break:break-all; margin-top:0.3rem;">${hex}</div>
+        `;
+        row.querySelector('.copy-btn').addEventListener('click', () => {
+          navigator.clipboard.writeText(hex);
+          const btn = row.querySelector('.copy-btn');
+          const old = btn.textContent;
+          btn.textContent = 'Copied!';
+          setTimeout(() => btn.textContent = old, 1200);
+        });
+        hashList.appendChild(row);
+      }
+      resultMeta.textContent = humanSize(file.size);
+      result.classList.add('visible');
+    } catch (err) {
+      showError('Could not hash this file. Try again or use a different file.');
+    }
+  }
+
+  dropzone.addEventListener('click', () => fileInput.click());
+  dropzone.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fileInput.click(); }
+  });
+  fileInput.addEventListener('change', (e) => handleFile(e.target.files[0]));
+
+  ['dragenter', 'dragover'].forEach(evt =>
+    dropzone.addEventListener(evt, (e) => { e.preventDefault(); dropzone.classList.add('dragover'); })
+  );
+  ['dragleave', 'drop'].forEach(evt =>
+    dropzone.addEventListener(evt, (e) => { e.preventDefault(); dropzone.classList.remove('dragover'); })
+  );
+  dropzone.addEventListener('drop', (e) => handleFile(e.dataTransfer.files[0]));
+
+  resetBtn.addEventListener('click', () => {
+    fileInput.value = '';
+    result.classList.remove('visible');
+    hashList.innerHTML = '';
+    clearError();
+  });
+})();
+</script>
+</body>
+</html>
