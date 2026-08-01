@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta property="og:title" content="Image Compressor — Presend">
+  <meta property="og:description" content="Shrink a JPG, PNG or WebP photo's file size before you email or upload it, entirely in your browser.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://presendapp.netlify.app/tools/image-compressor">
+  <meta property="og:image" content="https://presendapp.netlify.app/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+<title>Image Compressor — Presend</title>
+<meta name="description" content="Shrink a JPG, PNG or WebP photo's file size before you email or upload it, entirely in your browser. Nothing is uploaded.">
+  <link rel="icon" href="/favicon.ico">
+<link rel="preload" href="../style.css" as="style">
+    <link rel="stylesheet" href="../style.css">
+<link rel="canonical" href="https://presendapp.netlify.app/tools/image-compressor" />
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Image Compressor",
+  "url": "https://presendapp.netlify.app/tools/image-compressor",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "Any (runs in browser)",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "description": "Compress JPG, PNG or WebP images entirely client-side, no upload required."
+}
+</script>
+</head>
+<body class="tool-page">
+
+<header class="site-header wrap">
+  <a class='brand' href='/'><span class="brand-mark">●</span> Presend</a>
+  <a class='nav-link' href='/'>All tools</a>
+</header>
+
+<main class="wrap">
+  <a class='tool-back' href='/'>← Back</a>
+  <h1>Image Compressor</h1>
+  <p class="lede">Shrink a photo's file size before you email it or upload it somewhere with a size limit. Adjust the quality and see the size drop in real time. The image is processed on your device only.</p>
+
+  <span class="trust-badge">Your files are never sent to our servers</span>
+
+  <div style="margin-top: 2rem;">
+    <div class="dropzone" id="dropzone" tabindex="0" role="button" aria-label="Choose a photo or drop it here">
+      <p class="primary">Drop a photo here, or click to choose one</p>
+      <p class="secondary">JPG, PNG or WebP. Nothing leaves your device.</p>
+      <input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp">
+    </div>
+    <p class="error-msg" id="errorMsg"></p>
+
+    <div class="result" id="result">
+      <div style="margin: 1.2rem 0;">
+        <label for="qualitySlider" style="display:flex; justify-content:space-between; font-size:0.9rem; color:var(--color-muted); margin-bottom:0.4rem;">
+          <span>Quality</span>
+          <span id="qualityValue">80%</span>
+        </label>
+        <input type="range" id="qualitySlider" min="10" max="100" value="80" style="width:100%;">
+      </div>
+
+      <div class="result-row">
+        <div>
+          <div class="filename" id="resultName"></div>
+          <div class="meta" id="resultMeta"></div>
+        </div>
+        <a class="btn" id="downloadLink" download>Download compressed photo</a>
+      </div>
+      <button class="btn ghost" id="resetBtn" type="button">Compress another photo</button>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer wrap">
+  <p>Presend — free browser-based tools. Runs locally. No account, no tracking.</p>
+</footer>
+
+<script>
+(function () {
+  const dropzone = document.getElementById('dropzone');
+  const fileInput = document.getElementById('fileInput');
+  const errorMsg = document.getElementById('errorMsg');
+  const result = document.getElementById('result');
+  const resultName = document.getElementById('resultName');
+  const resultMeta = document.getElementById('resultMeta');
+  const downloadLink = document.getElementById('downloadLink');
+  const resetBtn = document.getElementById('resetBtn');
+  const qualitySlider = document.getElementById('qualitySlider');
+  const qualityValue = document.getElementById('qualityValue');
+
+  const MAX_SIZE = 25 * 1024 * 1024; // 25MB
+
+  let currentFile = null;
+  let currentImg = null;
+  let originalSize = 0;
+  let debounceTimer = null;
+
+  function showError(msg) {
+    errorMsg.textContent = msg;
+    errorMsg.classList.add('visible');
+  }
+  function clearError() {
+    errorMsg.textContent = '';
+    errorMsg.classList.remove('visible');
+  }
+  function humanSize(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+  }
+
+  function compressAndRender() {
+    if (!currentImg || !currentFile) return;
+
+    const canvas = document.createElement('canvas');
+    canvas.width = currentImg.naturalWidth;
+    canvas.height = currentImg.naturalHeight;
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(currentImg, 0, 0);
+
+    // PNG has no lossy quality parameter in Canvas API; for PNG we compress
+    // by re-encoding (which already strips metadata and can reduce size on
+    // its own). For JPG/WebP the quality slider directly controls output size.
+    const outputType = currentFile.type === 'image/png' ? 'image/png' : currentFile.type;
+    const quality = outputType === 'image/png' ? undefined : Number(qualitySlider.value) / 100;
+
+    canvas.toBlob(function (blob) {
+      if (!blob) {
+        showError('Something went wrong compressing this image. Try a different file.');
+        return;
+      }
+      const cleanUrl = URL.createObjectURL(blob);
+      const base = currentFile.name.replace(/\.[^.]+$/, '');
+      const ext = outputType === 'image/png' ? 'png' : outputType === 'image/webp' ? 'webp' : 'jpg';
+      const outName = base + '-compressed.' + ext;
+
+      downloadLink.href = cleanUrl;
+      downloadLink.download = outName;
+      resultName.textContent = outName;
+
+      if (blob.size < originalSize) {
+        const pct = Math.round((1 - blob.size / originalSize) * 100);
+        resultMeta.textContent = humanSize(originalSize) + ' → ' + humanSize(blob.size) + ' (' + pct + '% smaller)';
+      } else {
+        resultMeta.textContent = humanSize(blob.size) + ' — already small, little to gain here';
+      }
+    }, outputType, quality);
+  }
+
+  function handleFile(file) {
+    clearError();
+    result.classList.remove('visible');
+
+    if (!file) return;
+    if (!['image/jpeg', 'image/png', 'image/webp'].includes(file.type)) {
+      showError('Please choose a JPG, PNG or WebP image.');
+      return;
+    }
+    if (file.size > MAX_SIZE) {
+      showError('This file is larger than 25MB. Try a smaller photo.');
+      return;
+    }
+
+    currentFile = file;
+    originalSize = file.size;
+
+    const img = new Image();
+    const objectUrl = URL.createObjectURL(file);
+
+    img.onload = function () {
+      currentImg = img;
+      result.classList.add('visible');
+      compressAndRender();
+      URL.revokeObjectURL(objectUrl);
+    };
+    img.onerror = function () {
+      URL.revokeObjectURL(objectUrl);
+      showError('This file could not be read as an image.');
+    };
+    img.src = objectUrl;
+  }
+
+  qualitySlider.addEventListener('input', () => {
+    qualityValue.textContent = qualitySlider.value + '%';
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(compressAndRender, 150);
+  });
+
+  dropzone.addEventListener('click', () => fileInput.click());
+  dropzone.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fileInput.click(); }
+  });
+  fileInput.addEventListener('change', (e) => handleFile(e.target.files[0]));
+
+  ['dragenter', 'dragover'].forEach(evt =>
+    dropzone.addEventListener(evt, (e) => { e.preventDefault(); dropzone.classList.add('dragover'); })
+  );
+  ['dragleave', 'drop'].forEach(evt =>
+    dropzone.addEventListener(evt, (e) => { e.preventDefault(); dropzone.classList.remove('dragover'); })
+  );
+  dropzone.addEventListener('drop', (e) => handleFile(e.dataTransfer.files[0]));
+
+  resetBtn.addEventListener('click', () => {
+    fileInput.value = '';
+    currentFile = null;
+    currentImg = null;
+    result.classList.remove('visible');
+    clearError();
+  });
+})();
+</script>
+</body>
+</html>
