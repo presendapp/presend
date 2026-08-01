@@ -85,6 +85,18 @@
   status = 301
   force = true
 
+[[redirects]]
+  from = "/tools/landings/remove-gps-from-photo.html"
+  to = "/tools/landings/remove-gps-from-photo"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/tools/landings/clean-pdf-before-email.html"
+  to = "/tools/landings/clean-pdf-before-email"
+  status = 301
+  force = true
+
 [[headers]]
   for = "/*"
   [headers.values]
