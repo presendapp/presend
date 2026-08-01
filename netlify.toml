@@ -61,7 +61,6 @@
   status = 301
   force = true
 
-# Redirections propres pour les pages statiques
 [[redirects]]
   from = "/faq.html"
   to = "/faq"
@@ -71,6 +70,18 @@
 [[redirects]]
   from = "/alternatives.html"
   to = "/alternatives"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/about.html"
+  to = "/about"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/privacy.html"
+  to = "/privacy"
   status = 301
   force = true
 
