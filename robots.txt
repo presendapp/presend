@@ -1,4 +1,3 @@
 User-agent: *
 Allow: /
-
 Sitemap: https://presendapp.netlify.app/sitemap.xml
