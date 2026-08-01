@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta property="og:title" content="Video Metadata Remover — Presend">
+  <meta property="og:description" content="Strip hidden GPS location and device data from MP4/MOV videos before you share them, entirely in your browser.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://presendapp.netlify.app/tools/video-metadata-remover">
+  <meta property="og:image" content="https://presendapp.netlify.app/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+<title>Video Metadata Remover — Presend</title>
+<meta name="description" content="Strip hidden GPS location and device data from MP4/MOV videos before you share them, entirely in your browser. Nothing is uploaded.">
+  <link rel="icon" href="/favicon.ico">
+<link rel="preload" href="../style.css" as="style">
+    <link rel="stylesheet" href="../style.css">
+<link rel="canonical" href="https://presendapp.netlify.app/tools/video-metadata-remover" />
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Video Metadata Remover",
+  "url": "https://presendapp.netlify.app/tools/video-metadata-remover",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "Any (runs in browser)",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "description": "Remove hidden GPS and device metadata from MP4/MOV video files entirely client-side, without re-encoding."
+}
+</script>
+</head>
+<body class="tool-page">
+
+<header class="site-header wrap">
+  <a class='brand' href='/'><span class="brand-mark">●</span> Presend</a>
+  <a class='nav-link' href='/'>All tools</a>
+</header>
+
+<main class="wrap">
+  <a class='tool-back' href='/'>← Back</a>
+  <h1>Video Metadata Remover</h1>
+  <p class="lede">Phones often embed GPS coordinates and device info inside video files — most people never think to check. This strips that hidden data from MP4/MOV files without re-encoding, so quality and file size stay the same. The file is processed on your device only.</p>
+
+  <span class="trust-badge">Your files are never sent to our servers</span>
+
+  <div style="margin-top: 2rem;">
+    <div class="dropzone" id="dropzone" tabindex="0" role="button" aria-label="Choose a video or drop it here">
+      <p class="primary">Drop a video here, or click to choose one</p>
+      <p class="secondary">.mp4 or .mov. Nothing leaves your device.</p>
+      <input type="file" id="fileInput" accept=".mp4,.mov,video/mp4,video/quicktime">
+    </div>
+    <p class="error-msg" id="errorMsg"></p>
+
+    <div class="result" id="result">
+      <div class="result-row">
+        <div>
+          <div class="filename" id="resultName"></div>
+          <div class="meta" id="resultMeta"></div>
+        </div>
+        <a class="btn" id="downloadLink" download>Download cleaned video</a>
+      </div>
+      <button class="btn ghost" id="resetBtn" type="button">Clean another video</button>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer wrap">
+  <p>Presend — free browser-based tools. Runs locally. No account, no tracking.</p>
+</footer>
+
+<script>
+(function () {
+  const dropzone = document.getElementById('dropzone');
+  const fileInput = document.getElementById('fileInput');
+  const errorMsg = document.getElementById('errorMsg');
+  const result = document.getElementById('result');
+  const resultName = document.getElementById('resultName');
+  const resultMeta = document.getElementById('resultMeta');
+  const downloadLink = document.getElementById('downloadLink');
+  const resetBtn = document.getElementById('resetBtn');
+
+  const MAX_SIZE = 300 * 1024 * 1024; // 300MB, kept in memory during processing
+  const STRIP_FROM_MOOV = ['udta', 'meta']; // metadata containers: GPS, device, keys/ilst
+  const STRIP_TOP_LEVEL = ['meta', 'uuid']; // top-level metadata / XMP-style boxes
+
+  function showError(msg) {
+    errorMsg.textContent = msg;
+    errorMsg.classList.add('visible');
+  }
+  function clearError() {
+    errorMsg.textContent = '';
+    errorMsg.classList.remove('visible');
+  }
+  function humanSize(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+  }
+  function getExt(name) {
+    const m = name.match(/\.[^.]+$/);
+    return m ? m[0].toLowerCase() : '';
+  }
+
+  function readBoxType(view, offset) {
+    let s = '';
+    for (let i = 0; i < 4; i++) s += String.fromCharCode(view.getUint8(offset + 4 + i));
+    return s;
+  }
+
+  // Parses a single box header at `offset`. Handles 32-bit and 64-bit sizes,
+  // and size==0 (box extends to end of buffer, e.g. a trailing mdat).
+  function parseBoxHeader(view, offset, bufferLength) {
+    const size32 = view.getUint32(offset);
+    const type = readBoxType(view, offset);
+    if (size32 === 1) {
+      const hi = view.getUint32(offset + 8);
+      const lo = view.getUint32(offset + 12);
+      const size = hi * 4294967296 + lo;
+      return { type, start: offset, headerSize: 16, size, extended: true };
+    }
+    if (size32 === 0) {
+      return { type, start: offset, headerSize: 8, size: bufferLength - offset, extended: false };
+    }
+    return { type, start: offset, headerSize: 8, size: size32, extended: false };
+  }
+
+  function walkBoxes(buffer, view, start, end) {
+    const boxes = [];
+    let offset = start;
+    while (offset < end) {
+      const box = parseBoxHeader(view, offset, end);
+      if (box.size <= 0 || offset + box.size > end) break; // malformed guard
+      boxes.push(box);
+      offset += box.size;
+    }
+    return boxes;
+  }
+
+  // Rebuilds `moov` with certain direct child boxes removed, patching its size.
+  function rebuildMoovWithoutMetadata(buffer, view, moovBox) {
+    const children = walkBoxes(buffer, view, moovBox.start + moovBox.headerSize, moovBox.start + moovBox.size);
+    const kept = children.filter(c => !STRIP_FROM_MOOV.includes(c.type));
+    const keptBytesLength = kept.reduce((sum, c) => sum + c.size, 0);
+    const newSize = moovBox.headerSize + keptBytesLength;
+
+    const out = new Uint8Array(newSize);
+    const outView = new DataView(out.buffer);
+
+    if (moovBox.headerSize === 8) {
+      outView.setUint32(0, newSize);
+      out.set(new Uint8Array(buffer, moovBox.start + 4, 4), 4); // copy 'moov' type bytes
+    } else {
+      outView.setUint32(0, 1);
+      out.set(new Uint8Array(buffer, moovBox.start + 4, 4), 4);
+      outView.setUint32(8, Math.floor(newSize / 4294967296));
+      outView.setUint32(12, newSize % 4294967296);
+    }
+
+    let pos = moovBox.headerSize;
+    for (const c of kept) {
+      out.set(new Uint8Array(buffer, c.start, c.size), pos);
+      pos += c.size;
+    }
+    return out;
+  }
+
+  async function handleFile(file) {
+    clearError();
+    result.classList.remove('visible');
+    if (!file) return;
+
+    const ext = getExt(file.name);
+    if (!['.mp4', '.mov'].includes(ext)) {
+      showError('Please choose an MP4 or MOV file.');
+      return;
+    }
+    if (file.size > MAX_SIZE) {
+      showError('This file is larger than 300MB. Try a smaller video.');
+      return;
+    }
+
+    resultName.textContent = file.name;
+    resultMeta.textContent = 'Processing…';
+
+    try {
+      const buffer = await file.arrayBuffer();
+      const view = new DataView(buffer);
+      const topBoxes = walkBoxes(buffer, view, 0, buffer.byteLength);
+
+      if (!topBoxes.some(b => b.type === 'moov')) {
+        showError('This doesn\'t look like a valid MP4/MOV file (no moov atom found).');
+        return;
+      }
+
+      const pieces = [];
+      for (const box of topBoxes) {
+        if (STRIP_TOP_LEVEL.includes(box.type)) continue; // drop entirely
+        if (box.type === 'moov') {
+          pieces.push(rebuildMoovWithoutMetadata(buffer, view, box));
+        } else {
+          // mdat, ftyp, free, wide, etc. copied byte-for-byte, untouched
+          pieces.push(new Uint8Array(buffer, box.start, box.size));
+        }
+      }
+
+      const blob = new Blob(pieces, { type: file.type || 'video/mp4' });
+      const cleanUrl = URL.createObjectURL(blob);
+      const base = file.name.replace(/\.[^.]+$/, '');
+      const outName = base + '-clean' + ext;
+
+      downloadLink.href = cleanUrl;
+      downloadLink.download = outName;
+      resultName.textContent = outName;
+      resultMeta.textContent = humanSize(blob.size) + ' — metadata removed, video untouched';
+      result.classList.add('visible');
+    } catch (err) {
+      showError('This file could not be processed. It may be corrupted or use an unsupported structure.');
+    }
+  }
+
+  dropzone.addEventListener('click', () => fileInput.click());
+  dropzone.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fileInput.click(); }
+  });
+  fileInput.addEventListener('change', (e) => handleFile(e.target.files[0]));
+
+  ['dragenter', 'dragover'].forEach(evt =>
+    dropzone.addEventListener(evt, (e) => { e.preventDefault(); dropzone.classList.add('dragover'); })
+  );
+  ['dragleave', 'drop'].forEach(evt =>
+    dropzone.addEventListener(evt, (e) => { e.preventDefault(); dropzone.classList.remove('dragover'); })
+  );
+  dropzone.addEventListener('drop', (e) => handleFile(e.dataTransfer.files[0]));
+
+  resetBtn.addEventListener('click', () => {
+    fileInput.value = '';
+    result.classList.remove('visible');
+    clearError();
+  });
+})();
+</script>
+</body>
+</html>
