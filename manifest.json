@@ -1,0 +1,12 @@
+{
+  "name": "Presend — Privacy Tools",
+  "short_name": "Presend",
+  "description": "Free browser-based tools to clean and prepare files before sharing.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F7F5F0",
+  "theme_color": "#1F3A5F",
+  "icons": [
+    { "src": "/favicon.ico", "sizes": "any", "type": "image/x-icon" }
+  ]
+}
