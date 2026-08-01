@@ -49,6 +49,12 @@
   status = 301
   force = true
 
+[[redirects]]
+  from = "/tools/password-generator.html"
+  to = "/tools/password-generator"
+  status = 301
+  force = true
+
 [[headers]]
   for = "/*"
   [headers.values]
