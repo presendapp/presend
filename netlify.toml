@@ -97,6 +97,78 @@
   status = 301
   force = true
 
+[[redirects]]
+  from = "/tools/landings/remove-exif-iphone.html"
+  to = "/tools/landings/remove-exif-iphone"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/tools/landings/strip-metadata-pdf.html"
+  to = "/tools/landings/strip-metadata-pdf"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/tools/landings/compress-image-email.html"
+  to = "/tools/landings/compress-image-email"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/tools/landings/check-sha256-download.html"
+  to = "/tools/landings/check-sha256-download"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/tools/landings/convert-heic-jpg-online.html"
+  to = "/tools/landings/convert-heic-jpg-online"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/tools/landings/remove-video-location-data.html"
+  to = "/tools/landings/remove-video-location-data"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/tools/landings/clean-word-document-metadata.html"
+  to = "/tools/landings/clean-word-document-metadata"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/tools/landings/generate-strong-password.html"
+  to = "/tools/landings/generate-strong-password"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/tools/landings/create-qr-code-link.html"
+  to = "/tools/landings/create-qr-code-link"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/tools/landings/shrink-pdf-online.html"
+  to = "/tools/landings/shrink-pdf-online"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/tools/landings/remove-photo-location-online.html"
+  to = "/tools/landings/remove-photo-location-online"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/tools/landings/pdf-metadata-remover-mac.html"
+  to = "/tools/landings/pdf-metadata-remover-mac"
+  status = 301
+  force = true
+
 [[headers]]
   for = "/*"
   [headers.values]
