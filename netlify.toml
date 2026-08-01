@@ -13,6 +13,18 @@
   status = 301
   force = true
 
+[[redirects]]
+  from = "/tools/file-hash-checker.html"
+  to = "/tools/file-hash-checker"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/tools/office-metadata-remover.html"
+  to = "/tools/office-metadata-remover"
+  status = 301
+  force = true
+
 [[headers]]
   for = "/*"
   [headers.values]

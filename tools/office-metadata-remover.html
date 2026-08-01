@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta property="og:title" content="Office Metadata Remover — Presend">
+  <meta property="og:description" content="Remove hidden author, company and editing history from Word, Excel and PowerPoint files, entirely in your browser.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://presendapp.netlify.app/tools/office-metadata-remover">
+  <meta property="og:image" content="https://presendapp.netlify.app/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+<title>Office Metadata Remover — Presend</title>
+<meta name="description" content="Remove hidden author, company and editing history from Word, Excel and PowerPoint files, entirely in your browser. Nothing is uploaded.">
+  <link rel="icon" href="/favicon.ico">
+<link rel="preload" href="../style.css" as="style">
+    <link rel="stylesheet" href="../style.css">
+<link rel="canonical" href="https://presendapp.netlify.app/tools/office-metadata-remover" />
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Office Metadata Remover",
+  "url": "https://presendapp.netlify.app/tools/office-metadata-remover",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "Any (runs in browser)",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "description": "Remove hidden author, company and editing history metadata from Word, Excel and PowerPoint files entirely client-side."
+}
+</script>
+</head>
+<body class="tool-page">
+
+<header class="site-header wrap">
+  <a class='brand' href='/'><span class="brand-mark">●</span> Presend</a>
+  <a class='nav-link' href='/'>All tools</a>
+</header>
+
+<main class="wrap">
+  <a class='tool-back' href='/'>← Back</a>
+  <h1>Office Metadata Remover</h1>
+  <p class="lede">Word, Excel and PowerPoint files quietly store your name, your company, and everyone who's edited the file. This strips that hidden data before you send a CV, a contract, or a report. The file is processed on your device only.</p>
+
+  <span class="trust-badge">Your files are never sent to our servers</span>
+
+  <div style="margin-top: 2rem;">
+    <div class="dropzone" id="dropzone" tabindex="0" role="button" aria-label="Choose an Office file or drop it here">
+      <p class="primary">Drop a file here, or click to choose one</p>
+      <p class="secondary">.docx, .xlsx or .pptx. Nothing leaves your device.</p>
+      <input type="file" id="fileInput" accept=".docx,.xlsx,.pptx">
+    </div>
+    <p class="error-msg" id="errorMsg"></p>
+
+    <div class="result" id="result">
+      <div class="result-row">
+        <div>
+          <div class="filename" id="resultName"></div>
+          <div class="meta" id="resultMeta"></div>
+        </div>
+        <a class="btn" id="downloadLink" download>Download cleaned file</a>
+      </div>
+      <button class="btn ghost" id="resetBtn" type="button">Clean another file</button>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer wrap">
+  <p>Presend — free browser-based tools. Runs locally. No account, no tracking.</p>
+</footer>
+
+<script src="../vendor/jszip.min.js"></script>
+<script>
+(function () {
+  const dropzone = document.getElementById('dropzone');
+  const fileInput = document.getElementById('fileInput');
+  const errorMsg = document.getElementById('errorMsg');
+  const result = document.getElementById('result');
+  const resultName = document.getElementById('resultName');
+  const resultMeta = document.getElementById('resultMeta');
+  const downloadLink = document.getElementById('downloadLink');
+  const resetBtn = document.getElementById('resetBtn');
+
+  const MAX_SIZE = 50 * 1024 * 1024; // 50MB
+  const VALID_EXT = ['.docx', '.xlsx', '.pptx'];
+
+  function showError(msg) {
+    errorMsg.textContent = msg;
+    errorMsg.classList.add('visible');
+  }
+  function clearError() {
+    errorMsg.textContent = '';
+    errorMsg.classList.remove('visible');
+  }
+  function humanSize(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+  }
+  function getExt(name) {
+    const m = name.match(/\.[^.]+$/);
+    return m ? m[0].toLowerCase() : '';
+  }
+
+  // Blank out the sensitive text nodes in core.xml / app.xml rather than
+  // deleting the files — keeps the archive structurally valid.
+  function scrubCoreXml(xml) {
+    const fields = ['dc:creator', 'cp:lastModifiedBy', 'dc:subject', 'cp:keywords', 'dc:description', 'cp:category'];
+    let out = xml;
+    for (const tag of fields) {
+      const re = new RegExp('(<' + tag + '[^>]*>)([\\s\\S]*?)(<\\/' + tag + '>)', 'g');
+      out = out.replace(re, '$1$3');
+    }
+    // Reset revision + dates to neutral epoch-ish values instead of leaking edit history
+    out = out.replace(/(<cp:revision>)([\s\S]*?)(<\/cp:revision>)/g, '$11$3');
+    return out;
+  }
+
+  function scrubAppXml(xml) {
+    const fields = ['Company', 'Manager'];
+    let out = xml;
+    for (const tag of fields) {
+      const re = new RegExp('(<' + tag + '[^>]*>)([\\s\\S]*?)(<\\/' + tag + '>)', 'g');
+      out = out.replace(re, '$1$3');
+    }
+    return out;
+  }
+
+  async function handleFile(file) {
+    clearError();
+    result.classList.remove('visible');
+    if (!file) return;
+
+    const ext = getExt(file.name);
+    if (!VALID_EXT.includes(ext)) {
+      showError('Please choose a .docx, .xlsx or .pptx file.');
+      return;
+    }
+    if (file.size > MAX_SIZE) {
+      showError('This file is larger than 50MB. Try a smaller file.');
+      return;
+    }
+
+    try {
+      const zip = await JSZip.loadAsync(file);
+
+      const coreFile = zip.file('docProps/core.xml');
+      if (coreFile) {
+        const coreXml = await coreFile.async('string');
+        zip.file('docProps/core.xml', scrubCoreXml(coreXml));
+      }
+
+      const appFile = zip.file('docProps/app.xml');
+      if (appFile) {
+        const appXml = await appFile.async('string');
+        zip.file('docProps/app.xml', scrubAppXml(appXml));
+      }
+
+      const blob = await zip.generateAsync({
+        type: 'blob',
+        compression: 'DEFLATE',
+        compressionOptions: { level: 6 }
+      });
+
+      const cleanUrl = URL.createObjectURL(blob);
+      const base = file.name.replace(/\.[^.]+$/, '');
+      const outName = base + '-clean' + ext;
+
+      downloadLink.href = cleanUrl;
+      downloadLink.download = outName;
+      resultName.textContent = outName;
+      resultMeta.textContent = humanSize(blob.size) + ' — metadata removed';
+      result.classList.add('visible');
+    } catch (err) {
+      showError('This file could not be read. Make sure it\'s a valid Word, Excel or PowerPoint file.');
+    }
+  }
+
+  dropzone.addEventListener('click', () => fileInput.click());
+  dropzone.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fileInput.click(); }
+  });
+  fileInput.addEventListener('change', (e) => handleFile(e.target.files[0]));
+
+  ['dragenter', 'dragover'].forEach(evt =>
+    dropzone.addEventListener(evt, (e) => { e.preventDefault(); dropzone.classList.add('dragover'); })
+  );
+  ['dragleave', 'drop'].forEach(evt =>
+    dropzone.addEventListener(evt, (e) => { e.preventDefault(); dropzone.classList.remove('dragover'); })
+  );
+  dropzone.addEventListener('drop', (e) => handleFile(e.dataTransfer.files[0]));
+
+  resetBtn.addEventListener('click', () => {
+    fileInput.value = '';
+    result.classList.remove('visible');
+    clearError();
+  });
+})();
+</script>
+</body>
+</html>
