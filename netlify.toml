@@ -37,6 +37,12 @@
   status = 301
   force = true
 
+[[redirects]]
+  from = "/tools/video-metadata-remover.html"
+  to = "/tools/video-metadata-remover"
+  status = 301
+  force = true
+
 [[headers]]
   for = "/*"
   [headers.values]
