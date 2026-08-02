@@ -72,6 +72,6 @@ symbolique (dons), est envisagée : son tier gratuit interdit l'usage commercial
 
 ## Publication
 
-- Publié le 5 juillet 2026 sur https://presendapp.netlify.app
+- Publié le 5 juillet 2026 sur https://presend.pages.dev
 - Outils en ligne : EXIF Remover, PDF Metadata Remover
 
