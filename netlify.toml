@@ -264,3 +264,63 @@
   to = "/tools/image-to-base64"
   status = 301
   force = true
+
+[[redirects]]
+  from = "/tools/landings/remove-tracking-from-url.html"
+  to = "/tools/landings/remove-tracking-from-url"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/tools/landings/convert-json-to-csv-online.html"
+  to = "/tools/landings/convert-json-to-csv-online"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/tools/landings/clean-email-list-free.html"
+  to = "/tools/landings/clean-email-list-free"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/tools/landings/compare-texts-online.html"
+  to = "/tools/landings/compare-texts-online"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/tools/landings/wcag-color-contrast-checker.html"
+  to = "/tools/landings/wcag-color-contrast-checker"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/tools/landings/bold-text-generator-social-media.html"
+  to = "/tools/landings/bold-text-generator-social-media"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/tools/landings/split-text-twitter-thread.html"
+  to = "/tools/landings/split-text-twitter-thread"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/tools/landings/word-counter-online.html"
+  to = "/tools/landings/word-counter-online"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/tools/landings/check-password-strength.html"
+  to = "/tools/landings/check-password-strength"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/tools/landings/image-to-base64-converter.html"
+  to = "/tools/landings/image-to-base64-converter"
+  status = 301
+  force = true
