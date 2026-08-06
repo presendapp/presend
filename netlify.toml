@@ -324,3 +324,63 @@
   to = "/tools/landings/image-to-base64-converter"
   status = 301
   force = true
+[[redirects]]
+  from = "/tools/landings/check-file-integrity-sha256.html"
+  to = "/tools/landings/check-file-integrity-sha256"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/tools/landings/remove-author-from-word-document.html"
+  to = "/tools/landings/remove-author-from-word-document"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/tools/landings/remove-gps-from-video.html"
+  to = "/tools/landings/remove-gps-from-video"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/tools/landings/strong-password-generator-online.html"
+  to = "/tools/landings/strong-password-generator-online"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/tools/landings/qr-code-generator-free.html"
+  to = "/tools/landings/qr-code-generator-free"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/tools/landings/reduce-pdf-file-size.html"
+  to = "/tools/landings/reduce-pdf-file-size"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/tools/landings/clean-url-before-sharing.html"
+  to = "/tools/landings/clean-url-before-sharing"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/tools/landings/json-to-csv-converter-free.html"
+  to = "/tools/landings/json-to-csv-converter-free"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/tools/landings/remove-duplicates-email-list.html"
+  to = "/tools/landings/remove-duplicates-email-list"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/tools/landings/compare-two-texts-diff.html"
+  to = "/tools/landings/compare-two-texts-diff"
+  status = 301
+  force = true
+
