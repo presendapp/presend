@@ -13,7 +13,7 @@
 <title>Image to Base64 Converter — Presend</title>
 <meta name="description" content="Convert any image to a Base64 data URI for embedding in CSS, HTML or emails. Runs entirely in your browser. Nothing is uploaded.">
 <link rel="icon" href="/favicon.ico" sizes="any">
-<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" fetchpriority="high" href="../style.css">
 <link rel="canonical" href="https://presend.pages.dev/tools/image-to-base64" />
 <meta name="twitter:card" content="summary_large_image">
 <script type="application/ld+json">
@@ -51,7 +51,7 @@
 }
 </script>
 <!--seo-org-->
-</head>
+<script type="application/ld+json">\n{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[    {"@type":"Question","name":'What is Base64?',"acceptedAnswer":{"@type":"Answer","text":'Encoding binary to ASCII for embedding.'}},    {"@type":"Question","name":'When to use?',"acceptedAnswer":{"@type":"Answer","text":'Small icons, HTML emails, data URIs.'}},    {"@type":"Question","name":'Larger?',"acceptedAnswer":{"@type":"Answer","text":'Yes, ~33% larger. Use for small images only.'}},    {"@type":"Question","name":'Formats?',"acceptedAnswer":{"@type":"Answer","text":'JPG, PNG, GIF, WebP, SVG.'}},    {"@type":"Question","name":'Image uploaded?',"acceptedAnswer":{"@type":"Answer","text":'No. Local via FileReader API.'}}]}\n</script>\n<!--seo-faq-->\n</head>
 <body class="tool-page">
 
 <header class="site-header wrap">
@@ -78,7 +78,7 @@
       <div style="display:flex; gap:1.5rem; flex-wrap:wrap; margin-bottom:1rem;">
         <div style="flex:1; min-width:200px;">
           <h3 style="font-family: var(--font-display); font-size:1.05rem; margin-bottom:0.5rem;">Preview</h3>
-          <img id="previewImg" style="max-width:100%; max-height:200px; border-radius:var(--radius); border:1px solid var(--color-line);">
+          <img decoding="async" loading="lazy" id="previewImg" style="max-width:100%; max-height:200px; border-radius:var(--radius); border:1px solid var(--color-line);">
           <div id="fileInfo" style="margin-top:0.5rem; font-size:0.85rem; color:var(--color-muted);"></div>
         </div>
         <div style="flex:2; min-width:300px;">
