@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta property="og:title" content="Thread Splitter — Presend">
+<meta property="og:description" content="Split a long text into a Twitter/X or LinkedIn thread. Counts characters, adds numbering, and formats for copy-paste. Runs in your browser.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://presend.pages.dev/tools/thread-splitter">
+<meta property="og:image" content="https://presend.pages.dev/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<title>Thread Splitter — Presend</title>
+<meta name="description" content="Split a long article or text into a Twitter/X or LinkedIn thread. Auto-counts characters, adds numbering, and formats for easy copy-paste. Nothing is uploaded.">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="stylesheet" href="../style.css">
+<link rel="canonical" href="https://presend.pages.dev/tools/thread-splitter" />
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Thread Splitter",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Any",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "featureList": "Split long text into social media threads locally in your browser. No upload, no server, 100% private.",
+  "url": "https://presend.pages.dev/tools/thread-splitter"
+}
+</script>
+<style>
+.platform-row { display: flex; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap; }
+.thread-post { padding: 1rem; border: 1px solid var(--color-line); border-radius: var(--radius); background: var(--color-bg-raised); margin-bottom: 0.75rem; position: relative; }
+.thread-post .num { position: absolute; top: 0.5rem; right: 0.75rem; font-size: 0.75rem; color: var(--color-muted); font-family: var(--font-mono); }
+.thread-post .content { white-space: pre-wrap; word-break: break-word; font-size: 0.95rem; line-height: 1.5; padding-right: 2rem; }
+.thread-post .count { font-size: 0.75rem; color: var(--color-muted); margin-top: 0.5rem; font-family: var(--font-mono); }
+.thread-post.over { border-color: var(--color-danger); background: #fdf2f0; }
+</style>
+</head>
+<body class="tool-page">
+
+<header class="site-header wrap">
+  <a class='brand' href='/'><span class="brand-mark">●</span> Presend</a>
+  <a class='nav-link' href='/'>All tools</a>
+</header>
+
+<main class="wrap">
+  <a class='tool-back' href='/'>← Back</a>
+  <h1>Thread Splitter</h1>
+  <p class="lede">Paste a long article, blog post or idea and split it into a Twitter/X or LinkedIn thread. Auto-counts characters, adds numbering, and formats each post for copy-paste.</p>
+
+  <span class="trust-badge">Your data is never sent to our servers</span>
+
+  <div style="margin-top: 2rem;">
+    <div class="platform-row">
+      <button class="btn" id="btnTwitter" type="button">Twitter/X (280)</button>
+      <button class="btn ghost" id="btnLinkedIn" type="button">LinkedIn (3000)</button>
+      <button class="btn ghost" id="btnMastodon" type="button">Mastodon (500)</button>
+      <button class="btn ghost" id="btnCustom" type="button">Custom</button>
+      <input type="number" id="customLimit" value="500" style="width:80px; padding:0.4rem; border:1px solid var(--color-line); border-radius:var(--radius); font-family:var(--font-mono); display:none;">
+    </div>
+
+    <label for="inputText" style="display:block; font-weight:500; margin-bottom:0.5rem;">Paste your text</label>
+    <textarea id="inputText" rows="8" style="width:100%; padding:1rem; border:1px solid var(--color-line); border-radius:var(--radius); font-size:0.95rem; resize:vertical;" placeholder="Paste your article, blog post, or long idea here..."></textarea>
+
+    <div style="margin-top:1rem; display:flex; gap:0.75rem; flex-wrap:wrap;">
+      <button class="btn" id="splitBtn" type="button">Split into thread</button>
+      <button class="btn ghost" id="copyAllBtn" type="button" disabled>Copy all</button>
+      <button class="btn ghost" id="clearBtn" type="button">Clear</button>
+    </div>
+
+    <p class="error-msg" id="errorMsg"></p>
+
+    <div class="result" id="result" style="margin-top:1.5rem;">
+      <h3 style="font-family: var(--font-display); font-size:1.05rem; margin-bottom:0.5rem;">Thread preview</h3>
+      <div id="threadOutput"></div>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer wrap">
+  <p>Presend — free browser-based tools. Runs locally. No account, no tracking.</p>
+</footer>
+
+<script>
+(function () {
+  const LIMITS = { twitter: 280, linkedin: 3000, mastodon: 500 };
+  let platform = 'twitter';
+  let limit = LIMITS.twitter;
+
+  const inputText = document.getElementById('inputText');
+  const splitBtn = document.getElementById('splitBtn');
+  const copyAllBtn = document.getElementById('copyAllBtn');
+  const clearBtn = document.getElementById('clearBtn');
+  const errorMsg = document.getElementById('errorMsg');
+  const result = document.getElementById('result');
+  const threadOutput = document.getElementById('threadOutput');
+  const customLimit = document.getElementById('customLimit');
+
+  const btnTwitter = document.getElementById('btnTwitter');
+  const btnLinkedIn = document.getElementById('btnLinkedIn');
+  const btnMastodon = document.getElementById('btnMastodon');
+  const btnCustom = document.getElementById('btnCustom');
+
+  function showError(msg) { errorMsg.textContent = msg; errorMsg.classList.add('visible'); }
+  function clearError() { errorMsg.textContent = ''; errorMsg.classList.remove('visible'); }
+
+  function setPlatform(p) {
+    platform = p;
+    [btnTwitter, btnLinkedIn, btnMastodon, btnCustom].forEach(b => b.classList.add('ghost'));
+    if (p === 'twitter') { btnTwitter.classList.remove('ghost'); limit = LIMITS.twitter; customLimit.style.display = 'none'; }
+    if (p === 'linkedin') { btnLinkedIn.classList.remove('ghost'); limit = LIMITS.linkedin; customLimit.style.display = 'none'; }
+    if (p === 'mastodon') { btnMastodon.classList.remove('ghost'); limit = LIMITS.mastodon; customLimit.style.display = 'none'; }
+    if (p === 'custom') { btnCustom.classList.remove('ghost'); customLimit.style.display = 'inline-block'; limit = parseInt(customLimit.value) || 500; }
+  }
+
+  function splitText(text, maxLen) {
+    const sentences = text.match(/[^.!?]+[.!?]+[\s"]*/g) || [text];
+    const posts = [];
+    let current = '';
+    sentences.forEach(s => {
+      s = s.trim();
+      if (!s) return;
+      const test = current ? current + ' ' + s : s;
+      if (test.length <= maxLen) {
+        current = test;
+      } else {
+        if (current) posts.push(current);
+        current = s;
+        if (current.length > maxLen) {
+          while (current.length > maxLen) {
+            let cut = current.lastIndexOf(' ', maxLen);
+            if (cut < maxLen * 0.5) cut = maxLen;
+            posts.push(current.slice(0, cut).trim());
+            current = current.slice(cut).trim();
+          }
+        }
+      }
+    });
+    if (current) posts.push(current);
+    return posts;
+  }
+
+  splitBtn.addEventListener('click', () => {
+    clearError();
+    const text = inputText.value.trim();
+    if (!text) { showError('Paste some text to split.'); return; }
+    if (platform === 'custom') limit = parseInt(customLimit.value) || 500;
+
+    const posts = splitText(text, limit);
+    threadOutput.innerHTML = '';
+    posts.forEach((post, i) => {
+      const div = document.createElement('div');
+      div.className = 'thread-post' + (post.length > limit ? ' over' : '');
+      div.innerHTML = '<span class="num">' + (i+1) + '/' + posts.length + '</span><div class="content">' + escapeHtml(post) + '</div><div class="count">' + post.length + '/' + limit + ' chars</div>';
+      threadOutput.appendChild(div);
+    });
+    result.classList.add('visible');
+    copyAllBtn.disabled = false;
+  });
+
+  copyAllBtn.addEventListener('click', async () => {
+    const posts = Array.from(threadOutput.querySelectorAll('.content')).map(d => d.textContent);
+    const text = posts.map((p, i) => (i+1) + '/' + posts.length + '\n' + p).join('\n\n');
+    try {
+      await navigator.clipboard.writeText(text);
+      copyAllBtn.textContent = 'Copied!';
+      setTimeout(() => copyAllBtn.textContent = 'Copy all', 2000);
+    } catch (e) { showError('Could not copy to clipboard.'); }
+  });
+
+  clearBtn.addEventListener('click', () => {
+    inputText.value = '';
+    threadOutput.innerHTML = '';
+    result.classList.remove('visible');
+    copyAllBtn.disabled = true;
+    clearError();
+  });
+
+  btnTwitter.addEventListener('click', () => setPlatform('twitter'));
+  btnLinkedIn.addEventListener('click', () => setPlatform('linkedin'));
+  btnMastodon.addEventListener('click', () => setPlatform('mastodon'));
+  btnCustom.addEventListener('click', () => setPlatform('custom'));
+
+  function escapeHtml(t) { return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+})();
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Thread Splitter",
+  "url": "https://presend.pages.dev/tools/thread-splitter",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "Any (runs in browser)",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "description": "Split long text into social media threads entirely client-side."
+}
+</script>
+</body>
+</html>

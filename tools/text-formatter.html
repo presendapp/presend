@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta property="og:title" content="Social Media Text Formatter — Presend">
+<meta property="og:description" content="Convert plain text into bold, italic, strikethrough and other Unicode styles for Instagram, Twitter/X, LinkedIn and more. Runs in your browser.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://presend.pages.dev/tools/text-formatter">
+<meta property="og:image" content="https://presend.pages.dev/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<title>Social Media Text Formatter — Presend</title>
+<meta name="description" content="Convert plain text into bold, italic, monospace and other Unicode styles for social media bios, posts and comments. Nothing is uploaded.">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="stylesheet" href="../style.css">
+<link rel="canonical" href="https://presend.pages.dev/tools/text-formatter" />
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Social Media Text Formatter",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Any",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "featureList": "Format text with Unicode styles for social media. No upload, no server, 100% private.",
+  "url": "https://presend.pages.dev/tools/text-formatter"
+}
+</script>
+<style>
+.fmt-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-top: 1.5rem; }
+.fmt-card { padding: 1rem; border: 1px solid var(--color-line); border-radius: var(--radius); background: var(--color-bg-raised); cursor: pointer; transition: border-color 0.15s; }
+.fmt-card:hover { border-color: var(--color-accent); }
+.fmt-card h4 { font-size: 0.8rem; color: var(--color-muted); margin: 0 0 0.4rem; text-transform: uppercase; letter-spacing: 0.05em; }
+.fmt-card .sample { font-size: 1.1rem; word-break: break-word; }
+</style>
+</head>
+<body class="tool-page">
+
+<header class="site-header wrap">
+  <a class='brand' href='/'><span class="brand-mark">●</span> Presend</a>
+  <a class='nav-link' href='/'>All tools</a>
+</header>
+
+<main class="wrap">
+  <a class='tool-back' href='/'>← Back</a>
+  <h1>Social Media Text Formatter</h1>
+  <p class="lede">Convert plain text into bold, italic, monospace and other Unicode styles that work on Instagram, Twitter/X, LinkedIn, TikTok and more. Copy and paste anywhere.</p>
+
+  <span class="trust-badge">Your data is never sent to our servers</span>
+
+  <div style="margin-top: 2rem;">
+    <label for="inputText" style="display:block; font-weight:500; margin-bottom:0.5rem;">Type or paste your text</label>
+    <textarea id="inputText" rows="3" style="width:100%; padding:1rem; border:1px solid var(--color-line); border-radius:var(--radius); font-size:1rem; resize:vertical;" placeholder="Hello world"></textarea>
+
+    <div class="fmt-grid" id="fmtGrid"></div>
+
+    <p style="font-size:0.82rem; color:var(--color-muted); margin-top:1.5rem;">
+      Click any card to copy the formatted text. These Unicode characters work on most platforms, though some (like LinkedIn) may not support all styles.
+    </p>
+  </div>
+</main>
+
+<footer class="site-footer wrap">
+  <p>Presend — free browser-based tools. Runs locally. No account, no tracking.</p>
+</footer>
+
+<script>
+(function () {
+  const inputText = document.getElementById('inputText');
+  const fmtGrid = document.getElementById('fmtGrid');
+
+  const MAPS = {
+    'Bold': '𝗔𝗕𝗖𝗗𝗘𝗙𝗚𝗛𝗜𝗝𝗞𝗟𝗠𝗡𝗢𝗣𝗤𝗥𝗦𝗧𝗨𝗩𝗪𝗫𝗬𝗭𝗮𝗯𝗰𝗱𝗲𝗳𝗴𝗵𝗶𝗷𝗸𝗹𝗺𝗻𝗼𝗽𝗾𝗿𝘀𝘁𝘂𝘃𝘄𝘅𝘆𝘇𝟬𝟭𝟮𝟯𝟰𝟱𝟲𝟳𝟴𝟵',
+    'Italic': '𝘈𝘉𝘊𝘋𝘌𝘍𝘎𝘏𝘐𝘑𝘒𝘓𝘔𝘕𝘖𝘗𝘘𝘙𝘚𝘛𝘜𝘝𝘞𝘟𝘠𝘡𝘢𝘣𝘤𝘥𝘦𝘧𝘨𝘩𝘪𝘫𝘬𝘭𝘮𝘯𝘰𝘱𝘲𝘳𝘴𝘵𝘶𝘷𝘸𝘹𝘺𝘻𝟢𝟣𝟤𝟥𝟦𝟧𝟨𝟩𝟪𝟫',
+    'Bold Italic': '𝘼𝘽𝘾𝘿𝙀𝙁𝙂𝙃𝙄𝙅𝙆𝙇𝙈𝙉𝙊𝙋𝙌𝙍𝙎𝙏𝙐𝙑𝙒𝙓𝙔𝙕𝙖𝙗𝙘𝙙𝙚𝙛𝙜𝙝𝙞𝙟𝙠𝙡𝙢𝙣𝙤𝙥𝙦𝙧𝙨𝙩𝙪𝙫𝙬𝙭𝙮𝙯𝟬𝟭𝟮𝟯𝟰𝟱𝟲𝟳𝟴𝟵',
+    'Monospace': '𝙰𝙱𝙲𝙳𝙴𝙵𝙶𝙷𝙸𝙹𝙺𝙻𝙼𝙽𝙾𝙿𝚀𝚁𝚂𝚃𝚄𝚅𝚆𝚇𝚈𝚉𝚊𝚋𝚌𝚍𝚎𝚏𝚐𝚑𝚒𝚓𝚔𝚕𝚖𝚗𝚘𝚙𝚚𝚛𝚜𝚝𝚞𝚟𝚠𝚡𝚢𝚣𝟶𝟷𝟸𝟹𝟺𝟻𝟼𝟽𝟾𝟿',
+    'Strikethrough': 'A̶B̶C̶D̶E̶F̶G̶H̶I̶J̶K̶L̶M̶N̶O̶P̶Q̶R̶S̶T̶U̶V̶W̶X̶Y̶Z̶a̶b̶c̶d̶e̶f̶g̶h̶i̶j̶k̶l̶m̶n̶o̶p̶q̶r̶s̶t̶u̶v̶w̶x̶y̶z̶0̶1̶2̶3̶4̶5̶6̶7̶8̶9̶',
+    'Underline': 'A̲B̲C̲D̲E̲F̲G̲H̲I̲J̲K̲L̲M̲N̲O̲P̲Q̲R̲S̲T̲U̲V̲W̲X̲Y̲Z̲a̲b̲c̲d̲e̲f̲g̲h̲i̲j̲k̲l̲m̲n̲o̲p̲q̲r̲s̲t̲u̲v̲w̲x̲y̲z̲0̲1̲2̲3̲4̲5̲6̲7̲8̲9̲',
+    'Small Caps': 'ᴀʙᴄᴅᴇғɢʜɪᴊᴋʟᴍɴᴏᴘǫʀsᴛᴜᴠᴡxʏᴢᴀʙᴄᴅᴇғɢʜɪᴊᴋʟᴍɴᴏᴘǫʀsᴛᴜᴠᴡxʏᴢ0123456789',
+    'Bubble': 'ⓐⓑⓒⓓⓔⓕⓖⓗⓘⓙⓚⓛⓜⓝⓞⓟⓠⓡⓢⓣⓤⓥⓦⓧⓨⓩⓐⓑⓒⓓⓔⓕⓖⓗⓘⓙⓚⓛⓜⓝⓞⓟⓠⓡⓢⓣⓤⓥⓦⓧⓨⓩ①②③④⑤⑥⑦⑧⑨',
+    'Square': '🄰🄱🄲🄳🄴🄵🄶🄷🄸🄹🄺🄻🄼🄽🄾🄿🅀🅁🅂🅃🅄🅅🅆🅇🅈🅉🄰🄱🄲🄳🄴🄵🄶🄷🄸🄹🄺🄻🄼🄽🄾🄿🅀🅁🅂🅃🅄🅅🅆🅇🅈🅉123456789',
+    'Fullwidth': 'ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚ０１２３４５６７８９'
+  };
+
+  const NORMAL = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
+  function convert(text, map) {
+    let out = '';
+    for (const ch of text) {
+      const idx = NORMAL.indexOf(ch);
+      out += idx >= 0 ? map[idx] : ch;
+    }
+    return out;
+  }
+
+  function render() {
+    const text = inputText.value || 'Hello world';
+    fmtGrid.innerHTML = '';
+    Object.entries(MAPS).forEach(([name, map]) => {
+      const card = document.createElement('div');
+      card.className = 'fmt-card';
+      card.innerHTML = '<h4>' + name + '</h4><div class="sample">' + escapeHtml(convert(text, map)) + '</div>';
+      card.addEventListener('click', async () => {
+        const formatted = convert(text, map);
+        try {
+          await navigator.clipboard.writeText(formatted);
+          card.style.borderColor = 'var(--color-accent)';
+          setTimeout(() => card.style.borderColor = '', 800);
+        } catch (e) {}
+      });
+      fmtGrid.appendChild(card);
+    });
+  }
+
+  function escapeHtml(t) {
+    return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+
+  inputText.addEventListener('input', render);
+  render();
+})();
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Social Media Text Formatter",
+  "url": "https://presend.pages.dev/tools/text-formatter",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "Any (runs in browser)",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "description": "Format text with Unicode styles for social media entirely client-side."
+}
+</script>
+</body>
+</html>

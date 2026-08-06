@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta property="og:title" content="Word & Character Counter — Presend">
+<meta property="og:description" content="Count words, characters, sentences and paragraphs instantly. Runs entirely in your browser.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://presend.pages.dev/tools/word-counter">
+<meta property="og:image" content="https://presend.pages.dev/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<title>Word & Character Counter — Presend</title>
+<meta name="description" content="Count words, characters, sentences and paragraphs in real time. Perfect for essays, tweets, meta descriptions and more. Nothing is uploaded.">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="stylesheet" href="../style.css">
+<link rel="canonical" href="https://presend.pages.dev/tools/word-counter" />
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Word Counter",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Any",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "featureList": "Count words, characters, sentences and paragraphs locally in your browser. No upload, no server, 100% private.",
+  "url": "https://presend.pages.dev/tools/word-counter"
+}
+</script>
+<style>
+.counter-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 1rem; margin: 1.5rem 0; }
+.counter-card { padding: 1rem; border: 1px solid var(--color-line); border-radius: var(--radius); background: var(--color-bg-raised); text-align: center; }
+.counter-value { font-size: 2rem; font-weight: 600; font-family: var(--font-display); color: var(--color-accent); }
+.counter-label { font-size: 0.8rem; color: var(--color-muted); margin-top: 0.3rem; }
+.reading-time { font-size: 0.85rem; color: var(--color-muted); margin-top: 0.5rem; }
+</style>
+</head>
+<body class="tool-page">
+
+<header class="site-header wrap">
+  <a class='brand' href='/'><span class="brand-mark">●</span> Presend</a>
+  <a class='nav-link' href='/'>All tools</a>
+</header>
+
+<main class="wrap">
+  <a class='tool-back' href='/'>← Back</a>
+  <h1>Word & Character Counter</h1>
+  <p class="lede">Count words, characters, sentences and paragraphs in real time. Perfect for essays, tweets, meta descriptions, and any text with a limit.</p>
+
+  <span class="trust-badge">Your data is never sent to our servers</span>
+
+  <div style="margin-top: 2rem;">
+    <label for="inputText" style="display:block; font-weight:500; margin-bottom:0.5rem;">Type or paste your text</label>
+    <textarea id="inputText" rows="10" style="width:100%; padding:1rem; border:1px solid var(--color-line); border-radius:var(--radius); font-size:0.95rem; resize:vertical;" placeholder="Start typing or paste your text here..."></textarea>
+
+    <div class="counter-grid">
+      <div class="counter-card"><div class="counter-value" id="wordCount">0</div><div class="counter-label">Words</div></div>
+      <div class="counter-card"><div class="counter-value" id="charCount">0</div><div class="counter-label">Characters</div></div>
+      <div class="counter-card"><div class="counter-value" id="charNoSpace">0</div><div class="counter-label">Characters (no spaces)</div></div>
+      <div class="counter-card"><div class="counter-value" id="sentenceCount">0</div><div class="counter-label">Sentences</div></div>
+      <div class="counter-card"><div class="counter-value" id="paraCount">0</div><div class="counter-label">Paragraphs</div></div>
+      <div class="counter-card"><div class="counter-value" id="lineCount">0</div><div class="counter-label">Lines</div></div>
+    </div>
+
+    <div class="reading-time" id="readingTime">Reading time: —</div>
+
+    <div style="margin-top:1.5rem; display:flex; gap:0.75rem; flex-wrap:wrap;">
+      <button class="btn ghost" id="copyBtn" type="button" disabled>Copy text</button>
+      <button class="btn ghost" id="clearBtn" type="button">Clear</button>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer wrap">
+  <p>Presend — free browser-based tools. Runs locally. No account, no tracking.</p>
+</footer>
+
+<script>
+(function () {
+  const inputText = document.getElementById('inputText');
+  const wordCount = document.getElementById('wordCount');
+  const charCount = document.getElementById('charCount');
+  const charNoSpace = document.getElementById('charNoSpace');
+  const sentenceCount = document.getElementById('sentenceCount');
+  const paraCount = document.getElementById('paraCount');
+  const lineCount = document.getElementById('lineCount');
+  const readingTime = document.getElementById('readingTime');
+  const copyBtn = document.getElementById('copyBtn');
+  const clearBtn = document.getElementById('clearBtn');
+
+  function update() {
+    const text = inputText.value;
+    const words = text.trim() ? text.trim().split(/\s+/).length : 0;
+    const chars = text.length;
+    const charsNoSpace = text.replace(/\s/g, '').length;
+    const sentences = text.trim() ? text.split(/[.!?]+/).filter(s => s.trim()).length : 0;
+    const paras = text.trim() ? text.split(/\n\s*\n/).filter(s => s.trim()).length : 0;
+    const lines = text.trim() ? text.split('\n').length : 0;
+    const minutes = Math.ceil(words / 200);
+
+    wordCount.textContent = words;
+    charCount.textContent = chars;
+    charNoSpace.textContent = charsNoSpace;
+    sentenceCount.textContent = sentences;
+    paraCount.textContent = paras;
+    lineCount.textContent = lines;
+    readingTime.textContent = words > 0 ? 'Reading time: ~' + minutes + ' min' : 'Reading time: —';
+    copyBtn.disabled = !text;
+  }
+
+  inputText.addEventListener('input', update);
+
+  copyBtn.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(inputText.value);
+      copyBtn.textContent = 'Copied!';
+      setTimeout(() => copyBtn.textContent = 'Copy text', 2000);
+    } catch (e) {}
+  });
+
+  clearBtn.addEventListener('click', () => {
+    inputText.value = '';
+    update();
+  });
+
+  update();
+})();
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Word Counter",
+  "url": "https://presend.pages.dev/tools/word-counter",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "Any (runs in browser)",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "description": "Count words, characters, sentences and paragraphs entirely client-side."
+}
+</script>
+</body>
+</html>
