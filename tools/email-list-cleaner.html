@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta property="og:title" content="Email List Cleaner — Presend">
+<meta property="og:description" content="Clean, deduplicate and validate email lists instantly in your browser. No upload, no server, 100% private.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://presend.pages.dev/tools/email-list-cleaner">
+<meta property="og:image" content="https://presend.pages.dev/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<title>Email List Cleaner — Presend</title>
+<meta name="description" content="Clean, deduplicate and validate email lists before sending a campaign. Runs entirely in your browser. Nothing is uploaded.">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="stylesheet" href="../style.css">
+<link rel="canonical" href="https://presend.pages.dev/tools/email-list-cleaner" />
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Email List Cleaner",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Any",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "featureList": "Clean, deduplicate and validate email lists locally in your browser. No upload, no server, 100% private.",
+  "url": "https://presend.pages.dev/tools/email-list-cleaner"
+}
+</script>
+</head>
+<body class="tool-page">
+
+<header class="site-header wrap">
+  <a class='brand' href='/'><span class="brand-mark">●</span> Presend</a>
+  <a class='nav-link' href='/'>All tools</a>
+</header>
+
+<main class="wrap">
+  <a class='tool-back' href='/'>← Back</a>
+  <h1>Email List Cleaner</h1>
+  <p class="lede">Paste a messy list of emails and get a clean, deduplicated, validated list ready to import into your email tool. Everything stays on your device.</p>
+
+  <span class="trust-badge">Your data is never sent to our servers</span>
+
+  <div style="margin-top: 2rem;">
+    <label for="inputArea" style="display:block; font-weight:500; margin-bottom:0.5rem;">Paste your email list</label>
+    <textarea id="inputArea" rows="8" style="width:100%; padding:1rem; border:1px solid var(--color-line); border-radius:var(--radius); font-family:var(--font-mono); font-size:0.85rem; resize:vertical;" placeholder="john@example.com, alice@company.org
+BOB@TEST.COM
+invalid-email
+john@example.com (duplicate)"></textarea>
+
+    <div style="margin-top:1rem; display:flex; gap:0.75rem; flex-wrap:wrap;">
+      <button class="btn" id="cleanBtn" type="button">Clean list</button>
+      <button class="btn ghost" id="copyBtn" type="button" disabled>Copy result</button>
+      <button class="btn ghost" id="downloadBtn" type="button" disabled>Download CSV</button>
+      <button class="btn ghost" id="clearBtn" type="button">Clear</button>
+    </div>
+
+    <p class="error-msg" id="errorMsg"></p>
+
+    <div class="result" id="result" style="margin-top:1.5rem;">
+      <h3 style="font-family: var(--font-display); font-size:1.05rem; margin-bottom:0.5rem;">Clean list</h3>
+      <textarea id="outputArea" rows="8" readonly style="width:100%; padding:1rem; border:1px solid var(--color-line); border-radius:var(--radius); font-family:var(--font-mono); font-size:0.85rem; background:var(--color-bg-raised); resize:vertical;"></textarea>
+      <div id="stats" style="margin-top:0.75rem; font-size:0.85rem; color:var(--color-muted);"></div>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer wrap">
+  <p>Presend — free browser-based tools. Runs locally. No account, no tracking.</p>
+</footer>
+
+<script>
+(function () {
+  const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  const inputArea = document.getElementById('inputArea');
+  const outputArea = document.getElementById('outputArea');
+  const cleanBtn = document.getElementById('cleanBtn');
+  const copyBtn = document.getElementById('copyBtn');
+  const downloadBtn = document.getElementById('downloadBtn');
+  const clearBtn = document.getElementById('clearBtn');
+  const errorMsg = document.getElementById('errorMsg');
+  const result = document.getElementById('result');
+  const stats = document.getElementById('stats');
+
+  function showError(msg) {
+    errorMsg.textContent = msg;
+    errorMsg.classList.add('visible');
+  }
+  function clearError() {
+    errorMsg.textContent = '';
+    errorMsg.classList.remove('visible');
+  }
+
+  cleanBtn.addEventListener('click', () => {
+    clearError();
+    const text = inputArea.value;
+    if (!text.trim()) { showError('Paste an email list to clean.'); return; }
+
+    const raw = text.split(/[\n,;\t\s]+/);
+    const seen = new Set();
+    const valid = [];
+    const invalid = [];
+    const duplicates = [];
+
+    raw.forEach(e => {
+      const clean = e.trim().toLowerCase();
+      if (!clean) return;
+      if (!EMAIL_RE.test(clean)) {
+        invalid.push(e.trim());
+        return;
+      }
+      if (seen.has(clean)) {
+        duplicates.push(clean);
+        return;
+      }
+      seen.add(clean);
+      valid.push(clean);
+    });
+
+    outputArea.value = valid.join('\n');
+    let statText = valid.length + ' unique valid email' + (valid.length !== 1 ? 's' : '');
+    if (duplicates.length) statText += ' · ' + duplicates.length + ' duplicate' + (duplicates.length !== 1 ? 's' : '') + ' removed';
+    if (invalid.length) statText += ' · ' + invalid.length + ' invalid' + (invalid.length !== 1 ? 's' : '') + ' skipped';
+    stats.textContent = statText;
+    result.classList.add('visible');
+    copyBtn.disabled = false;
+    downloadBtn.disabled = false;
+  });
+
+  copyBtn.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(outputArea.value);
+      copyBtn.textContent = 'Copied!';
+      setTimeout(() => copyBtn.textContent = 'Copy result', 2000);
+    } catch (e) { showError('Could not copy to clipboard.'); }
+  });
+
+  downloadBtn.addEventListener('click', () => {
+    const lines = outputArea.value.split('\n').filter(Boolean);
+    const csv = 'email\n' + lines.join('\n');
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'clean-emails.csv';
+    a.click();
+    URL.revokeObjectURL(url);
+  });
+
+  clearBtn.addEventListener('click', () => {
+    inputArea.value = '';
+    outputArea.value = '';
+    result.classList.remove('visible');
+    copyBtn.disabled = true;
+    downloadBtn.disabled = true;
+    clearError();
+  });
+})();
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Email List Cleaner",
+  "url": "https://presend.pages.dev/tools/email-list-cleaner",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "Any (runs in browser)",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "description": "Clean, deduplicate and validate email lists entirely client-side."
+}
+</script>
+</body>
+</html>

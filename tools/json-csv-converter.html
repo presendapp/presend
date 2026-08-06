@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta property="og:title" content="JSON ↔ CSV Converter — Presend">
+<meta property="og:description" content="Convert between JSON and CSV instantly in your browser. No upload, no server, 100% private.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://presend.pages.dev/tools/json-csv-converter">
+<meta property="og:image" content="https://presend.pages.dev/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<title>JSON ↔ CSV Converter — Presend</title>
+<meta name="description" content="Convert JSON to CSV or CSV to JSON instantly in your browser. No upload, no server, 100% private.">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="stylesheet" href="../style.css">
+<link rel="canonical" href="https://presend.pages.dev/tools/json-csv-converter" />
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "JSON CSV Converter",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Any",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "featureList": "Convert JSON to CSV and CSV to JSON locally in your browser. No upload, no server, 100% private.",
+  "url": "https://presend.pages.dev/tools/json-csv-converter"
+}
+</script>
+</head>
+<body class="tool-page">
+
+<header class="site-header wrap">
+  <a class='brand' href='/'><span class="brand-mark">●</span> Presend</a>
+  <a class='nav-link' href='/'>All tools</a>
+</header>
+
+<main class="wrap">
+  <a class='tool-back' href='/'>← Back</a>
+  <h1>JSON ↔ CSV Converter</h1>
+  <p class="lede">Convert between JSON and CSV formats instantly. Paste your data or drop a file — everything is processed on your device.</p>
+
+  <span class="trust-badge">Your data is never sent to our servers</span>
+
+  <div style="margin-top: 2rem;">
+    <div style="display:flex; gap:0.5rem; margin-bottom:1rem; flex-wrap:wrap;">
+      <button class="btn" id="modeJsonToCsv" type="button">JSON → CSV</button>
+      <button class="btn ghost" id="modeCsvToJson" type="button">CSV → JSON</button>
+    </div>
+
+    <label for="inputArea" id="inputLabel" style="display:block; font-weight:500; margin-bottom:0.5rem;">Paste JSON here</label>
+    <textarea id="inputArea" rows="8" style="width:100%; padding:1rem; border:1px solid var(--color-line); border-radius:var(--radius); font-family:var(--font-mono); font-size:0.85rem; resize:vertical;" placeholder='[
+  {"name": "Alice", "age": 30},
+  {"name": "Bob", "age": 25}
+]'></textarea>
+
+    <div style="margin-top:1rem; display:flex; gap:0.75rem; flex-wrap:wrap;">
+      <button class="btn" id="convertBtn" type="button">Convert</button>
+      <button class="btn ghost" id="copyBtn" type="button" disabled>Copy result</button>
+      <button class="btn ghost" id="downloadBtn" type="button" disabled>Download</button>
+      <button class="btn ghost" id="clearBtn" type="button">Clear</button>
+    </div>
+
+    <p class="error-msg" id="errorMsg"></p>
+
+    <div class="result" id="result" style="margin-top:1.5rem;">
+      <h3 style="font-family: var(--font-display); font-size:1.05rem; margin-bottom:0.5rem;">Result</h3>
+      <textarea id="outputArea" rows="10" readonly style="width:100%; padding:1rem; border:1px solid var(--color-line); border-radius:var(--radius); font-family:var(--font-mono); font-size:0.85rem; background:var(--color-bg-raised); resize:vertical;"></textarea>
+      <div id="stats" style="margin-top:0.75rem; font-size:0.85rem; color:var(--color-muted);"></div>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer wrap">
+  <p>Presend — free browser-based tools. Runs locally. No account, no tracking.</p>
+</footer>
+
+<script>
+(function () {
+  let mode = 'json-to-csv';
+
+  const inputArea = document.getElementById('inputArea');
+  const inputLabel = document.getElementById('inputLabel');
+  const outputArea = document.getElementById('outputArea');
+  const convertBtn = document.getElementById('convertBtn');
+  const copyBtn = document.getElementById('copyBtn');
+  const downloadBtn = document.getElementById('downloadBtn');
+  const clearBtn = document.getElementById('clearBtn');
+  const errorMsg = document.getElementById('errorMsg');
+  const result = document.getElementById('result');
+  const stats = document.getElementById('stats');
+  const modeJsonToCsv = document.getElementById('modeJsonToCsv');
+  const modeCsvToJson = document.getElementById('modeCsvToJson');
+
+  function showError(msg) {
+    errorMsg.textContent = msg;
+    errorMsg.classList.add('visible');
+  }
+  function clearError() {
+    errorMsg.textContent = '';
+    errorMsg.classList.remove('visible');
+  }
+
+  function setMode(newMode) {
+    mode = newMode;
+    if (mode === 'json-to-csv') {
+      modeJsonToCsv.classList.remove('ghost');
+      modeCsvToJson.classList.add('ghost');
+      inputLabel.textContent = 'Paste JSON here';
+      inputArea.placeholder = '[\n  {"name": "Alice", "age": 30},\n  {"name": "Bob", "age": 25}\n]';
+    } else {
+      modeCsvToJson.classList.remove('ghost');
+      modeJsonToCsv.classList.add('ghost');
+      inputLabel.textContent = 'Paste CSV here';
+      inputArea.placeholder = 'name,age\nAlice,30\nBob,25';
+    }
+    result.classList.remove('visible');
+    copyBtn.disabled = true;
+    downloadBtn.disabled = true;
+    clearError();
+  }
+
+  function escapeCsv(val) {
+    const s = String(val == null ? '' : val);
+    if (s.includes(',') || s.includes('"') || s.includes('\n') || s.includes('\r')) {
+      return '"' + s.replace(/"/g, '""') + '"';
+    }
+    return s;
+  }
+
+  function jsonToCsv(jsonText) {
+    let data;
+    try {
+      data = JSON.parse(jsonText);
+    } catch (e) {
+      throw new Error('Invalid JSON: ' + e.message);
+    }
+    if (!Array.isArray(data)) {
+      if (typeof data === 'object' && data !== null) data = [data];
+      else throw new Error('JSON must be an array of objects or a single object.');
+    }
+    if (data.length === 0) return { csv: '', rows: 0, cols: 0 };
+    const keys = Array.from(new Set(data.flatMap(Object.keys)));
+    const lines = [keys.map(escapeCsv).join(',')];
+    data.forEach(row => {
+      lines.push(keys.map(k => escapeCsv(row[k])).join(','));
+    });
+    return { csv: lines.join('\n'), rows: data.length, cols: keys.length };
+  }
+
+  function csvToJson(csvText) {
+    const lines = csvText.trim().split(/\r?\n/);
+    if (lines.length < 2) throw new Error('CSV needs at least a header row and one data row.');
+    const headers = lines[0].split(',').map(h => h.trim().replace(/^"|"$/g, '').replace(/""/g, '"'));
+    const rows = [];
+    for (let i = 1; i < lines.length; i++) {
+      if (!lines[i].trim()) continue;
+      const values = [];
+      let current = '';
+      let inQuotes = false;
+      for (let j = 0; j < lines[i].length; j++) {
+        const ch = lines[i][j];
+        if (ch === '"') {
+          if (inQuotes && lines[i][j+1] === '"') { current += '"'; j++; }
+          else { inQuotes = !inQuotes; }
+        } else if (ch === ',' && !inQuotes) {
+          values.push(current.trim());
+          current = '';
+        } else {
+          current += ch;
+        }
+      }
+      values.push(current.trim());
+      const obj = {};
+      headers.forEach((h, idx) => { obj[h] = values[idx] !== undefined ? values[idx].replace(/^"|"$/g, '').replace(/""/g, '"') : ''; });
+      rows.push(obj);
+    }
+    return { json: JSON.stringify(rows, null, 2), rows: rows.length, cols: headers.length };
+  }
+
+  convertBtn.addEventListener('click', () => {
+    clearError();
+    const text = inputArea.value.trim();
+    if (!text) { showError('Paste some data to convert.'); return; }
+    try {
+      if (mode === 'json-to-csv') {
+        const res = jsonToCsv(text);
+        outputArea.value = res.csv;
+        stats.textContent = res.rows + ' row' + (res.rows !== 1 ? 's' : '') + ' · ' + res.cols + ' column' + (res.cols !== 1 ? 's' : '');
+      } else {
+        const res = csvToJson(text);
+        outputArea.value = res.json;
+        stats.textContent = res.rows + ' row' + (res.rows !== 1 ? 's' : '') + ' · ' + res.cols + ' column' + (res.cols !== 1 ? 's' : '');
+      }
+      result.classList.add('visible');
+      copyBtn.disabled = false;
+      downloadBtn.disabled = false;
+    } catch (e) {
+      showError(e.message);
+      result.classList.remove('visible');
+    }
+  });
+
+  copyBtn.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(outputArea.value);
+      copyBtn.textContent = 'Copied!';
+      setTimeout(() => copyBtn.textContent = 'Copy result', 2000);
+    } catch (e) { showError('Could not copy to clipboard.'); }
+  });
+
+  downloadBtn.addEventListener('click', () => {
+    const blob = new Blob([outputArea.value], { type: mode === 'json-to-csv' ? 'text/csv' : 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = mode === 'json-to-csv' ? 'converted.csv' : 'converted.json';
+    a.click();
+    URL.revokeObjectURL(url);
+  });
+
+  clearBtn.addEventListener('click', () => {
+    inputArea.value = '';
+    outputArea.value = '';
+    result.classList.remove('visible');
+    copyBtn.disabled = true;
+    downloadBtn.disabled = true;
+    clearError();
+  });
+
+  modeJsonToCsv.addEventListener('click', () => setMode('json-to-csv'));
+  modeCsvToJson.addEventListener('click', () => setMode('csv-to-json'));
+})();
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "JSON CSV Converter",
+  "url": "https://presend.pages.dev/tools/json-csv-converter",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "Any (runs in browser)",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "description": "Convert JSON to CSV and CSV to JSON entirely client-side."
+}
+</script>
+</body>
+</html>

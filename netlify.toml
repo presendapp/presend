@@ -204,3 +204,27 @@
   to = "/tools/landings/pdf-metadata-remover-mac"
   status = 301
   force = true
+
+[[redirects]]
+  from = "/tools/url-cleaner.html"
+  to = "/tools/url-cleaner"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/tools/json-csv-converter.html"
+  to = "/tools/json-csv-converter"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/tools/email-list-cleaner.html"
+  to = "/tools/email-list-cleaner"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/tools/text-diff.html"
+  to = "/tools/text-diff"
+  status = 301
+  force = true
