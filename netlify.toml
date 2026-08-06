@@ -228,3 +228,39 @@
   to = "/tools/text-diff"
   status = 301
   force = true
+
+[[redirects]]
+  from = "/tools/color-contrast.html"
+  to = "/tools/color-contrast"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/tools/text-formatter.html"
+  to = "/tools/text-formatter"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/tools/thread-splitter.html"
+  to = "/tools/thread-splitter"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/tools/word-counter.html"
+  to = "/tools/word-counter"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/tools/password-strength.html"
+  to = "/tools/password-strength"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/tools/image-to-base64.html"
+  to = "/tools/image-to-base64"
+  status = 301
+  force = true

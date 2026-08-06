@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta property="og:title" content="Image to Base64 Converter — Presend">
+<meta property="og:description" content="Convert any image to a Base64 data URI instantly in your browser. No upload, no server, 100% private.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://presend.pages.dev/tools/image-to-base64">
+<meta property="og:image" content="https://presend.pages.dev/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<title>Image to Base64 Converter — Presend</title>
+<meta name="description" content="Convert any image to a Base64 data URI for embedding in CSS, HTML or emails. Runs entirely in your browser. Nothing is uploaded.">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="stylesheet" href="../style.css">
+<link rel="canonical" href="https://presend.pages.dev/tools/image-to-base64" />
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Image to Base64 Converter",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Any",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "featureList": "Convert images to Base64 locally in your browser. No upload, no server, 100% private.",
+  "url": "https://presend.pages.dev/tools/image-to-base64"
+}
+</script>
+</head>
+<body class="tool-page">
+
+<header class="site-header wrap">
+  <a class='brand' href='/'><span class="brand-mark">●</span> Presend</a>
+  <a class='nav-link' href='/'>All tools</a>
+</header>
+
+<main class="wrap">
+  <a class='tool-back' href='/'>← Back</a>
+  <h1>Image to Base64 Converter</h1>
+  <p class="lede">Convert any image to a Base64 data URI for embedding directly in HTML, CSS or emails. No external file needed. The image is processed on your device only.</p>
+
+  <span class="trust-badge">Your files are never sent to our servers</span>
+
+  <div style="margin-top: 2rem;">
+    <div class="dropzone" id="dropzone" tabindex="0" role="button" aria-label="Choose an image or drop it here">
+      <p class="primary">Drop an image here, or click to choose one</p>
+      <p class="secondary">JPG, PNG, GIF, WebP, SVG. Nothing leaves your device.</p>
+      <input type="file" id="fileInput" accept="image/*">
+    </div>
+    <p class="error-msg" id="errorMsg"></p>
+
+    <div class="result" id="result">
+      <div style="display:flex; gap:1.5rem; flex-wrap:wrap; margin-bottom:1rem;">
+        <div style="flex:1; min-width:200px;">
+          <h3 style="font-family: var(--font-display); font-size:1.05rem; margin-bottom:0.5rem;">Preview</h3>
+          <img id="previewImg" style="max-width:100%; max-height:200px; border-radius:var(--radius); border:1px solid var(--color-line);">
+          <div id="fileInfo" style="margin-top:0.5rem; font-size:0.85rem; color:var(--color-muted);"></div>
+        </div>
+        <div style="flex:2; min-width:300px;">
+          <h3 style="font-family: var(--font-display); font-size:1.05rem; margin-bottom:0.5rem;">Base64 output</h3>
+          <textarea id="base64Output" rows="6" readonly style="width:100%; padding:1rem; border:1px solid var(--color-line); border-radius:var(--radius); font-family:var(--font-mono); font-size:0.75rem; background:var(--color-bg-raised); resize:vertical; word-break:break-all;"></textarea>
+          <div style="margin-top:0.75rem; display:flex; gap:0.5rem; flex-wrap:wrap;">
+            <button class="btn" id="copyBtn" type="button">Copy Base64</button>
+            <button class="btn ghost" id="copyDataUriBtn" type="button">Copy data URI</button>
+            <button class="btn ghost" id="copyCssBtn" type="button">Copy CSS</button>
+            <button class="btn ghost" id="resetBtn" type="button">Convert another</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer wrap">
+  <p>Presend — free browser-based tools. Runs locally. No account, no tracking.</p>
+</footer>
+
+<script>
+(function () {
+  const dropzone = document.getElementById('dropzone');
+  const fileInput = document.getElementById('fileInput');
+  const errorMsg = document.getElementById('errorMsg');
+  const result = document.getElementById('result');
+  const previewImg = document.getElementById('previewImg');
+  const fileInfo = document.getElementById('fileInfo');
+  const base64Output = document.getElementById('base64Output');
+  const copyBtn = document.getElementById('copyBtn');
+  const copyDataUriBtn = document.getElementById('copyDataUriBtn');
+  const copyCssBtn = document.getElementById('copyCssBtn');
+  const resetBtn = document.getElementById('resetBtn');
+
+  let currentBase64 = '';
+  let currentMime = '';
+
+  function showError(msg) { errorMsg.textContent = msg; errorMsg.classList.add('visible'); }
+  function clearError() { errorMsg.textContent = ''; errorMsg.classList.remove('visible'); }
+  function humanSize(b) { return b < 1024 ? b + ' B' : b < 1024*1024 ? (b/1024).toFixed(1) + ' KB' : (b/(1024*1024)).toFixed(1) + ' MB'; }
+
+  function handleFile(file) {
+    clearError(); result.classList.remove('visible');
+    if (!file || !file.type.startsWith('image/')) { showError('Please choose an image file.'); return; }
+    if (file.size > 5 * 1024 * 1024) { showError('Image is larger than 5MB. Try a smaller file.'); return; }
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      const dataUrl = reader.result;
+      const comma = dataUrl.indexOf(',');
+      currentBase64 = dataUrl.slice(comma + 1);
+      currentMime = dataUrl.slice(5, comma);
+
+      previewImg.src = dataUrl;
+      previewImg.onload = () => {
+        fileInfo.textContent = file.name + ' · ' + humanSize(file.size) + ' · ' + previewImg.naturalWidth + '×' + previewImg.naturalHeight;
+      };
+      base64Output.value = currentBase64;
+      result.classList.add('visible');
+    };
+    reader.onerror = () => showError('Could not read this image.');
+    reader.readAsDataURL(file);
+  }
+
+  dropzone.addEventListener('click', () => fileInput.click());
+  dropzone.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fileInput.click(); } });
+  fileInput.addEventListener('change', (e) => handleFile(e.target.files[0]));
+  ['dragenter','dragover'].forEach(e => dropzone.addEventListener(e, (ev) => { ev.preventDefault(); dropzone.classList.add('dragover'); }));
+  ['dragleave','drop'].forEach(e => dropzone.addEventListener(e, (ev) => { ev.preventDefault(); dropzone.classList.remove('dragover'); }));
+  dropzone.addEventListener('drop', (e) => handleFile(e.dataTransfer.files[0]));
+
+  copyBtn.addEventListener('click', async () => {
+    try { await navigator.clipboard.writeText(currentBase64); copyBtn.textContent = 'Copied!'; setTimeout(() => copyBtn.textContent = 'Copy Base64', 2000); }
+    catch (e) { showError('Could not copy.'); }
+  });
+  copyDataUriBtn.addEventListener('click', async () => {
+    try { await navigator.clipboard.writeText('data:' + currentMime + ';base64,' + currentBase64); copyDataUriBtn.textContent = 'Copied!'; setTimeout(() => copyDataUriBtn.textContent = 'Copy data URI', 2000); }
+    catch (e) { showError('Could not copy.'); }
+  });
+  copyCssBtn.addEventListener('click', async () => {
+    try { await navigator.clipboard.writeText("background-image: url('data:" + currentMime + ";base64," + currentBase64 + "');"); copyCssBtn.textContent = 'Copied!'; setTimeout(() => copyCssBtn.textContent = 'Copy CSS', 2000); }
+    catch (e) { showError('Could not copy.'); }
+  });
+  resetBtn.addEventListener('click', () => { fileInput.value = ''; result.classList.remove('visible'); clearError(); });
+})();
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Image to Base64 Converter",
+  "url": "https://presend.pages.dev/tools/image-to-base64",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "Any (runs in browser)",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "description": "Convert images to Base64 data URIs entirely client-side."
+}
+</script>
+</body>
+</html>

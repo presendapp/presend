@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta property="og:title" content="Color Contrast Checker — Presend">
+<meta property="og:description" content="Check if two colors meet WCAG accessibility standards. Runs entirely in your browser.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://presend.pages.dev/tools/color-contrast">
+<meta property="og:image" content="https://presend.pages.dev/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<title>Color Contrast Checker — Presend</title>
+<meta name="description" content="Check if your text and background colors meet WCAG 2.1 accessibility standards. AA, AAA, and normal/large text ratios. Runs in your browser.">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="stylesheet" href="../style.css">
+<link rel="canonical" href="https://presend.pages.dev/tools/color-contrast" />
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Color Contrast Checker",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Any",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "featureList": "Check WCAG color contrast ratios locally in your browser. No upload, no server, 100% private.",
+  "url": "https://presend.pages.dev/tools/color-contrast"
+}
+</script>
+<style>
+.color-row { display: flex; gap: 1.5rem; flex-wrap: wrap; margin-top: 1rem; }
+.color-field { flex: 1; min-width: 200px; }
+.color-field label { display: block; font-weight: 500; margin-bottom: 0.4rem; }
+.color-input-wrap { display: flex; align-items: center; gap: 0.5rem; }
+.color-input-wrap input[type="color"] { width: 48px; height: 40px; border: none; padding: 0; cursor: pointer; background: none; }
+.color-input-wrap input[type="text"] { flex: 1; padding: 0.6rem; border: 1px solid var(--color-line); border-radius: var(--radius); font-family: var(--font-mono); font-size: 0.9rem; text-transform: uppercase; }
+.preview-box { margin-top: 2rem; padding: 2rem; border-radius: var(--radius); text-align: center; font-size: 1.2rem; font-weight: 500; border: 1px solid var(--color-line); }
+.score-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1rem; margin-top: 1.5rem; }
+.score-card { padding: 1rem; border-radius: var(--radius); border: 1px solid var(--color-line); text-align: center; }
+.score-card.pass { background: #d4edda; border-color: #c3e6cb; }
+.score-card.fail { background: #f8d7da; border-color: #f5c6cb; }
+.score-value { font-size: 1.6rem; font-weight: 600; font-family: var(--font-display); }
+.score-label { font-size: 0.8rem; color: var(--color-muted); margin-top: 0.3rem; }
+</style>
+</head>
+<body class="tool-page">
+
+<header class="site-header wrap">
+  <a class='brand' href='/'><span class="brand-mark">●</span> Presend</a>
+  <a class='nav-link' href='/'>All tools</a>
+</header>
+
+<main class="wrap">
+  <a class='tool-back' href='/'>← Back</a>
+  <h1>Color Contrast Checker</h1>
+  <p class="lede">Check if your text and background colors meet WCAG 2.1 accessibility standards for normal and large text. Essential for designers and developers.</p>
+
+  <span class="trust-badge">Your data is never sent to our servers</span>
+
+  <div style="margin-top: 2rem;">
+    <div class="color-row">
+      <div class="color-field">
+        <label for="fgColor">Text color</label>
+        <div class="color-input-wrap">
+          <input type="color" id="fgPicker" value="#1A1D1B">
+          <input type="text" id="fgColor" value="#1A1D1B" maxlength="7">
+        </div>
+      </div>
+      <div class="color-field">
+        <label for="bgColor">Background color</label>
+        <div class="color-input-wrap">
+          <input type="color" id="bgPicker" value="#F7F5F0">
+          <input type="text" id="bgColor" value="#F7F5F0" maxlength="7">
+        </div>
+      </div>
+    </div>
+
+    <div class="preview-box" id="previewBox">
+      The quick brown fox jumps over the lazy dog.
+    </div>
+
+    <div class="score-grid" id="scoreGrid">
+      <div class="score-card" id="scoreNormalAA"><div class="score-value">—</div><div class="score-label">Normal text AA<br>(4.5:1)</div></div>
+      <div class="score-card" id="scoreNormalAAA"><div class="score-value">—</div><div class="score-label">Normal text AAA<br>(7:1)</div></div>
+      <div class="score-card" id="scoreLargeAA"><div class="score-value">—</div><div class="score-label">Large text AA<br>(3:1)</div></div>
+      <div class="score-card" id="scoreLargeAAA"><div class="score-value">—</div><div class="score-label">Large text AAA<br>(4.5:1)</div></div>
+    </div>
+
+    <p style="font-size:0.82rem; color:var(--color-muted); margin-top:1.5rem;">
+      WCAG 2.1 defines large text as 18pt (24px) or 14pt (18.66px) bold. The ratio is calculated from the relative luminance of each color.
+    </p>
+  </div>
+</main>
+
+<footer class="site-footer wrap">
+  <p>Presend — free browser-based tools. Runs locally. No account, no tracking.</p>
+</footer>
+
+<script>
+(function () {
+  const fgPicker = document.getElementById('fgPicker');
+  const fgColor = document.getElementById('fgColor');
+  const bgPicker = document.getElementById('bgPicker');
+  const bgColor = document.getElementById('bgColor');
+  const previewBox = document.getElementById('previewBox');
+  const scoreNormalAA = document.getElementById('scoreNormalAA');
+  const scoreNormalAAA = document.getElementById('scoreNormalAAA');
+  const scoreLargeAA = document.getElementById('scoreLargeAA');
+  const scoreLargeAAA = document.getElementById('scoreLargeAAA');
+
+  function hexToRgb(hex) {
+    const m = hex.match(/^#?([a-f0-9]{6})$/i);
+    if (!m) return null;
+    const v = parseInt(m[1], 16);
+    return { r: (v >> 16) & 255, g: (v >> 8) & 255, b: v & 255 };
+  }
+
+  function lum(c) {
+    const s = c / 255;
+    return s <= 0.03928 ? s / 12.92 : Math.pow((s + 0.055) / 1.055, 2.4);
+  }
+
+  function relativeLuminance(rgb) {
+    return 0.2126 * lum(rgb.r) + 0.7152 * lum(rgb.g) + 0.0722 * lum(rgb.b);
+  }
+
+  function contrastRatio(fg, bg) {
+    const l1 = relativeLuminance(fg);
+    const l2 = relativeLuminance(bg);
+    const lighter = Math.max(l1, l2);
+    const darker = Math.min(l1, l2);
+    return (lighter + 0.05) / (darker + 0.05);
+  }
+
+  function update() {
+    let fg = fgColor.value.trim();
+    let bg = bgColor.value.trim();
+    if (!fg.startsWith('#')) fg = '#' + fg;
+    if (!bg.startsWith('#')) bg = '#' + bg;
+
+    const fgRgb = hexToRgb(fg);
+    const bgRgb = hexToRgb(bg);
+    if (!fgRgb || !bgRgb) return;
+
+    previewBox.style.color = fg;
+    previewBox.style.backgroundColor = bg;
+
+    const ratio = contrastRatio(fgRgb, bgRgb);
+    const ratioStr = ratio.toFixed(2) + ':1';
+
+    function setCard(card, threshold) {
+      const pass = ratio >= threshold;
+      card.querySelector('.score-value').textContent = ratioStr;
+      card.className = 'score-card ' + (pass ? 'pass' : 'fail');
+    }
+
+    setCard(scoreNormalAA, 4.5);
+    setCard(scoreNormalAAA, 7);
+    setCard(scoreLargeAA, 3);
+    setCard(scoreLargeAAA, 4.5);
+  }
+
+  fgPicker.addEventListener('input', () => { fgColor.value = fgPicker.value; update(); });
+  bgPicker.addEventListener('input', () => { bgColor.value = bgPicker.value; update(); });
+  fgColor.addEventListener('input', () => { if (fgColor.value.length === 6 || fgColor.value.length === 7) fgPicker.value = fgColor.value.startsWith('#') ? fgColor.value : '#' + fgColor.value; update(); });
+  bgColor.addEventListener('input', () => { if (bgColor.value.length === 6 || bgColor.value.length === 7) bgPicker.value = bgColor.value.startsWith('#') ? bgColor.value : '#' + bgColor.value; update(); });
+
+  update();
+})();
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Color Contrast Checker",
+  "url": "https://presend.pages.dev/tools/color-contrast",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "Any (runs in browser)",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "description": "Check WCAG color contrast ratios entirely client-side."
+}
+</script>
+</body>
+</html>
