@@ -4,6 +4,15 @@ All notable changes to Presend.
 
 ## [Unreleased]
 
+## [1.5.0] - 2026-08-06
+### Added
+- IndexNow API submission for all URLs
+- Organization Schema (E-E-A-T) on all pages
+- FAQ Schema on 3 additional tools (password-generator, image-compressor, video-metadata-remover)
+- HowTo Schema on all 5 guides
+- Anchor IDs on guide sections for rich snippet deep-linking
+
+
 ## [1.4.0] - 2026-08-06
 ### Added
 - 10 new SEO landing pages for existing tools
