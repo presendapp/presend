@@ -1,0 +1,1 @@
+# Presend Marketing Kit\n\n## Pitch\nFree browser-based privacy tools. Clean, compress, convert files. No upload, no account, no tracking.\n\n## Directories\n- [ ] Product Hunt\n- [ ] Hacker News\n- [ ] AlternativeTo.net\n- [ ] Awesome Privacy (GitHub)\n- [ ] Indie Hackers\n- [ ] Reddit r/privacy\n- [ ] Reddit r/webdev\n- [ ] Reddit r/SideProject\n
