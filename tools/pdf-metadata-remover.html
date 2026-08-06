@@ -35,6 +35,67 @@
   "url": "https://presend.pages.dev/tools/pdf-metadata-remover"
 }
 </script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type":"ListItem","position":1,"name":"Home","item":"https://presend.pages.dev/"},
+    {"@type":"ListItem","position":2,"name":"Tools","item":"https://presend.pages.dev/tools/"},
+    {"@type":"ListItem","position":3,"name":"PDF Metadata Remover","item":"https://presend.pages.dev/tools/pdf-metadata-remover"}
+  ]
+}
+</script>
+<!--seo-breadcrumb-->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": 'What metadata is hidden in PDFs?',
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "PDFs can store the author's name, title, subject, keywords, creator software, producer software, creation date, and modification date. Some also contain XMP metadata."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": 'Is it safe to use?',
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": 'Yes. The PDF is processed entirely in your browser using the pdf-lib library. Your file never leaves your device.'
+      }
+    },
+    {
+      "@type": "Question",
+      "name": 'Does it work on encrypted or password-protected PDFs?',
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": 'No. If a PDF is encrypted, the tool cannot open it. You would need to decrypt it first using the original password.'
+      }
+    },
+    {
+      "@type": "Question",
+      "name": 'Will the PDF look different after cleaning?',
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": 'No. Only the document information dictionary is modified. The visual content, fonts, images, and layout remain exactly the same.'
+      }
+    },
+    {
+      "@type": "Question",
+      "name": 'What about XMP metadata?',
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": 'This tool clears the standard document info dictionary. Some PDFs also contain an XMP metadata stream; while the tool attempts to minimize it, complete XMP removal is not guaranteed in every case.'
+      }
+    }
+  ]
+}
+</script>
+<!--seo-faq-->
 </head>
 <body class="tool-page">
 
@@ -82,6 +143,24 @@
       than overclaim.
     </p>
   </div>
+<section class="wrap" style="margin-top:3rem;">
+  <h2 style="font-family:var(--font-display);font-size:1.1rem;">Related tools</h2>
+  <div class="tool-grid" style="margin-top:1rem;">
+      <a class='tool-card' href='/tools/pdf-compress'>
+        <div><h3>PDF Compress</h3><p>Shrink a PDF's file size.</p></div>
+        <span class="go">Open →</span>
+      </a>
+      <a class='tool-card' href='/tools/office-metadata-remover'>
+        <div><h3>Office Metadata Remover</h3><p>Strip hidden author, company and edit history from Office files.</p></div>
+        <span class="go">Open →</span>
+      </a>
+      <a class='tool-card' href='/tools/file-hash-checker'>
+        <div><h3>File Hash Checker</h3><p>Calculate SHA-256, SHA-1 and SHA-512 checksums.</p></div>
+        <span class="go">Open →</span>
+      </a>
+  </div>
+</section>
+<!--seo-related-tools-->
 </main>
 
 <footer class="site-footer wrap">

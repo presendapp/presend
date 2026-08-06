@@ -384,3 +384,33 @@
   status = 301
   force = true
 
+[[redirects]]
+  from = "/guides/how-to-remove-metadata-before-sharing.html"
+  to = "/guides/how-to-remove-metadata-before-sharing"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/how-to-verify-downloaded-file-safe.html"
+  to = "/guides/how-to-verify-downloaded-file-safe"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/how-to-clean-urls-for-sharing.html"
+  to = "/guides/how-to-clean-urls-for-sharing"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/how-to-compress-images-email.html"
+  to = "/guides/how-to-compress-images-email"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/guides/how-to-convert-heic-jpg.html"
+  to = "/guides/how-to-convert-heic-jpg"
+  status = 301
+  force = true
+
