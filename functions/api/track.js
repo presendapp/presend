@@ -1,7 +1,22 @@
 export async function onRequestPost(context) {
   const { request, env } = context;
+  const clientIP = request.headers.get('CF-Connecting-IP') || 'unknown';
+  const now = Math.floor(Date.now() / 60000);
+  const rateKey = `rate:${clientIP}:${now}`;
   
   try {
+    let rateCount = await env.PRESEND_ANALYTICS.get(rateKey);
+    rateCount = rateCount ? parseInt(rateCount) : 0;
+    
+    if (rateCount >= 20) {
+      return new Response(JSON.stringify({ error: "Rate limit exceeded. Max 20 requests per minute." }), {
+        status: 429,
+        headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
+      });
+    }
+    
+    await env.PRESEND_ANALYTICS.put(rateKey, (rateCount + 1).toString(), { expirationTtl: 120 });
+    
     const body = await request.json();
     const tool = body.tool || 'unknown';
     const date = new Date().toISOString().split('T')[0];
