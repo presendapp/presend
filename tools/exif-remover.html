@@ -254,6 +254,13 @@
         resultName.textContent = outName;
         resultMeta.textContent = humanSize(blob.size) + ' — metadata removed';
         result.classList.add('visible');
+
+        // Track successful cleaning (privacy-first, no IP, no cookies)
+        fetch('/api/track', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ tool: 'exif-remover' })
+        }).catch(() => {});
       }, outputType, quality);
     };
 
