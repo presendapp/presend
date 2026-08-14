@@ -192,5 +192,14 @@
   "description": "Count words, characters, sentences and paragraphs entirely client-side."
 }
 </script>
+<script>
+// Privacy-first page view tracking
+fetch('/api/track', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ tool: 'word-counter' })
+}).catch(() => {});
+</script>
+
 </body>
 </html>
