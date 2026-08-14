@@ -307,6 +307,13 @@
     resultName.textContent = outName;
     resultMeta.textContent = humanSize(blob.size) + ' — metadata cleared';
     result.classList.add('visible');
+
+    // Track successful cleaning (privacy-first, no IP, no cookies)
+    fetch('/api/track', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ tool: 'pdf-metadata-remover' })
+    }).catch(() => {});
   }
 
   dropzone.addEventListener('click', () => fileInput.click());
