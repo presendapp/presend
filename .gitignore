@@ -1,2 +1,4 @@
 .backup-*
 indexnow-key.txt
+_headers.backup.*
+_redirects.backup.*
