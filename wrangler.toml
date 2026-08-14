@@ -1,0 +1,6 @@
+name = "presend"
+compatibility_date = "2026-08-14"
+
+[[kv_namespaces]]
+binding = "PRESEND_ANALYTICS"
+id = "a7ea802fd79f40b7a50daefd97170368"
