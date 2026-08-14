@@ -359,5 +359,11 @@ fetch('/api/track', {
 <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "37606631a94f4ce69f54a301c7763f01"}'></script>
 <!-- End Cloudflare Web Analytics -->
 
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js');
+}
+</script>
+
 </body>
 </html>
