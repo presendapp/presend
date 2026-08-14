@@ -1,75 +1,8 @@
 # ============================================
-# Cloudflare Pages: Pretty URLs ↔ .html files
+# Cloudflare Pages: Canonical redirects only
 # ============================================
 
-# --- Rewrite: pretty URLs → .html files (200 = invisible rewrite) ---
-
-/tools/color-contrast /tools/color-contrast.html 200
-/tools/email-list-cleaner /tools/email-list-cleaner.html 200
-/tools/exif-remover /tools/exif-remover.html 200
-/tools/file-hash-checker /tools/file-hash-checker.html 200
-/tools/heic-converter /tools/heic-converter.html 200
-/tools/image-compressor /tools/image-compressor.html 200
-/tools/image-to-base64 /tools/image-to-base64.html 200
-/tools/json-csv-converter /tools/json-csv-converter.html 200
-/tools/office-metadata-remover /tools/office-metadata-remover.html 200
-/tools/password-generator /tools/password-generator.html 200
-/tools/password-strength /tools/password-strength.html 200
-/tools/pdf-compress /tools/pdf-compress.html 200
-/tools/pdf-metadata-remover /tools/pdf-metadata-remover.html 200
-/tools/qr-code-generator /tools/qr-code-generator.html 200
-/tools/text-diff /tools/text-diff.html 200
-/tools/text-formatter /tools/text-formatter.html 200
-/tools/thread-splitter /tools/thread-splitter.html 200
-/tools/url-cleaner /tools/url-cleaner.html 200
-/tools/video-metadata-remover /tools/video-metadata-remover.html 200
-/tools/word-counter /tools/word-counter.html 200
-/tools/landings/bold-text-generator-social-media /tools/landings/bold-text-generator-social-media.html 200
-/tools/landings/check-file-integrity-sha256 /tools/landings/check-file-integrity-sha256.html 200
-/tools/landings/check-password-strength /tools/landings/check-password-strength.html 200
-/tools/landings/check-sha256-download /tools/landings/check-sha256-download.html 200
-/tools/landings/clean-email-list-free /tools/landings/clean-email-list-free.html 200
-/tools/landings/clean-pdf-before-email /tools/landings/clean-pdf-before-email.html 200
-/tools/landings/clean-url-before-sharing /tools/landings/clean-url-before-sharing.html 200
-/tools/landings/clean-word-document-metadata /tools/landings/clean-word-document-metadata.html 200
-/tools/landings/compare-texts-online /tools/landings/compare-texts-online.html 200
-/tools/landings/compare-two-texts-diff /tools/landings/compare-two-texts-diff.html 200
-/tools/landings/compress-image-email /tools/landings/compress-image-email.html 200
-/tools/landings/convert-heic-jpg-online /tools/landings/convert-heic-jpg-online.html 200
-/tools/landings/convert-json-to-csv-online /tools/landings/convert-json-to-csv-online.html 200
-/tools/landings/create-qr-code-link /tools/landings/create-qr-code-link.html 200
-/tools/landings/generate-strong-password /tools/landings/generate-strong-password.html 200
-/tools/landings/image-to-base64-converter /tools/landings/image-to-base64-converter.html 200
-/tools/landings/json-to-csv-converter-free /tools/landings/json-to-csv-converter-free.html 200
-/tools/landings/pdf-metadata-remover-mac /tools/landings/pdf-metadata-remover-mac.html 200
-/tools/landings/qr-code-generator-free /tools/landings/qr-code-generator-free.html 200
-/tools/landings/reduce-pdf-file-size /tools/landings/reduce-pdf-file-size.html 200
-/tools/landings/remove-author-from-word-document /tools/landings/remove-author-from-word-document.html 200
-/tools/landings/remove-duplicates-email-list /tools/landings/remove-duplicates-email-list.html 200
-/tools/landings/remove-exif-iphone /tools/landings/remove-exif-iphone.html 200
-/tools/landings/remove-gps-from-photo /tools/landings/remove-gps-from-photo.html 200
-/tools/landings/remove-gps-from-video /tools/landings/remove-gps-from-video.html 200
-/tools/landings/remove-photo-location-online /tools/landings/remove-photo-location-online.html 200
-/tools/landings/remove-tracking-from-url /tools/landings/remove-tracking-from-url.html 200
-/tools/landings/remove-video-location-data /tools/landings/remove-video-location-data.html 200
-/tools/landings/shrink-pdf-online /tools/landings/shrink-pdf-online.html 200
-/tools/landings/split-text-twitter-thread /tools/landings/split-text-twitter-thread.html 200
-/tools/landings/strip-metadata-pdf /tools/landings/strip-metadata-pdf.html 200
-/tools/landings/strong-password-generator-online /tools/landings/strong-password-generator-online.html 200
-/tools/landings/wcag-color-contrast-checker /tools/landings/wcag-color-contrast-checker.html 200
-/tools/landings/word-counter-online /tools/landings/word-counter-online.html 200
-/guides/how-to-clean-urls-for-sharing /guides/how-to-clean-urls-for-sharing.html 200
-/guides/how-to-compress-images-email /guides/how-to-compress-images-email.html 200
-/guides/how-to-convert-heic-jpg /guides/how-to-convert-heic-jpg.html 200
-/guides/how-to-remove-metadata-before-sharing /guides/how-to-remove-metadata-before-sharing.html 200
-/guides/how-to-verify-downloaded-file-safe /guides/how-to-verify-downloaded-file-safe.html 200
-/about /about.html 200
-/privacy /privacy.html 200
-/faq /faq.html 200
-/alternatives /alternatives.html 200
-
-# --- Redirect: .html → pretty URLs (301 = SEO canonical) ---
-
+# Redirect .html -> pretty URLs (301 = SEO canonical)
 /tools/color-contrast.html /tools/color-contrast 301
 /tools/email-list-cleaner.html /tools/email-list-cleaner 301
 /tools/exif-remover.html /tools/exif-remover 301
@@ -90,45 +23,6 @@
 /tools/url-cleaner.html /tools/url-cleaner 301
 /tools/video-metadata-remover.html /tools/video-metadata-remover 301
 /tools/word-counter.html /tools/word-counter 301
-/tools/landings/bold-text-generator-social-media.html /tools/landings/bold-text-generator-social-media 301
-/tools/landings/check-file-integrity-sha256.html /tools/landings/check-file-integrity-sha256 301
-/tools/landings/check-password-strength.html /tools/landings/check-password-strength 301
-/tools/landings/check-sha256-download.html /tools/landings/check-sha256-download 301
-/tools/landings/clean-email-list-free.html /tools/landings/clean-email-list-free 301
-/tools/landings/clean-pdf-before-email.html /tools/landings/clean-pdf-before-email 301
-/tools/landings/clean-url-before-sharing.html /tools/landings/clean-url-before-sharing 301
-/tools/landings/clean-word-document-metadata.html /tools/landings/clean-word-document-metadata 301
-/tools/landings/compare-texts-online.html /tools/landings/compare-texts-online 301
-/tools/landings/compare-two-texts-diff.html /tools/landings/compare-two-texts-diff 301
-/tools/landings/compress-image-email.html /tools/landings/compress-image-email 301
-/tools/landings/convert-heic-jpg-online.html /tools/landings/convert-heic-jpg-online 301
-/tools/landings/convert-json-to-csv-online.html /tools/landings/convert-json-to-csv-online 301
-/tools/landings/create-qr-code-link.html /tools/landings/create-qr-code-link 301
-/tools/landings/generate-strong-password.html /tools/landings/generate-strong-password 301
-/tools/landings/image-to-base64-converter.html /tools/landings/image-to-base64-converter 301
-/tools/landings/json-to-csv-converter-free.html /tools/landings/json-to-csv-converter-free 301
-/tools/landings/pdf-metadata-remover-mac.html /tools/landings/pdf-metadata-remover-mac 301
-/tools/landings/qr-code-generator-free.html /tools/landings/qr-code-generator-free 301
-/tools/landings/reduce-pdf-file-size.html /tools/landings/reduce-pdf-file-size 301
-/tools/landings/remove-author-from-word-document.html /tools/landings/remove-author-from-word-document 301
-/tools/landings/remove-duplicates-email-list.html /tools/landings/remove-duplicates-email-list 301
-/tools/landings/remove-exif-iphone.html /tools/landings/remove-exif-iphone 301
-/tools/landings/remove-gps-from-photo.html /tools/landings/remove-gps-from-photo 301
-/tools/landings/remove-gps-from-video.html /tools/landings/remove-gps-from-video 301
-/tools/landings/remove-photo-location-online.html /tools/landings/remove-photo-location-online 301
-/tools/landings/remove-tracking-from-url.html /tools/landings/remove-tracking-from-url 301
-/tools/landings/remove-video-location-data.html /tools/landings/remove-video-location-data 301
-/tools/landings/shrink-pdf-online.html /tools/landings/shrink-pdf-online 301
-/tools/landings/split-text-twitter-thread.html /tools/landings/split-text-twitter-thread 301
-/tools/landings/strip-metadata-pdf.html /tools/landings/strip-metadata-pdf 301
-/tools/landings/strong-password-generator-online.html /tools/landings/strong-password-generator-online 301
-/tools/landings/wcag-color-contrast-checker.html /tools/landings/wcag-color-contrast-checker 301
-/tools/landings/word-counter-online.html /tools/landings/word-counter-online 301
-/guides/how-to-clean-urls-for-sharing.html /guides/how-to-clean-urls-for-sharing 301
-/guides/how-to-compress-images-email.html /guides/how-to-compress-images-email 301
-/guides/how-to-convert-heic-jpg.html /guides/how-to-convert-heic-jpg 301
-/guides/how-to-remove-metadata-before-sharing.html /guides/how-to-remove-metadata-before-sharing 301
-/guides/how-to-verify-downloaded-file-safe.html /guides/how-to-verify-downloaded-file-safe 301
 /about.html /about 301
 /privacy.html /privacy 301
 /faq.html /faq 301
