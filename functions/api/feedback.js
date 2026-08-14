@@ -1,22 +1,50 @@
 export async function onRequestPost(context) {
   const { request, env } = context;
+  
   try {
     const body = await request.json();
     const tool = body.tool || "general";
     const message = body.message || "";
+    const turnstileToken = body.turnstileToken || "";
+    
+    // Validate Turnstile token
+    if (!turnstileToken) {
+      return new Response(JSON.stringify({ error: "Turnstile token missing" }), {
+        status: 400,
+        headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
+      });
+    }
+    
+    const verifyRes = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: `secret=${env.TURNSTILE_SECRET_KEY}&response=${turnstileToken}`
+    });
+    
+    const verifyData = await verifyRes.json();
+    if (!verifyData.success) {
+      return new Response(JSON.stringify({ error: "Turnstile verification failed" }), {
+        status: 403,
+        headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
+      });
+    }
+    
     if (!message || message.length < 3) {
       return new Response(JSON.stringify({ error: "Message too short (min 3 chars)" }), {
         status: 400,
         headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
       });
     }
+    
     if (message.length > 2000) {
       return new Response(JSON.stringify({ error: "Message too long (max 2000 chars)" }), {
         status: 400,
         headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
       });
     }
+    
     await env.DB.prepare("INSERT INTO feedback (tool, message) VALUES (?, ?)").bind(tool, message).run();
+    
     return new Response(JSON.stringify({ success: true, message: "Feedback saved. Thank you!" }), {
       headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
     });
