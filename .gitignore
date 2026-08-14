@@ -1,4 +1,9 @@
-.backup-*
-indexnow-key.txt
-_headers.backup.*
-_redirects.backup.*
+# Cloudflare / Wrangler
+.wrangler/
+node_modules/
+.env
+.dev.vars
+
+# OS
+.DS_Store
+Thumbs.db
