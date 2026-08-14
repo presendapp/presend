@@ -1,0 +1,75 @@
+export async function onRequestPost(context) {
+  const { request, env } = context;
+  
+  try {
+    const body = await request.json();
+    const tool = body.tool || "general";
+    const message = body.message || "";
+    
+      return new Response(JSON.stringify({ error: "Message too short (min 3 chars)" }), {
+        status: 400,
+        headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
+      });
+    }
+    
+    if (message.length > 2000) {
+      return new Response(JSON.stringify({ error: "Message too long (max 2000 chars)" }), {
+        status: 400,
+        headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
+      });
+    }
+    
+    await env.DB.prepare(
+      "INSERT INTO feedback (tool, message) VALUES (?, ?)"
+    ).bind(tool, message).run();
+    
+    return new Response(JSON.stringify({
+      success: true,
+    }), {
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*"
+      }
+    });
+  } catch (e) {
+    return new Response(JSON.stringify({ error: e.message }), {
+      status: 500,
+      headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
+    });
+  }
+}
+
+export async function onRequestGet(context) {
+  const { env } = context;
+  
+  try {
+    const { results } = await env.DB.prepare(
+      "SELECT * FROM feedback ORDER BY created_at DESC LIMIT 50"
+    ).all();
+    
+    return new Response(JSON.stringify({
+      feedback: results,
+      count: results.length
+    }), {
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*"
+      }
+    });
+  } catch (e) {
+    return new Response(JSON.stringify({ error: e.message }), {
+      status: 500,
+      headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
+    });
+  }
+}
+
+export async function onRequestOptions() {
+  return new Response(null, {
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "POST, GET, OPTIONS",
+      "Access-Control-Allow-Headers": "Content-Type"
+    }
+  });
+}
