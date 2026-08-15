@@ -2,6 +2,7 @@ export async function onRequestGet() {
   const today = "2026-08-15";
   const urls = [
     { loc: "https://presend.pages.dev/", priority: "1.0", changefreq: "weekly" },
+    { loc: "https://presend.pages.dev/fr/", priority: "0.9", changefreq: "weekly" },
     { loc: "https://presend.pages.dev/about", priority: "0.7", changefreq: "monthly" },
     { loc: "https://presend.pages.dev/privacy", priority: "0.7", changefreq: "monthly" },
     { loc: "https://presend.pages.dev/faq", priority: "0.8", changefreq: "monthly" },
