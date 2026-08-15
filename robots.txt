@@ -4,7 +4,7 @@ Disallow: /vendor/
 Disallow: /admin/
 Disallow: /api/
 
-Sitemap: https://presend.pages.dev/api/sitemap
+Sitemap: https://presend.pages.dev/sitemap.xml
 
 # LLM-friendly summary
 # https://llmstxt.org/
