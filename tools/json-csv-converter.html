@@ -76,6 +76,7 @@
   <div style="margin-top: 2rem;">
     <div style="display:flex; gap:0.5rem; margin-bottom:1rem; flex-wrap:wrap;">
       <button class="btn" id="modeJsonToCsv" type="button">JSON → CSV</button>
+        <button class="btn ghost" id="shareBtn" type="button" style="margin-left:0.5rem;">🔗 Copy share link</button>
       <button class="btn ghost" id="modeCsvToJson" type="button">CSV → JSON</button>
     </div>
 
@@ -322,5 +323,29 @@ if ('serviceWorker' in navigator) {
 }
 </script>
 
+<script>
+document.getElementById('shareBtn').addEventListener('click', async function() {
+  const btn = this;
+  btn.textContent = 'Creating...';
+  try {
+    const res = await fetch('/api/share', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ tool: 'json-csv-converter' })
+    });
+    const data = await res.json();
+    if (data.success) {
+      await navigator.clipboard.writeText(data.shortUrl);
+      btn.textContent = '✅ Copied!';
+      setTimeout(() => btn.textContent = '🔗 Copy share link', 3000);
+    } else {
+      btn.textContent = '❌ Error';
+    }
+  } catch (e) {
+    btn.textContent = '❌ Error';
+    setTimeout(() => btn.textContent = '🔗 Copy share link', 3000);
+  }
+});
+</script>
 </body>
 </html>

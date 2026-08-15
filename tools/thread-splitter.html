@@ -84,6 +84,7 @@
   <div style="margin-top: 2rem;">
     <div class="platform-row">
       <button class="btn" id="btnTwitter" type="button">Twitter/X (280)</button>
+        <button class="btn ghost" id="shareBtn" type="button" style="margin-left:0.5rem;">🔗 Copy share link</button>
       <button class="btn ghost" id="btnLinkedIn" type="button">LinkedIn (3000)</button>
       <button class="btn ghost" id="btnMastodon" type="button">Mastodon (500)</button>
       <button class="btn ghost" id="btnCustom" type="button">Custom</button>
@@ -274,5 +275,29 @@ if ('serviceWorker' in navigator) {
 }
 </script>
 
+<script>
+document.getElementById('shareBtn').addEventListener('click', async function() {
+  const btn = this;
+  btn.textContent = 'Creating...';
+  try {
+    const res = await fetch('/api/share', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ tool: 'thread-splitter' })
+    });
+    const data = await res.json();
+    if (data.success) {
+      await navigator.clipboard.writeText(data.shortUrl);
+      btn.textContent = '✅ Copied!';
+      setTimeout(() => btn.textContent = '🔗 Copy share link', 3000);
+    } else {
+      btn.textContent = '❌ Error';
+    }
+  } catch (e) {
+    btn.textContent = '❌ Error';
+    setTimeout(() => btn.textContent = '🔗 Copy share link', 3000);
+  }
+});
+</script>
 </body>
 </html>
