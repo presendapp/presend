@@ -8,7 +8,7 @@
 <link crossorigin="" href="https://static.cloudflareinsights.com" rel="preconnect"/>
 <link href="https://static.cloudflareinsights.com" rel="dns-prefetch"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>管理者を送信 — 分析ダッシュボード</title>
+<title>管理者へ送信 — 分析ダッシュボード</title>
 <link href="style.css" rel="stylesheet"/>
 <style>
     .admin-container { max-width: 900px; margin: 0 auto; padding: 2rem; }
@@ -22,7 +22,7 @@
 <body>
 <div class="admin-container">
 <h1>📊 分析を送信</h1>
-<p class="loading" id="status">統計を読み込んでいます...</p>
+<p class="loading" id="status">統計を読んでいます...</p>
 <div class="stat-card">
 <div class="stat-number" id="total">—</div>
 <div>追跡されたアクションの合計</div>
@@ -67,11 +67,7 @@
     
     loadStats();
     setInterval(loadStats, 30000);
-  </script>
-Cloudflareウェブ分析
-<script data-cf-beacon='{"token": "37606631a94f4ce69f54a301c7763f01"}' src="https://static.cloudflareinsights.com/beacon.min.js" type="module"></script>
-Cloudflare Web分析を終了する
-<script>
+  </script>Cloudflareウェブ分析<script data-cf-beacon='{"token": "37606631a94f4ce69f54a301c7763f01"}' src="https://static.cloudflareinsights.com/beacon.min.js" type="module"></script>Cloudflare Web分析を終了する<script>
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('/sw.js');
 }

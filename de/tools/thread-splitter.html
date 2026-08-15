@@ -59,9 +59,7 @@
     {"@type":"ListItem","position":3,"name":"Thread Splitter","item":"https://presend.pages.dev/tools/thread-splitter"}
   ]
 }
-</script>
-SEO-Breadcrumb
-<script type="application/ld+json">
+</script>SEO-Breadcrumb<script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "Organization",
@@ -70,18 +68,14 @@ SEO-Breadcrumb
   "logo": "https://presend.pages.dev/og-image.png",
   "description": "Free browser-based tools to clean, compress, convert and check your files before you share them. Nothing is ever uploaded."
 }
-</script>
-seo-org
-<script type="application/ld+json">
+</script>seo-org<script type="application/ld+json">
 {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
     {"@type":"Question","name":"What is the character limit for Twitter/X?","acceptedAnswer":{"@type":"Answer","text":"Twitter/X allows 280 characters per post. Some accounts (verified/premium) have a 4,000 or 25,000 character limit, but 280 remains the standard for maximum reach."}},
     {"@type":"Question","name":"How does the thread splitter work?","acceptedAnswer":{"@type":"Answer","text":"The tool breaks your long text into multiple posts, each under the character limit, and numbers them automatically (1/, 2/, 3/, etc.) for easy copying."}},
     {"@type":"Question","name":"Can I customize the numbering format?","acceptedAnswer":{"@type":"Answer","text":"Yes. You can choose between \"1/5\" style numbering, \"Thread 🧵\" headers, or plain splits without numbering."}},
     {"@type":"Question","name":"Is my text uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. The splitting happens entirely in your browser. Your drafts, announcements, and content never leave your device."}}
 ]}
-</script>
-SEO-FAQ
-<script type="application/ld+json">
+</script>SEO-FAQ<script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "HowTo",
@@ -94,9 +88,7 @@ SEO-FAQ
     { "@type": "HowToStep", "position": 3, "name": "Copy the thread", "text": "The tool splits your text into perfectly sized posts. Copy each post individually, or copy the entire thread at once for easy posting.", "url": "https://presend.pages.dev/tools/thread-splitter#step3" }
   ]
 }
-</script>
-SEO-Howto
-</head>
+</script>SEO-Howto</head>
 <body class="tool-page">
 <header class="site-header wrap">
 <a class="brand" href="/"><span class="brand-mark">●</span>Präsentieren</a>
@@ -105,8 +97,8 @@ SEO-Howto
 <main class="wrap">
 <a class="tool-back" href="/">← Zurück</a>
 <h1>Fadenspalter</h1>
-<p class="lede">Fügen Sie einen langen Artikel, Blogbeitrag oder eine Idee ein und teilen Sie ihn in einen Twitter/X- oder LinkedIn-Thread auf. Zählt automatisch Zeichen, fügt Nummerierungen hinzu und formatiert jeden Beitrag zum Kopieren und Einfügen.</p>
-<span class="trust-badge">Ihre Daten werden niemals an unsere Server gesendet</span>
+<p class="lede">Fügen Sie einen langen Artikel, einen Blogbeitrag oder eine Idee ein und teilen Sie ihn in einem Twitter/X- oder LinkedIn-Thread auf. Zählt automatisch Zeichen, fügt Nummerierungen hinzu und formatiert jeden Beitrag zum Kopieren und Einfügen.</p>
+<span class="trust-badge">Ihre Daten werden niemals an unseren Server gesendet</span>
 <div style="margin-top: 2rem;">
 <div class="platform-row">
 <button class="btn" id="btnTwitter" type="button">Twitter/X (280)</button>
@@ -119,7 +111,7 @@ SEO-Howto
 <label for="inputText" style="display:block; font-weight:500; margin-bottom:0.5rem;">Fügen Sie Ihren Text ein</label>
 <textarea id="inputText" placeholder="Paste your article, blog post, or long idea here..." rows="8" style="width:100%; padding:1rem; border:1px solid var(--color-line); border-radius:var(--radius); font-size:0.95rem; resize:vertical;"></textarea>
 <div style="margin-top:1rem; display:flex; gap:0.75rem; flex-wrap:wrap;">
-<button class="btn" id="splitBtn" type="button">In Thread aufteilen</button>
+<button class="btn" id="splitBtn" type="button">Im Thread aufteilen</button>
 <button class="btn ghost" disabled="" id="copyAllBtn" type="button">Alles kopieren</button>
 <button class="btn ghost" id="clearBtn" type="button">Klar</button>
 </div>
@@ -146,17 +138,14 @@ SEO-Howto
 </a>
 </div>
 </section>
-
 <section class="wrap" style="margin-top:3rem;">
 <h2 style="font-family:var(--font-display);font-size:1.1rem;">Erfahren Sie mehr</h2>
 <p style="color:var(--color-muted);max-width:60ch;line-height:1.7;margin-top:0.75rem;">
 <a href="/tools/landings/split-text-twitter-thread">Lesen Sie unsere ausführliche Anleitung zu diesem Tool</a>
 </p>
-</section>
-SEO-bezogene-Tools
-</main>
+</section>SEO-bezogene-Tools</main>
 <footer class="site-footer wrap">
-<p>Presend – kostenlose browserbasierte Tools. Läuft lokal. Kein Konto, kein Tracking.</p>
+<p>Präsentieren – kostenlose browserbasierte Tools. Läuft lokal. Kein Konto, kein Tracking.</p>
 </footer>
 <script>
 (function () {
@@ -280,11 +269,7 @@ fetch('/api/track', {
   headers: { 'Content-Type': 'application/json' },
   body: JSON.stringify({ tool: 'thread-splitter' })
 }).catch(() => {});
-</script>
-Cloudflare-Webanalyse
-<script data-cf-beacon='{"token": "37606631a94f4ce69f54a301c7763f01"}' src="https://static.cloudflareinsights.com/beacon.min.js" type="module"></script>
-Beenden Sie Cloudflare Web Analytics
-<script>
+</script>Cloudflare-Webanalyse<script data-cf-beacon='{"token": "37606631a94f4ce69f54a301c7763f01"}' src="https://static.cloudflareinsights.com/beacon.min.js" type="module"></script>Beenden Sie Cloudflare Web Analytics<script>
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('/sw.js');
 }

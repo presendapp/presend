@@ -15,7 +15,7 @@
 <meta content="https://presend.pages.dev/api/og?tool=PDF+Metadata+Remover" property="og:image"/>
 <meta content="1200" property="og:image:width"/>
 <meta content="630" property="og:image:height"/>
-<title>PDF メタデータ リムーバー - 事前送信</title>
+<title>PDFメタデータリムーバー - 事前送信</title>
 <meta content="index, follow" name="robots"/>
 <meta content="Remove hidden metadata like author name, software used and creation dates from any PDF file. Entirely in your browser — no upload, no server, 100% private." name="description"/>
 <link href="/favicon.ico" rel="icon" sizes="any"/>
@@ -59,9 +59,7 @@
     {"@type":"ListItem","position":3,"name":"PDF Metadata Remover","item":"https://presend.pages.dev/tools/pdf-metadata-remover"}
   ]
 }
-</script>
-SEO ブレッドクラム
-<script type="application/ld+json">
+</script>SEO ブレッドクラム<script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "FAQPage",
@@ -108,9 +106,7 @@ SEO ブレッドクラム
     }
   ]
 }
-</script>
-ソファク
-<script type="application/ld+json">
+</script>ソファク<script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "Organization",
@@ -119,9 +115,7 @@ SEO ブレッドクラム
   "logo": "https://presend.pages.dev/og-image.png",
   "description": "Free browser-based tools to clean, compress, convert and check your files before you share them. Nothing is ever uploaded."
 }
-</script>
-seo-org
-<link href="/manifest.json" rel="manifest"/>
+</script>seo-org<link href="/manifest.json" rel="manifest"/>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -135,29 +129,26 @@ seo-org
     { "@type": "HowToStep", "position": 3, "name": "Download the clean PDF", "text": "Click Download to get a new PDF with all metadata removed. Safe to share, email or publish.", "url": "https://presend.pages.dev/tools/pdf-metadata-remover#step3" }
   ]
 }
-</script>
-SEO ハウツー
-</head>
+</script>ソハウツー</head>
 <body class="tool-page">
 <header class="site-header wrap">
 <a class="brand" href="/"><span class="brand-mark">●</span>プレゼンする</a>
-<a class="nav-link" href="/">すべてのツール</a>
+<a class="nav-link" href="/">みんなのツール</a>
 </header>
 <main class="wrap">
-<a class="tool-back" href="/">← 戻る</a>
-バックリンク<p><a href="/">← プレゼンする</a></p>
-<h1>PDF メタデータ リムーバー</h1>
-<p class="lede">PDF には多くの場合、ユーザーの名前、使用したソフトウェア、作成された正確な日付が含まれます (入力していなくても)。これにより、ファイルを共有する前にこれらの情報が消去されます。 PDF はデバイス上でのみ処理されます。</p>
+<a class="tool-back" href="/">← 戻る</a>バックリンク<p><a href="/">← プレゼンする</a></p>
+<h1>PDFメタデータリムーバー</h1>
+<p class="lede">PDF には多くの場合、ユーザーの名前、使用したソフトウェア、作成された正しい日付が含まれます (入力していなくても)。 これにより、ファイルを共有する前にこれらの情報が消去されます。 PDF はデバイス上でのみ処理されます。</p>
 <span class="trust-badge">ファイルが当社のサーバーに送信されることはありません</span>
 <div style="margin-top: 2rem;">
 <div aria-label="Choose a PDF or drop it here" class="dropzone" id="dropzone" role="button" tabindex="0">
-<p class="primary">ここに PDF をドロップするか、クリックして PDF を選択してください</p>
+<p class="primary">ここにPDFをドロップするか、クリックしてPDFを選択してください</p>
 <p class="secondary">デバイスからは何も残りません。</p>
 <input accept="application/pdf" id="fileInput" type="file"/>
 </div>
 <p class="error-msg" id="errorMsg"></p>
 <div class="result" id="found" style="margin-top:1.5rem;">
-<h3 style="font-family: var(--font-display); font-size:1.05rem; margin-bottom:0.5rem;">このファイルで見つかったメタデータ</h3>
+<h3 style="font-family: var(--font-display); font-size:1.05rem; margin-bottom:0.5rem;">このファイルで得たメタデータ</h3>
 <ul id="foundList" style="font-family: var(--font-mono); font-size:0.85rem; color: var(--color-muted); padding-left: 1.2rem; margin-top:0;"></ul>
 </div>
 <div class="result" id="result">
@@ -166,26 +157,25 @@ SEO ハウツー
 <div class="filename" id="resultName"></div>
 <div class="meta" id="resultMeta"></div>
 </div>
-<a class="btn" download="" id="downloadLink">クリーン化された PDF をダウンロードする</a>
+<a class="btn" download="" id="downloadLink">クリーン化されたPDFをダウンロードする</a>
 <button class="btn ghost" id="shareBtn" style="margin-left:0.5rem;" type="button">🔗 共有リンクをコピー</button>
 </div>
-<button class="btn ghost" id="resetBtn" type="button">別の PDF をクリーンアップする</button>
+<button class="btn ghost" id="resetBtn" type="button">別のPDFをクリーンアップする</button>
 </div>
 <p style="font-size:0.82rem; color:var(--color-muted); margin-top:2rem; max-width:56ch;">注: これにより、標準の文書情報 (タイトル、作成者、件名、キーワード、
-      クリエイター、プロデューサー、日付）。一部の PDF には、別のテクニカル メタデータ ブロック (XMP) が埋め込まれています。
-      このツールは、あらゆる場合にそれを削除することを保証するものではありません。むしろこれをはっきり言いたい
+      クリエイター、プロデューサー、日付）。 一部のPDFには、別のテクニカルメタデータブロック(XMP)が取り込まれています。
+      このツールは、あらゆる場合にそれを削除することを保証するものではありません。
       過剰請求よりも。</p>
 </div>
-
 <section class="wrap" style="margin-top:3rem;">
 <h2 style="font-family:var(--font-display);font-size:1.1rem;">関連ツール</h2>
 <div class="tool-grid" style="margin-top:1rem;">
 <a class="tool-card" href="/tools/pdf-compress">
-<div><h3>PDF圧縮</h3><p>PDF のファイル サイズを縮小します。</p></div>
+<div><h3>PDF圧縮</h3><p>PDFのファイルサイズを縮小します。</p></div>
 <span class="go">開く →</span>
 </a>
 <a class="tool-card" href="/tools/office-metadata-remover">
-<div><h3>Office メタデータ リムーバー</h3><p>Office ファイルから非表示の作成者、会社、編集履歴を削除します。</p></div>
+<div><h3>Officeメタデータリムーバー</h3><p>Office ファイルから非表示の作成者、会社、編集履歴を削除します。</p></div>
 <span class="go">開く →</span>
 </a>
 <a class="tool-card" href="/tools/file-hash-checker">
@@ -199,17 +189,14 @@ SEO ハウツー
 <p itemprop="speakable" style="color:var(--color-muted);max-width:60ch;line-height:1.7;margin-top:0.75rem;">
 <a href="/tools/landings/strip-metadata-pdf">ガイドをお読みください: 写真やドキュメントを共有する前にメタデータを削除する方法</a>
 </p>
-</section>
-
-SEO関連ツー​​ル
-<div data-tool="pdf-metadata-remover" id="feedback-widget"></div>
+</section>SEO関連ツー​​ル<div data-tool="pdf-metadata-remover" id="feedback-widget"></div>
 </main>
 <section class="wrap" style="margin-top:3rem;">
-<h2 style="font-family:var(--font-display);font-size:1.1rem;">PDF メタデータとは何ですか?なぜ削除するのですか?</h2>
-<p style="color:var(--color-muted);max-width:60ch;line-height:1.7;margin-top:0.75rem;">PDF ドキュメントには、ほとんどのユーザーが目にすることのないメタデータの隠れたレイヤーが含まれています。これには、作成者の名前、ファイルの作成に使用したソフトウェア (Microsoft Word や Adob​​e Acrobat など)、作成日と変更日、会社名、場合によってはコンピューター名やプリンターの詳細が含まれます。 PDF をクライアントと共有したり、オンラインで公開したり、求人応募の一部として送信したりすると、このメタデータが公開されます。弁護士、ジャーナリスト、企業にとって、内部ソフトウェアのバージョンや作成者の名前の漏洩は、重大なセキュリティ リスクとなる可能性があります。個人的な文書であっても、履歴書が午前 2 時に編集されたという事実や、競合他社のテンプレートで契約書が作成されたという事実など、意図した以上のことが明らかになる可能性があります。当社の PDF メタデータ リムーバーは、この隠された情報をすべて数秒で削除し、共有できるクリーンな匿名 PDF を作成します。プロセス全体はブラウザーで行われます。文書はサーバーにアップロードされることはなく、機密の契約、法的申請、機密報告書、個人記録などを安全に保管できます。</p>
+<h2 style="font-family:var(--font-display);font-size:1.1rem;">PDFメタデータとは何ですか?なぜ削除するのですか?</h2>
+<p style="color:var(--color-muted);max-width:60ch;line-height:1.7;margin-top:0.75rem;">PDF ドキュメントには、ほとんどのユーザーが目にすることのないメタデータの隠れたレイヤーが含まれています。 これには、作成者の名前、ファイルの作成に使用したソフトウェア (Microsoft Word や Adob e Acrobat など)、作成日と変更日、会社名、場合によってはコンピューター名やプリンターの詳細が含まれます。クライアントと共有したり、オンラインで公開したり、求人応募の一部として送信したりすると、このメタデータが公開されます。 弁護士、弁護士、企業向け、内部ソフトウェアのバージョンや作成者の名前の漏洩は、重大なセキュリティリスクとなる可能性があります。リムーバーは、この隠された情報をすべて数秒で削除し、共有できるクリーンな匿名 PDF を作成します。プロセス全体はブラウザーで行われます。文書はサーバーにアップロードされることはなく、機密の契約、法的申請、機密報告書、個人記録などを安全に保管できます。</p>
 </section>
 <footer class="site-footer wrap">
-<p>Presend — 無料のブラウザベースのツール。ローカルで実行されます。アカウントも追跡もありません。用途<a href="https://github.com/Hopding/pdf-lib" rel="nofollow noopener" target="_blank">pdf-lib</a>(MITライセンス)。</p>
+<p>Presend — 無料のブラウザベースのツール。ローカルで実行されます。アカウントも追跡もありません。<a href="https://github.com/Hopding/pdf-lib" rel="nofollow noopener" target="_blank">pdf-lib</a>(MITライセンス)。</p>
 </footer>
 <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
 <script>
@@ -374,11 +361,7 @@ SEO関連ツー​​ル
 }
 </script>
 <script async="" defer="" src="https://challenges.cloudflare.com/turnstile/v0/api.js"></script>
-<script async="" defer="" src="../js/feedback.js"></script>
-Cloudflareウェブ分析
-<script data-cf-beacon='{"token": "37606631a94f4ce69f54a301c7763f01"}' src="https://static.cloudflareinsights.com/beacon.min.js" type="module"></script>
-Cloudflare Web分析を終了する
-<script>
+<script async="" defer="" src="../js/feedback.js"></script>Cloudflareウェブ分析<script data-cf-beacon='{"token": "37606631a94f4ce69f54a301c7763f01"}' src="https://static.cloudflareinsights.com/beacon.min.js" type="module"></script>Cloudflare Web分析を終了する<script>
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('/sw.js');
 }
