@@ -13,7 +13,8 @@ export async function onRequestGet() {
   // Auto-detect tools
   const tools = [
     'color-contrast', 'email-list-cleaner', 'exif-remover', 'file-hash-checker',
-    'heic-converter', 'image-compressor', 'image-to-base64', 'json-csv-converter',
+    'heic-converter', 'image-compressor',
+    'image-resizer', 'image-to-base64', 'json-csv-converter',
     'office-metadata-remover', 'password-generator', 'password-strength', 'pdf-compress',
     'pdf-merger',
     'pdf-metadata-remover', 'qr-code-generator', 'text-diff', 'text-formatter',
