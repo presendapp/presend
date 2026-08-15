@@ -4,6 +4,7 @@ export async function onRequestGet() {
     { loc: "https://presend.pages.dev/", priority: "1.0", changefreq: "weekly" },
     { loc: "https://presend.pages.dev/fr/", priority: "0.9", changefreq: "weekly" },
     { loc: "https://presend.pages.dev/es/", priority: "0.9", changefreq: "weekly" },
+    { loc: "https://presend.pages.dev/de/", priority: "0.9", changefreq: "weekly" },
     { loc: "https://presend.pages.dev/about", priority: "0.7", changefreq: "monthly" },
     { loc: "https://presend.pages.dev/privacy", priority: "0.7", changefreq: "monthly" },
     { loc: "https://presend.pages.dev/faq", priority: "0.8", changefreq: "monthly" },
