@@ -1,77 +1,79 @@
-# Presend — système de production de micro-outils
+# Presend — Free Privacy Tools That Run in Your Browser
 
-Base de code minimale : vanilla HTML/CSS/JS, zéro build, zéro dépendance, zéro backend.
+[![Live Site](https://img.shields.io/badge/Live-presend.pages.dev-0066cc?style=flat-square)](https://presend.pages.dev)
+[![Tools](https://img.shields.io/badge/Tools-22-1F3A5F?style=flat-square)](https://presend.pages.dev)
+[![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)](LICENSE)
+[![PWA](https://img.shields.io/badge/PWA-Enabled-orange?style=flat-square)](https://presend.pages.dev)
+[![Privacy](https://img.shields.io/badge/Privacy-First-ff6b6b?style=flat-square)](https://presend.pages.dev/privacy)
 
-## Structure
+**22 free browser-based tools to clean, compress, convert and check your files before you share them. Nothing is ever uploaded.**
 
-```
-/index.html          → page d'accueil, liste des outils
-/style.css            → tokens de design partagés (couleurs, typo, composants)
-/tools/*.html          → un fichier HTML autonome par outil
-```
+[Open Presend](https://presend.pages.dev)
 
-Chaque outil est un fichier `.html` unique et autonome dans `/tools/`. Il importe `../style.css`
-pour l'apparence, mais toute sa logique JS est inline dans le fichier — pas de fichier JS partagé
-pour l'instant, pour garder chaque outil réellement indépendant (Principe n°1).
+## Why Presend?
 
-## Checklist — créer un nouvel outil
+Unlike most online tools, **Presend processes everything locally in your browser**. Your files, photos, and documents never leave your device. No account, no upload, no tracking, no ads.
 
-1. Copier `tools/exif-remover.html` comme point de départ
-2. Modifier le titre, la meta description, le H1 et le texte d'intro
-3. Ajouter la logique de traitement (toujours 100% côté client)
-4. Vérifier la licence de toute bibliothèque utilisée (si aucune n'est nécessaire, tant mieux)
-5. Tester : fichier valide, fichier invalide, fichier trop gros, mobile, clavier seul
-6. Déployer
-7. Ajouter une entrée dans `tool-grid` sur `index.html`
-8. Vérifier l'indexation Google (Search Console)
-9. Partager dans 1-2 communautés pertinentes
-10. Terminé
+- **100% Private** — Web Crypto API, Canvas API, FileReader — all client-side
+- **Instant** — Cloudflare CDN, loads in under 1 second globally
+- **PWA** — Install on mobile/desktop, works offline
+- **SEO-Optimized** — Schema.org markup (HowTo, FAQPage, SoftwareApplication), dynamic sitemap, Open Graph images
+- **Free Forever** — No freemium, no watermarks, no limits
 
-Règle : si une étape 3 prend plus de 2-3 jours, l'outil est trop gros — le découper.
+## Tools (22)
 
-## Principes
+| Tool | What it does | Link |
+|---|---|---|
+| **EXIF Remover** | Strip GPS, camera model, timestamps from photos | [Open](https://presend.pages.dev/tools/exif-remover) |
+| **PDF Metadata Remover** | Remove author, software, dates from PDFs | [Open](https://presend.pages.dev/tools/pdf-metadata-remover) |
+| **Image Compressor** | Shrink JPG/PNG/WebP with quality preview | [Open](https://presend.pages.dev/tools/image-compressor) |
+| **PDF Compress** | Reduce PDF file size without quality loss | [Open](https://presend.pages.dev/tools/pdf-compress) |
+| **PDF Merger** | Combine multiple PDFs into one document | [Open](https://presend.pages.dev/tools/pdf-merger) |
+| **Image Resizer** | Resize to exact dimensions (Instagram, LinkedIn, Twitter) | [Open](https://presend.pages.dev/tools/image-resizer) |
+| **HEIC to JPG Converter** | Convert iPhone photos to universal JPG | [Open](https://presend.pages.dev/tools/heic-converter) |
+| **Video Metadata Remover** | Strip GPS and device data from MP4/MOV | [Open](https://presend.pages.dev/tools/video-metadata-remover) |
+| **Office Metadata Remover** | Clean Word, Excel, PowerPoint hidden data | [Open](https://presend.pages.dev/tools/office-metadata-remover) |
+| **File Hash Checker** | Verify SHA-256, SHA-1, SHA-512 checksums | [Open](https://presend.pages.dev/tools/file-hash-checker) |
+| **Password Generator** | Create cryptographically secure passwords | [Open](https://presend.pages.dev/tools/password-generator) |
+| **Password Strength** | Analyze password entropy and crack time | [Open](https://presend.pages.dev/tools/password-strength) |
+| **QR Code Generator** | Generate QR codes for URLs, WiFi, text | [Open](https://presend.pages.dev/tools/qr-code-generator) |
+| **URL Cleaner** | Remove tracking parameters (UTM, fbclid, gclid) | [Open](https://presend.pages.dev/tools/url-cleaner) |
+| **Email List Cleaner** | Deduplicate, validate, clean email lists | [Open](https://presend.pages.dev/tools/email-list-cleaner) |
+| **JSON to CSV Converter** | Convert between JSON and CSV instantly | [Open](https://presend.pages.dev/tools/json-csv-converter) |
+| **Image to Base64** | Encode images for embedding in HTML/CSS | [Open](https://presend.pages.dev/tools/image-to-base64) |
+| **Text Diff** | Compare two texts side by side | [Open](https://presend.pages.dev/tools/text-diff) |
+| **Text Formatter** | Bold, italic, stylized text for social media | [Open](https://presend.pages.dev/tools/text-formatter) |
+| **Thread Splitter** | Split long text into Twitter/X threads | [Open](https://presend.pages.dev/tools/thread-splitter) |
+| **Word Counter** | Count words, characters, reading time | [Open](https://presend.pages.dev/tools/word-counter) |
+| **Color Contrast** | Check WCAG accessibility contrast ratios | [Open](https://presend.pages.dev/tools/color-contrast) |
 
-- Chaque outil fonctionne seul.
-- Aucune base de données tant que ce n'est pas indispensable.
-- Aucun compte utilisateur.
-- Aucun backend tant que le traitement peut rester local.
-- Aucune dépendance JS lourde si une solution simple suffit (ex : EXIF Remover n'utilise
-  aucune librairie — un simple redraw sur `<canvas>` suffit à supprimer toutes les métadonnées).
-- Réutiliser `style.css` entre tous les outils.
-- Publier vite, améliorer ensuite.
-- Un outil peu utilisé peut être retiré (principe de suppression).
+## SEO and Performance
 
-## Déploiement
+Presend is built for search engines and AI assistants:
 
-Ce dossier est un site 100% statique — n'importe quel hébergeur statique gratuit convient
-(Netlify, Cloudflare Pages, GitHub Pages). Éviter Vercel Hobby si une monétisation, même
-symbolique (dons), est envisagée : son tier gratuit interdit l'usage commercial.
+- **Schema.org**: HowTo, FAQPage, SoftwareApplication, BreadcrumbList, Organization on every page
+- **Dynamic Sitemap**: 68 URLs auto-updated (22 tools + 41 landing pages + 5 static pages)
+- **Dynamic OG Images**: API generates social preview images per tool
+- **Core Web Vitals**: Preconnect, DNS-prefetch, CSS preload, zero render-blocking JS
+- **PWA**: Service worker + manifest for offline use and installability
+- **Privacy-First Analytics**: Cloudflare Web Analytics (no cookies, no IP tracking)
 
-## Tours de boucle
+## Embed on Your Site
 
-### Tour 1 — EXIF Remover
-- **Outil** : EXIF Remover (images uniquement — JPG/PNG/WebP)
-- **Dépendance** : aucune (redraw `<canvas>` suffit à supprimer toutes les métadonnées)
-- **Hypothèse testée** : les gens veulent-ils supprimer les métadonnées d'une photo directement
-  dans le navigateur, sans installer d'app ni créer de compte ?
-- **Résultat** : à observer après publication.
+Add a Presend tool to your website or link back to us:
 
-### Tour 2 — PDF Metadata Remover
-- **Outil** : PDF Metadata Remover
-- **Dépendance** : [pdf-lib](https://github.com/Hopding/pdf-lib) (MIT, chargée via CDN jsdelivr,
-  aucune install locale). Écrire un parseur PDF maison dépasserait largement la règle des 2-3
-  jours — ici la "solution simple" du principe n°5 ne suffisait pas.
-- **Limite assumée et affichée à l'utilisateur** : ce tool nettoie le dictionnaire d'information
-  standard (titre, auteur, dates, logiciel utilisé), mais ne garantit pas encore la suppression
-  du flux XMP séparé que certains PDF embarquent. Documenté honnêtement dans l'UI plutôt que
-  de surpromettre.
-- **Hypothèse testée** : ce deuxième outil suffit-il à faire revenir un même visiteur pour un
-  deuxième usage (signal de parcours, cf. Niveau 2 du plan) ?
-- **Résultat** : à observer après publication.
-- **Prochain outil suggéré** (à confirmer selon la règle des 3 critères) : PDF Compress.
+[See all embed options](https://presend.pages.dev/embed)
 
-## Publication
+## Tech Stack
 
-- Publié le 5 juillet 2026 sur https://presend.pages.dev
-- Outils en ligne : EXIF Remover, PDF Metadata Remover
+- **Frontend**: Vanilla HTML5, CSS3, ES6 (zero build step)
+- **Hosting**: Cloudflare Pages (200+ edge locations)
+- **APIs**: Cloudflare Workers (share links, analytics, sitemap, OG images)
+- **Storage**: Cloudflare KV (share links, 30-day TTL)
+- **PWA**: Service Worker + Web App Manifest
 
+## License
+
+MIT — free to use, modify, and embed.
+
+[Open Presend](https://presend.pages.dev)
