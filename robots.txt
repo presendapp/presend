@@ -5,3 +5,7 @@ Disallow: /admin/
 Disallow: /api/
 
 Sitemap: https://presend.pages.dev/api/sitemap
+
+# LLM-friendly summary
+# https://llmstxt.org/
+LLMs: https://presend.pages.dev/llms.txt

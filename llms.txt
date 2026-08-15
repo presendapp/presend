@@ -1,0 +1,36 @@
+# Presend
+
+> Free, privacy-first browser-based tools to clean, compress, convert and check files before sharing them. All 22 tools run entirely client-side — no upload, no server, no account, no tracking.
+
+Presend is a collection of single-purpose utilities for common file tasks: removing hidden metadata, compressing images and PDFs, converting formats, checking file integrity, and generating passwords or QR codes. Every tool processes files locally in the browser using Web APIs (Canvas, Web Crypto, FileReader) — files never leave the user's device.
+
+## Tools
+
+- [EXIF Remover](https://presend.pages.dev/tools/exif-remover): Strip GPS location, camera model, and timestamps from JPG/PNG photos
+- [PDF Metadata Remover](https://presend.pages.dev/tools/pdf-metadata-remover): Remove author, software, and creation dates from PDF files
+- [Office Metadata Remover](https://presend.pages.dev/tools/office-metadata-remover): Clean hidden author, company, and edit history from Word/Excel/PowerPoint files
+- [Video Metadata Remover](https://presend.pages.dev/tools/video-metadata-remover): Strip GPS and device data from MP4/MOV videos
+- [Image Compressor](https://presend.pages.dev/tools/image-compressor): Shrink JPG/PNG/WebP file size with live quality preview
+- [PDF Compress](https://presend.pages.dev/tools/pdf-compress): Reduce PDF file size by optimizing structure
+- [PDF Merger](https://presend.pages.dev/tools/pdf-merger): Combine multiple PDF files into one document
+- [Image Resizer](https://presend.pages.dev/tools/image-resizer): Resize photos to exact dimensions for social media or printing
+- [HEIC to JPG Converter](https://presend.pages.dev/tools/heic-converter): Convert iPhone HEIC photos to universal JPG
+- [File Hash Checker](https://presend.pages.dev/tools/file-hash-checker): Calculate SHA-256, SHA-1, SHA-512 checksums to verify file integrity
+- [Password Generator](https://presend.pages.dev/tools/password-generator): Generate cryptographically secure random passwords
+- [Password Strength Checker](https://presend.pages.dev/tools/password-strength): Analyze password entropy and estimated crack time
+- [QR Code Generator](https://presend.pages.dev/tools/qr-code-generator): Create QR codes from URLs, text, or WiFi credentials
+- [URL Cleaner](https://presend.pages.dev/tools/url-cleaner): Remove tracking parameters (UTM, fbclid, gclid) from links
+- [Email List Cleaner](https://presend.pages.dev/tools/email-list-cleaner): Deduplicate and validate email address lists
+- [JSON ↔ CSV Converter](https://presend.pages.dev/tools/json-csv-converter): Convert between JSON and CSV formats
+- [Image to Base64](https://presend.pages.dev/tools/image-to-base64): Encode images as Base64 data URIs for embedding
+- [Text Diff Checker](https://presend.pages.dev/tools/text-diff): Compare two texts side by side
+- [Social Media Text Formatter](https://presend.pages.dev/tools/text-formatter): Convert text to bold/italic Unicode styles
+- [Thread Splitter](https://presend.pages.dev/tools/thread-splitter): Split long text into Twitter/X thread format
+- [Word Counter](https://presend.pages.dev/tools/word-counter): Count words, characters, and estimate reading time
+- [Color Contrast Checker](https://presend.pages.dev/tools/color-contrast): Check WCAG accessibility contrast ratios
+
+## About
+
+- [About Presend](https://presend.pages.dev/about): Who built this and why
+- [Privacy Policy](https://presend.pages.dev/privacy): No data collection, no cookies, no server-side processing
+- [FAQ](https://presend.pages.dev/faq): Common questions about how the tools work
