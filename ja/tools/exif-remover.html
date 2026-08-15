@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+<link rel="preconnect" href="https://static.cloudflareinsights.com" crossorigin>
+<link rel="dns-prefetch" href="https://static.cloudflareinsights.com">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta property="og:title" content="EXIF リムーバー — Presend">
+  <meta property="og:description" content="写真に含まれる隠れたEXIFデータ（GPS位置情報、カメラ機種、撮影日時）を、ブラウザ内で完全に削除します。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://presend.pages.dev/ja/tools/exif-remover">
+  <meta property="og:image" content="https://presend.pages.dev/api/og?tool=EXIF+Remover">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+<title>EXIF リムーバー — Presend</title>
+<meta name="robots" content="index, follow">
+  <meta name="description" content="写真に含まれる隠れたEXIFデータ（GPS位置情報、カメラ機種、撮影日時）を、ブラウザ内で完全に削除します。ファイルは一切アップロードされません。">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preload" href="../../style.css" as="style">
+    <link rel="stylesheet" fetchpriority="high" href="../../style.css">
+<link rel="canonical" href="https://presend.pages.dev/ja/tools/exif-remover" />
+<meta name="twitter:card" content="summary_large_image">
+<link rel="alternate" hreflang="en" href="https://presend.pages.dev/tools/exif-remover" />
+<link rel="alternate" hreflang="fr" href="https://presend.pages.dev/fr/tools/exif-remover" />
+<link rel="alternate" hreflang="es" href="https://presend.pages.dev/es/tools/exif-remover" />
+<link rel="alternate" hreflang="de" href="https://presend.pages.dev/de/tools/exif-remover" />
+<link rel="alternate" hreflang="pt" href="https://presend.pages.dev/pt/tools/exif-remover" />
+<link rel="alternate" hreflang="ja" href="https://presend.pages.dev/ja/tools/exif-remover" />
+<link rel="alternate" hreflang="x-default" href="https://presend.pages.dev/tools/exif-remover" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "EXIF Remover",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Any",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "featureList": "写真のEXIFメタデータをブラウザ内で削除します。アップロードなし、サーバーなし、完全プライベート。",
+  "url": "https://presend.pages.dev/ja/tools/exif-remover",
+  "mainEntityOfPage": "https://presend.pages.dev/ja/tools/exif-remover"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type":"ListItem","position":1,"name":"ホーム","item":"https://presend.pages.dev/ja/"},
+    {"@type":"ListItem","position":2,"name":"ツール","item":"https://presend.pages.dev/ja/"},
+    {"@type":"ListItem","position":3,"name":"EXIF リムーバー","item":"https://presend.pages.dev/ja/tools/exif-remover"}
+  ]
+}
+</script>
+<!--seo-breadcrumb-->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "EXIFデータとは何ですか？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "EXIF（Exchangeable Image File Format）は、デジタル写真に埋め込まれたメタデータです。GPS座標、カメラ機種、レンズ情報、露出設定、撮影日時などが含まれることがあります。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "写真から自分の位置を特定されることはありますか？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "はい。カメラやスマートフォンでGPSが有効になっている場合、撮影場所の緯度経度がEXIFデータに記録されることがよくあります。SNSでは通常削除されますが、メールやファイル共有では削除されません。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "このツールは写真をサーバーにアップロードしますか？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "いいえ。写真はブラウザ内でJavaScriptによって処理されます。サーバーやクラウド、第三者に送信されることはありません。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "対応しているファイル形式は？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "JPG、PNG、WebPに対応しています。処理後はメタデータを削除したJPG（入力がPNGの場合はPNG）が出力されます。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "EXIFを削除すると画質は劣化しますか？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "いいえ。画像は元の解像度でキャンバスに再描画されます。削除されるのはメタデータのみで、ピクセルデータは変わりません。"
+      }
+    }
+  ]
+}
+</script>
+<!--seo-faq-->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Presend",
+  "url": "https://presend.pages.dev/",
+  "logo": "https://presend.pages.dev/og-image.png",
+  "description": "共有前にファイルをクリーンアップ・圧縮・変換・チェックする無料のブラウザベースツール。何もアップロードされません。"
+}
+</script>
+<!--seo-org-->
+<link rel="manifest" href="/manifest.json">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "写真からEXIFデータを削除する方法",
+  "description": "JPGまたはPNG写真から隠れたGPS位置情報、カメラ機種、タイムスタンプを削除します。すべてブラウザ内で行われ、アップロードは不要です。",
+  "totalTime": "PT30S",
+  "step": [
+    { "@type": "HowToStep", "position": 1, "name": "写真をアップロード", "text": "JPGまたはPNG写真をドロップゾーンにドラッグ＆ドロップします。ファイルはローカルで処理され、サーバーにアップロードされることはありません。", "url": "https://presend.pages.dev/ja/tools/exif-remover#step1" },
+    { "@type": "HowToStep", "position": 2, "name": "出力形式を選択", "text": "JPGまたはPNG出力を選択します。ツールが埋め込みメタデータを自動的に削除します。", "url": "https://presend.pages.dev/ja/tools/exif-remover#step2" },
+    { "@type": "HowToStep", "position": 3, "name": "クリーンな写真をダウンロード", "text": "「ダウンロード」をクリックしてEXIFデータを削除した写真を保存します。GPS座標、カメラ情報、タイムスタンプは一切残りません。", "url": "https://presend.pages.dev/ja/tools/exif-remover#step3" }
+  ]
+}
+</script>
+<!--seo-howto-->
+</head>
+<body class="tool-page">
+
+<header class="site-header wrap">
+  <a class='brand' href='/ja/'><span class="brand-mark">●</span> Presend</a>
+  <a class='nav-link' href='/ja/'>すべてのツール</a>
+</header>
+
+<main class="wrap">
+  <a class='tool-back' href='/ja/'>← 戻る</a>
+  <!-- backlink --><p><a href="/ja/">← Presend</a></p>
+    <h1>EXIF リムーバー</h1>
+  <p class="lede">写真には隠れたデータ — GPS座標、カメラ機種、撮影日時 — が含まれています。共有する前に、それらをすべて削除します。処理はすべてお使いの端末内で行われます。</p>
+
+  <span class="trust-badge">ファイルはサーバーに送信されません</span>
+
+  <div style="margin-top: 2rem;">
+    <div class="dropzone" id="dropzone" tabindex="0" role="button" aria-label="写真を選択またはドロップしてください">
+      <p class="primary">ここに写真をドロップ、またはクリックして選択</p>
+      <p class="secondary">JPG、PNG、WebP対応。端末外には出ません。</p>
+      <input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp">
+    </div>
+    <p class="error-msg" id="errorMsg"></p>
+
+    <div class="result" id="result">
+      <div class="result-row">
+        <div>
+          <div class="filename" id="resultName"></div>
+          <div class="meta" id="resultMeta"></div>
+        </div>
+        <a class="btn" id="downloadLink" download>クリーンな写真をダウンロード</a>
+        <button class="btn ghost" id="shareBtn" type="button" style="margin-left:0.5rem;">🔗 共有リンクをコピー</button>
+      </div>
+      <button class="btn ghost" id="resetBtn" type="button">別の写真を処理する</button>
+    </div>
+  </div>
+</section>
+
+<section class="wrap" style="margin-top:3rem;">
+  <h2 style="font-family:var(--font-display);font-size:1.1rem;">関連ツール</h2>
+  <div class="tool-grid" style="margin-top:1rem;">
+      <a class='tool-card' href='/ja/tools/image-compressor'>
+        <div><h3>画像圧縮</h3><p>メールで送る前やアップロード前に写真のファイルサイズを縮小します。</p></div>
+        <span class="go">開く →</span>
+      </a>
+      <a class='tool-card' href='/ja/tools/video-metadata-remover'>
+        <div><h3>動画メタデータ削除</h3><p>動画から隠れたGPS位置情報や端末情報を削除します。</p></div>
+        <span class="go">開く →</span>
+      </a>
+      <a class='tool-card' href='/ja/tools/heic-converter'>
+        <div><h3>HEIC→JPG変換</h3><p>iPhoneのHEIC写真をJPGに変換します。</p></div>
+        <span class="go">開く →</span>
+      </a>
+  </div>
+</section>
+
+<section class="wrap" style="margin-top:3rem;">
+  <h2 id="speakable" style="font-family:var(--font-display);font-size:1.1rem;">もっと詳しく</h2>
+  <p itemprop="speakable" style="color:var(--color-muted);max-width:60ch;line-height:1.7;margin-top:0.75rem;">
+    <a href="/tools/landings/strip-metadata-pdf">ガイドを読む：写真やドキュメントを共有する前にメタデータを削除する方法</a>
+  </p>
+</section>
+
+</section>
+
+<!--seo-related-tools-->
+  <div id="feedback-widget" data-tool="exif-remover"></div>
+</main>
+
+<section class="wrap" style="margin-top:3rem;">
+  <h2 style="font-family:var(--font-display);font-size:1.1rem;">EXIFデータとは？なぜ削除すべきか</h2>
+  <p style="color:var(--color-muted);max-width:60ch;line-height:1.7;margin-top:0.75rem;">
+    スマートフォンやデジタルカメラで撮影した写真には、EXIF（Exchangeable Image File Format）と呼ばれる隠れたメタデータが埋め込まれています。この見えないデータ層には、正確なGPS座標、使用したカメラ機種やレンズ、撮影日時、さらには編集ソフトの履歴までもが記録されます。SNSに投稿したり、クライアントにメールで送ったり、ウェブサイトにアップロードしたりすると、このメタデータは知らないうちに画像とともに送信されます。EXIFデータの削除はプライバシー保護に不可欠です。TwitterやInstagramに投稿した一枚の写真が、自宅の住所や職場、日常の行動パターンを、メタデータの読み方を知っている人に明らかにしてしまうことがあります。ジャーナリスト、活動家、不動産業者、プライバシーを重視する個人は皆、公開前に画像をクリーンにするためEXIFリムーバーを使用しています。写真をリモートサーバーにアップロードするオンラインツールとは異なり、当ツールはすべてブラウザ内で処理を行います。ファイルが端末から出ることはなく、完全なプライバシーが保たれます。
+  </p>
+</section>
+
+<footer class="site-footer wrap">
+  <p>Presend — 無料のブラウザベースツール。<a href="/about">概要</a> · <a href="/privacy">プライバシー</a></p>
+</footer>
+
+<script>
+(function () {
+  const dropzone = document.getElementById('dropzone');
+  const fileInput = document.getElementById('fileInput');
+  const errorMsg = document.getElementById('errorMsg');
+  const result = document.getElementById('result');
+  const resultName = document.getElementById('resultName');
+  const resultMeta = document.getElementById('resultMeta');
+  const downloadLink = document.getElementById('downloadLink');
+  const resetBtn = document.getElementById('resetBtn');
+
+  const MAX_SIZE = 25 * 1024 * 1024;
+
+  function showError(msg) {
+    errorMsg.textContent = msg;
+    errorMsg.classList.add('visible');
+  }
+  function clearError() {
+    errorMsg.textContent = '';
+    errorMsg.classList.remove('visible');
+  }
+
+  function humanSize(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+  }
+
+  function handleFile(file) {
+    clearError();
+    result.classList.remove('visible');
+
+    if (!file) return;
+    if (!['image/jpeg', 'image/png', 'image/webp'].includes(file.type)) {
+      showError('JPG、PNG、WebPのいずれかを選択してください。');
+      return;
+    }
+    if (file.size > MAX_SIZE) {
+      showError('このファイルは25MBを超えています。より小さい写真をお試しください。');
+      return;
+    }
+
+    const img = new Image();
+    const objectUrl = URL.createObjectURL(file);
+
+    img.onload = function () {
+      const canvas = document.createElement('canvas');
+      canvas.width = img.naturalWidth;
+      canvas.height = img.naturalHeight;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0);
+
+      const outputType = file.type === 'image/png' ? 'image/png' : 'image/jpeg';
+      const quality = outputType === 'image/jpeg' ? 0.92 : undefined;
+
+      canvas.toBlob(function (blob) {
+        URL.revokeObjectURL(objectUrl);
+        if (!blob) {
+          showError('画像の読み込み中に問題が発生しました。別のファイルをお試しください。');
+          return;
+        }
+        const cleanUrl = URL.createObjectURL(blob);
+        const base = file.name.replace(/\.[^.]+$/, '');
+        const ext = outputType === 'image/png' ? 'png' : 'jpg';
+        const outName = base + '-clean.' + ext;
+
+        downloadLink.href = cleanUrl;
+        downloadLink.download = outName;
+        resultName.textContent = outName;
+        resultMeta.textContent = humanSize(blob.size) + ' — メタデータ削除済み';
+        result.classList.add('visible');
+
+        fetch('/api/track', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ tool: 'exif-remover' })
+        }).catch(() => {});
+      }, outputType, quality);
+    };
+
+    img.onerror = function () {
+      URL.revokeObjectURL(objectUrl);
+      showError('この画像を読み込めませんでした。');
+    };
+
+    img.src = objectUrl;
+  }
+
+  dropzone.addEventListener('click', () => fileInput.click());
+  dropzone.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fileInput.click(); }
+  });
+  fileInput.addEventListener('change', (e) => handleFile(e.target.files[0]));
+
+  ['dragenter', 'dragover'].forEach(evt =>
+    dropzone.addEventListener(evt, (e) => { e.preventDefault(); dropzone.classList.add('dragover'); })
+  );
+  ['dragleave', 'drop'].forEach(evt =>
+    dropzone.addEventListener(evt, (e) => { e.preventDefault(); dropzone.classList.remove('dragover'); })
+  );
+  dropzone.addEventListener('drop', (e) => {
+    const file = e.dataTransfer.files[0];
+    handleFile(file);
+  });
+
+  resetBtn.addEventListener('click', () => {
+    fileInput.value = '';
+    result.classList.remove('visible');
+    clearError();
+  });
+})();
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "EXIF Remover",
+  "url": "https://presend.pages.dev/ja/tools/exif-remover",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "Any (runs in browser)",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "description": "写真からEXIFメタデータ（GPS、カメラ機種、タイムスタンプ）をクライアントサイドで完全に削除します。"
+}
+</script>
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+<script src="../../js/feedback.js" async defer></script>
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "37606631a94f4ce69f54a301c7763f01"}'></script>
+
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js');
+}
+</script>
+
+<script>
+document.getElementById('shareBtn').addEventListener('click', async function() {
+  const btn = this;
+  btn.textContent = '作成中...';
+  try {
+    const res = await fetch('/api/share', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ tool: 'exif-remover' })
+    });
+    const data = await res.json();
+    if (data.success) {
+      await navigator.clipboard.writeText(data.shortUrl);
+      btn.textContent = '✅ コピーしました！';
+      setTimeout(() => btn.textContent = '🔗 共有リンクをコピー', 3000);
+    } else {
+      btn.textContent = '❌ エラー';
+    }
+  } catch (e) {
+    btn.textContent = '❌ エラー';
+  }
+});
+</script>
+
+</body>
+</html>
