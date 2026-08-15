@@ -82,6 +82,7 @@ john@example.com (duplicate)"></textarea>
 
     <div style="margin-top:1rem; display:flex; gap:0.75rem; flex-wrap:wrap;">
       <button class="btn" id="cleanBtn" type="button">Clean list</button>
+        <button class="btn ghost" id="shareBtn" type="button" style="margin-left:0.5rem;">🔗 Copy share link</button>
       <button class="btn ghost" id="copyBtn" type="button" disabled>Copy result</button>
       <button class="btn ghost" id="downloadBtn" type="button" disabled>Download CSV</button>
       <button class="btn ghost" id="clearBtn" type="button">Clear</button>
@@ -249,5 +250,29 @@ if ('serviceWorker' in navigator) {
 }
 </script>
 
+<script>
+document.getElementById('shareBtn').addEventListener('click', async function() {
+  const btn = this;
+  btn.textContent = 'Creating...';
+  try {
+    const res = await fetch('/api/share', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ tool: 'email-list-cleaner' })
+    });
+    const data = await res.json();
+    if (data.success) {
+      await navigator.clipboard.writeText(data.shortUrl);
+      btn.textContent = '✅ Copied!';
+      setTimeout(() => btn.textContent = '🔗 Copy share link', 3000);
+    } else {
+      btn.textContent = '❌ Error';
+    }
+  } catch (e) {
+    btn.textContent = '❌ Error';
+    setTimeout(() => btn.textContent = '🔗 Copy share link', 3000);
+  }
+});
+</script>
 </body>
 </html>
