@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+
+<html lang="ja">
+<head>
+<meta charset="utf-8"/>
+<link crossorigin="" href="https://cdn.jsdelivr.net" rel="preconnect"/>
+<link href="https://cdn.jsdelivr.net" rel="dns-prefetch"/>
+<link crossorigin="" href="https://static.cloudflareinsights.com" rel="preconnect"/>
+<link href="https://static.cloudflareinsights.com" rel="dns-prefetch"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>管理者を送信 — 分析ダッシュボード</title>
+<link href="style.css" rel="stylesheet"/>
+<style>
+    .admin-container { max-width: 900px; margin: 0 auto; padding: 2rem; }
+    .stat-card { background: #f8f9fa; border-radius: 12px; padding: 1.5rem; margin: 1rem 0; border-left: 4px solid #0066cc; }
+    .stat-number { font-size: 2.5rem; font-weight: 700; color: #0066cc; }
+    .tool-row { display: flex; justify-content: space-between; padding: 0.75rem 0; border-bottom: 1px solid #e9ecef; }
+    .loading { color: #6c757d; font-style: italic; }
+    .error { color: #dc3545; }
+  </style>
+</head>
+<body>
+<div class="admin-container">
+<h1>📊 分析を送信</h1>
+<p class="loading" id="status">統計を読み込んでいます...</p>
+<div class="stat-card">
+<div class="stat-number" id="total">—</div>
+<div>追跡されたアクションの合計</div>
+</div>
+<div class="stat-card">
+<h2>ツール別</h2>
+<div id="tools-list">読み込み中...</div>
+</div>
+<p style="margin-top: 2rem; color: #6c757d; font-size: 0.9rem;">🔒 プライバシー第一: Cookie、IP ストレージ、サードパーティのトラッカーは使用しません。</p>
+</div>
+<script>
+    async function loadStats() {
+      try {
+        const res = await fetch('/api/stats');
+        const data = await res.json();
+        
+        document.getElementById('status').textContent = 'Last updated: ' + new Date().toLocaleString();
+        document.getElementById('total').textContent = data.total.toLocaleString();
+        
+        const toolsDiv = document.getElementById('tools-list');
+        if (!data.tools || Object.keys(data.tools).length === 0) {
+          toolsDiv.innerHTML = '<p>No data yet.</p>';
+          return;
+        }
+        
+        let html = '';
+        for (const [tool, dates] of Object.entries(data.tools)) {
+          const toolTotal = Object.values(dates).reduce((a, b) => a + b, 0);
+          html += `<div class="tool-row"><strong>${tool}</strong> <span>${toolTotal.toLocaleString()}</span></div>`;
+          for (const [date, count] of Object.entries(dates)) {
+            html += `<div class="tool-row" style="padding-left: 1rem; font-size: 0.9rem; color: #6c757d;">
+              ${date} — ${count.toLocaleString()}
+            </div>`;
+          }
+        }
+        toolsDiv.innerHTML = html;
+      } catch (e) {
+        document.getElementById('status').textContent = 'Error loading stats';
+        document.getElementById('status').className = 'error';
+      }
+    }
+    
+    loadStats();
+    setInterval(loadStats, 30000);
+  </script>
+Cloudflareウェブ分析
+<script data-cf-beacon='{"token": "37606631a94f4ce69f54a301c7763f01"}' src="https://static.cloudflareinsights.com/beacon.min.js" type="module"></script>
+Cloudflare Web分析を終了する
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js');
+}
+</script>
+</body>
+</html>
