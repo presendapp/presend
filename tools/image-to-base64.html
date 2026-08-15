@@ -58,6 +58,15 @@
 </script>
 <!--seo-org-->
 <script type="application/ld+json">\n{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[    {"@type":"Question","name":'What is Base64?',"acceptedAnswer":{"@type":"Answer","text":'Encoding binary to ASCII for embedding.'}},    {"@type":"Question","name":'When to use?',"acceptedAnswer":{"@type":"Answer","text":'Small icons, HTML emails, data URIs.'}},    {"@type":"Question","name":'Larger?',"acceptedAnswer":{"@type":"Answer","text":'Yes, ~33% larger. Use for small images only.'}},    {"@type":"Question","name":'Formats?',"acceptedAnswer":{"@type":"Answer","text":'JPG, PNG, GIF, WebP, SVG.'}},    {"@type":"Question","name":'Image uploaded?',"acceptedAnswer":{"@type":"Answer","text":'No. Local via FileReader API.'}}]}\n</script>\n<!--seo-faq-->\n<link rel="manifest" href="/manifest.json">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+    {"@type":"Question","name":"What is Base64 encoding?","acceptedAnswer":{"@type":"Answer","text":"Base64 is a method of converting binary data (like images) into ASCII text strings. It is commonly used to embed images directly in HTML, CSS, or JSON."}},
+    {"@type":"Question","name":"Why convert an image to Base64?","acceptedAnswer":{"@type":"Answer","text":"Base64 encoding lets you embed images directly in code without external file references. This is useful for emails, single-file HTML pages, and data URLs in CSS."}},
+    {"@type":"Question","name":"Is there a size limit?","acceptedAnswer":{"@type":"Answer","text":"Base64 increases file size by about 33%. For best performance, use images under 500 KB. The tool processes everything locally in your browser."}},
+    {"@type":"Question","name":"Does this work offline?","acceptedAnswer":{"@type":"Answer","text":"Yes. The conversion happens entirely in your browser with no server upload required."}}
+]}
+</script>
+<!--seo-faq-->
 </head>
 <body class="tool-page">
 

@@ -58,6 +58,15 @@
 </script>
 <!--seo-org-->
 <script type="application/ld+json">\n{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[    {"@type":"Question","name":'CSV to JSON?',"acceptedAnswer":{"@type":"Answer","text":'Yes, works both ways.'}},    {"@type":"Question","name":'Nested objects?',"acceptedAnswer":{"@type":"Answer","text":'Flattened with dot notation.'}},    {"@type":"Question","name":'Size limit?',"acceptedAnswer":{"@type":"Answer","text":'No hard limit, large files may slow browser.'}},    {"@type":"Question","name":'Arrays?',"acceptedAnswer":{"@type":"Answer","text":'Converted to comma-separated strings.'}},    {"@type":"Question","name":'Data uploaded?',"acceptedAnswer":{"@type":"Answer","text":'No. All local.'}}]}\n</script>\n<!--seo-faq-->\n<link rel="manifest" href="/manifest.json">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+    {"@type":"Question","name":"Can I convert CSV to JSON?","acceptedAnswer":{"@type":"Answer","text":"Yes. The tool supports bidirectional conversion: JSON to CSV and CSV to JSON. Just paste or upload your data and select the direction."}},
+    {"@type":"Question","name":"What if my JSON is nested?","acceptedAnswer":{"@type":"Answer","text":"The tool flattens nested JSON objects using dot notation (e.g., user.name) so they fit into CSV columns. Arrays are converted to comma-separated strings."}},
+    {"@type":"Question","name":"Is my data uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. All conversion happens locally in your browser. Your sensitive data never leaves your device."}},
+    {"@type":"Question","name":"What delimiter does the CSV use?","acceptedAnswer":{"@type":"Answer","text":"The output CSV uses commas by default and wraps values in quotes when necessary. It is compatible with Excel, Google Sheets, and all major spreadsheet software."}}
+]}
+</script>
+<!--seo-faq-->
 </head>
 <body class="tool-page">
 
