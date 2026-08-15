@@ -1,6 +1,6 @@
 export async function onRequestGet(context) {
   const { env, params } = context;
-  const hash = params.path || '';
+  const hash = params.hash || '';
   try {
     const value = await env.PRESEND_ANALYTICS.get('share:' + hash);
     if (!value) {
