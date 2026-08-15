@@ -1,5 +1,7 @@
 User-agent: *
 Allow: /
 Disallow: /vendor/
+Disallow: /admin/
+Disallow: /api/
 
-Sitemap: https://presend.pages.dev/sitemap.xml
+Sitemap: https://presend.pages.dev/api/sitemap
