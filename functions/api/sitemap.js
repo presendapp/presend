@@ -7,6 +7,7 @@ export async function onRequestGet() {
     { loc: "https://presend.pages.dev/de/", priority: "0.9", changefreq: "weekly" },
     { loc: "https://presend.pages.dev/pt/", priority: "0.9", changefreq: "weekly" },
     { loc: "https://presend.pages.dev/ja/", priority: "0.9", changefreq: "weekly" },
+    { loc: "https://presend.pages.dev/fr/tools/exif-remover", priority: "0.8", changefreq: "monthly" },
     { loc: "https://presend.pages.dev/about", priority: "0.7", changefreq: "monthly" },
     { loc: "https://presend.pages.dev/privacy", priority: "0.7", changefreq: "monthly" },
     { loc: "https://presend.pages.dev/faq", priority: "0.8", changefreq: "monthly" },
