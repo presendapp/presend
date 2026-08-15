@@ -1,6 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script>
+  (function() {
+    if (!localStorage.getItem('lang_redirected')) {
+      var lang = navigator.language || navigator.userLanguage;
+      if (lang) {
+        var code = lang.substring(0, 2).toLowerCase();
+        var supported = ['fr', 'es', 'de', 'pt', 'ja'];
+        if (supported.includes(code)) {
+          localStorage.setItem('lang_redirected', 'true');
+          window.location.replace('/' + code + '/');
+        }
+      }
+    }
+  })();
+</script>
+
   <meta name="google-site-verification" content="Gc3XxNyjH4EKteXDWKKdHYKyhtfMAfdrbNLIbo-quS4" />
 <meta charset="UTF-8">
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
