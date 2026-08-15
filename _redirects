@@ -27,3 +27,6 @@
 /privacy.html /privacy 301
 /faq.html /faq 301
 /alternatives.html /alternatives 301
+
+# Short share links
+/s/*  /api/resolve?hash=:splat  302

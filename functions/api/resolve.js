@@ -1,7 +1,7 @@
 export async function onRequestGet(context) {
   const { env, request } = context;
   const url = new URL(request.url);
-  const hash = url.pathname.replace('/s/', '').replace('/', '');
+  const hash = url.searchParams.get('hash') || '';
   
   try {
     const value = await env.PRESEND_ANALYTICS.get('share:' + hash);
