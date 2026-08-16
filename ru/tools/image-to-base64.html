@@ -1,33 +1,26 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-
-
-
-
-
-
-<meta charset="UTF-8">
-<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-<link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
-<link rel="preconnect" href="https://static.cloudflareinsights.com" crossorigin>
-<link rel="dns-prefetch" href="https://static.cloudflareinsights.com">
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta property="og:title" content="Image to Base64 Converter — Presend">
-<meta property="og:description" content="Convert any image to a Base64 data URI instantly in your browser. No upload, no server, 100% private.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://presend.pages.dev/tools/image-to-base64">
-<meta property="og:image" content="https://presend.pages.dev/api/og?tool=Image+to+Base64+Converter">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<title>Image to Base64 Converter — Presend</title>
-<meta name="robots" content="index, follow">
-  <meta name="description" content="Convert any image to a Base64 data URI for embedding in CSS, HTML or emails. Runs entirely in your browser. Nothing is uploaded.">
-<link rel="icon" href="/favicon.ico" sizes="any">
-<link rel="stylesheet" fetchpriority="high" href="../style.css">
-<link rel="canonical" href="https://presend.pages.dev/tools/image-to-base64" />
-<meta name="twitter:card" content="summary_large_image">
+<meta charset="utf-8"/>
+<link crossorigin="" href="https://cdn.jsdelivr.net" rel="preconnect"/>
+<link href="https://cdn.jsdelivr.net" rel="dns-prefetch"/>
+<link crossorigin="" href="https://static.cloudflareinsights.com" rel="preconnect"/>
+<link href="https://static.cloudflareinsights.com" rel="dns-prefetch"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="Конвертер изображений в Base64 — Presend" property="og:title"/>
+<meta content="Мгновенно конвертируйте любое изображение в URI данных Base64 в своем браузере. Никакой загрузки, никакого сервера, 100% конфиденциальность." property="og:description"/>
+<meta content="website" property="og:type"/>
+<meta content="https://presend.pages.dev/tools/image-to-base64" property="og:url"/>
+<meta content="https://presend.pages.dev/api/og?tool=Image+to+Base64+Converter" property="og:image"/>
+<meta content="1200" property="og:image:width"/>
+<meta content="630" property="og:image:height"/>
+<title>Конвертер изображений в Base64 — Presend</title>
+<meta content="index, follow" name="robots"/>
+<meta content="Преобразуйте любое изображение в URI данных Base64 для встраивания в CSS, HTML или электронные письма. Работает полностью в вашем браузере. Ничего не загружается." name="description"/>
+<link href="/favicon.ico" rel="icon" sizes="any"/>
+<link fetchpriority="high" href="../style.css" rel="stylesheet"/>
+<link href="https://presend.pages.dev/tools/image-to-base64" rel="canonical"/>
+<meta content="summary_large_image" name="twitter:card"/>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -63,7 +56,7 @@
 }
 </script>
 <!--seo-org-->
-<script type="application/ld+json">\n{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[    {"@type":"Question","name":'What is Base64?',"acceptedAnswer":{"@type":"Answer","text":'Encoding binary to ASCII for embedding.'}},    {"@type":"Question","name":'When to use?',"acceptedAnswer":{"@type":"Answer","text":'Small icons, HTML emails, data URIs.'}},    {"@type":"Question","name":'Larger?',"acceptedAnswer":{"@type":"Answer","text":'Yes, ~33% larger. Use for small images only.'}},    {"@type":"Question","name":'Formats?',"acceptedAnswer":{"@type":"Answer","text":'JPG, PNG, GIF, WebP, SVG.'}},    {"@type":"Question","name":'Image uploaded?',"acceptedAnswer":{"@type":"Answer","text":'No. Local via FileReader API.'}}]}\n</script>\n<!--seo-faq-->\n<link rel="manifest" href="/manifest.json">
+<script type="application/ld+json">\n{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[    {"@type":"Question","name":'What is Base64?',"acceptedAnswer":{"@type":"Answer","text":'Encoding binary to ASCII for embedding.'}},    {"@type":"Question","name":'When to use?',"acceptedAnswer":{"@type":"Answer","text":'Small icons, HTML emails, data URIs.'}},    {"@type":"Question","name":'Larger?',"acceptedAnswer":{"@type":"Answer","text":'Yes, ~33% larger. Use for small images only.'}},    {"@type":"Question","name":'Formats?',"acceptedAnswer":{"@type":"Answer","text":'JPG, PNG, GIF, WebP, SVG.'}},    {"@type":"Question","name":'Image uploaded?',"acceptedAnswer":{"@type":"Answer","text":'No. Local via FileReader API.'}}]}\n</script></head><body>\nSEO-часто задаваемые вопросы\n<link href="/manifest.json" rel="manifest"/>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
     {"@type":"Question","name":"What is Base64 encoding?","acceptedAnswer":{"@type":"Answer","text":"Base64 is a method of converting binary data (like images) into ASCII text strings. It is commonly used to embed images directly in HTML, CSS, or JSON."}},
@@ -72,7 +65,7 @@
     {"@type":"Question","name":"Does this work offline?","acceptedAnswer":{"@type":"Answer","text":"Yes. The conversion happens entirely in your browser with no server upload required."}}
 ]}
 </script>
-<!--seo-faq-->
+SEO-часто задаваемые вопросы
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -87,94 +80,82 @@
   ]
 }
 </script>
-<!--seo-howto-->
-<meta property="og:locale" content="ru_RU" />
-<link rel="alternate" hreflang="en" href="https://presend.pages.dev/tools/image-to-base64" />
-<link rel="alternate" hreflang="fr" href="https://presend.pages.dev/fr/tools/image-to-base64" />
-<link rel="alternate" hreflang="es" href="https://presend.pages.dev/es/tools/image-to-base64" />
-<link rel="alternate" hreflang="de" href="https://presend.pages.dev/de/tools/image-to-base64" />
-<link rel="alternate" hreflang="pt" href="https://presend.pages.dev/pt/tools/image-to-base64" />
-<link rel="alternate" hreflang="ja" href="https://presend.pages.dev/ja/tools/image-to-base64" />
-<link rel="alternate" hreflang="ru" href="https://presend.pages.dev/ru/tools/image-to-base64" />
-<link rel="alternate" hreflang="hi" href="https://presend.pages.dev/hi/tools/image-to-base64" />
-<link rel="alternate" hreflang="x-default" href="https://presend.pages.dev/" />
-</head>
-<body class="tool-page">
-
+SEO-инструкции
+<meta content="ru_RU" property="og:locale"/>
+<link href="https://presend.pages.dev/tools/image-to-base64" hreflang="en" rel="alternate"/>
+<link href="https://presend.pages.dev/fr/tools/image-to-base64" hreflang="fr" rel="alternate"/>
+<link href="https://presend.pages.dev/es/tools/image-to-base64" hreflang="es" rel="alternate"/>
+<link href="https://presend.pages.dev/de/tools/image-to-base64" hreflang="de" rel="alternate"/>
+<link href="https://presend.pages.dev/pt/tools/image-to-base64" hreflang="pt" rel="alternate"/>
+<link href="https://presend.pages.dev/ja/tools/image-to-base64" hreflang="ja" rel="alternate"/>
+<link href="https://presend.pages.dev/ru/tools/image-to-base64" hreflang="ru" rel="alternate"/>
+<link href="https://presend.pages.dev/hi/tools/image-to-base64" hreflang="hi" rel="alternate"/>
+<link href="https://presend.pages.dev/" hreflang="x-default" rel="alternate"/>
 <header class="site-header wrap">
-  <a class='brand' href='/ru/'><span class="brand-mark">●</span> Presend</a>
-  <a class='nav-link' href='/ru/'>All tools</a>
+<a class="brand" href="/ru/"><span class="brand-mark">●</span>представить</a>
+<a class="nav-link" href="/ru/">Все инструменты</a>
 </header>
-
 <main class="wrap">
-  <a class='tool-back' href='/ru/'>← Back</a>
-  <h1>Image to Base64 Converter</h1>
-  <p class="lede">Convert any image to a Base64 data URI for embedding directly in HTML, CSS or emails. No external file needed. The image is processed on your device only.</p>
-
-  <span class="trust-badge">Your files are never sent to our servers</span>
-
-  <div style="margin-top: 2rem;">
-    <div class="dropzone" id="dropzone" tabindex="0" role="button" aria-label="Choose an image or drop it here">
-      <p class="primary">Drop an image here, or click to choose one</p>
-      <p class="secondary">JPG, PNG, GIF, WebP, SVG. Nothing leaves your device.</p>
-      <input type="file" id="fileInput" accept="image/*">
-    </div>
-    <p class="error-msg" id="errorMsg"></p>
-
-    <div class="result" id="result">
-      <div style="display:flex; gap:1.5rem; flex-wrap:wrap; margin-bottom:1rem;">
-        <div style="flex:1; min-width:200px;">
-          <h3 style="font-family: var(--font-display); font-size:1.05rem; margin-bottom:0.5rem;">Preview</h3>
-          <img decoding="async" loading="lazy" id="previewImg" alt="Preview of uploaded image" style="max-width:100%; max-height:200px; border-radius:var(--radius); border:1px solid var(--color-line);">
-          <div id="fileInfo" style="margin-top:0.5rem; font-size:0.85rem; color:var(--color-muted);"></div>
-        </div>
-        <div style="flex:2; min-width:300px;">
-          <h3 style="font-family: var(--font-display); font-size:1.05rem; margin-bottom:0.5rem;">Base64 output</h3>
-          <textarea id="base64Output" rows="6" readonly style="width:100%; padding:1rem; border:1px solid var(--color-line); border-radius:var(--radius); font-family:var(--font-mono); font-size:0.75rem; background:var(--color-bg-raised); resize:vertical; word-break:break-all;"></textarea>
-          <div style="margin-top:0.75rem; display:flex; gap:0.5rem; flex-wrap:wrap;">
-            <button class="btn" id="copyBtn" type="button">Copy Base64</button>
-        <button class="btn ghost" id="shareBtn" type="button" style="margin-left:0.5rem;">🔗 Copy share link</button>
-            <button class="btn ghost" id="copyDataUriBtn" type="button">Copy data URI</button>
-            <button class="btn ghost" id="copyCssBtn" type="button">Copy CSS</button>
-            <button class="btn ghost" id="resetBtn" type="button">Convert another</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+<a class="tool-back" href="/ru/">← Назад</a>
+<h1>Конвертер изображений в Base64</h1>
+<p class="lede">Преобразуйте любое изображение в URI данных Base64 для встраивания непосредственно в HTML, CSS или электронные письма. Внешний файл не требуется. Изображение обрабатывается только на вашем устройстве.</p>
+<span class="trust-badge">Ваши файлы никогда не отправляются на наши серверы</span>
+<div style="margin-top: 2rem;">
+<div aria-label="Выберите изображение или оставьте его здесь" class="dropzone" id="dropzone" role="button" tabindex="0">
+<p class="primary">Перетащите сюда изображение или нажмите, чтобы выбрать одно.</p>
+<p class="secondary">JPG, PNG, GIF, WebP, SVG. Ничего не покидает ваше устройство.</p>
+<input accept="image/*" id="fileInput" type="file"/>
+</div>
+<p class="error-msg" id="errorMsg"></p>
+<div class="result" id="result">
+<div style="display:flex; gap:1.5rem; flex-wrap:wrap; margin-bottom:1rem;">
+<div style="flex:1; min-width:200px;">
+<h3 style="font-family: var(--font-display); font-size:1.05rem; margin-bottom:0.5rem;">Предварительный просмотр</h3>
+<img alt="Предварительный просмотр загруженного изображения" decoding="async" id="previewImg" loading="lazy" style="max-width:100%; max-height:200px; border-radius:var(--radius); border:1px solid var(--color-line);"/>
+<div id="fileInfo" style="margin-top:0.5rem; font-size:0.85rem; color:var(--color-muted);"></div>
+</div>
+<div style="flex:2; min-width:300px;">
+<h3 style="font-family: var(--font-display); font-size:1.05rem; margin-bottom:0.5rem;">Вывод Base64</h3>
+<textarea id="base64Output" readonly="" rows="6" style="width:100%; padding:1rem; border:1px solid var(--color-line); border-radius:var(--radius); font-family:var(--font-mono); font-size:0.75rem; background:var(--color-bg-raised); resize:vertical; word-break:break-all;"></textarea>
+<div style="margin-top:0.75rem; display:flex; gap:0.5rem; flex-wrap:wrap;">
+<button class="btn" id="copyBtn" type="button">Копировать Base64</button>
+<button class="btn ghost" id="shareBtn" style="margin-left:0.5rem;" type="button">🔗 Скопируйте ссылку «Поделиться»</button>
+<button class="btn ghost" id="copyDataUriBtn" type="button">Копировать URI данных</button>
+<button class="btn ghost" id="copyCssBtn" type="button">Копировать CSS</button>
+<button class="btn ghost" id="resetBtn" type="button">Преобразовать другой</button>
+</div>
+</div>
+</div>
+</div>
+</div>
 <section class="wrap" style="margin-top:3rem;">
-  <h2 style="font-family:var(--font-display);font-size:1.1rem;">Related tools</h2>
-  <div class="tool-grid" style="margin-top:1rem;">
-      <a class='tool-card' href='/ru/tools/image-compressor'>
-        <div><h3>Image Compressor</h3><p>Shrink a photo's file size before you email or upload it.</p></div>
-        <span class="go">Open →</span>
-      </a>
-      <a class='tool-card' href='/ru/tools/heic-converter'>
-        <div><h3>HEIC to JPG Converter</h3><p>Convert iPhone HEIC photos to JPG.</p></div>
-        <span class="go">Open →</span>
-      </a>
-      <a class='tool-card' href='/ru/tools/exif-remover'>
-        <div><h3>EXIF Remover</h3><p>Strip hidden location and camera data from a photo.</p></div>
-        <span class="go">Open →</span>
-      </a>
-  </div>
+<h2 style="font-family:var(--font-display);font-size:1.1rem;">Сопутствующие инструменты</h2>
+<div class="tool-grid" style="margin-top:1rem;">
+<a class="tool-card" href="/ru/tools/image-compressor">
+<div><h3>Сжатие изображений</h3><p>Уменьшите размер файла фотографии перед отправкой по электронной почте или загрузкой.</p></div>
+<span class="go">Открыть →</span>
+</a>
+<a class="tool-card" href="/ru/tools/heic-converter">
+<div><h3>Конвертер HEIC в JPG</h3><p>Конвертируйте фотографии iPhone HEIC в JPG.</p></div>
+<span class="go">Открыть →</span>
+</a>
+<a class="tool-card" href="/ru/tools/exif-remover">
+<div><h3>EXIF для удаления</h3><p>Удаление скрытых данных о местоположении и камере с фотографии.</p></div>
+<span class="go">Открыть →</span>
+</a>
+</div>
 </section>
-</section>
-
 <section class="wrap" style="margin-top:3rem;">
-  <h2 style="font-family:var(--font-display);font-size:1.1rem;">Learn more</h2>
-  <p style="color:var(--color-muted);max-width:60ch;line-height:1.7;margin-top:0.75rem;">
-    <a href="/ru/tools/landings/image-to-base64-converter">Read our detailed guide about this tool</a>
-  </p>
+<h2 style="font-family:var(--font-display);font-size:1.1rem;">Узнать больше</h2>
+<p style="color:var(--color-muted);max-width:60ch;line-height:1.7;margin-top:0.75rem;">
+<a href="/ru/tools/landings/image-to-base64-converter">Прочтите наше подробное руководство по этому инструменту.</a>
+</p>
 </section>
-
-<!--seo-related-tools-->
+SEO-инструменты
 </main>
-
 <footer class="site-footer wrap">
-  <p>Presend — free browser-based tools. Runs locally. No account, no tracking.</p>
+<p>Presend — бесплатные браузерные инструменты. Запускается локально. Нет аккаунта, нет отслеживания.</p>
 </footer>
-
 <script>
 (function () {
   const dropzone = document.getElementById('dropzone');
@@ -241,7 +222,6 @@
   resetBtn.addEventListener('click', () => { fileInput.value = ''; result.classList.remove('visible'); clearError(); });
 })();
 </script>
-
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -262,17 +242,14 @@ fetch('/api/track', {
   body: JSON.stringify({ tool: 'image-to-base64' })
 }).catch(() => {});
 </script>
-
-<!-- Cloudflare Web Analytics -->
-<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "37606631a94f4ce69f54a301c7763f01"}'></script>
-<!-- End Cloudflare Web Analytics -->
-
+Веб-аналитика Cloudflare
+<script data-cf-beacon='{"token": "37606631a94f4ce69f54a301c7763f01"}' src="https://static.cloudflareinsights.com/beacon.min.js" type="module"></script>
+Завершить веб-аналитику Cloudflare
 <script>
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('/sw.js');
 }
 </script>
-
 <script>
 document.getElementById('shareBtn').addEventListener('click', async function() {
   const btn = this;
@@ -297,5 +274,4 @@ document.getElementById('shareBtn').addEventListener('click', async function() {
   }
 });
 </script>
-</body>
-</html>
+</body></html>

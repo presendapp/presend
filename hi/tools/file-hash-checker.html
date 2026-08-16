@@ -1,36 +1,29 @@
 <!DOCTYPE html>
 <html lang="hi">
 <head>
-
-
-
-
-
-
-<meta charset="UTF-8">
-<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-<link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
-<link rel="preconnect" href="https://static.cloudflareinsights.com" crossorigin>
-<link rel="dns-prefetch" href="https://static.cloudflareinsights.com">
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta property="og:title" content="File Hash Checker — Presend">
-  <meta property="og:description" content="Calculate SHA-256, SHA-1 and SHA-512 checksums of any file, entirely in your browser. Verify downloads are authentic and untampered.">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://presend.pages.dev/tools/file-hash-checker">
-  <meta property="og:image" content="https://presend.pages.dev/api/og?tool=File+Hash+Checker">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
-<title>File Hash Checker — Presend</title>
-<meta name="robots" content="index, follow">
-  <meta name="description" content="Calculate SHA-256, SHA-1 and SHA-512 checksums to verify any file's integrity. Entirely in your browser — no upload, no server, 100% private.">
-  <link rel="icon" href="/favicon.ico" sizes="any">
-  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<link rel="preload" href="../style.css" as="style">
-    <link rel="stylesheet" fetchpriority="high" href="../style.css">
-<link rel="canonical" href="https://presend.pages.dev/tools/file-hash-checker" />
-<meta name="twitter:card" content="summary_large_image">
+<meta charset="utf-8"/>
+<link crossorigin="" href="https://cdn.jsdelivr.net" rel="preconnect"/>
+<link href="https://cdn.jsdelivr.net" rel="dns-prefetch"/>
+<link crossorigin="" href="https://static.cloudflareinsights.com" rel="preconnect"/>
+<link href="https://static.cloudflareinsights.com" rel="dns-prefetch"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="फ़ाइल हैश चेकर - प्रस्तुत करें" property="og:title"/>
+<meta content="किसी भी फ़ाइल के SHA-256, SHA-1 और SHA-512 चेकसम की गणना करें, पूरी तरह से अपने ब्राउज़र में। सत्यापित करें कि डाउनलोड प्रामाणिक और छेड़छाड़ रहित हैं।" property="og:description"/>
+<meta content="website" property="og:type"/>
+<meta content="https://presend.pages.dev/tools/file-hash-checker" property="og:url"/>
+<meta content="https://presend.pages.dev/api/og?tool=File+Hash+Checker" property="og:image"/>
+<meta content="1200" property="og:image:width"/>
+<meta content="630" property="og:image:height"/>
+<title>फ़ाइल हैश चेकर - प्रस्तुत करें</title>
+<meta content="index, follow" name="robots"/>
+<meta content="किसी फ़ाइल की अखंडता को सत्यापित करने के लिए SHA-256, SHA-1 और SHA-512 चेकसम की गणना करें। पूरी तरह से आपके ब्राउज़र में - कोई अपलोड नहीं, कोई सर्वर नहीं, 100% निजी।" name="description"/>
+<link href="/favicon.ico" rel="icon" sizes="any"/>
+<link href="/favicon-96x96.png" rel="icon" sizes="96x96" type="image/png"/>
+<link href="/apple-touch-icon.png" rel="apple-touch-icon"/>
+<link as="style" href="../style.css" rel="preload"/>
+<link fetchpriority="high" href="../style.css" rel="stylesheet"/>
+<link href="https://presend.pages.dev/tools/file-hash-checker" rel="canonical"/>
+<meta content="summary_large_image" name="twitter:card"/>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -48,7 +41,6 @@
 }
 </script>
 <!--seo-app-->
-
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -72,7 +64,7 @@
 }
 </script>
 <!--seo-org-->
-<script type="application/ld+json">\n{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[    {"@type":"Question","name":'What is SHA-256?',"acceptedAnswer":{"@type":"Answer","text":'A cryptographic hash producing a unique 64-char fingerprint.'}},    {"@type":"Question","name":'Why verify integrity?',"acceptedAnswer":{"@type":"Answer","text":'To confirm a file was not corrupted or tampered with.'}},    {"@type":"Question","name":'Which algorithms?',"acceptedAnswer":{"@type":"Answer","text":'SHA-256, SHA-1, SHA-512.'}},    {"@type":"Question","name":'File uploaded?',"acceptedAnswer":{"@type":"Answer","text":'No. Processed locally via Web Crypto API.'}},    {"@type":"Question","name":'Large files?',"acceptedAnswer":{"@type":"Answer","text":'No practical limit, processed in chunks locally.'}}]}\n</script>\n<!--seo-faq-->\n<link rel="manifest" href="/manifest.json">
+<script type="application/ld+json">\n{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[    {"@type":"Question","name":'What is SHA-256?',"acceptedAnswer":{"@type":"Answer","text":'A cryptographic hash producing a unique 64-char fingerprint.'}},    {"@type":"Question","name":'Why verify integrity?',"acceptedAnswer":{"@type":"Answer","text":'To confirm a file was not corrupted or tampered with.'}},    {"@type":"Question","name":'Which algorithms?',"acceptedAnswer":{"@type":"Answer","text":'SHA-256, SHA-1, SHA-512.'}},    {"@type":"Question","name":'File uploaded?',"acceptedAnswer":{"@type":"Answer","text":'No. Processed locally via Web Crypto API.'}},    {"@type":"Question","name":'Large files?',"acceptedAnswer":{"@type":"Answer","text":'No practical limit, processed in chunks locally.'}}]}\n</script></head><body>\nseo-faq\n<link href="/manifest.json" rel="manifest"/>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -87,88 +79,73 @@
   ]
 }
 </script>
-<!--seo-howto-->
-<meta property="og:locale" content="hi_IN" />
-<link rel="alternate" hreflang="en" href="https://presend.pages.dev/tools/file-hash-checker" />
-<link rel="alternate" hreflang="fr" href="https://presend.pages.dev/fr/tools/file-hash-checker" />
-<link rel="alternate" hreflang="es" href="https://presend.pages.dev/es/tools/file-hash-checker" />
-<link rel="alternate" hreflang="de" href="https://presend.pages.dev/de/tools/file-hash-checker" />
-<link rel="alternate" hreflang="pt" href="https://presend.pages.dev/pt/tools/file-hash-checker" />
-<link rel="alternate" hreflang="ja" href="https://presend.pages.dev/ja/tools/file-hash-checker" />
-<link rel="alternate" hreflang="ru" href="https://presend.pages.dev/ru/tools/file-hash-checker" />
-<link rel="alternate" hreflang="hi" href="https://presend.pages.dev/hi/tools/file-hash-checker" />
-<link rel="alternate" hreflang="x-default" href="https://presend.pages.dev/" />
-</head>
-<body class="tool-page">
-
+एसईओ-कैसे करें
+<meta content="hi_IN" property="og:locale"/>
+<link href="https://presend.pages.dev/tools/file-hash-checker" hreflang="en" rel="alternate"/>
+<link href="https://presend.pages.dev/fr/tools/file-hash-checker" hreflang="fr" rel="alternate"/>
+<link href="https://presend.pages.dev/es/tools/file-hash-checker" hreflang="es" rel="alternate"/>
+<link href="https://presend.pages.dev/de/tools/file-hash-checker" hreflang="de" rel="alternate"/>
+<link href="https://presend.pages.dev/pt/tools/file-hash-checker" hreflang="pt" rel="alternate"/>
+<link href="https://presend.pages.dev/ja/tools/file-hash-checker" hreflang="ja" rel="alternate"/>
+<link href="https://presend.pages.dev/ru/tools/file-hash-checker" hreflang="ru" rel="alternate"/>
+<link href="https://presend.pages.dev/hi/tools/file-hash-checker" hreflang="hi" rel="alternate"/>
+<link href="https://presend.pages.dev/" hreflang="x-default" rel="alternate"/>
 <header class="site-header wrap">
-  <a class='brand' href='/hi/'><span class="brand-mark">●</span> Presend</a>
-  <a class='nav-link' href='/hi/'>All tools</a>
+<a class="brand" href="/hi/"><span class="brand-mark">●</span>प्रस्तुत करें</a>
+<a class="nav-link" href="/hi/">सभी उपकरण</a>
 </header>
-
 <main class="wrap">
-  <a class='tool-back' href='/hi/'>← Back</a>
-  <h1>File Hash Checker</h1>
-  <p class="lede">Calculate the SHA-256, SHA-1 and SHA-512 checksum of any file to verify it hasn't been altered or corrupted. Everything runs on your device — the file is never uploaded.</p>
-
-  <span class="trust-badge">Your files are never sent to our servers</span>
-
-  <div style="margin-top: 2rem;">
-    <div class="dropzone" id="dropzone" tabindex="0" role="button" aria-label="Choose a file or drop it here">
-      <p class="primary">Drop a file here, or click to choose one</p>
-      <p class="secondary">Any file type. Nothing leaves your device.</p>
-      <input type="file" id="fileInput">
-    </div>
-    <p class="error-msg" id="errorMsg"></p>
-
-    <div class="result" id="result">
-      <div class="result-row">
-        <div>
-          <div class="filename" id="resultName"></div>
-          <div class="meta" id="resultMeta"></div>
-        </div>
-      </div>
-      <div id="hashList" style="display:flex; flex-direction:column; gap:0.6rem; margin-top:0.8rem;"></div>
-      <button class="btn ghost" id="resetBtn" type="button" style="margin-top:1rem;">Check another file</button>
-        <button class="btn ghost" id="shareBtn" type="button" style="margin-left:0.5rem;">🔗 Copy share link</button>
-    </div>
-  </div>
-</section>
-
+<a class="tool-back" href="/hi/">← वापस</a>
+<h1>फ़ाइल हैश चेकर</h1>
+<p class="lede">यह सत्यापित करने के लिए किसी भी फ़ाइल के SHA-256, SHA-1 और SHA-512 चेकसम की गणना करें कि उसमें कोई बदलाव या भ्रष्ट तो नहीं किया गया है। सब कुछ आपके डिवाइस पर चलता है - फ़ाइल कभी अपलोड नहीं होती है।</p>
+<span class="trust-badge">आपकी फ़ाइलें कभी भी हमारे सर्वर पर नहीं भेजी जातीं</span>
+<div style="margin-top: 2rem;">
+<div aria-label="कोई फ़ाइल चुनें या उसे यहां छोड़ें" class="dropzone" id="dropzone" role="button" tabindex="0">
+<p class="primary">एक फ़ाइल यहां छोड़ें, या किसी एक को चुनने के लिए क्लिक करें</p>
+<p class="secondary">कोई भी फ़ाइल प्रकार. आपके डिवाइस से कुछ भी नहीं छूटता.</p>
+<input id="fileInput" type="file"/>
+</div>
+<p class="error-msg" id="errorMsg"></p>
+<div class="result" id="result">
+<div class="result-row">
+<div>
+<div class="filename" id="resultName"></div>
+<div class="meta" id="resultMeta"></div>
+</div>
+</div>
+<div id="hashList" style="display:flex; flex-direction:column; gap:0.6rem; margin-top:0.8rem;"></div>
+<button class="btn ghost" id="resetBtn" style="margin-top:1rem;" type="button">किसी अन्य फ़ाइल की जाँच करें</button>
+<button class="btn ghost" id="shareBtn" style="margin-left:0.5rem;" type="button">🔗कॉपी शेयर लिंक</button>
+</div>
+</div>
 <section class="wrap" style="margin-top:3rem;">
-  <h2 style="font-family:var(--font-display);font-size:1.1rem;">Related tools</h2>
-  <div class="tool-grid" style="margin-top:1rem;">
-      <a class='tool-card' href='/hi/tools/pdf-metadata-remover'>
-        <div><h3>PDF Metadata Remover</h3><p>Clear the author, software and dates hidden inside a PDF.</p></div>
-        <span class="go">Open →</span>
-      </a>
-      <a class='tool-card' href='/hi/tools/office-metadata-remover'>
-        <div><h3>Office Metadata Remover</h3><p>Strip hidden author, company and edit history from Office files.</p></div>
-        <span class="go">Open →</span>
-      </a>
-      <a class='tool-card' href='/hi/tools/exif-remover'>
-        <div><h3>EXIF Remover</h3><p>Strip hidden location and camera data from a photo.</p></div>
-        <span class="go">Open →</span>
-      </a>
-  </div>
+<h2 style="font-family:var(--font-display);font-size:1.1rem;">संबंधित उपकरण</h2>
+<div class="tool-grid" style="margin-top:1rem;">
+<a class="tool-card" href="/hi/tools/pdf-metadata-remover">
+<div><h3>पीडीएफ मेटाडेटा रिमूवर</h3><p>पीडीएफ के अंदर छिपे लेखक, सॉफ्टवेयर और तारीखों को साफ़ करें।</p></div>
+<span class="go">खोलें →</span>
+</a>
+<a class="tool-card" href="/hi/tools/office-metadata-remover">
+<div><h3>ऑफिस मेटाडेटा रिमूवर</h3><p>Office फ़ाइलों से छुपे हुए लेखक, कंपनी और संपादन इतिहास को हटाएँ।</p></div>
+<span class="go">खोलें →</span>
+</a>
+<a class="tool-card" href="/hi/tools/exif-remover">
+<div><h3>EXIF रिमूवर</h3><p>किसी फ़ोटो से छिपा हुआ स्थान और कैमरा डेटा हटाएँ।</p></div>
+<span class="go">खोलें →</span>
+</a>
+</div>
 </section>
-
 <section class="wrap" style="margin-top:3rem;">
-  <h2 style="font-family:var(--font-display);font-size:1.1rem;">Learn more</h2>
-  <p style="color:var(--color-muted);max-width:60ch;line-height:1.7;margin-top:0.75rem;">
-    <a href="/hi/guides/how-to-verify-downloaded-file-safe">Read our guide: How to Verify a Downloaded File is Safe</a>
-  </p>
+<h2 style="font-family:var(--font-display);font-size:1.1rem;">और अधिक जानें</h2>
+<p style="color:var(--color-muted);max-width:60ch;line-height:1.7;margin-top:0.75rem;">
+<a href="/hi/guides/how-to-verify-downloaded-file-safe">हमारी मार्गदर्शिका पढ़ें: कैसे सत्यापित करें कि डाउनलोड की गई फ़ाइल सुरक्षित है</a>
+</p>
 </section>
-
-</section>
-
-<!--seo-related-tools-->
+एसईओ-संबंधित-उपकरण
 </main>
-
 <footer class="site-footer wrap">
-  <p>Presend — free browser-based tools. <a href="/hi/about">About</a> · <a href="/hi/privacy">Privacy</a></p>
+<p>प्रेज़ेंड - निःशुल्क ब्राउज़र-आधारित उपकरण।<a href="/hi/about">के बारे में</a> · <a href="/hi/privacy">गोपनीयता</a></p>
 </footer>
-
 <script>
 (function () {
   const dropzone = document.getElementById('dropzone');
@@ -278,17 +255,14 @@ fetch('/api/track', {
   body: JSON.stringify({ tool: 'file-hash-checker' })
 }).catch(() => {});
 </script>
-
-<!-- Cloudflare Web Analytics -->
-<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "37606631a94f4ce69f54a301c7763f01"}'></script>
-<!-- End Cloudflare Web Analytics -->
-
+क्लाउडफ्लेयर वेब एनालिटिक्स
+<script data-cf-beacon='{"token": "37606631a94f4ce69f54a301c7763f01"}' src="https://static.cloudflareinsights.com/beacon.min.js" type="module"></script>
+क्लाउडफ्लेयर वेब एनालिटिक्स समाप्त करें
 <script>
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('/sw.js');
 }
 </script>
-
 <script>
 document.getElementById('shareBtn').addEventListener('click', async function() {
   const btn = this;
@@ -313,5 +287,4 @@ document.getElementById('shareBtn').addEventListener('click', async function() {
   }
 });
 </script>
-</body>
-</html>
+</body></html>

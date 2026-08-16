@@ -1,33 +1,26 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-
-
-
-
-
-
-<meta charset="UTF-8">
-<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-<link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
-<link rel="preconnect" href="https://static.cloudflareinsights.com" crossorigin>
-<link rel="dns-prefetch" href="https://static.cloudflareinsights.com">
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta property="og:title" content="Text Diff Checker — Presend">
-<meta property="og:description" content="Compare two texts side-by-side to spot every change. Runs entirely in your browser. No upload, 100% private.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://presend.pages.dev/tools/text-diff">
-<meta property="og:image" content="https://presend.pages.dev/api/og?tool=Text+Diff+Checker">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<title>Text Diff Checker — Presend</title>
-<meta name="robots" content="index, follow">
-  <meta name="description" content="Compare two versions of a text side-by-side to spot every addition, deletion and change. Runs entirely in your browser. Nothing is uploaded.">
-<link rel="icon" href="/favicon.ico" sizes="any">
-<link rel="stylesheet" fetchpriority="high" href="../style.css">
-<link rel="canonical" href="https://presend.pages.dev/tools/text-diff" />
-<meta name="twitter:card" content="summary_large_image">
+<meta charset="utf-8"/>
+<link crossorigin="" href="https://cdn.jsdelivr.net" rel="preconnect"/>
+<link href="https://cdn.jsdelivr.net" rel="dns-prefetch"/>
+<link crossorigin="" href="https://static.cloudflareinsights.com" rel="preconnect"/>
+<link href="https://static.cloudflareinsights.com" rel="dns-prefetch"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="Проверка текстовых различий — Presend" property="og:title"/>
+<meta content="Сравните два текста рядом, чтобы заметить каждое изменение. Работает полностью в вашем браузере. Никакой загрузки, 100% конфиденциальность." property="og:description"/>
+<meta content="website" property="og:type"/>
+<meta content="https://presend.pages.dev/tools/text-diff" property="og:url"/>
+<meta content="https://presend.pages.dev/api/og?tool=Text+Diff+Checker" property="og:image"/>
+<meta content="1200" property="og:image:width"/>
+<meta content="630" property="og:image:height"/>
+<title>Проверка текстовых различий — Presend</title>
+<meta content="index, follow" name="robots"/>
+<meta content="Сравните две версии текста рядом, чтобы выявить каждое добавление, удаление и изменение. Работает полностью в вашем браузере. Ничего не загружается." name="description"/>
+<link href="/favicon.ico" rel="icon" sizes="any"/>
+<link fetchpriority="high" href="../style.css" rel="stylesheet"/>
+<link href="https://presend.pages.dev/tools/text-diff" rel="canonical"/>
+<meta content="summary_large_image" name="twitter:card"/>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -75,7 +68,7 @@
 }
 </script>
 <!--seo-org-->
-<script type="application/ld+json">\n{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[    {"@type":"Question","name":'How does it work?',"acceptedAnswer":{"@type":"Answer","text":'Line-by-line, additions green, deletions red.'}},    {"@type":"Question","name":'Case-sensitive?',"acceptedAnswer":{"@type":"Answer","text":'Yes by default.'}},    {"@type":"Question","name":'Compare code?',"acceptedAnswer":{"@type":"Answer","text":'Yes, great for snippets and configs.'}},    {"@type":"Question","name":'Character limit?',"acceptedAnswer":{"@type":"Answer","text":'No hard limit, large texts may slow browser.'}},    {"@type":"Question","name":'Text uploaded?',"acceptedAnswer":{"@type":"Answer","text":'No. All local.'}}]}\n</script>\n<!--seo-faq-->\n<link rel="manifest" href="/manifest.json">
+<script type="application/ld+json">\n{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[    {"@type":"Question","name":'How does it work?',"acceptedAnswer":{"@type":"Answer","text":'Line-by-line, additions green, deletions red.'}},    {"@type":"Question","name":'Case-sensitive?',"acceptedAnswer":{"@type":"Answer","text":'Yes by default.'}},    {"@type":"Question","name":'Compare code?',"acceptedAnswer":{"@type":"Answer","text":'Yes, great for snippets and configs.'}},    {"@type":"Question","name":'Character limit?',"acceptedAnswer":{"@type":"Answer","text":'No hard limit, large texts may slow browser.'}},    {"@type":"Question","name":'Text uploaded?',"acceptedAnswer":{"@type":"Answer","text":'No. All local.'}}]}\n</script></head><body>\nSEO-часто задаваемые вопросы\n<link href="/manifest.json" rel="manifest"/>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
     {"@type":"Question","name":"What is a text diff checker?","acceptedAnswer":{"@type":"Answer","text":"It compares two blocks of text and highlights the differences — additions, deletions, and unchanged lines — side by side for easy review."}},
@@ -84,7 +77,7 @@
     {"@type":"Question","name":"Does it show character-level differences?","acceptedAnswer":{"@type":"Answer","text":"Yes. The tool highlights differences at both the line level and the word/character level for precise comparison."}}
 ]}
 </script>
-<!--seo-faq-->
+SEO-часто задаваемые вопросы
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -99,91 +92,77 @@
   ]
 }
 </script>
-<!--seo-howto-->
-<meta property="og:locale" content="ru_RU" />
-<link rel="alternate" hreflang="en" href="https://presend.pages.dev/tools/text-diff" />
-<link rel="alternate" hreflang="fr" href="https://presend.pages.dev/fr/tools/text-diff" />
-<link rel="alternate" hreflang="es" href="https://presend.pages.dev/es/tools/text-diff" />
-<link rel="alternate" hreflang="de" href="https://presend.pages.dev/de/tools/text-diff" />
-<link rel="alternate" hreflang="pt" href="https://presend.pages.dev/pt/tools/text-diff" />
-<link rel="alternate" hreflang="ja" href="https://presend.pages.dev/ja/tools/text-diff" />
-<link rel="alternate" hreflang="ru" href="https://presend.pages.dev/ru/tools/text-diff" />
-<link rel="alternate" hreflang="hi" href="https://presend.pages.dev/hi/tools/text-diff" />
-<link rel="alternate" hreflang="x-default" href="https://presend.pages.dev/" />
-</head>
-<body class="tool-page">
-
+SEO-инструкции
+<meta content="ru_RU" property="og:locale"/>
+<link href="https://presend.pages.dev/tools/text-diff" hreflang="en" rel="alternate"/>
+<link href="https://presend.pages.dev/fr/tools/text-diff" hreflang="fr" rel="alternate"/>
+<link href="https://presend.pages.dev/es/tools/text-diff" hreflang="es" rel="alternate"/>
+<link href="https://presend.pages.dev/de/tools/text-diff" hreflang="de" rel="alternate"/>
+<link href="https://presend.pages.dev/pt/tools/text-diff" hreflang="pt" rel="alternate"/>
+<link href="https://presend.pages.dev/ja/tools/text-diff" hreflang="ja" rel="alternate"/>
+<link href="https://presend.pages.dev/ru/tools/text-diff" hreflang="ru" rel="alternate"/>
+<link href="https://presend.pages.dev/hi/tools/text-diff" hreflang="hi" rel="alternate"/>
+<link href="https://presend.pages.dev/" hreflang="x-default" rel="alternate"/>
 <header class="site-header wrap">
-  <a class='brand' href='/ru/'><span class="brand-mark">●</span> Presend</a>
-  <a class='nav-link' href='/ru/'>All tools</a>
+<a class="brand" href="/ru/"><span class="brand-mark">●</span>представить</a>
+<a class="nav-link" href="/ru/">Все инструменты</a>
 </header>
-
 <main class="wrap">
-  <a class='tool-back' href='/ru/'>← Back</a>
-  <h1>Text Diff Checker</h1>
-  <p class="lede">Paste two versions of a text and see exactly what changed — word by word, line by line. Useful for contracts, code, translations, or any document review.</p>
-
-  <span class="trust-badge">Your data is never sent to our servers</span>
-
-  <div style="margin-top: 2rem;">
-    <div class="diff-wrap">
-      <div>
-        <label style="display:block; font-weight:500; margin-bottom:0.5rem;">Original text</label>
-        <textarea id="textA" style="width:100%; padding:1rem; border:1px solid var(--color-line); border-radius:var(--radius); font-family:var(--font-body); font-size:0.9rem; resize:vertical;" placeholder="Paste the original text here..."></textarea>
-      </div>
-      <div>
-        <label style="display:block; font-weight:500; margin-bottom:0.5rem;">Modified text</label>
-        <textarea id="textB" style="width:100%; padding:1rem; border:1px solid var(--color-line); border-radius:var(--radius); font-family:var(--font-body); font-size:0.9rem; resize:vertical;" placeholder="Paste the modified text here..."></textarea>
-      </div>
-    </div>
-
-    <div style="margin-top:1rem; display:flex; gap:0.75rem; flex-wrap:wrap;">
-      <button class="btn" id="compareBtn" type="button">Compare</button>
-        <button class="btn ghost" id="shareBtn" type="button" style="margin-left:0.5rem;">🔗 Copy share link</button>
-      <button class="btn ghost" id="clearBtn" type="button">Clear both</button>
-    </div>
-
-    <p class="error-msg" id="errorMsg"></p>
-
-    <div class="result" id="result">
-      <h3 style="font-family: var(--font-display); font-size:1.05rem; margin-bottom:0.5rem;">Differences</h3>
-      <div id="diffOutput" style="max-height: 500px; overflow-y: auto; border: 1px solid var(--color-line); border-radius: var(--radius); padding: 1rem; background: var(--color-bg-raised);"></div>
-      <div id="stats" style="margin-top:0.75rem; font-size:0.85rem; color:var(--color-muted);"></div>
-    </div>
-  </div>
+<a class="tool-back" href="/ru/">← Назад</a>
+<h1>Проверка текстовых различий</h1>
+<p class="lede">Вставьте две версии текста и посмотрите, что именно изменилось — слово за словом, строка за строкой. Полезно для контрактов, кода, переводов или любого обзора документов.</p>
+<span class="trust-badge">Ваши данные никогда не отправляются на наши серверы</span>
+<div style="margin-top: 2rem;">
+<div class="diff-wrap">
+<div>
+<label style="display:block; font-weight:500; margin-bottom:0.5rem;">Исходный текст</label>
+<textarea id="textA" placeholder="Вставьте сюда исходный текст..." style="width:100%; padding:1rem; border:1px solid var(--color-line); border-radius:var(--radius); font-family:var(--font-body); font-size:0.9rem; resize:vertical;"></textarea>
+</div>
+<div>
+<label style="display:block; font-weight:500; margin-bottom:0.5rem;">Измененный текст</label>
+<textarea id="textB" placeholder="Вставьте измененный текст сюда..." style="width:100%; padding:1rem; border:1px solid var(--color-line); border-radius:var(--radius); font-family:var(--font-body); font-size:0.9rem; resize:vertical;"></textarea>
+</div>
+</div>
+<div style="margin-top:1rem; display:flex; gap:0.75rem; flex-wrap:wrap;">
+<button class="btn" id="compareBtn" type="button">Сравнивать</button>
+<button class="btn ghost" id="shareBtn" style="margin-left:0.5rem;" type="button">🔗 Скопируйте ссылку «Поделиться»</button>
+<button class="btn ghost" id="clearBtn" type="button">Очистить оба</button>
+</div>
+<p class="error-msg" id="errorMsg"></p>
+<div class="result" id="result">
+<h3 style="font-family: var(--font-display); font-size:1.05rem; margin-bottom:0.5rem;">Различия</h3>
+<div id="diffOutput" style="max-height: 500px; overflow-y: auto; border: 1px solid var(--color-line); border-radius: var(--radius); padding: 1rem; background: var(--color-bg-raised);"></div>
+<div id="stats" style="margin-top:0.75rem; font-size:0.85rem; color:var(--color-muted);"></div>
+</div>
+</div>
 <section class="wrap" style="margin-top:3rem;">
-  <h2 style="font-family:var(--font-display);font-size:1.1rem;">Related tools</h2>
-  <div class="tool-grid" style="margin-top:1rem;">
-      <a class='tool-card' href='/ru/tools/json-csv-converter'>
-        <div><h3>JSON CSV Converter</h3><p>Convert JSON to CSV and back.</p></div>
-        <span class="go">Open →</span>
-      </a>
-      <a class='tool-card' href='/ru/tools/word-counter'>
-        <div><h3>Word Counter</h3><p>Count words, characters and sentences.</p></div>
-        <span class="go">Open →</span>
-      </a>
-      <a class='tool-card' href='/ru/tools/email-list-cleaner'>
-        <div><h3>Email List Cleaner</h3><p>Clean and deduplicate email lists.</p></div>
-        <span class="go">Open →</span>
-      </a>
-  </div>
+<h2 style="font-family:var(--font-display);font-size:1.1rem;">Сопутствующие инструменты</h2>
+<div class="tool-grid" style="margin-top:1rem;">
+<a class="tool-card" href="/ru/tools/json-csv-converter">
+<div><h3>Конвертер JSON CSV</h3><p>Конвертируйте JSON в CSV и обратно.</p></div>
+<span class="go">Открыть →</span>
+</a>
+<a class="tool-card" href="/ru/tools/word-counter">
+<div><h3>Счетчик слов</h3><p>Подсчитайте слова, символы и предложения.</p></div>
+<span class="go">Открыть →</span>
+</a>
+<a class="tool-card" href="/ru/tools/email-list-cleaner">
+<div><h3>Очиститель списка адресов электронной почты</h3><p>Очистите и дедуплицируйте списки адресов электронной почты.</p></div>
+<span class="go">Открыть →</span>
+</a>
+</div>
 </section>
-</section>
-
 <section class="wrap" style="margin-top:3rem;">
-  <h2 style="font-family:var(--font-display);font-size:1.1rem;">Learn more</h2>
-  <p style="color:var(--color-muted);max-width:60ch;line-height:1.7;margin-top:0.75rem;">
-    <a href="/ru/tools/landings/compare-texts-online">Read our detailed guide about this tool</a>
-  </p>
+<h2 style="font-family:var(--font-display);font-size:1.1rem;">Узнать больше</h2>
+<p style="color:var(--color-muted);max-width:60ch;line-height:1.7;margin-top:0.75rem;">
+<a href="/ru/tools/landings/compare-texts-online">Прочтите наше подробное руководство по этому инструменту.</a>
+</p>
 </section>
-
-<!--seo-related-tools-->
+SEO-инструменты
 </main>
-
 <footer class="site-footer wrap">
-  <p>Presend — free browser-based tools. Runs locally. No account, no tracking.</p>
+<p>Presend — бесплатные браузерные инструменты. Запускается локально. Нет аккаунта, нет отслеживания.</p>
 </footer>
-
 <script>
 (function () {
   const textA = document.getElementById('textA');
@@ -284,7 +263,6 @@
   });
 })();
 </script>
-
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -305,17 +283,14 @@ fetch('/api/track', {
   body: JSON.stringify({ tool: 'text-diff' })
 }).catch(() => {});
 </script>
-
-<!-- Cloudflare Web Analytics -->
-<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "37606631a94f4ce69f54a301c7763f01"}'></script>
-<!-- End Cloudflare Web Analytics -->
-
+Веб-аналитика Cloudflare
+<script data-cf-beacon='{"token": "37606631a94f4ce69f54a301c7763f01"}' src="https://static.cloudflareinsights.com/beacon.min.js" type="module"></script>
+Завершить веб-аналитику Cloudflare
 <script>
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('/sw.js');
 }
 </script>
-
 <script>
 document.getElementById('shareBtn').addEventListener('click', async function() {
   const btn = this;
@@ -340,5 +315,4 @@ document.getElementById('shareBtn').addEventListener('click', async function() {
   }
 });
 </script>
-</body>
-</html>
+</body></html>

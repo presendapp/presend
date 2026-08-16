@@ -1,16 +1,15 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-<link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
-<link rel="preconnect" href="https://static.cloudflareinsights.com" crossorigin>
-<link rel="dns-prefetch" href="https://static.cloudflareinsights.com">
-
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Presend Admin — Analytics Dashboard</title>
-  <link rel="stylesheet" href="style.css">
-  <style>
+<meta charset="utf-8"/>
+<link crossorigin="" href="https://cdn.jsdelivr.net" rel="preconnect"/>
+<link href="https://cdn.jsdelivr.net" rel="dns-prefetch"/>
+<link crossorigin="" href="https://static.cloudflareinsights.com" rel="preconnect"/>
+<link href="https://static.cloudflareinsights.com" rel="dns-prefetch"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Presend Admin — панель аналитики</title>
+<link href="style.css" rel="stylesheet"/>
+<style>
     .admin-container { max-width: 900px; margin: 0 auto; padding: 2rem; }
     .stat-card { background: #f8f9fa; border-radius: 12px; padding: 1.5rem; margin: 1rem 0; border-left: 4px solid #0066cc; }
     .stat-number { font-size: 2.5rem; font-weight: 700; color: #0066cc; }
@@ -18,39 +17,33 @@
     .loading { color: #6c757d; font-style: italic; }
     .error { color: #dc3545; }
   </style>
-<meta property="og:locale" content="ru_RU" />
-<link rel="alternate" hreflang="en" href="https://presend.pages.dev/admin" />
-<link rel="alternate" hreflang="fr" href="https://presend.pages.dev/fr/admin" />
-<link rel="alternate" hreflang="es" href="https://presend.pages.dev/es/admin" />
-<link rel="alternate" hreflang="de" href="https://presend.pages.dev/de/admin" />
-<link rel="alternate" hreflang="pt" href="https://presend.pages.dev/pt/admin" />
-<link rel="alternate" hreflang="ja" href="https://presend.pages.dev/ja/admin" />
-<link rel="alternate" hreflang="ru" href="https://presend.pages.dev/ru/admin" />
-<link rel="alternate" hreflang="hi" href="https://presend.pages.dev/hi/admin" />
-<link rel="alternate" hreflang="x-default" href="https://presend.pages.dev/" />
+<meta content="ru_RU" property="og:locale"/>
+<link href="https://presend.pages.dev/admin" hreflang="en" rel="alternate"/>
+<link href="https://presend.pages.dev/fr/admin" hreflang="fr" rel="alternate"/>
+<link href="https://presend.pages.dev/es/admin" hreflang="es" rel="alternate"/>
+<link href="https://presend.pages.dev/de/admin" hreflang="de" rel="alternate"/>
+<link href="https://presend.pages.dev/pt/admin" hreflang="pt" rel="alternate"/>
+<link href="https://presend.pages.dev/ja/admin" hreflang="ja" rel="alternate"/>
+<link href="https://presend.pages.dev/ru/admin" hreflang="ru" rel="alternate"/>
+<link href="https://presend.pages.dev/hi/admin" hreflang="hi" rel="alternate"/>
+<link href="https://presend.pages.dev/" hreflang="x-default" rel="alternate"/>
 </head>
 <body>
-<div style="background:#1a1a2e;color:#ffd700;text-align:center;padding:10px 16px;font-size:14px;border-bottom:1px solid #333;">🌐 Эта страница временно доступна на английском языке. Перевод на русский скоро появится. <a href="/ru/" style="color:#ffd700;text-decoration:underline;">Смотреть на английском</a></div>
-  <div class="admin-container">
-    <h1>📊 Presend Analytics</h1>
-    <p class="loading" id="status">Loading stats...</p>
-    
-    <div class="stat-card">
-      <div class="stat-number" id="total">—</div>
-      <div>Total actions tracked</div>
-    </div>
-    
-    <div class="stat-card">
-      <h2>By Tool</h2>
-      <div id="tools-list">Loading...</div>
-    </div>
-    
-    <p style="margin-top: 2rem; color: #6c757d; font-size: 0.9rem;">
-      🔒 Privacy-first: no cookies, no IP storage, no third-party trackers.
-    </p>
-  </div>
 
-  <script>
+<div class="admin-container">
+<h1>📊 Представить аналитику</h1>
+<p class="loading" id="status">Загрузка статистики...</p>
+<div class="stat-card">
+<div class="stat-number" id="total">—</div>
+<div>Всего отслеживаемых действий</div>
+</div>
+<div class="stat-card">
+<h2>По инструменту</h2>
+<div id="tools-list">Загрузка...</div>
+</div>
+<p style="margin-top: 2rem; color: #6c757d; font-size: 0.9rem;">🔒 Конфиденциальность прежде всего: никаких файлов cookie, никакого IP-хранилища и сторонних трекеров.</p>
+</div>
+<script>
     async function loadStats() {
       try {
         const res = await fetch('/api/stats');
@@ -85,15 +78,13 @@
     loadStats();
     setInterval(loadStats, 30000);
   </script>
-<!-- Cloudflare Web Analytics -->
-<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "37606631a94f4ce69f54a301c7763f01"}'></script>
-<!-- End Cloudflare Web Analytics -->
-
+Веб-аналитика Cloudflare
+<script data-cf-beacon='{"token": "37606631a94f4ce69f54a301c7763f01"}' src="https://static.cloudflareinsights.com/beacon.min.js" type="module"></script>
+Завершить веб-аналитику Cloudflare
 <script>
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('/sw.js');
 }
 </script>
-
 </body>
 </html>

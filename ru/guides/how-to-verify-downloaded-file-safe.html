@@ -1,22 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta property="og:title" content="How to Verify a Downloaded File Is Safe — Presend">
-<meta property="og:description" content="Learn how to check a file's SHA-256 checksum to confirm it hasn't been tampered with, corrupted, or replaced by malware.">
-<meta property="og:type" content="article">
-<meta property="og:url" content="https://presend.pages.dev/guides/how-to-verify-downloaded-file-safe">
-<meta property="og:image" content="https://presend.pages.dev/og-image.png">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<title>How to Verify a Downloaded File Is Safe — Presend</title>
-<meta name="robots" content="index, follow">
-  <meta name="description" content="Learn how to check a file's SHA-256 checksum to confirm it hasn't been tampered with, corrupted, or replaced by malware.">
-<link rel="icon" href="/favicon.ico" sizes="any">
-<link rel="stylesheet" fetchpriority="high" href="../style.css">
-<link rel="canonical" href="https://presend.pages.dev/guides/how-to-verify-downloaded-file-safe" />
-<meta name="twitter:card" content="summary_large_image">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="Как убедиться, что загруженный файл безопасен — Presend" property="og:title"/>
+<meta content="Узнайте, как проверить контрольную сумму файла SHA-256, чтобы убедиться, что он не был подделан, поврежден или заменен вредоносным ПО." property="og:description"/>
+<meta content="article" property="og:type"/>
+<meta content="https://presend.pages.dev/guides/how-to-verify-downloaded-file-safe" property="og:url"/>
+<meta content="https://presend.pages.dev/og-image.png" property="og:image"/>
+<meta content="1200" property="og:image:width"/>
+<meta content="630" property="og:image:height"/>
+<title>Как убедиться, что загруженный файл безопасен — Presend</title>
+<meta content="index, follow" name="robots"/>
+<meta content="Узнайте, как проверить контрольную сумму файла SHA-256, чтобы убедиться, что он не был подделан, поврежден или заменен вредоносным ПО." name="description"/>
+<link href="/favicon.ico" rel="icon" sizes="any"/>
+<link fetchpriority="high" href="../style.css" rel="stylesheet"/>
+<link href="https://presend.pages.dev/guides/how-to-verify-downloaded-file-safe" rel="canonical"/>
+<meta content="summary_large_image" name="twitter:card"/>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -84,40 +84,39 @@
 }
 </script>
 <!--seo-howto-->
-<link rel="manifest" href="/manifest.json">
-<link rel="alternate" hreflang="en" href="https://presend.pages.dev/guides/how-to-verify-downloaded-file-safe" />
-<link rel="alternate" hreflang="fr" href="https://presend.pages.dev/fr/guides/how-to-verify-downloaded-file-safe" />
-<link rel="alternate" hreflang="es" href="https://presend.pages.dev/es/guides/how-to-verify-downloaded-file-safe" />
-<link rel="alternate" hreflang="de" href="https://presend.pages.dev/de/guides/how-to-verify-downloaded-file-safe" />
-<link rel="alternate" hreflang="pt" href="https://presend.pages.dev/pt/guides/how-to-verify-downloaded-file-safe" />
-<link rel="alternate" hreflang="ja" href="https://presend.pages.dev/ja/guides/how-to-verify-downloaded-file-safe" />
-<link rel="alternate" hreflang="ru" href="https://presend.pages.dev/ru/guides/how-to-verify-downloaded-file-safe" />
-<link rel="alternate" hreflang="hi" href="https://presend.pages.dev/hi/guides/how-to-verify-downloaded-file-safe" />
-<link rel="alternate" hreflang="x-default" href="https://presend.pages.dev/" />
+<link href="/manifest.json" rel="manifest"/>
+<link href="https://presend.pages.dev/guides/how-to-verify-downloaded-file-safe" hreflang="en" rel="alternate"/>
+<link href="https://presend.pages.dev/fr/guides/how-to-verify-downloaded-file-safe" hreflang="fr" rel="alternate"/>
+<link href="https://presend.pages.dev/es/guides/how-to-verify-downloaded-file-safe" hreflang="es" rel="alternate"/>
+<link href="https://presend.pages.dev/de/guides/how-to-verify-downloaded-file-safe" hreflang="de" rel="alternate"/>
+<link href="https://presend.pages.dev/pt/guides/how-to-verify-downloaded-file-safe" hreflang="pt" rel="alternate"/>
+<link href="https://presend.pages.dev/ja/guides/how-to-verify-downloaded-file-safe" hreflang="ja" rel="alternate"/>
+<link href="https://presend.pages.dev/ru/guides/how-to-verify-downloaded-file-safe" hreflang="ru" rel="alternate"/>
+<link href="https://presend.pages.dev/hi/guides/how-to-verify-downloaded-file-safe" hreflang="hi" rel="alternate"/>
+<link href="https://presend.pages.dev/" hreflang="x-default" rel="alternate"/>
 </head>
 <body class="tool-page">
 <header class="site-header wrap">
-  <a class='brand' href='/ru/'><span class="brand-mark">●</span> Presend</a>
-  <a class='nav-link' href='/ru/'>All tools</a>
+<a class="brand" href="/ru/"><span class="brand-mark">●</span>представить</a>
+<a class="nav-link" href="/ru/">Все инструменты</a>
 </header>
 <main class="wrap">
-  <a class='tool-back' href='/ru/'>← Back</a>
-  <article>
-    <h1>How to Verify a Downloaded File Is Safe</h1>
-    <p class="lede">When you download software, a document, or any file from the internet, how do you know it's the real thing? One of the most reliable ways is to verify its cryptographic checksum.</p>
-    <h2 style="font-family:var(--font-display);font-size:1.1rem;margin-top:2.5rem;">What is a checksum?</h2>
-<p style="color:var(--color-muted);max-width:60ch;line-height:1.7;">A checksum is a unique string of characters generated from a file's contents. If even a single byte changes — through corruption or malicious tampering — the checksum changes completely. SHA-256 is the industry standard for this verification.</p>
-<h2 style="font-family:var(--font-display);font-size:1.1rem;margin-top:2.5rem;">How to check SHA-256</h2>
-<p style="color:var(--color-muted);max-width:60ch;line-height:1.7;">The publisher of the file usually provides the expected SHA-256 hash. You calculate the hash of the file you downloaded and compare the two. If they match exactly, the file is intact. Use our <a href='/ru/tools/file-hash-checker'>File Hash Checker</a> to calculate SHA-256, SHA-1 and SHA-512 instantly in your browser.</p>
-<h2 style="font-family:var(--font-display);font-size:1.1rem;margin-top:2.5rem;">Red flags to watch for</h2>
-<p style="color:var(--color-muted);max-width:60ch;line-height:1.7;">If the checksum doesn't match, do not open the file. Delete it and download again from the official source. Be especially cautious with executables, PDFs from unknown senders, and files from peer-to-peer networks.</p>
-<h2 style="font-family:var(--font-display);font-size:1.1rem;margin-top:2.5rem;">Why do this in the browser?</h2>
-<p style="color:var(--color-muted);max-width:60ch;line-height:1.7;">Our tool runs entirely on your device. Your file is never uploaded to a server, which is critical when you're dealing with sensitive or confidential downloads.</p>
-
-  </article>
+<a class="tool-back" href="/ru/">← Назад</a>
+<article>
+<h1>Как убедиться, что загруженный файл безопасен</h1>
+<p class="lede">Когда вы загружаете программное обеспечение, документ или любой файл из Интернета, как вы узнаете, что это настоящая вещь? Один из самых надежных способов — проверить его криптографическую контрольную сумму.</p>
+<h2 style="font-family:var(--font-display);font-size:1.1rem;margin-top:2.5rem;">Что такое контрольная сумма?</h2>
+<p style="color:var(--color-muted);max-width:60ch;line-height:1.7;">Контрольная сумма — это уникальная строка символов, созданная на основе содержимого файла. Если изменится хотя бы один байт — в результате повреждения или злонамеренного вмешательства — контрольная сумма изменится полностью. SHA-256 является отраслевым стандартом для этой проверки.</p>
+<h2 style="font-family:var(--font-display);font-size:1.1rem;margin-top:2.5rem;">Как проверить SHA-256</h2>
+<p style="color:var(--color-muted);max-width:60ch;line-height:1.7;">Издатель файла обычно предоставляет ожидаемый хэш SHA-256. Вы вычисляете хэш загруженного файла и сравниваете их. Если они точно совпадают, файл не поврежден. Используйте наш<a href="/ru/tools/file-hash-checker">Проверка хеша файла</a>для мгновенного расчета SHA-256, SHA-1 и SHA-512 в вашем браузере.</p>
+<h2 style="font-family:var(--font-display);font-size:1.1rem;margin-top:2.5rem;">Красные флаги, на которые стоит обратить внимание</h2>
+<p style="color:var(--color-muted);max-width:60ch;line-height:1.7;">Если контрольная сумма не совпадает, не открывайте файл. Удалите его и скачайте заново с официального источника. Будьте особенно осторожны с исполняемыми файлами, PDF-файлами от неизвестных отправителей и файлами из одноранговых сетей.</p>
+<h2 style="font-family:var(--font-display);font-size:1.1rem;margin-top:2.5rem;">Зачем это делать в браузере?</h2>
+<p style="color:var(--color-muted);max-width:60ch;line-height:1.7;">Наш инструмент работает полностью на вашем устройстве. Ваш файл никогда не загружается на сервер, что очень важно, когда вы имеете дело с конфиденциальными загрузками.</p>
+</article>
 </main>
 <footer class="site-footer wrap">
-  <p>Presend — free browser-based tools. Runs locally. No account, no tracking.</p>
+<p>Presend — бесплатные браузерные инструменты. Запускается локально. Нет аккаунта, нет отслеживания.</p>
 </footer>
 </body>
 </html>
