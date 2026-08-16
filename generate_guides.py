@@ -1,7 +1,7 @@
 import os
 import re
 
-LANGUAGES = ['fr', 'es', 'de', 'pt', 'ja', 'ru']
+LANGUAGES = ['fr', 'es', 'de', 'pt', 'ja', 'ru', 'hi']
 GUIDES_DIR = 'guides'
 
 TRANSLATIONS = {
@@ -10,7 +10,8 @@ TRANSLATIONS = {
     'de': {'back': '← Zurück zu den Werkzeugen'},
     'pt': {'back': '← Voltar para as ferramentas'},
     'ja': {'back': '← ツールに戻る'},
-    'ru': {'back': '← Назад к инструментам'}
+    'ru': {'back': '← Назад к инструментам'},
+    'hi': {'back': '← टूल पर wapas जाएं'}
 }
 
 if not os.path.exists(GUIDES_DIR):
@@ -37,4 +38,4 @@ for lang in LANGUAGES:
         with open(dest_path, 'w', encoding='utf-8') as f:
             f.write(content)
             
-print("Génération des guides russes terminée avec succès !")
+print("Génération des guides en hindi terminée avec succès !")
