@@ -23,10 +23,11 @@
 <link href="/favicon.ico" rel="icon" sizes="any"/>
 <link href="/favicon-96x96.png" rel="icon" sizes="96x96" type="image/png"/>
 <link href="/apple-touch-icon.png" rel="apple-touch-icon"/>
-<link as="style" href="/style.css" rel="preload"/>
-<link fetchpriority="high" href="/style.css" rel="stylesheet"/>
+<link as="style" hrefstyle.css" rel="preload"/>
+<link fetchpriority="high" hrefstyle.css" rel="stylesheet"/>
 <link rel="canonical" href="https://presend.pages.dev/de/tools/image-resizer" />
-<meta content="summary_large_image" name="twitter:card"/>
+<meta content="summary_large_image" name="twitter:card"/><meta content="Image Resizer — Presend" name="twitter:title" />
+<meta content="Resize any photo to exact dimensions for Instagram, Twitter, LinkedIn, forms or printing. Entirely in your browser — no upload, no server, 100% private." name="twitter:description" />
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -97,11 +98,8 @@
 </head>
 <body class="tool-page">
 <header class="site-header wrap">
-<a class="logo" href="/de/">Präsentieren</a>
-<nav aria-label="Main" class="nav">
-<a href="/de/">Alle Werkzeuge</a>
-<a href="/about">Äh</a>
-</nav>
+  <a class="brand" href="/de/"><span class="brand-mark">●</span> Presend</a>
+  <a class="nav-link" href="/de/">Alle Werkzeuge</a>
 </header>
 <main class="wrap">
 <h1>Bild-Resizer</h1>
@@ -122,9 +120,9 @@
 <button class="btn ghost preset" data-h="1080" data-w="1920" type="button">HD-Hintergrundbild</button>
 </div>
 <div style="display:flex;gap:1rem;flex-wrap:wrap;align-items:center;">
-<label>Breite:<input id="widthInput" max="8000" min="1" style="width:80px;padding:0.5rem;border:1px solid #dee2e6;border-radius:6px;" type="number" value="800"/></label>
-<label>Höhe:<input id="heightInput" max="8000" min="1" style="width:80px;padding:0.5rem;border:1px solid #dee2e6;border-radius:6px;" type="number" value="600"/></label>
-<label><input checked="" id="keepRatio" type="checkbox"/>Verhältnis beibehalten</label>
+<label>Breite:<input id="widthInput" max="8000" min="1" style="width:80px;padding:0.5rem;border:1px solid #dee2e6;border-radius:6px;" type="number" value="800" aria-label="Width in pixels" /></label>
+<label>Höhe:<input id="heightInput" max="8000" min="1" style="width:80px;padding:0.5rem;border:1px solid #dee2e6;border-radius:6px;" type="number" value="600" aria-label="Height in pixels" /></label>
+<label><input checked="" id="keepRatio" type="checkbox" aria-label="Lock aspect ratio" />Verhältnis beibehalten</label>
 <button class="btn" id="resizeBtn" type="button">Größe ändern</button>
 </div>
 <div id="preview" style="margin-top:1rem;text-align:center;"></div>

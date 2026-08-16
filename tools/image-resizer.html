@@ -22,10 +22,11 @@
   <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<link rel="preload" href="../style.css" as="style">
-    <link rel="stylesheet" fetchpriority="high" href="../style.css">
+<link rel="preload" hrefstyle.css" as="style">
+    <link rel="stylesheet" fetchpriority="high" hrefstyle.css">
 <link rel="canonical" href="https://presend.pages.dev/tools/image-resizer" />
-<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Image Resizer — Presend">
+<meta name="twitter:description" content="Resize any photo to exact dimensions for Instagram, Twitter, LinkedIn, forms or printing. Entirely in your browser — no upload, no server, 100% private.">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -105,11 +106,8 @@
 </head>
 <body class="tool-page">
 <header class="site-header wrap">
-  <a href="/" class="logo">Presend</a>
-  <nav class="nav" aria-label="Main">
-    <a href="/">All tools</a>
-    <a href="/about">About</a>
-  </nav>
+  <a class="brand" href="/"><span class="brand-mark">●</span> Presend</a>
+  <a class="nav-link" href="/">All tools</a>
 </header>
 
 <main class="wrap">
@@ -134,9 +132,9 @@
       </div>
       
       <div style="display:flex;gap:1rem;flex-wrap:wrap;align-items:center;">
-        <label>Width: <input type="number" id="widthInput" value="800" min="1" max="8000" style="width:80px;padding:0.5rem;border:1px solid #dee2e6;border-radius:6px;"></label>
-        <label>Height: <input type="number" id="heightInput" value="600" min="1" max="8000" style="width:80px;padding:0.5rem;border:1px solid #dee2e6;border-radius:6px;"></label>
-        <label><input type="checkbox" id="keepRatio" checked> Keep ratio</label>
+        <label>Width: <input type="number" id="widthInput" value="800" min="1" max="8000" style="width:80px;padding:0.5rem;border:1px solid #dee2e6;border-radius:6px;" aria-label="Width in pixels"></label>
+        <label>Height: <input type="number" id="heightInput" value="600" min="1" max="8000" style="width:80px;padding:0.5rem;border:1px solid #dee2e6;border-radius:6px;" aria-label="Height in pixels"></label>
+        <label><input type="checkbox" id="keepRatio" checked aria-label="Lock aspect ratio"> Keep ratio</label>
         <button class="btn" id="resizeBtn" type="button">Resize</button>
       </div>
       
@@ -172,7 +170,7 @@
 </footer>
 
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
-<script src="../js/feedback.js" async defer></script>
+<script src="/js/feedback.js" async defer></script>
 
 <script>
 const dropzone = document.getElementById('dropzone');

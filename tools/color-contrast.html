@@ -25,9 +25,10 @@
 <meta name="robots" content="index, follow">
   <meta name="description" content="Check if your text and background colors meet WCAG 2.1 accessibility standards. AA, AAA, and normal/large text ratios. Runs in your browser.">
 <link rel="icon" href="/favicon.ico" sizes="any">
-<link rel="stylesheet" fetchpriority="high" href="../style.css">
+<link rel="stylesheet" fetchpriority="high" hrefstyle.css">
 <link rel="canonical" href="https://presend.pages.dev/tools/color-contrast" />
-<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Color Contrast Checker — Presend">
+<meta name="twitter:description" content="Check if two colors meet WCAG accessibility standards. Runs entirely in your browser.">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -134,14 +135,14 @@
       <div class="color-field">
         <label for="fgColor">Text color</label>
         <div class="color-input-wrap">
-          <input type="color" id="fgPicker" value="#1A1D1B">
+          <input type="color" id="fgPicker" value="#1A1D1B" aria-label="Foreground color">
           <input type="text" id="fgColor" value="#1A1D1B" maxlength="7">
         </div>
       </div>
       <div class="color-field">
         <label for="bgColor">Background color</label>
         <div class="color-input-wrap">
-          <input type="color" id="bgPicker" value="#F7F5F0">
+          <input type="color" id="bgPicker" value="#F7F5F0" aria-label="Background color">
           <input type="text" id="bgColor" value="#F7F5F0" maxlength="7">
         </div>
       </div>

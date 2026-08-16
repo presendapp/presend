@@ -304,3 +304,101 @@ label:focus-visible {
   color: var(--color-muted);
   font-size: 0.85rem;
 }
+
+/* ============================================================
+   Responsive — Mobile-first additions
+   ============================================================ */
+
+/* --- Nav toggle (CSS-only checkbox hack) --- */
+.nav-toggle {
+  display: none;
+}
+.nav-toggle-label {
+  display: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  margin: -0.5rem;
+}
+.nav-toggle-label span,
+.nav-toggle-label span::before,
+.nav-toggle-label span::after {
+  display: block;
+  background: var(--color-ink);
+  height: 2px;
+  width: 22px;
+  border-radius: 2px;
+  position: relative;
+}
+.nav-toggle-label span::before,
+.nav-toggle-label span::after {
+  content: '';
+  position: absolute;
+}
+.nav-toggle-label span::before { bottom: 7px; }
+.nav-toggle-label span::after { top: 7px; }
+
+/* --- Mobile breakpoint --- */
+@media (max-width: 640px) {
+  .wrap {
+    padding: 0 var(--space-2);
+  }
+  
+  .site-header {
+    flex-wrap: wrap;
+    gap: var(--space-1);
+  }
+  
+  .nav-toggle-label {
+    display: block;
+  }
+  
+  .site-header nav {
+    display: none;
+    width: 100%;
+    flex-direction: column;
+    gap: var(--space-1);
+    padding-top: var(--space-1);
+  }
+  
+  .nav-toggle:checked ~ nav {
+    display: flex;
+  }
+  
+  .hero {
+    padding: var(--space-4) 0 var(--space-3);
+  }
+  
+  .hero h1 {
+    font-size: clamp(1.6rem, 6vw, 2rem);
+  }
+  
+  .diagram {
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+  
+  .diagram-arrow {
+    transform: rotate(90deg);
+  }
+  
+  .diagram-step {
+    flex: 1 1 auto;
+    width: 100%;
+  }
+  
+  .tool-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-1);
+  }
+  
+  .result-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-1);
+  }
+  
+  .dropzone {
+    padding: var(--space-4) var(--space-2);
+  }
+}

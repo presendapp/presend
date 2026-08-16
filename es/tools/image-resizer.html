@@ -23,10 +23,11 @@
 <link href="/favicon.ico" rel="icon" sizes="any"/>
 <link href="/favicon-96x96.png" rel="icon" sizes="96x96" type="image/png"/>
 <link href="/apple-touch-icon.png" rel="apple-touch-icon"/>
-<link as="style" href="/style.css" rel="preload"/>
-<link fetchpriority="high" href="/style.css" rel="stylesheet"/>
+<link as="style" hrefstyle.css" rel="preload"/>
+<link fetchpriority="high" hrefstyle.css" rel="stylesheet"/>
 <link rel="canonical" href="https://presend.pages.dev/es/tools/image-resizer" />
-<meta content="summary_large_image" name="twitter:card"/>
+<meta content="summary_large_image" name="twitter:card"/><meta content="Image Resizer — Presend" name="twitter:title" />
+<meta content="Resize any photo to exact dimensions for Instagram, Twitter, LinkedIn, forms or printing. Entirely in your browser — no upload, no server, 100% private." name="twitter:description" />
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -97,11 +98,8 @@
 </head>
 <body class="tool-page">
 <header class="site-header wrap">
-<a class="logo" href="/es/">presentar</a>
-<nav aria-label="Main" class="nav">
-<a href="/es/">Todas las herramientas</a>
-<a href="/about">Acerca de</a>
-</nav>
+  <a class="brand" href="/es/"><span class="brand-mark">●</span> Presend</a>
+  <a class="nav-link" href="/es/">Todas las herramientas</a>
 </header>
 <main class="wrap">
 <h1>Cambiar tamaño de imagen</h1>
@@ -122,9 +120,9 @@
 <button class="btn ghost preset" data-h="1080" data-w="1920" type="button">Fondo de pantalla HD</button>
 </div>
 <div style="display:flex;gap:1rem;flex-wrap:wrap;align-items:center;">
-<label>Ancho:<input id="widthInput" max="8000" min="1" style="width:80px;padding:0.5rem;border:1px solid #dee2e6;border-radius:6px;" type="number" value="800"/></label>
-<label>Altura:<input id="heightInput" max="8000" min="1" style="width:80px;padding:0.5rem;border:1px solid #dee2e6;border-radius:6px;" type="number" value="600"/></label>
-<label><input checked="" id="keepRatio" type="checkbox"/>mantener la proporción</label>
+<label>Ancho:<input id="widthInput" max="8000" min="1" style="width:80px;padding:0.5rem;border:1px solid #dee2e6;border-radius:6px;" type="number" value="800" aria-label="Width in pixels" /></label>
+<label>Altura:<input id="heightInput" max="8000" min="1" style="width:80px;padding:0.5rem;border:1px solid #dee2e6;border-radius:6px;" type="number" value="600" aria-label="Height in pixels" /></label>
+<label><input checked="" id="keepRatio" type="checkbox" aria-label="Lock aspect ratio" />mantener la proporción</label>
 <button class="btn" id="resizeBtn" type="button">Cambiar tamaño</button>
 </div>
 <div id="preview" style="margin-top:1rem;text-align:center;"></div>

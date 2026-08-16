@@ -17,10 +17,11 @@
 <link href="/favicon.ico" rel="icon" sizes="any"/>
 <link href="/favicon-96x96.png" rel="icon" sizes="96x96" type="image/png"/>
 <link href="/apple-touch-icon.png" rel="apple-touch-icon"/>
-<link as="style" href="../style.css" rel="preload"/>
-<link fetchpriority="high" href="../style.css" rel="stylesheet"/>
+<link as="style" hrefstyle.css" rel="preload"/>
+<link fetchpriority="high" hrefstyle.css" rel="stylesheet"/>
 <link rel="canonical" href="https://presend.pages.dev/ru/tools/image-resizer" />
-<meta content="summary_large_image" name="twitter:card"/>
+<meta content="summary_large_image" name="twitter:card"/><meta content="Изменение размера изображения — Presend" name="twitter:title" />
+<meta content="Измените размер любой фотографии до точных размеров для Instagram, Twitter, LinkedIn, форм или печати. Полностью в вашем браузере — без загрузки, без сервера, 100% конфиденциальность." name="twitter:description" />
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -99,11 +100,8 @@
 </head>
 <body class="tool-page">
 <header class="site-header wrap">
-<a class="logo" href="/ru/">представить</a>
-<nav aria-label="Main" class="nav">
-<a href="/ru/">Все инструменты</a>
-<a href="/ru/about">О</a>
-</nav>
+  <a class="brand" href="/ru/"><span class="brand-mark">●</span> Presend</a>
+  <a class="nav-link" href="/ru/">Все инструменты</a>
 </header>
 <main class="wrap">
 <h1>Изменение размера изображения</h1>
@@ -124,9 +122,9 @@
 <button class="btn ghost preset" data-h="1080" data-w="1920" type="button">HD обои</button>
 </div>
 <div style="display:flex;gap:1rem;flex-wrap:wrap;align-items:center;">
-<label>Ширина:<input id="widthInput" max="8000" min="1" style="width:80px;padding:0.5rem;border:1px solid #dee2e6;border-radius:6px;" type="number" value="800"/></label>
-<label>Высота:<input id="heightInput" max="8000" min="1" style="width:80px;padding:0.5rem;border:1px solid #dee2e6;border-radius:6px;" type="number" value="600"/></label>
-<label><input checked="" id="keepRatio" type="checkbox"/>Сохранять соотношение</label>
+<label>Ширина:<input id="widthInput" max="8000" min="1" style="width:80px;padding:0.5rem;border:1px solid #dee2e6;border-radius:6px;" type="number" value="800" aria-label="Width in pixels" /></label>
+<label>Высота:<input id="heightInput" max="8000" min="1" style="width:80px;padding:0.5rem;border:1px solid #dee2e6;border-radius:6px;" type="number" value="600" aria-label="Height in pixels" /></label>
+<label><input checked="" id="keepRatio" type="checkbox" aria-label="Lock aspect ratio" />Сохранять соотношение</label>
 <button class="btn" id="resizeBtn" type="button">Изменить размер</button>
 </div>
 <div id="preview" style="margin-top:1rem;text-align:center;"></div>
@@ -153,7 +151,7 @@
 <p>Presend — бесплатные браузерные инструменты.<a href="/ru/about">О</a> · <a href="/ru/privacy">Конфиденциальность</a></p>
 </footer>
 <script async="" defer="" src="https://challenges.cloudflare.com/turnstile/v0/api.js"></script>
-<script async="" defer="" src="../js/feedback.js"></script>
+<script async="" defer="" src="/js/feedback.js"></script>
 <script>
 const dropzone = document.getElementById('dropzone');
 const fileInput = document.getElementById('fileInput');

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta property="og:title" content="How to Verify a Downloaded File Is Safe — Presend">
+<meta property="og:title" content="ダウンロードしたファイルが安全かどうか確認する方法 — Presend">
 <meta property="og:description" content="Learn how to check a file's SHA-256 checksum to confirm it hasn't been tampered with, corrupted, or replaced by malware.">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://presend.pages.dev/guides/how-to-verify-downloaded-file-safe">
@@ -14,13 +14,14 @@
 <meta name="robots" content="index, follow">
   <meta name="description" content="Learn how to check a file's SHA-256 checksum to confirm it hasn't been tampered with, corrupted, or replaced by malware.">
 <link rel="icon" href="/favicon.ico" sizes="any">
-<link rel="stylesheet" fetchpriority="high" href="../style.css">
+<link rel="stylesheet" fetchpriority="high" hrefstyle.css">
 <link rel="canonical" href="https://presend.pages.dev/ja/guides/how-to-verify-downloaded-file-safe" />
-<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="ダウンロードしたファイルが安全かどうか確認する方法 — Presend">
+<meta name="twitter:description" content="Learn how to check a file">
 <script type="application/ld+json">{
   "@context": "https://schema.org",
   "@type": "TechArticle",
-  "headline": "How to Verify a Downloaded File Is Safe",
+  "headline": "ダウンロードしたファイルが安全かどうか確認する方法",
   "description": "Learn how to check a file's SHA-256 checksum to confirm it hasn't been tampered with, corrupted, or replaced by malware.",
   "url": "https://presend.pages.dev/guides/how-to-verify-downloaded-file-safe",
   "datePublished": "2026-08-06",
@@ -45,7 +46,7 @@
 <script type="application/ld+json">{
   "@context": "https://schema.org",
   "@type": "HowTo",
-  "name": "How to Verify a Downloaded File Is Safe",
+  "name": "ダウンロードしたファイルが安全かどうか確認する方法",
   "description": "Learn how to check a file's SHA-256 checksum to confirm it hasn't been tampered with, corrupted, or replaced by malware.",
   "totalTime": "PT5M",
   "step": [
@@ -128,20 +129,20 @@
   <a class='tool-back' href='/ja/'>← Back</a>
   <article>
     <h1>ダウンロードしたファイルが安全かどうか確認する方法</h1>
-    <p class="lede">When you download software, a document, or any file from the internet, how do you know it's the real thing? One of the most reliable ways is to verify its cryptographic checksum.</p>
-    <h2 style="font-family:var(--font-display);font-size:1.1rem;margin-top:2.5rem;">What is a checksum?</h2>
-<p style="color:var(--color-muted);max-width:60ch;line-height:1.7;">A checksum is a unique string of characters generated from a file's contents. If even a single byte changes — through corruption or malicious tampering — the checksum changes completely. SHA-256 is the industry standard for this verification.</p>
-<h2 style="font-family:var(--font-display);font-size:1.1rem;margin-top:2.5rem;">How to check SHA-256</h2>
-<p style="color:var(--color-muted);max-width:60ch;line-height:1.7;">The publisher of the file usually provides the expected SHA-256 hash. You calculate the hash of the file you downloaded and compare the two. If they match exactly, the file is intact. Use our <a href='/ja/tools/file-hash-checker'>File Hash Checker</a> to calculate SHA-256, SHA-1 and SHA-512 instantly in your browser.</p>
-<h2 style="font-family:var(--font-display);font-size:1.1rem;margin-top:2.5rem;">Red flags to watch for</h2>
-<p style="color:var(--color-muted);max-width:60ch;line-height:1.7;">If the checksum doesn't match, do not open the file. Delete it and download again from the official source. Be especially cautious with executables, PDFs from unknown senders, and files from peer-to-peer networks.</p>
-<h2 style="font-family:var(--font-display);font-size:1.1rem;margin-top:2.5rem;">Why do this in the browser?</h2>
-<p style="color:var(--color-muted);max-width:60ch;line-height:1.7;">Our tool runs entirely on your device. Your file is never uploaded to a server, which is critical when you're dealing with sensitive or confidential downloads.</p>
+    <p class="lede">インターネットからソフトウェア、文書、または任意のファイルをダウンロードしたとき、それが本物であるかどうかをどうやって知るのでしょうか？最も信頼できる方法の一つは、暗号学的ハッシュ値を検証することです。</p>
+    <h2 style="font-family:var(--font-display);font-size:1.1rem;margin-top:2.5rem;">チェックサムとは何ですか？</h2>
+<p style="color:var(--color-muted);max-width:60ch;line-height:1.7;">チェックサムは、ファイルの内容から生成された一意の文字列です。たとえ1バイトでも変更されれば — 破損や悪意のある改ざんによって — チェックサムは完全に変わります。SHA-256はこの検証の業界標準です。</p>
+<h2 style="font-family:var(--font-display);font-size:1.1rem;margin-top:2.5rem;">SHA-256を確認する方法</h2>
+<p style="color:var(--color-muted);max-width:60ch;line-height:1.7;">ファイルの公開者は通常、期待されるSHA-256ハッシュを提供します。ダウンロードしたファイルのハッシュを計算し、両者を比較します。完全に一致すれば、ファイルは無傷です。当サイトの<a href='/ja/tools/file-hash-checker'>ファイルハッシュチェッカー</a>を使用すれば、ブラウザ内で即座にSHA-256、SHA-1、SHA-512を計算できます。</p>
+<h2 style="font-family:var(--font-display);font-size:1.1rem;margin-top:2.5rem;">注意すべき警告サイン</h2>
+<p style="color:var(--color-muted);max-width:60ch;line-height:1.7;">チェックサムが一致しない場合は、ファイルを開かないでください。削除し、公式ソースから再度ダウンロードしてください。実行ファイル、不明な送信者からのPDF、ピアツーピアネットワークのファイルには特に注意してください。</p>
+<h2 style="font-family:var(--font-display);font-size:1.1rem;margin-top:2.5rem;">なぜブラウザで行うのですか？</h2>
+<p style="color:var(--color-muted);max-width:60ch;line-height:1.7;">当サイトのツールは完全にあなたの端末上で動作します。ファイルはサーバーにアップロードされることはありません。これは機密性や秘密性の高いダウンロードを扱う際に重要です。</p>
 
   </article>
 </main>
 <footer class="site-footer wrap">
-  <p>Presend — free browser-based tools. Runs locally. No account, no tracking.</p>
+  <p>Presend — 無料のブラウザ内蔵ツール。ローカルで動作し、アカウント登録も追跡もありません。</p>
 </footer>
 <script>
 if ('serviceWorker' in navigator) {

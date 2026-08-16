@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta property="og:title" content="How to Verify a Downloaded File Is Safe — Presend">
+<meta property="og:title" content="Como verificar se um arquivo baixado é seguro — Presend">
 <meta property="og:description" content="Learn how to check a file's SHA-256 checksum to confirm it hasn't been tampered with, corrupted, or replaced by malware.">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://presend.pages.dev/guides/how-to-verify-downloaded-file-safe">
@@ -14,13 +14,14 @@
 <meta name="robots" content="index, follow">
   <meta name="description" content="Learn how to check a file's SHA-256 checksum to confirm it hasn't been tampered with, corrupted, or replaced by malware.">
 <link rel="icon" href="/favicon.ico" sizes="any">
-<link rel="stylesheet" fetchpriority="high" href="../style.css">
+<link rel="stylesheet" fetchpriority="high" hrefstyle.css">
 <link rel="canonical" href="https://presend.pages.dev/pt/guides/how-to-verify-downloaded-file-safe" />
-<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Como verificar se um arquivo baixado é seguro — Presend">
+<meta name="twitter:description" content="Learn how to check a file">
 <script type="application/ld+json">{
   "@context": "https://schema.org",
   "@type": "TechArticle",
-  "headline": "How to Verify a Downloaded File Is Safe",
+  "headline": "Como verificar se um arquivo baixado é seguro",
   "description": "Learn how to check a file's SHA-256 checksum to confirm it hasn't been tampered with, corrupted, or replaced by malware.",
   "url": "https://presend.pages.dev/guides/how-to-verify-downloaded-file-safe",
   "datePublished": "2026-08-06",
@@ -45,7 +46,7 @@
 <script type="application/ld+json">{
   "@context": "https://schema.org",
   "@type": "HowTo",
-  "name": "How to Verify a Downloaded File Is Safe",
+  "name": "Como verificar se um arquivo baixado é seguro",
   "description": "Learn how to check a file's SHA-256 checksum to confirm it hasn't been tampered with, corrupted, or replaced by malware.",
   "totalTime": "PT5M",
   "step": [
@@ -128,20 +129,20 @@
   <a class='tool-back' href='/pt/'>← Back</a>
   <article>
     <h1>Como verificar se um arquivo baixado é seguro</h1>
-    <p class="lede">When you download software, a document, or any file from the internet, how do you know it's the real thing? One of the most reliable ways is to verify its cryptographic checksum.</p>
-    <h2 style="font-family:var(--font-display);font-size:1.1rem;margin-top:2.5rem;">What is a checksum?</h2>
-<p style="color:var(--color-muted);max-width:60ch;line-height:1.7;">A checksum is a unique string of characters generated from a file's contents. If even a single byte changes — through corruption or malicious tampering — the checksum changes completely. SHA-256 is the industry standard for this verification.</p>
-<h2 style="font-family:var(--font-display);font-size:1.1rem;margin-top:2.5rem;">How to check SHA-256</h2>
-<p style="color:var(--color-muted);max-width:60ch;line-height:1.7;">The publisher of the file usually provides the expected SHA-256 hash. You calculate the hash of the file you downloaded and compare the two. If they match exactly, the file is intact. Use our <a href='/pt/tools/file-hash-checker'>File Hash Checker</a> to calculate SHA-256, SHA-1 and SHA-512 instantly in your browser.</p>
-<h2 style="font-family:var(--font-display);font-size:1.1rem;margin-top:2.5rem;">Red flags to watch for</h2>
-<p style="color:var(--color-muted);max-width:60ch;line-height:1.7;">If the checksum doesn't match, do not open the file. Delete it and download again from the official source. Be especially cautious with executables, PDFs from unknown senders, and files from peer-to-peer networks.</p>
-<h2 style="font-family:var(--font-display);font-size:1.1rem;margin-top:2.5rem;">Why do this in the browser?</h2>
-<p style="color:var(--color-muted);max-width:60ch;line-height:1.7;">Our tool runs entirely on your device. Your file is never uploaded to a server, which is critical when you're dealing with sensitive or confidential downloads.</p>
+    <p class="lede">Quando você baixa software, um documento ou qualquer arquivo da internet, como sabe que é o verdadeiro? Uma das formas mais confiáveis é verificar sua soma de verificação criptográfica.</p>
+    <h2 style="font-family:var(--font-display);font-size:1.1rem;margin-top:2.5rem;">O que é uma soma de verificação?</h2>
+<p style="color:var(--color-muted);max-width:60ch;line-height:1.7;">Uma soma de verificação é uma cadeia de caracteres única gerada a partir do conteúdo de um arquivo. Se mesmo um único byte mudar — por corrupção ou adulteração maliciosa — a soma de verificação muda completamente. SHA-256 é o padrão da indústria para esta verificação.</p>
+<h2 style="font-family:var(--font-display);font-size:1.1rem;margin-top:2.5rem;">Como verificar SHA-256</h2>
+<p style="color:var(--color-muted);max-width:60ch;line-height:1.7;">O publicador do arquivo geralmente fornece o hash SHA-256 esperado. Você calcula o hash do arquivo baixado e compara os dois. Se corresponderem exatamente, o arquivo está intacto. Use nosso <a href='/pt/tools/file-hash-checker'>verificador de hash de arquivos</a> para calcular SHA-256, SHA-1 e SHA-512 instantaneamente no seu navegador.</p>
+<h2 style="font-family:var(--font-display);font-size:1.1rem;margin-top:2.5rem;">Sinais de alerta para observar</h2>
+<p style="color:var(--color-muted);max-width:60ch;line-height:1.7;">Se a soma de verificação não corresponder, não abra o arquivo. Exclua-o e baixe novamente da fonte oficial. Tenha especial cuidado com executáveis, PDFs de remetentes desconhecidos e arquivos de redes peer-to-peer.</p>
+<h2 style="font-family:var(--font-display);font-size:1.1rem;margin-top:2.5rem;">Por que fazer isso no navegador?</h2>
+<p style="color:var(--color-muted);max-width:60ch;line-height:1.7;">Nossa ferramenta funciona inteiramente no seu dispositivo. Seu arquivo nunca é enviado para um servidor, o que é crítico quando você lida com downloads sensíveis ou confidenciais.</p>
 
   </article>
 </main>
 <footer class="site-footer wrap">
-  <p>Presend — free browser-based tools. Runs locally. No account, no tracking.</p>
+  <p>Presend — ferramentas gratuitas no navegador. Funciona localmente. Sem conta, sem rastreamento.</p>
 </footer>
 <script>
 if ('serviceWorker' in navigator) {
