@@ -7,40 +7,10 @@
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://presend.pages.dev/.backup-seo-20260731/exif-remover</loc>
-    <lastmod>2026-08-16</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://presend.pages.dev/.backup-seo-20260731/index</loc>
-    <lastmod>2026-08-16</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-  </url>
-  <url>
-    <loc>https://presend.pages.dev/.backup-seo-20260731/pdf-metadata-remover</loc>
-    <lastmod>2026-08-16</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://presend.pages.dev/404</loc>
-    <lastmod>2026-08-16</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.1</priority>
-  </url>
-  <url>
     <loc>https://presend.pages.dev/about</loc>
     <lastmod>2026-08-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://presend.pages.dev/admin</loc>
-    <lastmod>2026-08-16</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.1</priority>
   </url>
   <url>
     <loc>https://presend.pages.dev/alternatives</loc>
@@ -49,34 +19,16 @@
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://presend.pages.dev/de/404</loc>
-    <lastmod>2026-08-16</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.1</priority>
-  </url>
-  <url>
     <loc>https://presend.pages.dev/de/about</loc>
     <lastmod>2026-08-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://presend.pages.dev/de/admin</loc>
-    <lastmod>2026-08-16</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.1</priority>
-  </url>
-  <url>
     <loc>https://presend.pages.dev/de/alternatives</loc>
     <lastmod>2026-08-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://presend.pages.dev/de/embed</loc>
-    <lastmod>2026-08-16</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.3</priority>
   </url>
   <url>
     <loc>https://presend.pages.dev/de/faq</loc>
@@ -259,40 +211,16 @@
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://presend.pages.dev/embed</loc>
-    <lastmod>2026-08-16</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.3</priority>
-  </url>
-  <url>
-    <loc>https://presend.pages.dev/es/404</loc>
-    <lastmod>2026-08-16</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.1</priority>
-  </url>
-  <url>
     <loc>https://presend.pages.dev/es/about</loc>
     <lastmod>2026-08-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://presend.pages.dev/es/admin</loc>
-    <lastmod>2026-08-16</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.1</priority>
-  </url>
-  <url>
     <loc>https://presend.pages.dev/es/alternatives</loc>
     <lastmod>2026-08-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://presend.pages.dev/es/embed</loc>
-    <lastmod>2026-08-16</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.3</priority>
   </url>
   <url>
     <loc>https://presend.pages.dev/es/faq</loc>
@@ -481,34 +409,16 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://presend.pages.dev/fr/404</loc>
-    <lastmod>2026-08-16</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.1</priority>
-  </url>
-  <url>
     <loc>https://presend.pages.dev/fr/about</loc>
     <lastmod>2026-08-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://presend.pages.dev/fr/admin</loc>
-    <lastmod>2026-08-16</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.1</priority>
-  </url>
-  <url>
     <loc>https://presend.pages.dev/fr/alternatives</loc>
     <lastmod>2026-08-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://presend.pages.dev/fr/embed</loc>
-    <lastmod>2026-08-16</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.3</priority>
   </url>
   <url>
     <loc>https://presend.pages.dev/fr/faq</loc>
@@ -721,34 +631,16 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://presend.pages.dev/hi/404</loc>
-    <lastmod>2026-08-16</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.1</priority>
-  </url>
-  <url>
     <loc>https://presend.pages.dev/hi/about</loc>
     <lastmod>2026-08-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://presend.pages.dev/hi/admin</loc>
-    <lastmod>2026-08-16</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.1</priority>
-  </url>
-  <url>
     <loc>https://presend.pages.dev/hi/alternatives</loc>
     <lastmod>2026-08-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://presend.pages.dev/hi/embed</loc>
-    <lastmod>2026-08-16</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.3</priority>
   </url>
   <url>
     <loc>https://presend.pages.dev/hi/faq</loc>
@@ -1177,34 +1069,16 @@
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://presend.pages.dev/ja/404</loc>
-    <lastmod>2026-08-16</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.1</priority>
-  </url>
-  <url>
     <loc>https://presend.pages.dev/ja/about</loc>
     <lastmod>2026-08-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://presend.pages.dev/ja/admin</loc>
-    <lastmod>2026-08-16</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.1</priority>
-  </url>
-  <url>
     <loc>https://presend.pages.dev/ja/alternatives</loc>
     <lastmod>2026-08-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://presend.pages.dev/ja/embed</loc>
-    <lastmod>2026-08-16</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.3</priority>
   </url>
   <url>
     <loc>https://presend.pages.dev/ja/faq</loc>
@@ -1393,34 +1267,16 @@
     <priority>0.4</priority>
   </url>
   <url>
-    <loc>https://presend.pages.dev/pt/404</loc>
-    <lastmod>2026-08-16</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.1</priority>
-  </url>
-  <url>
     <loc>https://presend.pages.dev/pt/about</loc>
     <lastmod>2026-08-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://presend.pages.dev/pt/admin</loc>
-    <lastmod>2026-08-16</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.1</priority>
-  </url>
-  <url>
     <loc>https://presend.pages.dev/pt/alternatives</loc>
     <lastmod>2026-08-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://presend.pages.dev/pt/embed</loc>
-    <lastmod>2026-08-16</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.3</priority>
   </url>
   <url>
     <loc>https://presend.pages.dev/pt/faq</loc>
@@ -1603,34 +1459,16 @@
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://presend.pages.dev/ru/404</loc>
-    <lastmod>2026-08-16</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.1</priority>
-  </url>
-  <url>
     <loc>https://presend.pages.dev/ru/about</loc>
     <lastmod>2026-08-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://presend.pages.dev/ru/admin</loc>
-    <lastmod>2026-08-16</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.1</priority>
-  </url>
-  <url>
     <loc>https://presend.pages.dev/ru/alternatives</loc>
     <lastmod>2026-08-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://presend.pages.dev/ru/embed</loc>
-    <lastmod>2026-08-16</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.3</priority>
   </url>
   <url>
     <loc>https://presend.pages.dev/ru/faq</loc>
