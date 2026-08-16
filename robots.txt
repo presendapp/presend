@@ -1,11 +1,9 @@
 User-agent: *
 Allow: /
-Disallow: /vendor/
-Disallow: /admin/
-Disallow: /api/
+Disallow: /embed
+Disallow: /admin
+Disallow: /*/embed
+Disallow: /*/admin
+Disallow: /.backup-seo-20260731/
 
 Sitemap: https://presend.pages.dev/sitemap.xml
-
-# LLM-friendly summary
-# https://llmstxt.org/
-LLMs: https://presend.pages.dev/llms.txt
