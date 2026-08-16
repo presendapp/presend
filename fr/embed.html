@@ -84,5 +84,10 @@
 <footer class="site-footer wrap">
 <p>Present – ​​​​outils gratuits utilisés sur un navigateur.<a href="/about">À propos de</a> · <a href="/privacy">Confidentialité</a></p>
 </footer>
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js').catch(() => {});
+}
+</script>
 </body>
 </html>

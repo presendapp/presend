@@ -182,5 +182,10 @@
   "description": "Remove hidden EXIF metadata (GPS, camera model, timestamps) from a photo entirely client-side."
 }
 </script>
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js').catch(() => {});
+}
+</script>
 </body>
 </html>

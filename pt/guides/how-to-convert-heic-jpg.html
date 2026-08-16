@@ -95,6 +95,38 @@
 <link rel="alternate" hreflang="hi" href="https://presend.pages.dev/hi/guides/how-to-convert-heic-jpg" />
 <link rel="alternate" hreflang="x-default" href="https://presend.pages.dev/" />
 <meta property="og:locale" content="pt_BR" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Como converter HEIC para JPG gratuitamente?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Use nossa ferramenta online. Arraste e solte seu arquivo HEIC, ele é convertido instantaneamente para JPG no seu navegador. Sem upload para servidor."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "O conversor funciona no iPhone?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sim, funciona em todos os dispositivos: iPhone, Android, Windows, Mac e Linux. Tudo acontece no navegador."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "A qualidade é preservada?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sim, a conversão preserva a qualidade original da imagem. Nenhuma compressão adicional é aplicada."
+      }
+    }
+  ]
+}
+</script>
 </head>
 <body class="tool-page">
 <header class="site-header wrap">
@@ -120,5 +152,10 @@
 <footer class="site-footer wrap">
   <p>Presend — free browser-based tools. Runs locally. No account, no tracking.</p>
 </footer>
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js').catch(() => {});
+}
+</script>
 </body>
 </html>

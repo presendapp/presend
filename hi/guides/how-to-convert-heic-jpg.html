@@ -96,6 +96,38 @@
 <link href="https://presend.pages.dev/hi/guides/how-to-convert-heic-jpg" hreflang="hi" rel="alternate"/>
 <link href="https://presend.pages.dev/" hreflang="x-default" rel="alternate"/>
 <meta property="og:locale" content="hi_IN" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "HEIC को JPG में मुफ्त में कैसे बदलें?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "हमारे ऑनलाइन टूल का उपयोग करें। HEIC फ़ाइल को खींचें और छोड़ें, यह तुरंत आपके ब्राउज़र में JPG में बदल जाएगी। सर्वर पर अपलोड नहीं।"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "क्या कनवर्टर iPhone पर काम करता है?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "हाँ, यह सभी डिवाइस पर काम करता है: iPhone, Android, Windows, Mac और Linux। सब कुछ ब्राउज़र में होता है।"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "क्या गुणवत्ता बनी रहती है?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "हाँ, कनवर्जन मूल छवि की गुणवत्ता को बनाए रखता है। कोई अतिरिक्त संपीड़न लागू नहीं किया जाता।"
+      }
+    }
+  ]
+}
+</script>
 </head>
 <body class="tool-page">
 <header class="site-header wrap">
@@ -120,5 +152,10 @@
 <footer class="site-footer wrap">
 <p>प्रेज़ेंड - निःशुल्क ब्राउज़र-आधारित उपकरण। स्थानीय स्तर पर चलता है. कोई खाता नहीं, कोई ट्रैकिंग नहीं.</p>
 </footer>
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js').catch(() => {});
+}
+</script>
 </body>
 </html>

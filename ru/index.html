@@ -2,21 +2,7 @@
 
 <html lang="ru">
 <head>
-<script>
-  (function() {
-    if (!localStorage.getItem('lang_redirected')) {
-      var lang = navigator.language || navigator.userLanguage;
-      if (lang) {
-        var code = lang.substring(0, 2).toLowerCase();
-        var supported = ['fr', 'es', 'de', 'pt', 'ja'];
-        if (supported.includes(code)) {
-          localStorage.setItem('lang_redirected', 'true');
-          window.location.replace('/' + code + '/');
-        }
-      }
-    }
-  })();
-</script>
+
 <meta content="Gc3XxNyjH4EKteXDWKKdHYKyhtfMAfdrbNLIbo-quS4" name="google-site-verification"/>
 <meta charset="utf-8"/>
 <link crossorigin="" href="https://cdn.jsdelivr.net" rel="preconnect"/>
@@ -288,6 +274,21 @@
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('/sw.js');
 }
+</script>
+<script>
+  (function() {
+    if (!localStorage.getItem('lang_redirected')) {
+      var lang = navigator.language || navigator.userLanguage;
+      if (lang) {
+        var code = lang.substring(0, 2).toLowerCase();
+        var supported = ['fr', 'es', 'de', 'pt', 'ja'];
+        if (supported.includes(code)) {
+          localStorage.setItem('lang_redirected', 'true');
+          window.location.replace('/' + code + '/');
+        }
+      }
+    }
+  })();
 </script>
 </body>
 </html>

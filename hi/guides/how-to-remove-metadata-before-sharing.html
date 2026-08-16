@@ -122,5 +122,10 @@
 <footer class="site-footer wrap">
 <p>प्रेज़ेंड - निःशुल्क ब्राउज़र-आधारित उपकरण। स्थानीय स्तर पर चलता है. कोई खाता नहीं, कोई ट्रैकिंग नहीं.</p>
 </footer>
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js').catch(() => {});
+}
+</script>
 </body>
 </html>

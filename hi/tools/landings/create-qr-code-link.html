@@ -69,5 +69,10 @@
 <footer class="site-footer wrap">
 <p>प्रेज़ेंड - निःशुल्क ब्राउज़र-आधारित उपकरण।<a href="/hi/about">के बारे में</a> · <a href="/hi/privacy">गोपनीयता</a></p>
 </footer>
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js').catch(() => {});
+}
+</script>
 </body>
 </html>

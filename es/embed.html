@@ -84,5 +84,10 @@
 <footer class="site-footer wrap">
 <p>Presente: herramientas gratuitas basadas en navegador.<a href="/about">Acerca de</a> · <a href="/privacy">Privacidad</a></p>
 </footer>
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js').catch(() => {});
+}
+</script>
 </body>
 </html>

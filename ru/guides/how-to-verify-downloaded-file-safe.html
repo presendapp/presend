@@ -120,5 +120,10 @@
 <footer class="site-footer wrap">
 <p>Presend — бесплатные браузерные инструменты. Запускается локально. Нет аккаунта, нет отслеживания.</p>
 </footer>
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js').catch(() => {});
+}
+</script>
 </body>
 </html>

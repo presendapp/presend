@@ -224,5 +224,10 @@
   "description": "Remove hidden document metadata from a PDF entirely client-side, using pdf-lib."
 }
 </script>
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js').catch(() => {});
+}
+</script>
 </body>
 </html>
