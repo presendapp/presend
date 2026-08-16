@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="ru">
 <head>
 <meta charset="utf-8"/>
@@ -63,7 +64,7 @@
 }
 </script>
 <!--seo-org-->
-<script type="application/ld+json">\n{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[    {"@type":"Question","name":'What counts as word?',"acceptedAnswer":{"@type":"Answer","text":'Sequence separated by whitespace.'}},    {"@type":"Question","name":'Sentences accurate?',"acceptedAnswer":{"@type":"Answer","text":'Splits on .!? Abbreviations may miscount.'}},    {"@type":"Question","name":'Characters with spaces?',"acceptedAnswer":{"@type":"Answer","text":'Yes, both with and without.'}},    {"@type":"Question","name":'Limit?',"acceptedAnswer":{"@type":"Answer","text":'No hard limit.'}},    {"@type":"Question","name":'Text uploaded?',"acceptedAnswer":{"@type":"Answer","text":'No. Real-time local counting.'}}]}\n</script></head><body>\nSEO-часто задаваемые вопросы\n<link href="/manifest.json" rel="manifest"/>
+<script type="application/ld+json">\n{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[    {"@type":"Question","name":'What counts as word?',"acceptedAnswer":{"@type":"Answer","text":'Sequence separated by whitespace.'}},    {"@type":"Question","name":'Sentences accurate?',"acceptedAnswer":{"@type":"Answer","text":'Splits on .!? Abbreviations may miscount.'}},    {"@type":"Question","name":'Characters with spaces?',"acceptedAnswer":{"@type":"Answer","text":'Yes, both with and without.'}},    {"@type":"Question","name":'Limit?',"acceptedAnswer":{"@type":"Answer","text":'No hard limit.'}},    {"@type":"Question","name":'Text uploaded?',"acceptedAnswer":{"@type":"Answer","text":'No. Real-time local counting.'}}]}\n</script>\n<!--seo-faq-->\n<link href="/manifest.json" rel="manifest"/>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
     {"@type":"Question","name":"What does the word counter measure?","acceptedAnswer":{"@type":"Answer","text":"It counts words, characters (with and without spaces), sentences, paragraphs, and estimates reading time based on average adult reading speed (200 words per minute)."}},
@@ -72,7 +73,7 @@
     {"@type":"Question","name":"Is my text uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. The analysis happens entirely in your browser. Your drafts, essays, and documents are never sent to any server."}}
 ]}
 </script>
-SEO-часто задаваемые вопросы
+<!--seo-faq-->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -87,7 +88,7 @@ SEO-часто задаваемые вопросы
   ]
 }
 </script>
-SEO-инструкции
+<!--seo-howto-->
 <meta content="ru_RU" property="og:locale"/>
 <link href="https://presend.pages.dev/tools/word-counter" hreflang="en" rel="alternate"/>
 <link href="https://presend.pages.dev/fr/tools/word-counter" hreflang="fr" rel="alternate"/>
@@ -98,6 +99,8 @@ SEO-инструкции
 <link href="https://presend.pages.dev/ru/tools/word-counter" hreflang="ru" rel="alternate"/>
 <link href="https://presend.pages.dev/hi/tools/word-counter" hreflang="hi" rel="alternate"/>
 <link href="https://presend.pages.dev/" hreflang="x-default" rel="alternate"/>
+</head>
+<body class="tool-page">
 <header class="site-header wrap">
 <a class="brand" href="/ru/"><span class="brand-mark">●</span>представить</a>
 <a class="nav-link" href="/ru/">Все инструменты</a>
@@ -109,7 +112,7 @@ SEO-инструкции
 <span class="trust-badge">Ваши данные никогда не отправляются на наши серверы</span>
 <div style="margin-top: 2rem;">
 <label for="inputText" style="display:block; font-weight:500; margin-bottom:0.5rem;">Введите или вставьте текст</label>
-<textarea id="inputText" placeholder="Начните вводить или вставьте сюда свой текст..." rows="10" style="width:100%; padding:1rem; border:1px solid var(--color-line); border-radius:var(--radius); font-size:0.95rem; resize:vertical;"></textarea>
+<textarea id="inputText" placeholder="Start typing or paste your text here..." rows="10" style="width:100%; padding:1rem; border:1px solid var(--color-line); border-radius:var(--radius); font-size:0.95rem; resize:vertical;"></textarea>
 <div class="counter-grid">
 <div class="counter-card"><div class="counter-value" id="wordCount">0</div><div class="counter-label">Слова</div></div>
 <div class="counter-card"><div class="counter-value" id="charCount">0</div><div class="counter-label">Персонажи</div></div>
@@ -142,6 +145,7 @@ SEO-инструкции
 </a>
 </div>
 </section>
+
 <section class="wrap" style="margin-top:3rem;">
 <h2 style="font-family:var(--font-display);font-size:1.1rem;">Узнать больше</h2>
 <p style="color:var(--color-muted);max-width:60ch;line-height:1.7;margin-top:0.75rem;">
@@ -260,4 +264,5 @@ document.getElementById('shareBtn').addEventListener('click', async function() {
   }
 });
 </script>
-</body></html>
+</body>
+</html>

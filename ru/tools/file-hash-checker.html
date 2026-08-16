@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="ru">
 <head>
 <meta charset="utf-8"/>
@@ -64,7 +65,7 @@
 }
 </script>
 <!--seo-org-->
-<script type="application/ld+json">\n{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[    {"@type":"Question","name":'What is SHA-256?',"acceptedAnswer":{"@type":"Answer","text":'A cryptographic hash producing a unique 64-char fingerprint.'}},    {"@type":"Question","name":'Why verify integrity?',"acceptedAnswer":{"@type":"Answer","text":'To confirm a file was not corrupted or tampered with.'}},    {"@type":"Question","name":'Which algorithms?',"acceptedAnswer":{"@type":"Answer","text":'SHA-256, SHA-1, SHA-512.'}},    {"@type":"Question","name":'File uploaded?',"acceptedAnswer":{"@type":"Answer","text":'No. Processed locally via Web Crypto API.'}},    {"@type":"Question","name":'Large files?',"acceptedAnswer":{"@type":"Answer","text":'No practical limit, processed in chunks locally.'}}]}\n</script></head><body>\nSEO-часто задаваемые вопросы\n<link href="/manifest.json" rel="manifest"/>
+<script type="application/ld+json">\n{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[    {"@type":"Question","name":'What is SHA-256?',"acceptedAnswer":{"@type":"Answer","text":'A cryptographic hash producing a unique 64-char fingerprint.'}},    {"@type":"Question","name":'Why verify integrity?',"acceptedAnswer":{"@type":"Answer","text":'To confirm a file was not corrupted or tampered with.'}},    {"@type":"Question","name":'Which algorithms?',"acceptedAnswer":{"@type":"Answer","text":'SHA-256, SHA-1, SHA-512.'}},    {"@type":"Question","name":'File uploaded?',"acceptedAnswer":{"@type":"Answer","text":'No. Processed locally via Web Crypto API.'}},    {"@type":"Question","name":'Large files?',"acceptedAnswer":{"@type":"Answer","text":'No practical limit, processed in chunks locally.'}}]}\n</script>\n<!--seo-faq-->\n<link href="/manifest.json" rel="manifest"/>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -79,7 +80,7 @@
   ]
 }
 </script>
-SEO-инструкции
+<!--seo-howto-->
 <meta content="ru_RU" property="og:locale"/>
 <link href="https://presend.pages.dev/tools/file-hash-checker" hreflang="en" rel="alternate"/>
 <link href="https://presend.pages.dev/fr/tools/file-hash-checker" hreflang="fr" rel="alternate"/>
@@ -90,6 +91,8 @@ SEO-инструкции
 <link href="https://presend.pages.dev/ru/tools/file-hash-checker" hreflang="ru" rel="alternate"/>
 <link href="https://presend.pages.dev/hi/tools/file-hash-checker" hreflang="hi" rel="alternate"/>
 <link href="https://presend.pages.dev/" hreflang="x-default" rel="alternate"/>
+</head>
+<body class="tool-page">
 <header class="site-header wrap">
 <a class="brand" href="/ru/"><span class="brand-mark">●</span>представить</a>
 <a class="nav-link" href="/ru/">Все инструменты</a>
@@ -100,7 +103,7 @@ SEO-инструкции
 <p class="lede">Рассчитайте контрольную сумму SHA-256, SHA-1 и SHA-512 любого файла, чтобы убедиться, что он не был изменен или поврежден. Все работает на вашем устройстве — файл никогда не загружается.</p>
 <span class="trust-badge">Ваши файлы никогда не отправляются на наши серверы</span>
 <div style="margin-top: 2rem;">
-<div aria-label="Выберите файл или закиньте его сюда" class="dropzone" id="dropzone" role="button" tabindex="0">
+<div aria-label="Choose a file or drop it here" class="dropzone" id="dropzone" role="button" tabindex="0">
 <p class="primary">Перетащите сюда файл или нажмите, чтобы выбрать его.</p>
 <p class="secondary">Любой тип файла. Ничего не покидает ваше устройство.</p>
 <input id="fileInput" type="file"/>
@@ -118,6 +121,7 @@ SEO-инструкции
 <button class="btn ghost" id="shareBtn" style="margin-left:0.5rem;" type="button">🔗 Скопируйте ссылку «Поделиться»</button>
 </div>
 </div>
+
 <section class="wrap" style="margin-top:3rem;">
 <h2 style="font-family:var(--font-display);font-size:1.1rem;">Сопутствующие инструменты</h2>
 <div class="tool-grid" style="margin-top:1rem;">
@@ -141,6 +145,7 @@ SEO-инструкции
 <a href="/ru/guides/how-to-verify-downloaded-file-safe">Прочтите наше руководство: Как убедиться, что загруженный файл безопасен</a>
 </p>
 </section>
+
 SEO-инструменты
 </main>
 <footer class="site-footer wrap">
@@ -287,4 +292,5 @@ document.getElementById('shareBtn').addEventListener('click', async function() {
   }
 });
 </script>
-</body></html>
+</body>
+</html>

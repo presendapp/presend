@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="hi">
 <head>
 <meta charset="utf-8"/>
@@ -56,7 +57,7 @@
 }
 </script>
 <!--seo-org-->
-<script type="application/ld+json">\n{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[    {"@type":"Question","name":'What is Base64?',"acceptedAnswer":{"@type":"Answer","text":'Encoding binary to ASCII for embedding.'}},    {"@type":"Question","name":'When to use?',"acceptedAnswer":{"@type":"Answer","text":'Small icons, HTML emails, data URIs.'}},    {"@type":"Question","name":'Larger?',"acceptedAnswer":{"@type":"Answer","text":'Yes, ~33% larger. Use for small images only.'}},    {"@type":"Question","name":'Formats?',"acceptedAnswer":{"@type":"Answer","text":'JPG, PNG, GIF, WebP, SVG.'}},    {"@type":"Question","name":'Image uploaded?',"acceptedAnswer":{"@type":"Answer","text":'No. Local via FileReader API.'}}]}\n</script></head><body>\nseo-faq\n<link href="/manifest.json" rel="manifest"/>
+<script type="application/ld+json">\n{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[    {"@type":"Question","name":'What is Base64?',"acceptedAnswer":{"@type":"Answer","text":'Encoding binary to ASCII for embedding.'}},    {"@type":"Question","name":'When to use?',"acceptedAnswer":{"@type":"Answer","text":'Small icons, HTML emails, data URIs.'}},    {"@type":"Question","name":'Larger?',"acceptedAnswer":{"@type":"Answer","text":'Yes, ~33% larger. Use for small images only.'}},    {"@type":"Question","name":'Formats?',"acceptedAnswer":{"@type":"Answer","text":'JPG, PNG, GIF, WebP, SVG.'}},    {"@type":"Question","name":'Image uploaded?',"acceptedAnswer":{"@type":"Answer","text":'No. Local via FileReader API.'}}]}\n</script>\n<!--seo-faq-->\n<link href="/manifest.json" rel="manifest"/>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
     {"@type":"Question","name":"What is Base64 encoding?","acceptedAnswer":{"@type":"Answer","text":"Base64 is a method of converting binary data (like images) into ASCII text strings. It is commonly used to embed images directly in HTML, CSS, or JSON."}},
@@ -65,7 +66,7 @@
     {"@type":"Question","name":"Does this work offline?","acceptedAnswer":{"@type":"Answer","text":"Yes. The conversion happens entirely in your browser with no server upload required."}}
 ]}
 </script>
-seo-faq
+<!--seo-faq-->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -80,7 +81,7 @@ seo-faq
   ]
 }
 </script>
-एसईओ-कैसे करें
+<!--seo-howto-->
 <meta content="hi_IN" property="og:locale"/>
 <link href="https://presend.pages.dev/tools/image-to-base64" hreflang="en" rel="alternate"/>
 <link href="https://presend.pages.dev/fr/tools/image-to-base64" hreflang="fr" rel="alternate"/>
@@ -91,6 +92,8 @@ seo-faq
 <link href="https://presend.pages.dev/ru/tools/image-to-base64" hreflang="ru" rel="alternate"/>
 <link href="https://presend.pages.dev/hi/tools/image-to-base64" hreflang="hi" rel="alternate"/>
 <link href="https://presend.pages.dev/" hreflang="x-default" rel="alternate"/>
+</head>
+<body class="tool-page">
 <header class="site-header wrap">
 <a class="brand" href="/hi/"><span class="brand-mark">●</span>प्रस्तुत करें</a>
 <a class="nav-link" href="/hi/">सभी उपकरण</a>
@@ -101,7 +104,7 @@ seo-faq
 <p class="lede">HTML, CSS या ईमेल में सीधे एम्बेड करने के लिए किसी भी छवि को बेस64 डेटा यूआरआई में बदलें। किसी बाहरी फ़ाइल की आवश्यकता नहीं. छवि केवल आपके डिवाइस पर संसाधित की जाती है।</p>
 <span class="trust-badge">आपकी फ़ाइलें कभी भी हमारे सर्वर पर नहीं भेजी जातीं</span>
 <div style="margin-top: 2rem;">
-<div aria-label="कोई छवि चुनें या उसे यहां छोड़ें" class="dropzone" id="dropzone" role="button" tabindex="0">
+<div aria-label="Choose an image or drop it here" class="dropzone" id="dropzone" role="button" tabindex="0">
 <p class="primary">यहां एक छवि छोड़ें, या किसी एक को चुनने के लिए क्लिक करें</p>
 <p class="secondary">जेपीजी, पीएनजी, जीआईएफ, वेबपी, एसवीजी। आपके डिवाइस से कुछ भी नहीं छूटता.</p>
 <input accept="image/*" id="fileInput" type="file"/>
@@ -111,7 +114,7 @@ seo-faq
 <div style="display:flex; gap:1.5rem; flex-wrap:wrap; margin-bottom:1rem;">
 <div style="flex:1; min-width:200px;">
 <h3 style="font-family: var(--font-display); font-size:1.05rem; margin-bottom:0.5rem;">पूर्व दर्शन</h3>
-<img alt="अपलोड की गई छवि का पूर्वावलोकन" decoding="async" id="previewImg" loading="lazy" style="max-width:100%; max-height:200px; border-radius:var(--radius); border:1px solid var(--color-line);"/>
+<img alt="Preview of uploaded image" decoding="async" id="previewImg" loading="lazy" style="max-width:100%; max-height:200px; border-radius:var(--radius); border:1px solid var(--color-line);"/ width="600" height="400">
 <div id="fileInfo" style="margin-top:0.5rem; font-size:0.85rem; color:var(--color-muted);"></div>
 </div>
 <div style="flex:2; min-width:300px;">
@@ -145,6 +148,7 @@ seo-faq
 </a>
 </div>
 </section>
+
 <section class="wrap" style="margin-top:3rem;">
 <h2 style="font-family:var(--font-display);font-size:1.1rem;">और अधिक जानें</h2>
 <p style="color:var(--color-muted);max-width:60ch;line-height:1.7;margin-top:0.75rem;">
@@ -274,4 +278,5 @@ document.getElementById('shareBtn').addEventListener('click', async function() {
   }
 });
 </script>
-</body></html>
+</body>
+</html>

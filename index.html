@@ -7,7 +7,7 @@
       var lang = navigator.language || navigator.userLanguage;
       if (lang) {
         var code = lang.substring(0, 2).toLowerCase();
-        var supported = ['fr', 'es', 'de', 'pt', 'ja'];
+        var supported = ['fr', 'es', 'de', 'pt', 'ja', 'ru', 'hi'];
         if (supported.includes(code)) {
           localStorage.setItem('lang_redirected', 'true');
           window.location.replace('/' + code + '/');

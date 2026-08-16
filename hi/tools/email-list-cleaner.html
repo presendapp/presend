@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="hi">
 <head>
 <meta charset="utf-8"/>
@@ -56,7 +57,7 @@
 }
 </script>
 <!--seo-org-->
-<script type="application/ld+json">\n{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[    {"@type":"Question","name":'What does it clean?',"acceptedAnswer":{"@type":"Answer","text":'Duplicates, whitespace, formatting issues.'}},    {"@type":"Question","name":'Validate emails?',"acceptedAnswer":{"@type":"Answer","text":'Basic syntax check only.'}},    {"@type":"Question","name":'Sort?',"acceptedAnswer":{"@type":"Answer","text":'Yes, alphabetically or by domain.'}},    {"@type":"Question","name":'List uploaded?',"acceptedAnswer":{"@type":"Answer","text":'No. Processed locally.'}},    {"@type":"Question","name":'Output format?',"acceptedAnswer":{"@type":"Answer","text":'Plain text, one email per line.'}}]}\n</script></head><body>\nseo-faq\n<link href="/manifest.json" rel="manifest"/>
+<script type="application/ld+json">\n{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[    {"@type":"Question","name":'What does it clean?',"acceptedAnswer":{"@type":"Answer","text":'Duplicates, whitespace, formatting issues.'}},    {"@type":"Question","name":'Validate emails?',"acceptedAnswer":{"@type":"Answer","text":'Basic syntax check only.'}},    {"@type":"Question","name":'Sort?',"acceptedAnswer":{"@type":"Answer","text":'Yes, alphabetically or by domain.'}},    {"@type":"Question","name":'List uploaded?',"acceptedAnswer":{"@type":"Answer","text":'No. Processed locally.'}},    {"@type":"Question","name":'Output format?',"acceptedAnswer":{"@type":"Answer","text":'Plain text, one email per line.'}}]}\n</script>\n<!--seo-faq-->\n<link href="/manifest.json" rel="manifest"/>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
     {"@type":"Question","name":"What does an email list cleaner do?","acceptedAnswer":{"@type":"Answer","text":"It removes duplicate addresses, fixes formatting errors, strips invalid syntax, and filters out disposable or role-based emails — all locally in your browser."}},
@@ -65,7 +66,7 @@
     {"@type":"Question","name":"Can I download the cleaned list?","acceptedAnswer":{"@type":"Answer","text":"Yes. After cleaning, you can download the deduplicated, validated list as a CSV or TXT file."}}
 ]}
 </script>
-seo-faq
+<!--seo-faq-->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -80,7 +81,7 @@ seo-faq
   ]
 }
 </script>
-एसईओ-कैसे करें
+<!--seo-howto-->
 <meta content="hi_IN" property="og:locale"/>
 <link href="https://presend.pages.dev/tools/email-list-cleaner" hreflang="en" rel="alternate"/>
 <link href="https://presend.pages.dev/fr/tools/email-list-cleaner" hreflang="fr" rel="alternate"/>
@@ -91,6 +92,8 @@ seo-faq
 <link href="https://presend.pages.dev/ru/tools/email-list-cleaner" hreflang="ru" rel="alternate"/>
 <link href="https://presend.pages.dev/hi/tools/email-list-cleaner" hreflang="hi" rel="alternate"/>
 <link href="https://presend.pages.dev/" hreflang="x-default" rel="alternate"/>
+</head>
+<body class="tool-page">
 <header class="site-header wrap">
 <a class="brand" href="/hi/"><span class="brand-mark">●</span>प्रस्तुत करें</a>
 <a class="nav-link" href="/hi/">सभी उपकरण</a>
@@ -104,8 +107,8 @@ seo-faq
 <label for="inputArea" style="display:block; font-weight:500; margin-bottom:0.5rem;">अपनी ईमेल सूची चिपकाएँ</label>
 <textarea id="inputArea" placeholder="john@example.com, alice@company.org
 BOB@TEST.COM
-अमान्य-ईमेल
-john@example.com (डुप्लिकेट)" rows="8" style="width:100%; padding:1rem; border:1px solid var(--color-line); border-radius:var(--radius); font-family:var(--font-mono); font-size:0.85rem; resize:vertical;"></textarea>
+invalid-email
+john@example.com (duplicate)" rows="8" style="width:100%; padding:1rem; border:1px solid var(--color-line); border-radius:var(--radius); font-family:var(--font-mono); font-size:0.85rem; resize:vertical;"></textarea>
 <div style="margin-top:1rem; display:flex; gap:0.75rem; flex-wrap:wrap;">
 <button class="btn" id="cleanBtn" type="button">साफ़ सूची</button>
 <button class="btn ghost" id="shareBtn" style="margin-left:0.5rem;" type="button">🔗कॉपी शेयर लिंक</button>
@@ -137,6 +140,7 @@ john@example.com (डुप्लिकेट)" rows="8" style="width:100%; padd
 </a>
 </div>
 </section>
+
 <section class="wrap" style="margin-top:3rem;">
 <h2 style="font-family:var(--font-display);font-size:1.1rem;">और अधिक जानें</h2>
 <p style="color:var(--color-muted);max-width:60ch;line-height:1.7;margin-top:0.75rem;">
@@ -293,4 +297,5 @@ document.getElementById('shareBtn').addEventListener('click', async function() {
   }
 });
 </script>
-</body></html>
+</body>
+</html>

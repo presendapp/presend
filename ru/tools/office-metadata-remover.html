@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="ru">
 <head>
 <meta charset="utf-8"/>
@@ -65,7 +66,7 @@
 }
 </script>
 <!--seo-org-->
-<script type="application/ld+json">\n{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[    {"@type":"Question","name":'What metadata?',"acceptedAnswer":{"@type":"Answer","text":'Author, company, revision history, comments, template paths.'}},    {"@type":"Question","name":'Look different?',"acceptedAnswer":{"@type":"Answer","text":'No. Only hidden metadata removed.'}},    {"@type":"Question","name":'Formats?',"acceptedAnswer":{"@type":"Answer","text":'DOCX, XLSX, PPTX.'}},    {"@type":"Question","name":'Safe for confidential?',"acceptedAnswer":{"@type":"Answer","text":'Yes. Nothing uploaded.'}},    {"@type":"Question","name":'Multiple files?',"acceptedAnswer":{"@type":"Answer","text":'One at a time currently.'}}]}\n</script></head><body>\nSEO-часто задаваемые вопросы\n<link href="/manifest.json" rel="manifest"/>
+<script type="application/ld+json">\n{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[    {"@type":"Question","name":'What metadata?',"acceptedAnswer":{"@type":"Answer","text":'Author, company, revision history, comments, template paths.'}},    {"@type":"Question","name":'Look different?',"acceptedAnswer":{"@type":"Answer","text":'No. Only hidden metadata removed.'}},    {"@type":"Question","name":'Formats?',"acceptedAnswer":{"@type":"Answer","text":'DOCX, XLSX, PPTX.'}},    {"@type":"Question","name":'Safe for confidential?',"acceptedAnswer":{"@type":"Answer","text":'Yes. Nothing uploaded.'}},    {"@type":"Question","name":'Multiple files?',"acceptedAnswer":{"@type":"Answer","text":'One at a time currently.'}}]}\n</script>\n<!--seo-faq-->\n<link href="/manifest.json" rel="manifest"/>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
     {"@type":"Question","name":"What metadata is hidden in Office files?","acceptedAnswer":{"@type":"Answer","text":"Word, Excel, and PowerPoint files can contain author name, company, computer name, total editing time, creation date, modification date, previous authors, and track changes history."}},
@@ -74,7 +75,7 @@
     {"@type":"Question","name":"Will my document formatting be preserved?","acceptedAnswer":{"@type":"Answer","text":"Yes. The tool creates a clean copy of your document with identical formatting, layout, and content — only the hidden metadata is removed."}}
 ]}
 </script>
-SEO-часто задаваемые вопросы
+<!--seo-faq-->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -89,7 +90,7 @@ SEO-часто задаваемые вопросы
   ]
 }
 </script>
-SEO-инструкции
+<!--seo-howto-->
 <meta content="ru_RU" property="og:locale"/>
 <link href="https://presend.pages.dev/tools/office-metadata-remover" hreflang="en" rel="alternate"/>
 <link href="https://presend.pages.dev/fr/tools/office-metadata-remover" hreflang="fr" rel="alternate"/>
@@ -100,6 +101,8 @@ SEO-инструкции
 <link href="https://presend.pages.dev/ru/tools/office-metadata-remover" hreflang="ru" rel="alternate"/>
 <link href="https://presend.pages.dev/hi/tools/office-metadata-remover" hreflang="hi" rel="alternate"/>
 <link href="https://presend.pages.dev/" hreflang="x-default" rel="alternate"/>
+</head>
+<body class="tool-page">
 <header class="site-header wrap">
 <a class="brand" href="/ru/"><span class="brand-mark">●</span>представить</a>
 <a class="nav-link" href="/ru/">Все инструменты</a>
@@ -110,7 +113,7 @@ SEO-инструкции
 <p class="lede">Файлы Word, Excel и PowerPoint незаметно хранят ваше имя, вашу компанию и всех, кто редактировал файл. Это удалит эти скрытые данные перед отправкой резюме, контракта или отчета. Файл обрабатывается только на вашем устройстве.</p>
 <span class="trust-badge">Ваши файлы никогда не отправляются на наши серверы</span>
 <div style="margin-top: 2rem;">
-<div aria-label="Выберите файл Office или перетащите его сюда." class="dropzone" id="dropzone" role="button" tabindex="0">
+<div aria-label="Choose an Office file or drop it here" class="dropzone" id="dropzone" role="button" tabindex="0">
 <p class="primary">Перетащите сюда файл или нажмите, чтобы выбрать его.</p>
 <p class="secondary">.docx, .xlsx or .pptx. Nothing leaves your device.</p>
 <input accept=".docx,.xlsx,.pptx" id="fileInput" type="file"/>
@@ -128,6 +131,7 @@ SEO-инструкции
 <button class="btn ghost" id="resetBtn" type="button">Очистить другой файл</button>
 </div>
 </div>
+
 <section class="wrap" style="margin-top:3rem;">
 <h2 style="font-family:var(--font-display);font-size:1.1rem;">Сопутствующие инструменты</h2>
 <div class="tool-grid" style="margin-top:1rem;">
@@ -151,6 +155,7 @@ SEO-инструкции
 <a href="/ru/tools/landings/strip-metadata-pdf">Прочтите наше руководство: Как удалить метаданные перед отправкой фотографий и документов.</a>
 </p>
 </section>
+
 SEO-инструменты
 </main>
 <section class="wrap" style="margin-top:3rem;">
@@ -332,4 +337,5 @@ document.getElementById('shareBtn').addEventListener('click', async function() {
   }
 });
 </script>
-</body></html>
+</body>
+</html>

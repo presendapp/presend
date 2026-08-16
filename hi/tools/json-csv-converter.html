@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="hi">
 <head>
 <meta charset="utf-8"/>
@@ -56,7 +57,7 @@
 }
 </script>
 <!--seo-org-->
-<script type="application/ld+json">\n{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[    {"@type":"Question","name":'CSV to JSON?',"acceptedAnswer":{"@type":"Answer","text":'Yes, works both ways.'}},    {"@type":"Question","name":'Nested objects?',"acceptedAnswer":{"@type":"Answer","text":'Flattened with dot notation.'}},    {"@type":"Question","name":'Size limit?',"acceptedAnswer":{"@type":"Answer","text":'No hard limit, large files may slow browser.'}},    {"@type":"Question","name":'Arrays?',"acceptedAnswer":{"@type":"Answer","text":'Converted to comma-separated strings.'}},    {"@type":"Question","name":'Data uploaded?',"acceptedAnswer":{"@type":"Answer","text":'No. All local.'}}]}\n</script></head><body>\nseo-faq\n<link href="/manifest.json" rel="manifest"/>
+<script type="application/ld+json">\n{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[    {"@type":"Question","name":'CSV to JSON?',"acceptedAnswer":{"@type":"Answer","text":'Yes, works both ways.'}},    {"@type":"Question","name":'Nested objects?',"acceptedAnswer":{"@type":"Answer","text":'Flattened with dot notation.'}},    {"@type":"Question","name":'Size limit?',"acceptedAnswer":{"@type":"Answer","text":'No hard limit, large files may slow browser.'}},    {"@type":"Question","name":'Arrays?',"acceptedAnswer":{"@type":"Answer","text":'Converted to comma-separated strings.'}},    {"@type":"Question","name":'Data uploaded?',"acceptedAnswer":{"@type":"Answer","text":'No. All local.'}}]}\n</script>\n<!--seo-faq-->\n<link href="/manifest.json" rel="manifest"/>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
     {"@type":"Question","name":"Can I convert CSV to JSON?","acceptedAnswer":{"@type":"Answer","text":"Yes. The tool supports bidirectional conversion: JSON to CSV and CSV to JSON. Just paste or upload your data and select the direction."}},
@@ -65,7 +66,7 @@
     {"@type":"Question","name":"What delimiter does the CSV use?","acceptedAnswer":{"@type":"Answer","text":"The output CSV uses commas by default and wraps values in quotes when necessary. It is compatible with Excel, Google Sheets, and all major spreadsheet software."}}
 ]}
 </script>
-seo-faq
+<!--seo-faq-->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -80,7 +81,7 @@ seo-faq
   ]
 }
 </script>
-एसईओ-कैसे करें
+<!--seo-howto-->
 <meta content="hi_IN" property="og:locale"/>
 <link href="https://presend.pages.dev/tools/json-csv-converter" hreflang="en" rel="alternate"/>
 <link href="https://presend.pages.dev/fr/tools/json-csv-converter" hreflang="fr" rel="alternate"/>
@@ -91,6 +92,8 @@ seo-faq
 <link href="https://presend.pages.dev/ru/tools/json-csv-converter" hreflang="ru" rel="alternate"/>
 <link href="https://presend.pages.dev/hi/tools/json-csv-converter" hreflang="hi" rel="alternate"/>
 <link href="https://presend.pages.dev/" hreflang="x-default" rel="alternate"/>
+</head>
+<body class="tool-page">
 <header class="site-header wrap">
 <a class="brand" href="/hi/"><span class="brand-mark">●</span>प्रस्तुत करें</a>
 <a class="nav-link" href="/hi/">सभी उपकरण</a>
@@ -108,8 +111,8 @@ seo-faq
 </div>
 <label for="inputArea" id="inputLabel" style="display:block; font-weight:500; margin-bottom:0.5rem;">यहां JSON चिपकाएं</label>
 <textarea id="inputArea" placeholder='[
-  {"नाम": "ऐलिस", "उम्र": 30},
-  {"नाम": "बॉब", "उम्र": 25}
+  {"name": "Alice", "age": 30},
+  {"name": "Bob", "age": 25}
 ]' rows="8" style="width:100%; padding:1rem; border:1px solid var(--color-line); border-radius:var(--radius); font-family:var(--font-mono); font-size:0.85rem; resize:vertical;"></textarea>
 <div style="margin-top:1rem; display:flex; gap:0.75rem; flex-wrap:wrap;">
 <button class="btn" id="convertBtn" type="button">बदलना</button>
@@ -141,6 +144,7 @@ seo-faq
 </a>
 </div>
 </section>
+
 <section class="wrap" style="margin-top:3rem;">
 <h2 style="font-family:var(--font-display);font-size:1.1rem;">और अधिक जानें</h2>
 <p style="color:var(--color-muted);max-width:60ch;line-height:1.7;margin-top:0.75rem;">
@@ -365,4 +369,5 @@ document.getElementById('shareBtn').addEventListener('click', async function() {
   }
 });
 </script>
-</body></html>
+</body>
+</html>

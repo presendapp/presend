@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="ru">
 <head>
 <meta charset="utf-8"/>
@@ -56,7 +57,7 @@
 }
 </script>
 <!--seo-org-->
-<script type="application/ld+json">\n{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[    {"@type":"Question","name":'What is Base64?',"acceptedAnswer":{"@type":"Answer","text":'Encoding binary to ASCII for embedding.'}},    {"@type":"Question","name":'When to use?',"acceptedAnswer":{"@type":"Answer","text":'Small icons, HTML emails, data URIs.'}},    {"@type":"Question","name":'Larger?',"acceptedAnswer":{"@type":"Answer","text":'Yes, ~33% larger. Use for small images only.'}},    {"@type":"Question","name":'Formats?',"acceptedAnswer":{"@type":"Answer","text":'JPG, PNG, GIF, WebP, SVG.'}},    {"@type":"Question","name":'Image uploaded?',"acceptedAnswer":{"@type":"Answer","text":'No. Local via FileReader API.'}}]}\n</script></head><body>\nSEO-часто задаваемые вопросы\n<link href="/manifest.json" rel="manifest"/>
+<script type="application/ld+json">\n{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[    {"@type":"Question","name":'What is Base64?',"acceptedAnswer":{"@type":"Answer","text":'Encoding binary to ASCII for embedding.'}},    {"@type":"Question","name":'When to use?',"acceptedAnswer":{"@type":"Answer","text":'Small icons, HTML emails, data URIs.'}},    {"@type":"Question","name":'Larger?',"acceptedAnswer":{"@type":"Answer","text":'Yes, ~33% larger. Use for small images only.'}},    {"@type":"Question","name":'Formats?',"acceptedAnswer":{"@type":"Answer","text":'JPG, PNG, GIF, WebP, SVG.'}},    {"@type":"Question","name":'Image uploaded?',"acceptedAnswer":{"@type":"Answer","text":'No. Local via FileReader API.'}}]}\n</script>\n<!--seo-faq-->\n<link href="/manifest.json" rel="manifest"/>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
     {"@type":"Question","name":"What is Base64 encoding?","acceptedAnswer":{"@type":"Answer","text":"Base64 is a method of converting binary data (like images) into ASCII text strings. It is commonly used to embed images directly in HTML, CSS, or JSON."}},
@@ -65,7 +66,7 @@
     {"@type":"Question","name":"Does this work offline?","acceptedAnswer":{"@type":"Answer","text":"Yes. The conversion happens entirely in your browser with no server upload required."}}
 ]}
 </script>
-SEO-часто задаваемые вопросы
+<!--seo-faq-->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -80,7 +81,7 @@ SEO-часто задаваемые вопросы
   ]
 }
 </script>
-SEO-инструкции
+<!--seo-howto-->
 <meta content="ru_RU" property="og:locale"/>
 <link href="https://presend.pages.dev/tools/image-to-base64" hreflang="en" rel="alternate"/>
 <link href="https://presend.pages.dev/fr/tools/image-to-base64" hreflang="fr" rel="alternate"/>
@@ -91,6 +92,8 @@ SEO-инструкции
 <link href="https://presend.pages.dev/ru/tools/image-to-base64" hreflang="ru" rel="alternate"/>
 <link href="https://presend.pages.dev/hi/tools/image-to-base64" hreflang="hi" rel="alternate"/>
 <link href="https://presend.pages.dev/" hreflang="x-default" rel="alternate"/>
+</head>
+<body class="tool-page">
 <header class="site-header wrap">
 <a class="brand" href="/ru/"><span class="brand-mark">●</span>представить</a>
 <a class="nav-link" href="/ru/">Все инструменты</a>
@@ -101,7 +104,7 @@ SEO-инструкции
 <p class="lede">Преобразуйте любое изображение в URI данных Base64 для встраивания непосредственно в HTML, CSS или электронные письма. Внешний файл не требуется. Изображение обрабатывается только на вашем устройстве.</p>
 <span class="trust-badge">Ваши файлы никогда не отправляются на наши серверы</span>
 <div style="margin-top: 2rem;">
-<div aria-label="Выберите изображение или оставьте его здесь" class="dropzone" id="dropzone" role="button" tabindex="0">
+<div aria-label="Choose an image or drop it here" class="dropzone" id="dropzone" role="button" tabindex="0">
 <p class="primary">Перетащите сюда изображение или нажмите, чтобы выбрать одно.</p>
 <p class="secondary">JPG, PNG, GIF, WebP, SVG. Ничего не покидает ваше устройство.</p>
 <input accept="image/*" id="fileInput" type="file"/>
@@ -111,7 +114,7 @@ SEO-инструкции
 <div style="display:flex; gap:1.5rem; flex-wrap:wrap; margin-bottom:1rem;">
 <div style="flex:1; min-width:200px;">
 <h3 style="font-family: var(--font-display); font-size:1.05rem; margin-bottom:0.5rem;">Предварительный просмотр</h3>
-<img alt="Предварительный просмотр загруженного изображения" decoding="async" id="previewImg" loading="lazy" style="max-width:100%; max-height:200px; border-radius:var(--radius); border:1px solid var(--color-line);"/>
+<img alt="Preview of uploaded image" decoding="async" id="previewImg" loading="lazy" style="max-width:100%; max-height:200px; border-radius:var(--radius); border:1px solid var(--color-line);"/ width="600" height="400">
 <div id="fileInfo" style="margin-top:0.5rem; font-size:0.85rem; color:var(--color-muted);"></div>
 </div>
 <div style="flex:2; min-width:300px;">
@@ -145,6 +148,7 @@ SEO-инструкции
 </a>
 </div>
 </section>
+
 <section class="wrap" style="margin-top:3rem;">
 <h2 style="font-family:var(--font-display);font-size:1.1rem;">Узнать больше</h2>
 <p style="color:var(--color-muted);max-width:60ch;line-height:1.7;margin-top:0.75rem;">
@@ -274,4 +278,5 @@ document.getElementById('shareBtn').addEventListener('click', async function() {
   }
 });
 </script>
-</body></html>
+</body>
+</html>
