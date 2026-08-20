@@ -1,16 +1,21 @@
-# Cloudflare / Wrangler
-.wrangler/
-node_modules/
-.env
-.dev.vars
+# Scripts de build
+*.py
+!requirements.txt
+
+# Fichiers temporaires
+*.tmp
+*.bak
+*.swp
+*~
 
 # OS
 .DS_Store
 Thumbs.db
-venv/
 
-__pycache__/
-*.pyc
-*.sqlite
-*.sqlite-shm
-*.sqlite-wal
+# IDEs
+.vscode/
+.idea/
+*.sublime-*
+
+# Logs
+*.log
