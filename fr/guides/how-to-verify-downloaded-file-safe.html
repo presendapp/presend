@@ -141,5 +141,45 @@
   <p>Presend — outils gratuits dans le navigateur. Fonctionne localement. Sans compte, sans tracking.</p>
 </footer>
 <script src="/sw-register.js"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Qu'est-ce qu'une somme de contrôle ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Une somme de contrôle est une empreinte digitale unique générée à partir du contenu d'un fichier. Si un seul octet change, le hash change complètement — ce qui le rend parfait pour vérifier l'intégrité du fichier."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Comment vérifier SHA-256",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Collez le fichier et le hash attendu dans notre outil. L'outil calcule le hash SHA-256 de votre fichier et le compare instantanément avec le hash fourni."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Signaux d'alerte à surveiller",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Si les hashes ne correspondent pas, le fichier peut être corrompu ou altéré. N'exécutez jamais d'exécutables de sources non fiables sans vérification."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Pourquoi faire cela dans le navigateur ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Notre outil fonctionne entièrement côté client — vos fichiers ne quittent jamais votre appareil. C'est plus sûr que de télécharger vers des vérificateurs de hash en ligne qui pourraient stocker vos données."
+      }
+    }
+  ]
+}
+</script>
 </body>
 </html>

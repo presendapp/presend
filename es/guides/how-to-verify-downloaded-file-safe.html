@@ -145,5 +145,45 @@
   <p>Presend — herramientas gratuitas en el navegador. Funciona localmente. Sin cuenta, sin seguimiento.</p>
 </footer>
 <script src="/sw-register.js"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "¿Qué es una suma de comprobación?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Una suma de comprobación es una huella digital única generada a partir del contenido de un archivo. Si cambia incluso un byte, el hash cambia por completo — lo que la hace perfecta para verificar la integridad del archivo."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Cómo verificar SHA-256",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Pegue el archivo y el hash esperado en nuestra herramienta. La herramienta calcula el hash SHA-256 de su archivo y lo compara instantáneamente con el hash proporcionado."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Señales de alerta a tener en cuenta",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Si los hashes no coinciden, el archivo puede estar corrupto o manipulado. Nunca ejecute ejecutables de fuentes no confiables sin verificación."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Por qué hacer esto en el navegador?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Nuestra herramienta funciona completamente en el lado del cliente — sus archivos nunca abandonan su dispositivo. Esto es más seguro que subir a verificadores de hash en línea que podrían almacenar sus datos."
+      }
+    }
+  ]
+}
+</script>
 </body>
 </html>

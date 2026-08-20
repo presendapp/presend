@@ -147,5 +147,53 @@
   <p>Presend — outils gratuits dans le navigateur. Fonctionne localement. Sans compte, sans tracking.</p>
 </footer>
 <script src="/sw-register.js"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "1. Photos : supprimer les données EXIF et GPS",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Les photos contiennent des métadonnées EXIF avec coordonnées GPS, modèle d'appareil et horodatages. Notre Suppresseur EXIF élimine toutes ces données tout en préservant la qualité de l'image."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "2. PDFs : effacer les infos auteur et logiciel",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Les PDFs stockent le nom de l'auteur, l'entreprise et le logiciel utilisé pour les créer. Notre Suppresseur de Métadonnées PDF supprime complètement ces informations cachées."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "3. Documents Office : supprimer l'historique de modifications",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Les fichiers Word, Excel et PowerPoint contiennent des noms d'auteur, infos d'entreprise et historique de modifications. Notre Suppresseur de Métadonnées Office nettoie toutes les traces."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "4. Vidéos : supprimer les données GPS et de l'appareil",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Les vidéos peuvent contenir des coordonnées GPS et des informations sur l'appareil. Notre Suppresseur de Métadonnées Vidéo élimine toutes les données de suivi des fichiers MP4 et MOV."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Pourquoi c'est important",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Partager des fichiers avec des métadonnées expose des informations personnelles comme votre localisation, identité et habitudes. Les supprimer protège votre vie privée avant le partage."
+      }
+    }
+  ]
+}
+</script>
 </body>
 </html>

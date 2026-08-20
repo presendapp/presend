@@ -143,5 +143,45 @@
   <p>Presend — outils gratuits dans le navigateur. Fonctionne localement. Sans compte, sans tracking.</p>
 </footer>
 <script src="/sw-register.js"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Choisir le bon format",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "JPG est le meilleur pour les photographies, PNG pour les images avec transparence, et WebP offre la meilleure compression avec qualité. Notre convertisseur gère les trois formats."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Trouver le bon équilibre de qualité",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Visez 80-85% de qualité — cela réduit considérablement la taille du fichier tout en gardant les images nettes. Notre outil permet un aperçu avant le téléchargement."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Redimensionner si nécessaire",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Pour l'email, redimensionnez les images à 1200px de large maximum. La plupart des écrans ne peuvent de toute façon pas afficher des images plus grandes, et les fichiers plus petits se chargent plus vite."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Supprimer d'abord les métadonnées",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Supprimez les métadonnées EXIF avant de compresser. Ces données cachées peuvent ajouter 10-30% à la taille du fichier sans améliorer l'image."
+      }
+    }
+  ]
+}
+</script>
 </body>
 </html>

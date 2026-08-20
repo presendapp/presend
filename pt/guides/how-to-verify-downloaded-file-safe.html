@@ -145,5 +145,45 @@
   <p>Presend — ferramentas gratuitas no navegador. Funciona localmente. Sem conta, sem rastreamento.</p>
 </footer>
 <script src="/sw-register.js"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "O que é uma soma de verificação?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Uma soma de verificação é uma impressão digital única gerada a partir do conteúdo de um arquivo. Se mesmo um byte mudar, o hash muda completamente — tornando-o perfeito para verificar a integridade do arquivo."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Como verificar SHA-256",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Cole o arquivo e o hash esperado em nossa ferramenta. A ferramenta calcula o hash SHA-256 do seu arquivo e o compara instantaneamente com o hash fornecido."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Sinais de alerta para observar",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Se os hashes não corresponderem, o arquivo pode estar corrompido ou adulterado. Nunca execute executáveis de fontes não confiáveis sem verificação."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Por que fazer isso no navegador?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Nossa ferramenta funciona totalmente no lado do cliente — seus arquivos nunca deixam seu dispositivo. Isso é mais seguro do que fazer upload para verificadores de hash online que poderiam armazenar seus dados."
+      }
+    }
+  ]
+}
+</script>
 </body>
 </html>

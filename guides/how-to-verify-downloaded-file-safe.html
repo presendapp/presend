@@ -133,5 +133,37 @@
   <p>Presend — free browser-based tools. Runs locally. No account, no tracking.</p>
 </footer>
 <script src="/sw-register.js"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is a file hash?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A file hash is a unique fingerprint generated from a file's contents. If even one byte changes, the hash changes completely — making it perfect for verifying file integrity."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is SHA-256?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "SHA-256 is a cryptographic hash function that produces a 64-character string. It's the industry standard for verifying file integrity because it's extremely secure and virtually impossible to fake."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Should I verify every download?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "For critical software, updates, or files from unofficial sources — yes. Verifying the hash ensures the file hasn't been tampered with or corrupted during download."
+      }
+    }
+  ]
+}
+</script>
 </body>
 </html>

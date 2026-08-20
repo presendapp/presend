@@ -137,5 +137,37 @@
   <p>Presend — free browser-based tools. Runs locally. No account, no tracking.</p>
 </footer>
 <script src="/sw-register.js"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is metadata in files?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Metadata is hidden information embedded in files — like GPS coordinates in photos, author names in documents, and creation dates in PDFs. It can reveal personal information you didn't intend to share."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can metadata reveal my location?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes — photos taken with smartphones often contain GPS coordinates in their EXIF metadata. Anyone with the right tool can extract your exact location from an unedited photo."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is removing metadata reversible?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No — once metadata is removed, it cannot be recovered. Make sure to keep an original copy if you need the metadata for your own records."
+      }
+    }
+  ]
+}
+</script>
 </body>
 </html>

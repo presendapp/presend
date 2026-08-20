@@ -145,5 +145,45 @@
   <p>Presend — 無料のブラウザ内蔵ツール。ローカルで動作し、アカウント登録も追跡もありません。</p>
 </footer>
 <script src="/sw-register.js"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "チェックサムとは何ですか？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "チェックサムは、ファイルの内容から生成される一意の指紋です。1バイトでも変更されると、ハッシュは完全に変わります — これにより、ファイルの整合性を確認するのに最適です。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "SHA-256を確認する方法",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "ファイルと期待されるハッシュをツールに貼り付けてください。ツールはファイルのSHA-256ハッシュを計算し、提供されたハッシュと即座に比較します。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "注意すべき警告サイン",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "ハッシュが一致しない場合、ファイルが破損しているか改ざんされている可能性があります。検証なしに信頼できないソースからの実行ファイルを実行しないでください。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "なぜブラウザで行うのですか？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "私たちのツールは完全にクライアントサイドで実行されます — ファイルがデバイスから離れることはありません。これは、データを保存する可能性のあるオンラインハッシュチェッカーにアップロードするよりも安全です。"
+      }
+    }
+  ]
+}
+</script>
 </body>
 </html>

@@ -135,5 +135,37 @@
   <p>Presend — free browser-based tools. Runs locally. No account, no tracking.</p>
 </footer>
 <script src="/sw-register.js"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What are tracking parameters in URLs?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Tracking parameters like UTM, fbclid, and gclid are added by marketing platforms to monitor where clicks come from. They can reveal your browsing habits and make links look messy when shared."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is it safe to remove tracking parameters?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes — removing tracking parameters only deletes the monitoring tags. The destination website and its content remain completely unchanged."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can cleaned URLs still work?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Absolutely. A cleaned URL points to the exact same page. Only the tracking junk is removed, so links work perfectly for everyone."
+      }
+    }
+  ]
+}
+</script>
 </body>
 </html>

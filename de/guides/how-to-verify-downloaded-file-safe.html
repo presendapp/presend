@@ -145,5 +145,45 @@
   <p>Presend — kostenlose browserbasierte Tools. Läuft lokal. Kein Konto, kein Tracking.</p>
 </footer>
 <script src="/sw-register.js"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Was ist eine Prüfsumme?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Eine Prüfsumme ist ein eindeutiger Fingerabdruck, der aus dem Inhalt einer Datei generiert wird. Wenn sich auch nur ein Byte ändert, ändert sich der Hash vollständig — ideal zur Überprüfung der Dateiintegrität."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "So überprüfen Sie SHA-256",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Fügen Sie die Datei und den erwarteten Hash in unser Tool ein. Das Tool berechnet den SHA-256-Hash Ihrer Datei und vergleicht ihn sofort mit dem bereitgestellten Hash."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Warnsignale, auf die Sie achten sollten",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Wenn die Hashes nicht übereinstimmen, kann die Datei beschädigt oder manipuliert sein. Führen Sie niemals ausführbare Dateien aus nicht vertrauenswürdigen Quellen ohne Überprüfung aus."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Warum im Browser?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Unser Tool läuft vollständig clientseitig — Ihre Dateien verlassen niemals Ihr Gerät. Das ist sicherer als das Hochladen zu Online-Hash-Checkern, die Ihre Daten speichern könnten."
+      }
+    }
+  ]
+}
+</script>
 </body>
 </html>
