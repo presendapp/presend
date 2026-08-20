@@ -49,7 +49,6 @@
   ]
 }
 </script>
-<meta name="keywords" content="бесплатные онлайн-инструменты, инструменты браузера, очистка файлов, сжатие файлов, конвертация файлов, конфиденциальность, без загрузки" />
 </head>
 <body class="tool-page">
 <header class="site-header wrap">
@@ -103,10 +102,6 @@
 <footer class="site-footer wrap">
 <p>Presend — бесплатные браузерные инструменты.<a href="/ru/about">О</a> · <a href="/ru/privacy">Конфиденциальность</a></p>
 </footer>
-<script>
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js').catch(() => {});
-}
-</script>
+<script src="/sw-register.js"></script>
 </body>
 </html>

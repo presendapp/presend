@@ -66,7 +66,6 @@
   ]
 }
 </script>
-<meta name="keywords" content="ऑनलाइन टूल, ब्राउज़र आधारित, मुफ्त, गोपनीयता, अपलोड नहीं, स्थानीय प्रोसेसिंग" />
 <link rel="alternate" hreflang="en" href="https://presend.pages.dev/tools/landings/strip-metadata-pdf" />
 <link rel="alternate" hreflang="fr" href="https://presend.pages.dev/fr/tools/landings/strip-metadata-pdf" />
 <link rel="alternate" hreflang="es" href="https://presend.pages.dev/es/tools/landings/strip-metadata-pdf" />
@@ -122,10 +121,6 @@
 <footer class="site-footer wrap">
 <p>प्रेज़ेंड - निःशुल्क ब्राउज़र-आधारित उपकरण।<a href="/hi/about">के बारे में</a> · <a href="/hi/privacy">गोपनीयता</a></p>
 </footer>
-<script>
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js').catch(() => {});
-}
-</script>
+<script src="/sw-register.js"></script>
 </body>
 </html>

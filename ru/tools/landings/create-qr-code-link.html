@@ -66,7 +66,6 @@
   ]
 }
 </script>
-<meta name="keywords" content="онлайн-инструмент, браузер, бесплатно, конфиденциальность, без загрузки, локальная обработка" />
 <link rel="alternate" hreflang="en" href="https://presend.pages.dev/tools/landings/create-qr-code-link" />
 <link rel="alternate" hreflang="fr" href="https://presend.pages.dev/fr/tools/landings/create-qr-code-link" />
 <link rel="alternate" hreflang="es" href="https://presend.pages.dev/es/tools/landings/create-qr-code-link" />
@@ -121,10 +120,6 @@
 <footer class="site-footer wrap">
 <p>Presend — бесплатные браузерные инструменты.<a href="/ru/about">О</a> · <a href="/ru/privacy">Конфиденциальность</a></p>
 </footer>
-<script>
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js').catch(() => {});
-}
-</script>
+<script src="/sw-register.js"></script>
 </body>
 </html>

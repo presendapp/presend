@@ -99,7 +99,6 @@
 <link rel="alternate" hreflang="hi" href="https://presend.pages.dev/hi/tools/url-cleaner" />
 <link rel="alternate" hreflang="x-default" href="https://presend.pages.dev/" />
 <meta property="og:locale" content="en_US" />
-<meta name="keywords" content="online tool, browser based, free, privacy, no upload, local processing" />
 </head>
 <body class="tool-page">
 
@@ -296,11 +295,7 @@ fetch('/api/track', {
 <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "37606631a94f4ce69f54a301c7763f01"}'></script>
 <!-- End Cloudflare Web Analytics -->
 
-<script>
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js');
-}
-</script>
+<script src="/sw-register.js"></script>
 
 <script>
 document.getElementById('shareBtn').addEventListener('click', async function() {

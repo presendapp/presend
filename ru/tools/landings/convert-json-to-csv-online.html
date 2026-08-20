@@ -79,7 +79,6 @@
   ]
 }
 </script>
-<meta name="keywords" content="онлайн-инструмент, браузер, бесплатно, конфиденциальность, без загрузки, локальная обработка" />
 <link rel="alternate" hreflang="en" href="https://presend.pages.dev/tools/landings/convert-json-to-csv-online" />
 <link rel="alternate" hreflang="fr" href="https://presend.pages.dev/fr/tools/landings/convert-json-to-csv-online" />
 <link rel="alternate" hreflang="es" href="https://presend.pages.dev/es/tools/landings/convert-json-to-csv-online" />
@@ -136,10 +135,6 @@
 <footer class="site-footer wrap">
 <p>Presend — бесплатные браузерные инструменты. Запускается локально. Нет аккаунта, нет отслеживания.</p>
 </footer>
-<script>
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js').catch(() => {});
-}
-</script>
+<script src="/sw-register.js"></script>
 </body>
 </html>

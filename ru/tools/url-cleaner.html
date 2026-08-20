@@ -93,7 +93,6 @@
 <link href="https://presend.pages.dev/ru/tools/url-cleaner" hreflang="ru" rel="alternate"/>
 <link href="https://presend.pages.dev/hi/tools/url-cleaner" hreflang="hi" rel="alternate"/>
 <link href="https://presend.pages.dev/" hreflang="x-default" rel="alternate"/>
-<meta name="keywords" content="онлайн-инструмент, браузер, бесплатно, конфиденциальность, без загрузки, локальная обработка" />
 </head>
 <body class="tool-page">
 <header class="site-header wrap">
@@ -272,11 +271,7 @@ fetch('/api/track', {
 Веб-аналитика Cloudflare
 <script data-cf-beacon='{"token": "37606631a94f4ce69f54a301c7763f01"}' src="https://static.cloudflareinsights.com/beacon.min.js" type="module"></script>
 Завершить веб-аналитику Cloudflare
-<script>
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js');
-}
-</script>
+<script src="/sw-register.js"></script>
 <script>
 document.getElementById('shareBtn').addEventListener('click', async function() {
   const btn = this;

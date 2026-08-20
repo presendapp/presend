@@ -60,7 +60,6 @@
   ]
 }
 </script>
-<meta name="keywords" content="online tool, browser based, free, privacy, no upload, local processing" />
 <link rel="alternate" hreflang="en" href="https://presend.pages.dev/tools/landings/reduce-pdf-file-size" />
 <link rel="alternate" hreflang="fr" href="https://presend.pages.dev/fr/tools/landings/reduce-pdf-file-size" />
 <link rel="alternate" hreflang="es" href="https://presend.pages.dev/es/tools/landings/reduce-pdf-file-size" />
@@ -114,10 +113,6 @@
 <footer class="site-footer wrap">
   <p>Presend — free browser-based tools. Runs locally. No account, no tracking.</p>
 </footer>
-<script>
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js').catch(() => {});
-}
-</script>
+<script src="/sw-register.js"></script>
 </body>
 </html>

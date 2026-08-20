@@ -93,7 +93,6 @@
 <link href="https://presend.pages.dev/ru/tools/image-to-base64" hreflang="ru" rel="alternate"/>
 <link href="https://presend.pages.dev/hi/tools/image-to-base64" hreflang="hi" rel="alternate"/>
 <link href="https://presend.pages.dev/" hreflang="x-default" rel="alternate"/>
-<meta name="keywords" content="ऑनलाइन टूल, ब्राउज़र आधारित, मुफ्त, गोपनीयता, अपलोड नहीं, स्थानीय प्रोसेसिंग" />
 </head>
 <body class="tool-page">
 <header class="site-header wrap">
@@ -251,11 +250,7 @@ fetch('/api/track', {
 क्लाउडफ्लेयर वेब एनालिटिक्स
 <script data-cf-beacon='{"token": "37606631a94f4ce69f54a301c7763f01"}' src="https://static.cloudflareinsights.com/beacon.min.js" type="module"></script>
 क्लाउडफ्लेयर वेब एनालिटिक्स समाप्त करें
-<script>
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js');
-}
-</script>
+<script src="/sw-register.js"></script>
 <script>
 document.getElementById('shareBtn').addEventListener('click', async function() {
   const btn = this;

@@ -79,7 +79,6 @@
   ]
 }
 </script>
-<meta name="keywords" content="ऑनलाइन टूल, ब्राउज़र आधारित, मुफ्त, गोपनीयता, अपलोड नहीं, स्थानीय प्रोसेसिंग" />
 <link rel="alternate" hreflang="en" href="https://presend.pages.dev/tools/landings/word-counter-online" />
 <link rel="alternate" hreflang="fr" href="https://presend.pages.dev/fr/tools/landings/word-counter-online" />
 <link rel="alternate" hreflang="es" href="https://presend.pages.dev/es/tools/landings/word-counter-online" />
@@ -117,10 +116,6 @@
 <footer class="site-footer wrap">
 <p>प्रेज़ेंड - निःशुल्क ब्राउज़र-आधारित उपकरण। स्थानीय स्तर पर चलता है. कोई खाता नहीं, कोई ट्रैकिंग नहीं.</p>
 </footer>
-<script>
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js').catch(() => {});
-}
-</script>
+<script src="/sw-register.js"></script>
 </body>
 </html>

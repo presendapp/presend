@@ -49,7 +49,6 @@
   ]
 }
 </script>
-<meta name="keywords" content="मुफ्त ऑनलाइन टूल्स, ब्राउज़र टूल्स, फ़ाइल साफ़ करना, फ़ाइल संपीड़ित करना, फ़ाइल परिवर्तित करना, गोपनीयता, अपलोड नहीं" />
 </head>
 <body class="tool-page">
 <header class="site-header wrap">
@@ -103,10 +102,6 @@
 <footer class="site-footer wrap">
 <p>प्रेज़ेंड - निःशुल्क ब्राउज़र-आधारित उपकरण।<a href="/hi/about">के बारे में</a> · <a href="/hi/privacy">गोपनीयता</a></p>
 </footer>
-<script>
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js').catch(() => {});
-}
-</script>
+<script src="/sw-register.js"></script>
 </body>
 </html>

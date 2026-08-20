@@ -47,7 +47,6 @@
   ]
 }
 </script>
-<meta name="keywords" content="online tool, browser based, free, privacy, no upload, local processing" />
 <link rel="alternate" hreflang="en" href="https://presend.pages.dev/tools/landings/compress-image-email" />
 <link rel="alternate" hreflang="fr" href="https://presend.pages.dev/fr/tools/landings/compress-image-email" />
 <link rel="alternate" hreflang="es" href="https://presend.pages.dev/es/tools/landings/compress-image-email" />
@@ -102,10 +101,6 @@
 <footer class="site-footer wrap">
   <p>Presend — free browser-based tools. <a href="/about">About</a> · <a href="/privacy">Privacy</a></p>
 </footer>
-<script>
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js').catch(() => {});
-}
-</script>
+<script src="/sw-register.js"></script>
 </body>
 </html>

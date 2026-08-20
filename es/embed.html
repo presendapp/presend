@@ -49,7 +49,6 @@
   ]
 }
 </script>
-<meta name="keywords" content="herramientas gratuitas en línea, herramientas navegador, limpiar archivos, comprimir archivos, convertir archivos, privacidad, sin subida" />
 </head>
 <body class="tool-page">
 <header class="site-header wrap">
@@ -101,10 +100,6 @@
 <footer class="site-footer wrap">
 <p>Presente: herramientas gratuitas basadas en navegador.<a href="/about">Acerca de</a> · <a href="/privacy">Privacidad</a></p>
 </footer>
-<script>
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js').catch(() => {});
-}
-</script>
+<script src="/sw-register.js"></script>
 </body>
 </html>

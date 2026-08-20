@@ -49,7 +49,6 @@
   ]
 }
 </script>
-<meta name="keywords" content="free online tools, browser tools, file cleaner, compress files, convert files, privacy tools, no upload" />
 </head>
 <body class="tool-page">
 <header class="site-header wrap">
@@ -108,10 +107,6 @@
 <footer class="site-footer wrap">
   <p>Presend — free browser-based tools. <a href="/about">About</a> · <a href="/privacy">Privacy</a></p>
 </footer>
-<script>
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js').catch(() => {});
-}
-</script>
+<script src="/sw-register.js"></script>
 </body>
 </html>

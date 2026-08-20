@@ -49,7 +49,6 @@
   ]
 }
 </script>
-<meta name="keywords" content="無料オンラインツール, ブラウザツール, ファイルクリーン, ファイル圧縮, ファイル変換, プライバシー, アップロードなし" />
 </head>
 <body class="tool-page">
 <header class="site-header wrap">
@@ -101,10 +100,6 @@
 <footer class="site-footer wrap">
 <p>プレゼン — 無料のブラウザベースのツール。<a href="/about">について</a> · <a href="/privacy">プライバシー</a></p>
 </footer>
-<script>
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js').catch(() => {});
-}
-</script>
+<script src="/sw-register.js"></script>
 </body>
 </html>

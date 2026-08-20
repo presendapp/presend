@@ -120,7 +120,6 @@
   ]
 }
 </script>
-<meta name="keywords" content="使い方, チュートリアル, ガイド, ヒント, ファイル管理, プライバシー" />
 </head>
 <body class="tool-page">
 <header class="site-header wrap">
@@ -148,10 +147,6 @@
 <footer class="site-footer wrap">
   <p>Presend — 無料のブラウザ内蔵ツール。ローカルで動作し、アカウント登録も追跡もありません。</p>
 </footer>
-<script>
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js').catch(() => {});
-}
-</script>
+<script src="/sw-register.js"></script>
 </body>
 </html>

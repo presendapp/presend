@@ -146,7 +146,6 @@
     }
   ]
 }</script>
-<meta name="keywords" content="comment faire, tutoriel, guide, astuces, gestion fichiers, confidentialité" />
 </head>
 <body class="tool-page">
 <header class="site-header wrap">
@@ -172,10 +171,6 @@
 <footer class="site-footer wrap">
   <p>Presend — outils gratuits dans le navigateur. Fonctionne localement. Sans compte, sans tracking.</p>
 </footer>
-<script>
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js').catch(() => {});
-}
-</script>
+<script src="/sw-register.js"></script>
 </body>
 </html>

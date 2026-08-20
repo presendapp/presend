@@ -49,7 +49,6 @@
   ]
 }
 </script>
-<meta name="keywords" content="kostenlose online-tools, browser-tools, dateien bereinigen, dateien komprimieren, dateien konvertieren, datenschutz, kein upload" />
 </head>
 <body class="tool-page">
 <header class="site-header wrap">
@@ -101,10 +100,6 @@
 <footer class="site-footer wrap">
 <p>Präsentieren – kostenlose browserbasierte Tools.<a href="/about">Äh</a> · <a href="/privacy">Privatsphäre</a></p>
 </footer>
-<script>
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js').catch(() => {});
-}
-</script>
+<script src="/sw-register.js"></script>
 </body>
 </html>
