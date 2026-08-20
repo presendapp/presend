@@ -1,47 +1,57 @@
 #!/bin/bash
+# =============================================================================
 # Auto Discovery Master - Système complet de découverte automatique
-# À exécuter via cron toutes les semaines
-# crontab -e → 0 2 * * 0 /home/victor-barbier/Bureau/microtools-clean/microtools/auto_discovery_master.sh
+# À exécuter via cron hebdomadaire :
+#   crontab -e → 0 2 * * 0 /home/victor-barbier/Bureau/microtools-clean/microtools/auto_discovery_master.sh
+# =============================================================================
 
 set -e
 
 LOG_FILE="/tmp/presend_discovery_$(date +%Y%m%d_%H%M%S).log"
 PROJECT_DIR="/home/victor-barbier/Bureau/microtools-clean/microtools"
 
-echo "🤖 Auto Discovery Master - $(date)" | tee -a "$LOG_FILE"
-echo "================================================" | tee -a "$LOG_FILE"
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+NC='\033[0m'
+
+echo -e "${BLUE}"
+echo "🤖 AUTO DISCOVERY MASTER — $(date)"
+echo "================================================"
+echo -e "${NC}" | tee -a "$LOG_FILE"
 
 cd "$PROJECT_DIR"
 
-# 1. Discovery Engine (DNS, SSL, WHOIS, Wayback, W3C)
-echo -e "\n📡 Étape 1: Discovery Engine" | tee -a "$LOG_FILE"
+# ─── 1. Génération du sitemap ──────────────────────────────────────────────
+echo -e "\n${YELLOW}🗺️  Étape 1: Génération du sitemap${NC}" | tee -a "$LOG_FILE"
+python3 generate_sitemap.py | tee -a "$LOG_FILE"
+
+# ─── 2. Discovery Engine (DNS, SSL, WHOIS, etc.) ───────────────────────────
+echo -e "\n${YELLOW}📡 Étape 2: Discovery Engine${NC}" | tee -a "$LOG_FILE"
 python3 discovery_engine.py >> "$LOG_FILE" 2>&1 || true
 
-# 2. Crawler Ping System (Common Crawl, Memento, etc.)
-echo -e "\n🕷️  Étape 2: Crawler Ping System" | tee -a "$LOG_FILE"
+# ─── 3. Crawler Ping System (Common Crawl, etc.) ───────────────────────────
+echo -e "\n${YELLOW}🕷️  Étape 3: Crawler Ping System${NC}" | tee -a "$LOG_FILE"
 python3 crawler_ping_system.py >> "$LOG_FILE" 2>&1 || true
 
-# 3. IndexNow Submission (Bing, Yandex, Naver, Seznam)
-echo -e "\n📡 Étape 3: IndexNow Submission" | tee -a "$LOG_FILE"
-python3 submit_indexnow.py >> "$LOG_FILE" 2>&1 || true
+# ─── 4. Soumission SEO unifiée (Google + IndexNow + Ping) ──────────────────
+echo -e "\n${YELLOW}📡 Étape 4: Soumission SEO unifiée${NC}" | tee -a "$LOG_FILE"
+python3 submit_all.py | tee -a "$LOG_FILE"
 
-# 4. Ping sitemap (même si déprécié, certains services l'utilisent encore)
-echo -e "\n🔔 Étape 4: Ping Sitemap (fallback)" | tee -a "$LOG_FILE"
-curl -s "https://www.bing.com/ping?sitemap=https://presend.pages.dev/sitemap.xml" > /dev/null 2>&1 || true
-curl -s "https://webmaster.yandex.ru/ping?sitemap=https://presend.pages.dev/sitemap.xml" > /dev/null 2>&1 || true
-
-# 5. Wayback Machine - archive toutes les pages importantes
-echo -e "\n📚 Étape 5: Wayback Machine Archiving" | tee -a "$LOG_FILE"
+# ─── 5. Wayback Machine — archivage ────────────────────────────────────────
+echo -e "\n${YELLOW}📚 Étape 5: Wayback Machine Archiving${NC}" | tee -a "$LOG_FILE"
 for page in "/" "/tools/exif-remover" "/tools/pdf-compress" "/tools/image-compressor" "/tools/password-generator"; do
     curl -s "https://web.archive.org/save/https://presend.pages.dev${page}" > /dev/null 2>&1 || true
     sleep 5
 done
+echo "   ✅ Pages archivées sur Wayback Machine" | tee -a "$LOG_FILE"
 
-# 6. Générer un rapport
-echo -e "\n📊 Étape 6: Rapport" | tee -a "$LOG_FILE"
+# ─── 6. Rapport ────────────────────────────────────────────────────────────
+echo -e "\n${YELLOW}📊 Étape 6: Rapport${NC}" | tee -a "$LOG_FILE"
 URL_COUNT=$(grep -c "<loc>" sitemap.xml)
-echo "URLs dans le sitemap: $URL_COUNT" | tee -a "$LOG_FILE"
-echo "Log complet: $LOG_FILE" | tee -a "$LOG_FILE"
+echo "   URLs dans le sitemap: $URL_COUNT" | tee -a "$LOG_FILE"
+echo "   Log complet: $LOG_FILE" | tee -a "$LOG_FILE"
 
-echo -e "\n================================================" | tee -a "$LOG_FILE"
-echo "✅ Auto Discovery Master terminé - $(date)" | tee -a "$LOG_FILE"
+echo -e "\n${BLUE}================================================"
+echo "✅ Auto Discovery Master terminé — $(date)"
+echo "================================================${NC}" | tee -a "$LOG_FILE"
