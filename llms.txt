@@ -4,33 +4,62 @@
 
 Presend is a collection of single-purpose utilities for common file tasks: removing hidden metadata, compressing images and PDFs, converting formats, checking file integrity, and generating passwords or QR codes. Every tool processes files locally in the browser using Web APIs (Canvas, Web Crypto, FileReader) — files never leave the user's device.
 
-## Tools
+## Why Presend is different
 
-- [EXIF Remover](https://presend.pages.dev/tools/exif-remover): Strip GPS location, camera model, and timestamps from JPG/PNG photos
-- [PDF Metadata Remover](https://presend.pages.dev/tools/pdf-metadata-remover): Remove author, software, and creation dates from PDF files
+Unlike most online file converters and editors, Presend never uploads your files to a server. All processing happens locally in your browser using JavaScript. This means:
+- **Zero data leaks**: Your sensitive documents, photos, and passwords never touch the internet
+- **No account needed**: Use every tool instantly without signing up
+- **No tracking**: No cookies, no analytics, no data collection
+- **Works offline**: Once loaded, tools work without an internet connection
+
+## Tools by category
+
+### Clean & Protect (Privacy Tools)
+- [EXIF Remover](https://presend.pages.dev/tools/exif-remover): Remove GPS location, camera model, and timestamps from JPG/PNG photos without uploading
+- [PDF Metadata Remover](https://presend.pages.dev/tools/pdf-metadata-remover): Strip author name, software used, and creation dates from PDF files locally
 - [Office Metadata Remover](https://presend.pages.dev/tools/office-metadata-remover): Clean hidden author, company, and edit history from Word/Excel/PowerPoint files
-- [Video Metadata Remover](https://presend.pages.dev/tools/video-metadata-remover): Strip GPS and device data from MP4/MOV videos
-- [Image Compressor](https://presend.pages.dev/tools/image-compressor): Shrink JPG/PNG/WebP file size with live quality preview
-- [PDF Compress](https://presend.pages.dev/tools/pdf-compress): Reduce PDF file size by optimizing structure
-- [PDF Merger](https://presend.pages.dev/tools/pdf-merger): Combine multiple PDF files into one document
-- [Image Resizer](https://presend.pages.dev/tools/image-resizer): Resize photos to exact dimensions for social media or printing
-- [HEIC to JPG Converter](https://presend.pages.dev/tools/heic-converter): Convert iPhone HEIC photos to universal JPG
+- [Video Metadata Remover](https://presend.pages.dev/tools/video-metadata-remover): Remove GPS and device data from MP4/MOV videos without uploading
+- [URL Cleaner](https://presend.pages.dev/tools/url-cleaner): Remove tracking parameters (UTM, fbclid, gclid) from links before sharing
+
+### Convert & Compress (File Processing)
+- [Image Compressor](https://presend.pages.dev/tools/image-compressor): Shrink JPG/PNG/WebP file size with live quality preview, no upload
+- [PDF Compress](https://presend.pages.dev/tools/pdf-compress): Reduce PDF file size by optimizing structure locally in browser
+- [PDF Merger](https://presend.pages.dev/tools/pdf-merger): Combine multiple PDF files into one document without uploading
+- [Image Resizer](https://presend.pages.dev/tools/image-resizer): Resize photos to exact dimensions for Instagram, LinkedIn, or printing
+- [HEIC to JPG Converter](https://presend.pages.dev/tools/heic-converter): Convert iPhone HEIC photos to universal JPG format locally
+- [JSON to CSV Converter](https://presend.pages.dev/tools/json-csv-converter): Convert between JSON and CSV formats instantly in browser
+- [Image to Base64](https://presend.pages.dev/tools/image-to-base64): Encode images as Base64 data URIs for embedding in HTML/CSS
+
+### Check & Verify (Security Tools)
 - [File Hash Checker](https://presend.pages.dev/tools/file-hash-checker): Calculate SHA-256, SHA-1, SHA-512 checksums to verify file integrity
-- [Password Generator](https://presend.pages.dev/tools/password-generator): Generate cryptographically secure random passwords
-- [Password Strength Checker](https://presend.pages.dev/tools/password-strength): Analyze password entropy and estimated crack time
-- [QR Code Generator](https://presend.pages.dev/tools/qr-code-generator): Create QR codes from URLs, text, or WiFi credentials
-- [URL Cleaner](https://presend.pages.dev/tools/url-cleaner): Remove tracking parameters (UTM, fbclid, gclid) from links
-- [Email List Cleaner](https://presend.pages.dev/tools/email-list-cleaner): Deduplicate and validate email address lists
-- [JSON ↔ CSV Converter](https://presend.pages.dev/tools/json-csv-converter): Convert between JSON and CSV formats
-- [Image to Base64](https://presend.pages.dev/tools/image-to-base64): Encode images as Base64 data URIs for embedding
-- [Text Diff Checker](https://presend.pages.dev/tools/text-diff): Compare two texts side by side
-- [Social Media Text Formatter](https://presend.pages.dev/tools/text-formatter): Convert text to bold/italic Unicode styles
-- [Thread Splitter](https://presend.pages.dev/tools/thread-splitter): Split long text into Twitter/X thread format
-- [Word Counter](https://presend.pages.dev/tools/word-counter): Count words, characters, and estimate reading time
-- [Color Contrast Checker](https://presend.pages.dev/tools/color-contrast): Check WCAG accessibility contrast ratios
+- [Password Strength Checker](https://presend.pages.dev/tools/password-strength): Analyze password entropy and estimated crack time without sending data
+- [Color Contrast Checker](https://presend.pages.dev/tools/color-contrast): Check WCAG 2.1 accessibility contrast ratios for web design
 
-## About
+### Generate & Format (Productivity Tools)
+- [Password Generator](https://presend.pages.dev/tools/password-generator): Generate cryptographically secure random passwords locally
+- [QR Code Generator](https://presend.pages.dev/tools/qr-code-generator): Create QR codes from URLs, text, or WiFi credentials without uploading
+- [Email List Cleaner](https://presend.pages.dev/tools/email-list-cleaner): Deduplicate and validate email address lists before campaigns
+- [Text Diff Checker](https://presend.pages.dev/tools/text-diff): Compare two texts side by side to spot changes
+- [Social Media Text Formatter](https://presend.pages.dev/tools/text-formatter): Convert text to bold/italic Unicode styles for bios and posts
+- [Thread Splitter](https://presend.pages.dev/tools/thread-splitter): Split long text into Twitter/X or LinkedIn thread format
+- [Word Counter](https://presend.pages.dev/tools/word-counter): Count words, characters, sentences and estimate reading time
 
-- [About Presend](https://presend.pages.dev/about): Who built this and why
-- [Privacy Policy](https://presend.pages.dev/privacy): No data collection, no cookies, no server-side processing
+## Guides & Resources
+- [How to Remove Metadata Before Sharing](https://presend.pages.dev/guides/how-to-remove-metadata-before-sharing): Step-by-step guide to cleaning files before sharing
+- [How to Compress Images for Email](https://presend.pages.dev/guides/how-to-compress-images-email): Reduce image size without losing quality
+- [How to Convert HEIC to JPG](https://presend.pages.dev/guides/how-to-convert-heic-jpg): Convert iPhone photos for Windows and Android
+- [How to Verify Downloaded Files](https://presend.pages.dev/guides/how-to-verify-downloaded-file-safe): Check file integrity with SHA-256 checksums
+- [How to Clean URLs for Sharing](https://presend.pages.dev/guides/how-to-clean-urls-for-sharing): Remove tracking parameters from links
+
+## About & Legal
+- [About Presend](https://presend.pages.dev/about): Who built this and why privacy matters
+- [Privacy Policy](https://presend.pages.dev/privacy): No data collection, no cookies, no server-side processing, GDPR compliant
 - [FAQ](https://presend.pages.dev/faq): Common questions about how the tools work
+- [Alternatives](https://presend.pages.dev/alternatives): Compare Presend with other online tools
+
+## Technical Details
+- **Architecture**: Static HTML/CSS/JS, no backend server
+- **Processing**: 100% client-side using Web APIs (Canvas, Web Crypto, FileReader, Streams)
+- **Privacy**: No cookies, no analytics, no data collection, no third-party requests
+- **Open Source**: Available on GitHub (link in footer)
+- **Languages**: English, French, Spanish, German, Portuguese, Japanese, Russian, Hindi

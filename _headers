@@ -30,3 +30,7 @@
 
 /sw.js
   Cache-Control: public, max-age=0, must-revalidate
+
+/*.html
+  Cache-Control: public, max-age=3600
+  Link: </style.min.css>; rel=preload; as=style, </sw-register.js>; rel=preload; as=script

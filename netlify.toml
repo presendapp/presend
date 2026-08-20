@@ -420,3 +420,15 @@
   for = "/favicon.ico"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
+
+[[redirects]]
+  from = "/tools/image-resizer.html"
+  to = "/tools/image-resizer"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/tools/pdf-merger.html"
+  to = "/tools/pdf-merger"
+  status = 301
+  force = true
