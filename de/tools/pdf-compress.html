@@ -57,7 +57,7 @@
     {"@type":"ListItem","position":2,"name":"Tools","item":"https://presend.pages.dev/tools/"},
     {"@type":"ListItem","position":3,"name":"PDF Compress","item":"https://presend.pages.dev/tools/pdf-compress"}
   ]
-}
+}</script>
 <!--seo-breadcrumb--><script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -81,7 +81,7 @@
     { "@type": "HowToStep", "position": 3, "name": "Download the smaller PDF", "text": "Save your compressed PDF — often 30-70% smaller. Ideal for email attachments and web uploads.", "url": "https://presend.pages.dev/tools/pdf-compress#step3" }
   ]
 }
-</script>SEO-Howto<script type="application/ld+json">
+</script><!--seo-howto--><script type="application/ld+json">
 {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
     {"@type":"Question","name":"Will compression reduce PDF quality?","acceptedAnswer":{"@type":"Answer","text":"No. The tool optimizes the internal structure of the PDF and recompresses images without changing their visible resolution. Text and vector graphics remain perfectly sharp."}},
     {"@type":"Question","name":"How much smaller will my PDF be?","acceptedAnswer":{"@type":"Answer","text":"Typical reductions range from 30% to 70%, depending on how many images the PDF contains and their current compression level."}},
@@ -150,7 +150,7 @@
 <p itemprop="speakable" style="color:var(--color-muted);max-width:60ch;line-height:1.7;margin-top:0.75rem;">
 <a href="/tools/landings/shrink-pdf-online">Lesen Sie unsere ausführliche Anleitung zu diesem Tool</a>
 </p>
-</section>SEO-bezogene-Tools</main>
+</section><!--seo-related-tools--></main>
 <section class="wrap" style="margin-top:3rem;">
 <h2 style="font-family:var(--font-display);font-size:1.1rem;">Warum PDF-Dateien komprimieren?</h2>
 <p style="color:var(--color-muted);max-width:60ch;line-height:1.7;margin-top:0.75rem;">PDF-Dokumente können überraschend groß werden, insbesondere wenn sie hochauflösende Bilder, eingebettete Schriftarten oder gescannte Seiten enthalten. Ein 20-seitiger Bericht mit Diagrammen und Fotos kann leicht 10 MB überschreiten – weit über die Anhanggrenzen der meisten E-Mail-Anbieter wie Gmail (25 MB) oder Outlook (20 MB). Große PDF-Dateien verlangsamen außerdem die Ladezeiten von Websites, verbrauchen übermäßig viel Cloud-Speicher und können nicht in Formulare mit Größenbeschränkungen hochgeladen werden. Durch das Komprimieren einer PDF-Datei wird die Dateigröße reduziert, interne Strukturen optimiert, redundante Daten entfernt und Bilder erneut komprimiert – und das alles ohne Beeinträchtigung der Lesbarkeit oder der visuellen Qualität. Unser PDF-Komprimierungstool erreicht eine durchschnittliche Größenreduzierung von 30–70 % und eignet sich daher ideal zum Versenden von Dokumenten per E-Mail, zum Hochladen auf Regierungsportale oder zum effizienten Archivieren von Dateien. Der gesamte Komprimierungsprozess läuft lokal in Ihrem Browser: Ihre Verträge, Lebensläufe, wissenschaftlichen Arbeiten und Finanzdokumente werden niemals auf einen externen Server hochgeladen, wodurch absolute Vertraulichkeit gewährleistet ist.</p>
@@ -276,7 +276,7 @@ fetch('/api/track', {
   headers: { 'Content-Type': 'application/json' },
   body: JSON.stringify({ tool: 'pdf-compress' })
 }).catch(() => {});
-<!--cloudflare-analytics--><script data-cf-beacon='{"token": "37606631a94f4ce69f54a301c7763f01"}' src="https://static.cloudflareinsights.com/beacon.min.js" type="module"></script>Beenden Sie Cloudflare Web Analytics<script src="/sw-register.js"></script>
+<!--cloudflare-analytics--></script><script data-cf-beacon='{"token": "37606631a94f4ce69f54a301c7763f01"}' src="https://static.cloudflareinsights.com/beacon.min.js" type="module"></script><!--cloudflare-analytics-install--><script src="/sw-register.js"></script>
 <script>
 document.getElementById('shareBtn').addEventListener('click', async function() {
   const btn = this;

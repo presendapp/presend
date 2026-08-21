@@ -56,7 +56,7 @@
     {"@type":"ListItem","position":2,"name":"Tools","item":"https://presend.pages.dev/tools/"},
     {"@type":"ListItem","position":3,"name":"QR Code Generator","item":"https://presend.pages.dev/tools/qr-code-generator"}
   ]
-}
+}</script>
 <!--seo-breadcrumb--><script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -74,7 +74,7 @@
     {"@type":"Question","name":"What format is the downloaded QR code?","acceptedAnswer":{"@type":"Answer","text":"The QR code is downloaded as a high-resolution PNG image, suitable for printing, websites, and social media."}},
     {"@type":"Question","name":"Is there a scan limit?","acceptedAnswer":{"@type":"Answer","text":"No. Static QR codes have no scan limits, no expiration, and no third-party dependencies."}}
 ]}
-<!--seo-faq--><script type="application/ld+json">
+</script><!--seo-faq--><script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "HowTo",
@@ -152,7 +152,7 @@
 <p style="color:var(--color-muted);max-width:60ch;line-height:1.7;margin-top:0.75rem;">
 <a href="/tools/landings/create-qr-code-link">Lea nuestra guía detallada sobre esta herramienta.</a>
 </p>
-</section>herramientas-relacionadas-con-seo</main>
+</section><!--seo-related-tools--></main>
 <section class="wrap" style="margin-top:3rem;">
 <h2 style="font-family:var(--font-display);font-size:1.1rem;">¿Para qué se utilizan los códigos QR?</h2>
 <p style="color:var(--color-muted);max-width:60ch;line-height:1.7;margin-top:0.75rem;">Los códigos QR cierran la brecha entre el mundo físico y el digital. Los restaurantes los utilizan para menús sin contacto, los minoristas para información de productos, eventos para entradas digitales y los especialistas en marketing para seguimiento de campañas. Un código QR puede codificar la URL de un sitio web, una contraseña de red WiFi, una dirección de correo electrónico, un número de teléfono, un mensaje SMS o instrucciones en texto sin formato. A diferencia de los códigos de barras, los códigos QR almacenan datos tanto horizontal como verticalmente, lo que permite millas de caracteres en un pequeño cuadrado. Funcionan incluso cuando están parcialmente dañados: hasta un 30% del código puede quedar oculto y aún así escanearse correctamente. Nuestro generador de códigos QR crea imágenes PNG de alta resolución adecuadas para impresión (tarjetas de presentación, folletos, carteles) y uso digital (sitios web, redes sociales, firmas de correo electrónico). Los códigos son estáticos: los datos están incrustados directamente en la imagen, por lo que funcionan para siempre sin límites de escaneo, sin suscripciones y sin dependencias de terceros. Generado completamente en su navegador: sus datos nunca salen de su dispositivo.</p>
@@ -160,7 +160,7 @@
 <footer class="site-footer wrap">
 <p>Presente: herramientas gratuitas basadas en navegador.<a href="/about">Acerca de</a> · <a href="/privacy">Privacidad</a></p>
 </footer>
-<script defer src="/vendor/qrcode.min.js"></script>
+</script><script defer src="/vendor/qrcode.min.js"></script>
 <script>
 (function () {
   const textInput = document.getElementById('textInput');
@@ -238,7 +238,7 @@ fetch('/api/track', {
   headers: { 'Content-Type': 'application/json' },
   body: JSON.stringify({ tool: 'qr-code-generator' })
 }).catch(() => {});
-<!--cloudflare-analytics--><script data-cf-beacon='{"token": "37606631a94f4ce69f54a301c7763f01"}' src="https://static.cloudflareinsights.com/beacon.min.js" type="module"></script><!--cloudflare-analytics-install--><script src="/sw-register.js"></script>
+<!--cloudflare-analytics--></script><script data-cf-beacon='{"token": "37606631a94f4ce69f54a301c7763f01"}' src="https://static.cloudflareinsights.com/beacon.min.js" type="module"></script><!--cloudflare-analytics-install--><script src="/sw-register.js"></script>
 <script>
 document.getElementById('shareBtn').addEventListener('click', async function() {
   const btn = this;

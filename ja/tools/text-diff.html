@@ -52,7 +52,7 @@
     {"@type":"ListItem","position":2,"name":"Tools","item":"https://presend.pages.dev/tools/"},
     {"@type":"ListItem","position":3,"name":"Text Diff","item":"https://presend.pages.dev/tools/text-diff"}
   ]
-}
+}</script>
 <!--seo-breadcrumb--><script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -69,7 +69,7 @@
     {"@type":"Question","name":"Is my text uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. The comparison happens entirely in your browser. Your sensitive documents, code, or contracts never leave your device."}},
     {"@type":"Question","name":"Can I compare long documents?","acceptedAnswer":{"@type":"Answer","text":"Yes. There is no practical length limit. The tool handles essays, legal contracts, code files, and even book chapters locally."}},
     {"@type":"Question","name":"Does it show character-level differences?","acceptedAnswer":{"@type":"Answer","text":"Yes. The tool highlights differences at both the line level and the word/character level for precise comparison."}}
-]}
+]}</script>
 <!--seo-faq--><script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -153,7 +153,7 @@
 <footer class="site-footer wrap">
 <p>Presend — 無料のブラウザベースのツール。ローカルで実行されます。アカウントも追跡ありません。</p>
 </footer>
-<script>
+</script><script>
 (function () {
   const textA = document.getElementById('textA');
   const textB = document.getElementById('textB');
@@ -272,7 +272,7 @@ fetch('/api/track', {
   headers: { 'Content-Type': 'application/json' },
   body: JSON.stringify({ tool: 'text-diff' })
 }).catch(() => {});
-<!--cloudflare-analytics--><script data-cf-beacon='{"token": "37606631a94f4ce69f54a301c7763f01"}' src="https://static.cloudflareinsights.com/beacon.min.js" type="module"></script><!--cloudflare-analytics-install--><script src="/sw-register.js"></script>
+<!--cloudflare-analytics--></script><script data-cf-beacon='{"token": "37606631a94f4ce69f54a301c7763f01"}' src="https://static.cloudflareinsights.com/beacon.min.js" type="module"></script><!--cloudflare-analytics-install--><script src="/sw-register.js"></script>
 <script>
 document.getElementById('shareBtn').addEventListener('click', async function() {
   const btn = this;

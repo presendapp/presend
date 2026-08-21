@@ -57,7 +57,7 @@
     {"@type":"ListItem","position":2,"name":"Tools","item":"https://presend.pages.dev/tools/"},
     {"@type":"ListItem","position":3,"name":"PDF Compress","item":"https://presend.pages.dev/tools/pdf-compress"}
   ]
-}
+}</script>
 <!--seo-breadcrumb--><script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -150,7 +150,7 @@
 <p itemprop="speakable" style="color:var(--color-muted);max-width:60ch;line-height:1.7;margin-top:0.75rem;">
 <a href="/tools/landings/shrink-pdf-online">Lea nuestra guía detallada sobre esta herramienta.</a>
 </p>
-</section>herramientas-relacionadas-con-seo</main>
+</section><!--seo-related-tools--></main>
 <section class="wrap" style="margin-top:3rem;">
 <h2 style="font-family:var(--font-display);font-size:1.1rem;">¿Por qué comprimir archivos PDF?</h2>
 <p style="color:var(--color-muted);max-width:60ch;line-height:1.7;margin-top:0.75rem;">Los documentos PDF pueden llegar a ser sorprendentemente grandes, especialmente cuando contienen imágenes de alta resolución, fuentes incrustadas o páginas escaneadas. Un informe de 20 páginas con gráficos y fotografías puede superar fácilmente los 10 MB, mucho más allá de los límites de archivos adjuntos de la mayoría de los proveedores de correo electrónico como Gmail (25 MB) o Outlook (20 MB). Los archivos PDF de gran tamaño también ralentizan los tiempos de carga de los sitios web, consumen demasiado almacenamiento en la nube y no se cargan en formularios con restricciones de tamaño. La compresión de un PDF reduce el tamaño del archivo al optimizar las estructuras internas, eliminar datos redundantes y recomprimir imágenes, todo sin afectar la legibilidad o la calidad visual. Nuestra herramienta PDF Compress logra una reducción de tamaño promedio de entre un 30% y un 70%, lo que la hace ideal para enviar documentos por correo electrónico, cargarlos en portales gubernamentales o archivar archivos de manera eficiente. Todo el proceso de compresión se ejecuta localmente en su navegador: sus contratos, currículums, trabajos académicos y documentos financieros nunca se cargan en ningún servidor externo, lo que garantiza una total confidencialidad.</p>
@@ -276,7 +276,7 @@ fetch('/api/track', {
   headers: { 'Content-Type': 'application/json' },
   body: JSON.stringify({ tool: 'pdf-compress' })
 }).catch(() => {});
-<!--cloudflare-analytics--><script data-cf-beacon='{"token": "37606631a94f4ce69f54a301c7763f01"}' src="https://static.cloudflareinsights.com/beacon.min.js" type="module"></script><!--cloudflare-analytics-install--><script src="/sw-register.js"></script>
+<!--cloudflare-analytics--></script><script data-cf-beacon='{"token": "37606631a94f4ce69f54a301c7763f01"}' src="https://static.cloudflareinsights.com/beacon.min.js" type="module"></script><!--cloudflare-analytics-install--><script src="/sw-register.js"></script>
 <script>
 document.getElementById('shareBtn').addEventListener('click', async function() {
   const btn = this;

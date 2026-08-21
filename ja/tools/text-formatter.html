@@ -52,7 +52,7 @@
     {"@type":"ListItem","position":2,"name":"Tools","item":"https://presend.pages.dev/tools/"},
     {"@type":"ListItem","position":3,"name":"Social Media Text Formatter","item":"https://presend.pages.dev/tools/text-formatter"}
   ]
-}
+}</script>
 <!--seo-breadcrumb--><script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -69,7 +69,7 @@
     {"@type":"Question","name":"Is this real bold and italic?","acceptedAnswer":{"@type":"Answer","text":"No. These are Unicode mathematical alphanumeric symbols that look like bold, italic, or script text. They are actual characters, not formatting, so they display everywhere."}},
     {"@type":"Question","name":"Can I use this for usernames?","acceptedAnswer":{"@type":"Answer","text":"Yes. Many platforms allow Unicode characters in usernames, bios, and display names. However, some games and strict systems may reject non-ASCII characters."}},
     {"@type":"Question","name":"Does this work offline?","acceptedAnswer":{"@type":"Answer","text":"Yes. The formatter runs entirely in your browser with no server connection needed."}}
-]}
+]}</script>
 <!--seo-faq--><script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -141,7 +141,7 @@
 <footer class="site-footer wrap">
 <p>Presend — 無料のブラウザベースのツール。ローカルで実行されます。アカウントも追跡ありません。</p>
 </footer>
-<script>
+</script><script>
 (function () {
   const inputText = document.getElementById('inputText');
   const fmtGrid = document.getElementById('fmtGrid');
@@ -216,7 +216,7 @@ fetch('/api/track', {
   headers: { 'Content-Type': 'application/json' },
   body: JSON.stringify({ tool: 'text-formatter' })
 }).catch(() => {});
-<!--cloudflare-analytics--><script data-cf-beacon='{"token": "37606631a94f4ce69f54a301c7763f01"}' src="https://static.cloudflareinsights.com/beacon.min.js" type="module"></script><!--cloudflare-analytics-install--><script src="/sw-register.js"></script>
+<!--cloudflare-analytics--></script><script data-cf-beacon='{"token": "37606631a94f4ce69f54a301c7763f01"}' src="https://static.cloudflareinsights.com/beacon.min.js" type="module"></script><!--cloudflare-analytics-install--><script src="/sw-register.js"></script>
 <script>
 document.getElementById('shareBtn').addEventListener('click', async function() {
   const btn = this;

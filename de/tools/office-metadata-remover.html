@@ -57,7 +57,7 @@
     {"@type":"ListItem","position":2,"name":"Tools","item":"https://presend.pages.dev/tools/"},
     {"@type":"ListItem","position":3,"name":"Office Metadata Remover","item":"https://presend.pages.dev/tools/office-metadata-remover"}
   ]
-}
+}</script>
 <!--seo-breadcrumb--><script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -75,7 +75,7 @@
     {"@type":"Question","name":"What file formats are supported?","acceptedAnswer":{"@type":"Answer","text":"The tool supports modern Office formats: .docx (Word), .xlsx (Excel), and .pptx (PowerPoint). Older .doc, .xls, and .ppt formats are not supported."}},
     {"@type":"Question","name":"Will my document formatting be preserved?","acceptedAnswer":{"@type":"Answer","text":"Yes. The tool creates a clean copy of your document with identical formatting, layout, and content — only the hidden metadata is removed."}}
 ]}
-<!--seo-faq--><script type="application/ld+json">
+</script><!--seo-faq--><script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "HowTo",
@@ -88,7 +88,7 @@
     { "@type": "HowToStep", "position": 3, "name": "Download the clean document", "text": "Click Download to save a new version of your document with all metadata stripped. The visible content and formatting remain unchanged.", "url": "https://presend.pages.dev/tools/office-metadata-remover#step3" }
   ]
 }
-</script>SEO-Howto<meta property="og:locale" content="de_DE" />
+</script><!--seo-howto--><meta property="og:locale" content="de_DE" />
 <link rel="alternate" hreflang="en" href="https://presend.pages.dev/tools/office-metadata-remover" />
 <link rel="alternate" hreflang="fr" href="https://presend.pages.dev/fr/tools/office-metadata-remover" />
 <link rel="alternate" hreflang="es" href="https://presend.pages.dev/es/tools/office-metadata-remover" />
@@ -150,7 +150,7 @@
 <p itemprop="speakable" style="color:var(--color-muted);max-width:60ch;line-height:1.7;margin-top:0.75rem;">
 <a href="/tools/landings/strip-metadata-pdf">Lesen Sie unseren Leitfaden: So entfernen Sie Metadaten vor dem Teilen von Fotos und Dokumenten</a>
 </p>
-</section>SEO-bezogene-Tools</main>
+</section><!--seo-related-tools--></main>
 <section class="wrap" style="margin-top:3rem;">
 <h2 style="font-family:var(--font-display);font-size:1.1rem;">Welche Metadaten verbergen sich in Word-, Excel- und PowerPoint-Dateien?</h2>
 <p style="color:var(--color-muted);max-width:60ch;line-height:1.7;margin-top:0.75rem;">Microsoft Office-Dokumente enthalten umfangreiche versteckte Metadaten, die den meisten Benutzern nicht bekannt sind. In einer Word-Datei können der Name des Autors, der Firmenname, der Computername, die gesamte Bearbeitungszeit, das Erstellungsdatum, das Datum der letzten Änderung, die Namen früherer Autoren und sogar gelöschter Text aus der Verfolgung von Änderungen gespeichert werden. Excel-Tabellen können Formelstrukturen, ausgeblendete Blätter und benannte Bereiche anzeigen. PowerPoint-Präsentationen können Vortragsnotizen, Kommentarthreads und den Revisionsverlauf offenlegen. Wenn Sie diese Dokumente mit Kunden teilen, bei Zeitschriften einreichen oder online veröffentlichen, werden diese Metadaten vollständig offengelegt. Für Unternehmen kann die Offenlegung interner Autorennamen oder Firmendaten die Vertraulichkeit gefährden. Für Arbeitssuchende wirkt ein Lebenslauf mit 47 Stunden Bearbeitungszeit oder dem Namen eines früheren Arbeitgebers in den Metadaten unprofessionell. Unser Office Metadata Remover entfernt in Sekundenschnelle alle versteckten Informationen aus Word- (.docx), Excel- (.xlsx) und PowerPoint- (.pptx) Dateien. Der gesamte Vorgang findet lokal in Ihrem Browser statt – Ihre Dokumente werden nicht hochgeladen, wodurch der vollständige Datenschutz für sensible Geschäfts- und Privatdateien gewährleistet ist.</p>
@@ -297,7 +297,7 @@ fetch('/api/track', {
   headers: { 'Content-Type': 'application/json' },
   body: JSON.stringify({ tool: 'office-metadata-remover' })
 }).catch(() => {});
-<!--cloudflare-analytics--><script data-cf-beacon='{"token": "37606631a94f4ce69f54a301c7763f01"}' src="https://static.cloudflareinsights.com/beacon.min.js" type="module"></script>Beenden Sie Cloudflare Web Analytics<script src="/sw-register.js"></script>
+<!--cloudflare-analytics--></script><script data-cf-beacon='{"token": "37606631a94f4ce69f54a301c7763f01"}' src="https://static.cloudflareinsights.com/beacon.min.js" type="module"></script><!--cloudflare-analytics-install--><script src="/sw-register.js"></script>
 <script>
 document.getElementById('shareBtn').addEventListener('click', async function() {
   const btn = this;

@@ -51,7 +51,7 @@
     {"@type":"ListItem","position":2,"name":"Tools","item":"https://presend.pages.dev/tools/"},
     {"@type":"ListItem","position":3,"name":"URL Cleaner","item":"https://presend.pages.dev/tools/url-cleaner"}
   ]
-}
+}</script>
 <!--seo-breadcrumb--><script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -69,7 +69,7 @@
     {"@type":"Question","name":"Will the link still work?","acceptedAnswer":{"@type":"Answer","text":"Yes. Removing tracking parameters does not affect the destination page. The link functions identically — it just stops sending your data to advertisers."}},
     {"@type":"Question","name":"Is my URL uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. The cleaning happens entirely in your browser. The URLs you paste are never sent to any external server."}}
 ]}
-<!--seo-faq--><script type="application/ld+json">
+</script><!--seo-faq--><script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "HowTo",
@@ -82,7 +82,7 @@
     { "@type": "HowToStep", "position": 3, "name": "Copy the clean link", "text": "The cleaned URL appears instantly. Click Copy to save it to your clipboard. The link works identically — just without the tracking.", "url": "https://presend.pages.dev/tools/url-cleaner#step3" }
   ]
 }
-</script>SEO-Howto<meta property="og:locale" content="de_DE" />
+</script><!--seo-howto--><meta property="og:locale" content="de_DE" />
 <link rel="alternate" hreflang="en" href="https://presend.pages.dev/tools/url-cleaner" />
 <link rel="alternate" hreflang="fr" href="https://presend.pages.dev/fr/tools/url-cleaner" />
 <link rel="alternate" hreflang="es" href="https://presend.pages.dev/es/tools/url-cleaner" />
@@ -143,7 +143,7 @@ https://another.com/page?gclid=abc123&amp;ref=twitter" rows="6" style="width:100
 <p style="color:var(--color-muted);max-width:60ch;line-height:1.7;margin-top:0.75rem;">
 <a href="/de/guides/how-to-clean-urls-for-sharing">Lesen Sie unseren Leitfaden: So bereinigen Sie URLs zum Teilen</a>
 </p>
-</section>SEO-bezogene-Tools</main>
+</section><!--seo-related-tools--></main>
 <footer class="site-footer wrap">
 <p>Präsentieren – kostenlose browserbasierte Tools. Läuft lokal. Kein Konto, kein Tracking.</p>
 </footer>
@@ -263,7 +263,7 @@ fetch('/api/track', {
   headers: { 'Content-Type': 'application/json' },
   body: JSON.stringify({ tool: 'url-cleaner' })
 }).catch(() => {});
-<!--cloudflare-analytics--><script data-cf-beacon='{"token": "37606631a94f4ce69f54a301c7763f01"}' src="https://static.cloudflareinsights.com/beacon.min.js" type="module"></script>Beenden Sie Cloudflare Web Analytics<script src="/sw-register.js"></script>
+<!--cloudflare-analytics--></script><script data-cf-beacon='{"token": "37606631a94f4ce69f54a301c7763f01"}' src="https://static.cloudflareinsights.com/beacon.min.js" type="module"></script><!--cloudflare-analytics-install--><script src="/sw-register.js"></script>
 <script>
 document.getElementById('shareBtn').addEventListener('click', async function() {
   const btn = this;

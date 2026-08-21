@@ -52,7 +52,7 @@
     {"@type":"ListItem","position":2,"name":"Tools","item":"https://presend.pages.dev/tools/"},
     {"@type":"ListItem","position":3,"name":"Word Counter","item":"https://presend.pages.dev/tools/word-counter"}
   ]
-}
+}</script>
 <!--seo-breadcrumb--><script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -70,7 +70,7 @@
     {"@type":"Question","name":"Does it work with any language?","acceptedAnswer":{"@type":"Answer","text":"Yes. The tool counts words in any language using Unicode word boundaries. It works for English, French, Spanish, Chinese, Arabic, and all other languages."}},
     {"@type":"Question","name":"Is my text uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. The analysis happens entirely in your browser. Your drafts, essays, and documents are never sent to any server."}}
 ]}
-<!--seo-faq--><script type="application/ld+json">
+</script><!--seo-faq--><script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "HowTo",
@@ -144,7 +144,7 @@
 <p style="color:var(--color-muted);max-width:60ch;line-height:1.7;margin-top:0.75rem;">
 <a href="/tools/landings/word-counter-online">Lea nuestra guía detallada sobre esta herramienta.</a>
 </p>
-</section>herramientas-relacionadas-con-seo</main>
+</section><!--seo-related-tools--></main>
 <section class="wrap" style="margin-top:3rem;">
 <h2 style="font-family:var(--font-display);font-size:1.1rem;">¿Por qué contar palabras y caracteres?</h2>
 <p style="color:var(--color-muted);max-width:60ch;line-height:1.7;margin-top:0.75rem;">El recuento de palabras es la columna vertebral invisible de la escritura profesional. Los periodistas deben alcanzar la longitud exacta de las columnas impresas (800 palabras) o de los artículos en línea (1500 palabras). Los estudiantes enfrentan límites estrictos en los ensayos: demasiado cortos pierden puntos, demasiado largos son rechazados. Los escritores de SEO optimizan las publicaciones de blogs entre 1500 y 2500 palabras para la clasificación de Google. Los administradores de redes sociales se mantienen por debajo de los 280 caracteres de Twitter o del límite de 3000 caracteres de LinkedIn. Los traductores cobran por palabra, por lo que los recuentos precisos afectan directamente las facturas. Nuestro contador de palabras va más allá del simple recuento de palabras: rastrea caracteres con y sin espacios, oraciones, párrafos y estima el tiempo de lectura según la velocidad promedio de un adulto (200 palabras por minuto). Funciona en cualquier idioma (inglés, francés, chino, árabe, hindi) utilizando límites compatibles con Unicode. La herramienta se actualiza en tiempo real a medida que escribe, sin carga, sin servidor y sin exposición de datos. Perfecto para ensayos, artículos, publicaciones en redes sociales, traducciones y cualquier texto donde la precisión sea importante.</p>
@@ -152,7 +152,7 @@
 <footer class="site-footer wrap">
 <p>Presente: herramientas gratuitas basadas en navegador. Se ejecuta localmente. Sin cuenta, sin seguimiento.</p>
 </footer>
-<script>
+</script><script>
 (function () {
   const inputText = document.getElementById('inputText');
   const wordCount = document.getElementById('wordCount');
@@ -222,7 +222,7 @@ fetch('/api/track', {
   headers: { 'Content-Type': 'application/json' },
   body: JSON.stringify({ tool: 'word-counter' })
 }).catch(() => {});
-<!--cloudflare-analytics--><script data-cf-beacon='{"token": "37606631a94f4ce69f54a301c7763f01"}' src="https://static.cloudflareinsights.com/beacon.min.js" type="module"></script><!--cloudflare-analytics-install--><script src="/sw-register.js"></script>
+<!--cloudflare-analytics--></script><script data-cf-beacon='{"token": "37606631a94f4ce69f54a301c7763f01"}' src="https://static.cloudflareinsights.com/beacon.min.js" type="module"></script><!--cloudflare-analytics-install--><script src="/sw-register.js"></script>
 <script>
 document.getElementById('shareBtn').addEventListener('click', async function() {
   const btn = this;

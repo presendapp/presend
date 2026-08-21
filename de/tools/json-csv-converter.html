@@ -51,7 +51,7 @@
     {"@type":"ListItem","position":2,"name":"Tools","item":"https://presend.pages.dev/tools/"},
     {"@type":"ListItem","position":3,"name":"JSON CSV Converter","item":"https://presend.pages.dev/tools/json-csv-converter"}
   ]
-}
+}</script>
 <!--seo-breadcrumb--><script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -69,7 +69,7 @@
     {"@type":"Question","name":"Is my data uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. All conversion happens locally in your browser. Your sensitive data never leaves your device."}},
     {"@type":"Question","name":"What delimiter does the CSV use?","acceptedAnswer":{"@type":"Answer","text":"The output CSV uses commas by default and wraps values in quotes when necessary. It is compatible with Excel, Google Sheets, and all major spreadsheet software."}}
 ]}
-<!--seo-faq--><script type="application/ld+json">
+</script><!--seo-faq--><script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "HowTo",
@@ -82,7 +82,7 @@
     { "@type": "HowToStep", "position": 3, "name": "Copy or download the result", "text": "The converted data appears instantly. Copy it to your clipboard or download as a file. Paste into Excel, Google Sheets, or your database.", "url": "https://presend.pages.dev/tools/json-csv-converter#step3" }
   ]
 }
-</script>SEO-Howto<meta property="og:locale" content="de_DE" />
+</script><!--seo-howto--><meta property="og:locale" content="de_DE" />
 <link rel="alternate" hreflang="en" href="https://presend.pages.dev/tools/json-csv-converter" />
 <link rel="alternate" hreflang="fr" href="https://presend.pages.dev/fr/tools/json-csv-converter" />
 <link rel="alternate" hreflang="es" href="https://presend.pages.dev/es/tools/json-csv-converter" />
@@ -149,7 +149,7 @@
 <p style="color:var(--color-muted);max-width:60ch;line-height:1.7;margin-top:0.75rem;">
 <a href="/tools/landings/convert-json-to-csv-online">Lesen Sie unsere ausführliche Anleitung zu diesem Tool</a>
 </p>
-</section>SEO-bezogene-Tools</main>
+</section><!--seo-related-tools--></main>
 <section class="wrap" style="margin-top:3rem;">
 <h2 style="font-family:var(--font-display);font-size:1.1rem;">Wann benötigen Sie eine JSON ↔ CSV-Konvertierung?</h2>
 <p style="color:var(--color-muted);max-width:60ch;line-height:1.7;margin-top:0.75rem;">JSON und CSV sind die beiden gängigsten Datenformate in modernen Workflows, dienen jedoch unterschiedlichen Zwecken. JSON ist die Muttersprache von APIs, Webanwendungen und NoSQL-Datenbanken – es verarbeitet verschachtelte Strukturen, Arrays und komplexe Beziehungen. CSV ist das universelle Format für Tabellenkalkulationen, Excel, Google Sheets und ältere Geschäftssysteme – es ist flach, einfach und für Menschen lesbar. Sie benötigen JSON in CSV, wenn Sie API-Daten zur Analyse in Excel exportieren, Datenbankexport für nicht technisch versierte Stakeholder migrieren oder Daten für E-Mail-Marketing-Tools vorbereiten. Sie benötigen CSV in JSON, wenn Sie Tabellendaten in eine Web-App importieren, strukturierte Daten an eine API weiterleiten oder Umfrageergebnisse für ein Entwicklerteam konvertieren. Unser Konverter verarbeitet sofort beide Richtungen, reduziert verschachtelte JSON-Objekte mit Punktnotation und behält Datentypen bei. Die gesamte Konvertierung erfolgt in Ihrem Browser – kein Upload, kein Server, keine Datenfreigabe. Perfekt für den Umgang mit sensiblen Kundendaten, Finanzunterlagen oder geschützten Geschäftsinformationen.</p>
@@ -333,7 +333,7 @@ fetch('/api/track', {
   headers: { 'Content-Type': 'application/json' },
   body: JSON.stringify({ tool: 'json-csv-converter' })
 }).catch(() => {});
-<!--cloudflare-analytics--><script data-cf-beacon='{"token": "37606631a94f4ce69f54a301c7763f01"}' src="https://static.cloudflareinsights.com/beacon.min.js" type="module"></script>Beenden Sie Cloudflare Web Analytics<script src="/sw-register.js"></script>
+<!--cloudflare-analytics--></script><script data-cf-beacon='{"token": "37606631a94f4ce69f54a301c7763f01"}' src="https://static.cloudflareinsights.com/beacon.min.js" type="module"></script><!--cloudflare-analytics-install--><script src="/sw-register.js"></script>
 <script>
 document.getElementById('shareBtn').addEventListener('click', async function() {
   const btn = this;

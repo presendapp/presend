@@ -48,7 +48,7 @@
   "url": "https://presend.pages.dev/tools/office-metadata-remover",
   "mainEntityOfPage": "https://presend.pages.dev/tools/office-metadata-remover"
 }
-<!--seo-app--><script type="application/ld+json">
+<!--seo-app--></script><script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
@@ -57,7 +57,7 @@
     {"@type":"ListItem","position":2,"name":"Tools","item":"https://presend.pages.dev/tools/"},
     {"@type":"ListItem","position":3,"name":"Office Metadata Remover","item":"https://presend.pages.dev/tools/office-metadata-remover"}
   ]
-}
+}</script>
 <!--seo-breadcrumb--><script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -74,7 +74,7 @@
     {"@type":"Question","name":"Is it safe to remove metadata?","acceptedAnswer":{"@type":"Answer","text":"Yes. Removing metadata does not affect the visible content of your document. It only strips hidden information that could leak privacy or confidentiality."}},
     {"@type":"Question","name":"What file formats are supported?","acceptedAnswer":{"@type":"Answer","text":"The tool supports modern Office formats: .docx (Word), .xlsx (Excel), and .pptx (PowerPoint). Older .doc, .xls, and .ppt formats are not supported."}},
     {"@type":"Question","name":"Will my document formatting be preserved?","acceptedAnswer":{"@type":"Answer","text":"Yes. The tool creates a clean copy of your document with identical formatting, layout, and content — only the hidden metadata is removed."}}
-]}
+]}</script>
 <!--seo-faq--><script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -162,7 +162,7 @@
 <footer class="site-footer wrap">
 <p>プレゼン — 無料のブラウザベースのツール。<a href="/about">について</a> · <a href="/privacy">プライバシー</a></p>
 </footer>
-<script defer src="/vendor/jszip.min.js"></script>
+</script><script defer src="/vendor/jszip.min.js"></script>
 <script>
 (function () {
   const dropzone = document.getElementById('dropzone');
@@ -297,7 +297,7 @@ fetch('/api/track', {
   headers: { 'Content-Type': 'application/json' },
   body: JSON.stringify({ tool: 'office-metadata-remover' })
 }).catch(() => {});
-<!--cloudflare-analytics--><script data-cf-beacon='{"token": "37606631a94f4ce69f54a301c7763f01"}' src="https://static.cloudflareinsights.com/beacon.min.js" type="module"></script><!--cloudflare-analytics-install--><script src="/sw-register.js"></script>
+<!--cloudflare-analytics--></script><script data-cf-beacon='{"token": "37606631a94f4ce69f54a301c7763f01"}' src="https://static.cloudflareinsights.com/beacon.min.js" type="module"></script><!--cloudflare-analytics-install--><script src="/sw-register.js"></script>
 <script>
 document.getElementById('shareBtn').addEventListener('click', async function() {
   const btn = this;

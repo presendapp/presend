@@ -52,7 +52,7 @@
     {"@type":"ListItem","position":2,"name":"Tools","item":"https://presend.pages.dev/tools/"},
     {"@type":"ListItem","position":3,"name":"Color Contrast Checker","item":"https://presend.pages.dev/tools/color-contrast"}
   ]
-}
+}</script>
 <!--seo-breadcrumb--><script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -70,7 +70,7 @@
     {"@type":"Question","name":"What does WCAG stand for?","acceptedAnswer":{"@type":"Answer","text":"WCAG stands for Web Content Accessibility Guidelines. It is the international standard for web accessibility, including color contrast requirements."}},
     {"@type":"Question","name":"Does this tool work offline?","acceptedAnswer":{"@type":"Answer","text":"Yes. Once loaded, the tool works entirely in your browser with no internet connection needed."}}
 ]}
-<!--seo-faq--><script type="application/ld+json">
+</script><!--seo-faq--><script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "HowTo",
@@ -153,11 +153,11 @@
 <p style="color:var(--color-muted);max-width:60ch;line-height:1.7;margin-top:0.75rem;">
 <a href="/tools/landings/wcag-color-contrast-checker">Lea nuestra guía detallada sobre esta herramienta.</a>
 </p>
-</section>herramientas-relacionadas-con-seo</main>
+</section><!--seo-related-tools--></main>
 <footer class="site-footer wrap">
 <p>Presente: herramientas gratuitas basadas en navegador. Se ejecuta localmente. Sin cuenta, sin seguimiento.</p>
 </footer>
-<script>
+</script><script>
 (function () {
   const fgPicker = document.getElementById('fgPicker');
   const fgColor = document.getElementById('fgColor');
@@ -248,7 +248,7 @@ fetch('/api/track', {
   headers: { 'Content-Type': 'application/json' },
   body: JSON.stringify({ tool: 'color-contrast' })
 }).catch(() => {});
-<!--cloudflare-analytics--><script data-cf-beacon='{"token": "37606631a94f4ce69f54a301c7763f01"}' src="https://static.cloudflareinsights.com/beacon.min.js" type="module"></script><!--cloudflare-analytics-install--><script src="/sw-register.js"></script>
+<!--cloudflare-analytics--></script><script data-cf-beacon='{"token": "37606631a94f4ce69f54a301c7763f01"}' src="https://static.cloudflareinsights.com/beacon.min.js" type="module"></script><!--cloudflare-analytics-install--><script src="/sw-register.js"></script>
 <script>
 document.getElementById('shareBtn').addEventListener('click', async function() {
   const btn = this;
