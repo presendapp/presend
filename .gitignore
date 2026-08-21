@@ -21,3 +21,4 @@ Thumbs.db
 *.log
 google-service-account.json
 .indexing_quota_state.pkl
+venv/
