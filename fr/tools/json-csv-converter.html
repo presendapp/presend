@@ -52,7 +52,7 @@
     {"@type":"ListItem","position":3,"name":"JSON CSV Converter","item":"https://presend.pages.dev/tools/json-csv-converter"}
   ]
 }
-</script>fil d'Ariane seo<script type="application/ld+json">{
+</script><!--seo-breadcrumb--><script type="application/ld+json">{
   "@context": "https://schema.org",
   "@type": "Organization",
   "name": "Presend",
@@ -67,7 +67,7 @@
     {"@type":"Question","name":"Is my data uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. All conversion happens locally in your browser. Your sensitive data never leaves your device."}},
     {"@type":"Question","name":"What delimiter does the CSV use?","acceptedAnswer":{"@type":"Answer","text":"The output CSV uses commas by default and wraps values in quotes when necessary. It is compatible with Excel, Google Sheets, and all major spreadsheet software."}}
 ]}
-</script>FAQ SEO<script type="application/ld+json">
+</script><!--seo-faq--><script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "HowTo",
@@ -80,7 +80,7 @@
     { "@type": "HowToStep", "position": 3, "name": "Copy or download the result", "text": "The converted data appears instantly. Copy it to your clipboard or download as a file. Paste into Excel, Google Sheets, or your database.", "url": "https://presend.pages.dev/tools/json-csv-converter#step3" }
   ]
 }
-</script>seo-comment faire<meta property="og:locale" content="fr_FR" />
+</script><!--seo-howto--><meta property="og:locale" content="fr_FR" />
 <link rel="alternate" hreflang="en" href="https://presend.pages.dev/tools/json-csv-converter" />
 <link rel="alternate" hreflang="fr" href="https://presend.pages.dev/fr/tools/json-csv-converter" />
 <link rel="alternate" hreflang="es" href="https://presend.pages.dev/es/tools/json-csv-converter" />
@@ -331,7 +331,7 @@ fetch('/api/track', {
   headers: { 'Content-Type': 'application/json' },
   body: JSON.stringify({ tool: 'json-csv-converter' })
 }).catch(() => {});
-</script><!--cloudflare-analytics--><script data-cf-beacon='{"token": "37606631a94f4ce69f54a301c7763f01"}' src="https://static.cloudflareinsights.com/beacon.min.js" type="module"></script>Mettre fin à Cloudflare Web Analytics<script src="/sw-register.js"></script>
+</script><!--cloudflare-analytics--><script data-cf-beacon='{"token": "37606631a94f4ce69f54a301c7763f01"}' src="https://static.cloudflareinsights.com/beacon.min.js" type="module"></script><!--cloudflare-analytics-install--><script src="/sw-register.js"></script>
 <script>
 document.getElementById('shareBtn').addEventListener('click', async function() {
   const btn = this;

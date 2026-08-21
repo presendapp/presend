@@ -53,7 +53,7 @@
     {"@type":"ListItem","position":3,"name":"Word Counter","item":"https://presend.pages.dev/tools/word-counter"}
   ]
 }
-</script>fil d'Ariane seo<script type="application/ld+json">{
+</script><!--seo-breadcrumb--><script type="application/ld+json">{
   "@context": "https://schema.org",
   "@type": "Organization",
   "name": "Presend",
@@ -68,7 +68,7 @@
     {"@type":"Question","name":"Does it work with any language?","acceptedAnswer":{"@type":"Answer","text":"Yes. The tool counts words in any language using Unicode word boundaries. It works for English, French, Spanish, Chinese, Arabic, and all other languages."}},
     {"@type":"Question","name":"Is my text uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. The analysis happens entirely in your browser. Your drafts, essays, and documents are never sent to any server."}}
 ]}
-</script>FAQ SEO<script type="application/ld+json">
+</script><!--seo-faq--><script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "HowTo",
@@ -81,7 +81,7 @@
     { "@type": "HowToStep", "position": 3, "name": "Copy or edit", "text": "Use the Copy button to grab your text, or the Clear button to start over. The counts update instantly with every keystroke.", "url": "https://presend.pages.dev/tools/word-counter#step3" }
   ]
 }
-</script>seo-comment faire<meta property="og:locale" content="fr_FR" />
+</script><!--seo-howto--><meta property="og:locale" content="fr_FR" />
 <link rel="alternate" hreflang="en" href="https://presend.pages.dev/tools/word-counter" />
 <link rel="alternate" hreflang="fr" href="https://presend.pages.dev/fr/tools/word-counter" />
 <link rel="alternate" hreflang="es" href="https://presend.pages.dev/es/tools/word-counter" />
@@ -220,7 +220,7 @@ fetch('/api/track', {
   headers: { 'Content-Type': 'application/json' },
   body: JSON.stringify({ tool: 'word-counter' })
 }).catch(() => {});
-</script><!--cloudflare-analytics--><script data-cf-beacon='{"token": "37606631a94f4ce69f54a301c7763f01"}' src="https://static.cloudflareinsights.com/beacon.min.js" type="module"></script>Mettre fin à Cloudflare Web Analytics<script src="/sw-register.js"></script>
+</script><!--cloudflare-analytics--><script data-cf-beacon='{"token": "37606631a94f4ce69f54a301c7763f01"}' src="https://static.cloudflareinsights.com/beacon.min.js" type="module"></script><!--cloudflare-analytics-install--><script src="/sw-register.js"></script>
 <script>
 document.getElementById('shareBtn').addEventListener('click', async function() {
   const btn = this;

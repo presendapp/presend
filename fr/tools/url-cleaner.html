@@ -52,7 +52,7 @@
     {"@type":"ListItem","position":3,"name":"URL Cleaner","item":"https://presend.pages.dev/tools/url-cleaner"}
   ]
 }
-</script>fil d'Ariane seo<script type="application/ld+json">{
+</script><!--seo-breadcrumb--><script type="application/ld+json">{
   "@context": "https://schema.org",
   "@type": "Organization",
   "name": "Presend",
@@ -67,7 +67,7 @@
     {"@type":"Question","name":"Will the link still work?","acceptedAnswer":{"@type":"Answer","text":"Yes. Removing tracking parameters does not affect the destination page. The link functions identically — it just stops sending your data to advertisers."}},
     {"@type":"Question","name":"Is my URL uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. The cleaning happens entirely in your browser. The URLs you paste are never sent to any external server."}}
 ]}
-</script>FAQ SEO<script type="application/ld+json">
+</script><!--seo-faq--><script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "HowTo",
@@ -80,7 +80,7 @@
     { "@type": "HowToStep", "position": 3, "name": "Copy the clean link", "text": "The cleaned URL appears instantly. Click Copy to save it to your clipboard. The link works identically — just without the tracking.", "url": "https://presend.pages.dev/tools/url-cleaner#step3" }
   ]
 }
-</script>seo-comment faire<meta property="og:locale" content="fr_FR" />
+</script><!--seo-howto--><meta property="og:locale" content="fr_FR" />
 <link rel="alternate" hreflang="en" href="https://presend.pages.dev/tools/url-cleaner" />
 <link rel="alternate" hreflang="fr" href="https://presend.pages.dev/fr/tools/url-cleaner" />
 <link rel="alternate" hreflang="es" href="https://presend.pages.dev/es/tools/url-cleaner" />
@@ -261,7 +261,7 @@ fetch('/api/track', {
   headers: { 'Content-Type': 'application/json' },
   body: JSON.stringify({ tool: 'url-cleaner' })
 }).catch(() => {});
-</script><!--cloudflare-analytics--><script data-cf-beacon='{"token": "37606631a94f4ce69f54a301c7763f01"}' src="https://static.cloudflareinsights.com/beacon.min.js" type="module"></script>Mettre fin à Cloudflare Web Analytics<script src="/sw-register.js"></script>
+</script><!--cloudflare-analytics--><script data-cf-beacon='{"token": "37606631a94f4ce69f54a301c7763f01"}' src="https://static.cloudflareinsights.com/beacon.min.js" type="module"></script><!--cloudflare-analytics-install--><script src="/sw-register.js"></script>
 <script>
 document.getElementById('shareBtn').addEventListener('click', async function() {
   const btn = this;
