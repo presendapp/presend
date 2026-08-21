@@ -52,7 +52,7 @@
     {"@type":"ListItem","position":3,"name":"URL Cleaner","item":"https://presend.pages.dev/tools/url-cleaner"}
   ]
 }
-</script>SEO-Breadcrumb<script type="application/ld+json">
+<!--seo-breadcrumb--><script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "Organization",
@@ -69,7 +69,7 @@
     {"@type":"Question","name":"Will the link still work?","acceptedAnswer":{"@type":"Answer","text":"Yes. Removing tracking parameters does not affect the destination page. The link functions identically — it just stops sending your data to advertisers."}},
     {"@type":"Question","name":"Is my URL uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. The cleaning happens entirely in your browser. The URLs you paste are never sent to any external server."}}
 ]}
-</script>SEO-FAQ<script type="application/ld+json">
+<!--seo-faq--><script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "HowTo",
@@ -263,7 +263,7 @@ fetch('/api/track', {
   headers: { 'Content-Type': 'application/json' },
   body: JSON.stringify({ tool: 'url-cleaner' })
 }).catch(() => {});
-</script>Cloudflare-Webanalyse<script data-cf-beacon='{"token": "37606631a94f4ce69f54a301c7763f01"}' src="https://static.cloudflareinsights.com/beacon.min.js" type="module"></script>Beenden Sie Cloudflare Web Analytics<script src="/sw-register.js"></script>
+<!--cloudflare-analytics--><script data-cf-beacon='{"token": "37606631a94f4ce69f54a301c7763f01"}' src="https://static.cloudflareinsights.com/beacon.min.js" type="module"></script>Beenden Sie Cloudflare Web Analytics<script src="/sw-register.js"></script>
 <script>
 document.getElementById('shareBtn').addEventListener('click', async function() {
   const btn = this;
