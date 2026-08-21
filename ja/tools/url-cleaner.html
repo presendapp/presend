@@ -52,7 +52,7 @@
     {"@type":"ListItem","position":3,"name":"URL Cleaner","item":"https://presend.pages.dev/tools/url-cleaner"}
   ]
 }
-</script>SEO ブレッドクラム<script type="application/ld+json">
+<!--seo-breadcrumb--><script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "Organization",
@@ -143,7 +143,7 @@ https://another.com/page?gclid=abc123&amp;ref=twitter" rows="6" style="width:100
 <p style="color:var(--color-muted);max-width:60ch;line-height:1.7;margin-top:0.75rem;">
 <a href="/ja/guides/how-to-clean-urls-for-sharing">ガイドをお読みください: 共有用の URL をクリーンアップする方法</a>
 </p>
-</section>SEO関連ツー​​ル</main>
+<!--seo-related--></main>
 <footer class="site-footer wrap">
 <p>Presend — 無料のブラウザベースのツール。ローカルで実行されます。アカウントも追跡ありません。</p>
 </footer>
@@ -263,7 +263,7 @@ fetch('/api/track', {
   headers: { 'Content-Type': 'application/json' },
   body: JSON.stringify({ tool: 'url-cleaner' })
 }).catch(() => {});
-<!--cloudflare-analytics--><script data-cf-beacon='{"token": "37606631a94f4ce69f54a301c7763f01"}' src="https://static.cloudflareinsights.com/beacon.min.js" type="module"></script>Cloudflare Web分析を終了する<script src="/sw-register.js"></script>
+<!--cloudflare-analytics--><script data-cf-beacon='{"token": "37606631a94f4ce69f54a301c7763f01"}' src="https://static.cloudflareinsights.com/beacon.min.js" type="module"></script><!--cloudflare-analytics-install--><script src="/sw-register.js"></script>
 <script>
 document.getElementById('shareBtn').addEventListener('click', async function() {
   const btn = this;
