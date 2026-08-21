@@ -32,6 +32,3 @@
 
 # Short share links
 /s/*  /api/resolve?hash=:splat  302
-
-# Catch-all: serve .html for extensionless URLs
-/* /:splat.html 200
