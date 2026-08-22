@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>無料でテキストを音声に変換する方法 — Presend ガイド</title>
+<meta name="description" content="Learn how to turn written text into natural-sounding speech using your browser's built-in voice engine. No download, no account, completely private.">
+<link rel="canonical" href="https://presend.pages.dev/ja/tools/landings/text-to-speech-converter" />
+<link href="../../style.min.css" rel="stylesheet"/>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "How to Convert Text to Speech for Free",
+  "description": "Step-by-step guide to text-to-speech using your browser's native speechSynthesis API. 100% private, no server upload.",
+  "author": {"@type":"Organization","name":"Presend"},
+  "publisher": {"@type":"Organization","name":"Presend","logo":{"@type":"ImageObject","url":"https://presend.pages.dev/og-image.png"}},
+  "datePublished": "2026-08-22",
+  "dateModified": "2026-08-22",
+  "mainEntityOfPage": {"@type":"WebPage","@id":"https://presend.pages.dev/tools/landings/text-to-speech-converter"}
+}
+</script>
+</head>
+<body class="tool-page">
+<header class="site-header wrap">
+  <a class='brand' href='/'><span class="brand-mark">●</span>プレゼンする</a>
+  <a class='nav-link' href='/'>すべてのツール</a>
+</header>
+<main class="wrap">
+  <a class='tool-back' href='/tools/text-to-speech'>← テキスト読み上げ</a>
+  <article>
+    <h1>無料でテキストを音声に変換する方法</h1>
+    <p class="lede">エッセイを校正したり、通勤中に記事を聞いたり、ナレーションを作成したりする必要がありますか?ブラウザーはあらゆるテキストを読み上げることができます。購読やアップロード、デバイスからのデータの送信は必要ありません。</p>
+
+    <h2>なぜブラウザベースのテキスト読み上げなのか?</h2>
+    <p>Amazon Polly、Google Cloud Text-to-Speech、または Celebrities などのクラウド TTS サービスは優れた結果をもたらしますが、次のことが必要です。</p>
+    <ul>
+      <li>テキストをサーバーにアップロードする</li>
+      <li>APIキーと開発者アカウント</li>
+      <li>キャラクターごとまたは分ごとに支払う</li>
+      <li>データのトレーニングを許可する条件に同意する</li>
+    </ul>
+    <p>個人的な使用、下書き、または機密性の高いコンテンツの場合、ブラウザベースの TTS は高速かつ無料で、完全にプライベートです。</p>
+
+    <h2>音声合成の仕組み</h2>
+    <p>の<a href="https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesis" target="_blank" rel="noopener">Web Speech API の speechSynthesis インターフェイス</a>最新のすべてのブラウザに組み込まれています。オペレーティング システムの音声を使用します。</p>
+    <ul>
+      <li><strong>窓</strong>— Microsoft David、Zira、その他のシステムボイス</li>
+      <li><strong>macOS</strong>— 高品質の Siri の声 (アレックス、サマンサなど)</li>
+      <li><strong>Linux</strong>— ディストリビューションに応じて、espeak、Festival、または Piper</li>
+      <li><strong>アンドロイド/iOS</strong>— 地域アクセントを備えたデバイスネイティブの TTS エンジン</li>
+    </ul>
+    <p>テキストはすべてデバイス上で処理されます。コンテンツを伝送するネットワーク リクエストはありません。</p>
+
+    <h2>ユースケース</h2>
+    <ul>
+      <li><strong>校正</strong>— 自分の書いた文章が読み上げられるのを聞くと、目が見逃していた間違いを見つけることができます</li>
+      <li><strong>アクセシビリティ</strong>— 読むのが難しい場合は、記事、電子メール、または文書を聞いてください。</li>
+      <li><strong>語学学習</strong>— 外国語のテキストの発音を聞く</li>
+      <li><strong>コンテンツ制作</strong>— ビデオまたはプレゼンテーション用の素早いナレーションの下書き</li>
+      <li><strong>マルチタスク</strong>— 料理中、運動中、通勤中に聞くことができます</li>
+    </ul>
+
+    <h2>音声設定を調整する</h2>
+    <p>Presend のツールを使用すると、以下を制御できます。</p>
+    <ul>
+      <li><strong>声</strong>— システムにインストールされているすべての音声から言語ごとにグループ化して選択します</li>
+      <li><strong>スピード</strong>— 0.5× (遅い) から 2.0× (速い) まで。 1.0倍は自然な会話のペースです</li>
+      <li><strong>ピッチ</strong>— 高い音または低い音。コンテンツの雰囲気を強調したり一致させたりするのに役立ちます</li>
+    </ul>
+
+    <h2>ステップバイステップのガイド</h2>
+    <ol>
+      <li><strong>ツールを開く</strong>— に移動<a href="/ja/tools/text-to-speech">テキスト読み上げ</a></li>
+      <li><strong>テキストを貼り付けます</strong>— 最大数千文字を入力または貼り付けます</li>
+      <li><strong>声を選択してください</strong>— 言語と特定の音声を選択します</li>
+      <li><strong>スピードとピッチを調整する</strong>— 好みに合わせて微調整</li>
+      <li><strong>「話す」をクリックします</strong>— すぐに聞くことができます</li>
+      <li><strong>一時停止/停止を使用する</strong>— 必要に応じて再生を制御します</li>
+    </ol>
+
+    <h2>出力の記録</h2>
+    <p>ほとんどのブラウザは、セキュリティ サンドボックスのため、合成オーディオを直接キャプチャできません。 TTS 出力を音声ファイルとして保存するには、オペレーティング システムのスクリーン レコーダーと音声キャプチャを使用します。</p>
+    <ul>
+      <li><strong>窓</strong>— Xbox ゲーム バー (Win+G) または OBS Studio</li>
+      <li><strong>macOS</strong>— QuickTime Player (ファイル > 新しいオーディオ録音) または Cmd+Shift+5</li>
+      <li><strong>Linux</strong>— OBS Studio または ffmpeg を使用した parec</li>
+    </ul>
+
+    <div style="margin-top:2rem; text-align:center;">
+      <a class="btn" href="/ja/tools/text-to-speech">テキスト読み上げを開く →</a>
+    </div>
+  </article>
+</main>
+<footer class="site-footer wrap">
+  <p>Presend — 無料のブラウザベースのツール。<a href="/about">について</a> · <a href="/privacy">プライバシー</a></p>
+</footer>
+</body>
+</html>
