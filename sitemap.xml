@@ -3217,6 +3217,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://presend.pages.dev/tools/password-breach-checker</loc>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://presend.pages.dev/tools/password-generator</loc>
     <lastmod>2026-08-21</lastmod>
     <changefreq>weekly</changefreq>
