@@ -2923,6 +2923,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://presend.pages.dev/tools/landings/check-password-breach</loc>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://presend.pages.dev/tools/landings/check-password-strength</loc>
     <lastmod>2026-08-21</lastmod>
     <changefreq>weekly</changefreq>
@@ -3001,6 +3007,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://presend.pages.dev/tools/landings/compress-video-online</loc>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://presend.pages.dev/tools/landings/convert-heic-jpg-online</loc>
     <lastmod>2026-08-21</lastmod>
     <changefreq>weekly</changefreq>
@@ -3026,7 +3038,13 @@
   </url>
   <url>
     <loc>https://presend.pages.dev/tools/landings/create-qr-code-link</loc>
-    <lastmod>2026-08-21</lastmod>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://presend.pages.dev/tools/landings/extract-text-from-image</loc>
+    <lastmod>2026-08-22</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -3085,6 +3103,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://presend.pages.dev/tools/landings/remove-audio-metadata</loc>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://presend.pages.dev/tools/landings/remove-author-from-word-document</loc>
     <lastmod>2026-08-21</lastmod>
     <changefreq>weekly</changefreq>
@@ -3123,6 +3147,12 @@
   <url>
     <loc>https://presend.pages.dev/tools/landings/remove-gps-from-video</loc>
     <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://presend.pages.dev/tools/landings/remove-image-background</loc>
+    <lastmod>2026-08-22</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -3181,8 +3211,20 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://presend.pages.dev/tools/landings/scan-qr-code-image</loc>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://presend.pages.dev/tools/landings/shrink-pdf-online</loc>
     <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://presend.pages.dev/tools/landings/speech-to-text-transcription</loc>
+    <lastmod>2026-08-22</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -3201,6 +3243,12 @@
   <url>
     <loc>https://presend.pages.dev/tools/landings/strong-password-generator-online</loc>
     <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://presend.pages.dev/tools/landings/text-to-speech-converter</loc>
+    <lastmod>2026-08-22</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
