@@ -22,6 +22,7 @@ jobs:
   daily-seo:
     if: github.event.schedule == '0 9 * * *' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -36,13 +37,13 @@ jobs:
           python3 -c "
           import base64, os, json
           b64 = os.environ['GOOGLE_CREDS_B64']
-          print(f'Base64 length: {len(b64)} chars')
+          print('Base64 length:', len(b64))
           decoded = base64.b64decode(b64)
           with open('google-service-account.json', 'wb') as f:
               f.write(decoded)
           with open('google-service-account.json', 'r') as f:
               data = json.load(f)
-          print(f'OK - project: {data[\"project_id\"]}')
+          print('OK - project:', data['project_id'])
           "
       - name: Run daily SEO
         run: python3 daily_seo.py
@@ -53,6 +54,7 @@ jobs:
   auto-discovery:
     if: github.event.schedule == '0 2 * * 0' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
