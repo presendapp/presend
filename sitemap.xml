@@ -3271,6 +3271,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://presend.pages.dev/tools/screenshot-to-text</loc>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://presend.pages.dev/tools/speech-to-text</loc>
     <lastmod>2026-08-22</lastmod>
     <changefreq>weekly</changefreq>
