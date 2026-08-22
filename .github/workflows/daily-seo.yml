@@ -1,0 +1,38 @@
+name: Daily SEO
+
+on:
+  schedule:
+    - cron: '0 9 * * *'
+  workflow_dispatch: {}
+
+jobs:
+  daily-seo:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install google-auth google-auth-oauthlib
+      - name: Decode and write Google service account credentials
+        env:
+          GOOGLE_CREDS_B64: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
+        run: |
+          python3 -c "
+          import base64, os, json
+          b64 = os.environ['GOOGLE_CREDS_B64']
+          print('Base64 length:', len(b64))
+          decoded = base64.b64decode(b64)
+          with open('google-service-account.json', 'wb') as f:
+              f.write(decoded)
+          with open('google-service-account.json', 'r') as f:
+              data = json.load(f)
+          print('OK - project:', data['project_id'])
+          "
+      - name: Run daily SEO
+        run: python3 daily_seo.py
+      - name: Clean up credentials
+        if: always()
+        run: rm -f google-service-account.json
