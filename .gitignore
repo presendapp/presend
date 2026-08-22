@@ -22,3 +22,11 @@ Thumbs.db
 google-service-account.json
 .indexing_quota_state.pkl
 venv/
+
+# Scripts SEO à suivre malgré l'exclusion générale *.py
+!daily_seo.py
+!indexnow_submit.py
+!generate_blog.py
+!discovery_engine.py
+!submit_all.py
+!crawler_ping_system.py
