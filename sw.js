@@ -18,6 +18,12 @@ self.addEventListener('activate', (e) => {
 });
 
 self.addEventListener('fetch', (e) => {
+  // Only handle same-origin requests; let cross-origin requests
+  // (analytics, CDNs, etc.) pass through untouched.
+  if (new URL(e.request.url).origin !== self.location.origin) {
+    return;
+  }
+
   const isNavigation = e.request.mode === 'navigate';
   if (isNavigation) {
     // Network-first for HTML pages, so content updates show immediately.
