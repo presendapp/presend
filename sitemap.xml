@@ -2839,6 +2839,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://presend.pages.dev/tools/audio-metadata-remover</loc>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://presend.pages.dev/tools/color-contrast</loc>
     <lastmod>2026-08-21</lastmod>
     <changefreq>weekly</changefreq>
