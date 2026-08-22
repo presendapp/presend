@@ -33,12 +33,9 @@ jobs:
         env:
           GOOGLE_CREDS_B64: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
         run: |
-          printf '%s' "$GOOGLE_CREDS_B64" | base64 -d > google-service-account.json
-          echo "=== Vérification du fichier ==="
-          wc -c google-service-account.json
-          head -c 1 google-service-account.json | xxd
-          echo ""
-          python3 -c "import json; json.load(open('google-service-account.json')); print('JSON valide')"
+          echo "$GOOGLE_CREDS_B64" | base64 -d > google-service-account.json
+          ls -la google-service-account.json
+          python3 -c "import json; d=json.load(open('google-service-account.json')); print('OK - project:', d['project_id'])"
       - name: Run daily SEO
         run: python3 daily_seo.py
       - name: Clean up credentials
@@ -59,7 +56,7 @@ jobs:
         env:
           GOOGLE_CREDS_B64: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
         run: |
-          printf '%s' "$GOOGLE_CREDS_B64" | base64 -d > google-service-account.json
+          echo "$GOOGLE_CREDS_B64" | base64 -d > google-service-account.json
       - name: Run auto discovery master
         run: bash auto_discovery_master.sh
       - name: Clean up credentials
