@@ -33,6 +33,15 @@ jobs:
         env:
           GOOGLE_CREDS: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
         run: printf '%s' "$GOOGLE_CREDS" > google-service-account.json
+      - name: Debug credentials file (safe, no content shown)
+        run: |
+          echo "Taille du fichier en octets:"
+          wc -c google-service-account.json
+          echo "Premier caractère (doit être '{'):"
+          head -c 1 google-service-account.json
+          echo ""
+          echo "Nombre de lignes:"
+          wc -l google-service-account.json
       - name: Run daily SEO
         run: python3 daily_seo.py
       - name: Clean up credentials
