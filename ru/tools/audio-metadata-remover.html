@@ -1,31 +1,31 @@
-
-<html lang="ru">>
+<!DOCTYPE html>
+<html lang="ru">
 <head>
-<meta charset="UTF-8">>
-<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin="None">>
-<link rel="dns-prefetch" href="https://cdn.jsdelivr.net">>
-<link rel="preconnect" href="https://static.cloudflareinsights.com" crossorigin="None">>
-<link rel="dns-prefetch" href="https://static.cloudflareinsights.com">>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">>
-  <meta property="og:title" content="Audio Metadata Remover — Presend">>
-  <meta property="og:description" content="Strip ID3 tags and hidden metadata from MP3 and M4A files without re-encoding, without sending data to servers.">>
-  <meta property="og:type" content="website">>
-  <meta property="og:url" content="https://presend.pages.dev/tools/audio-metadata-remover">>
-  <meta property="og:image" content="https://presend.pages.dev/api/og?tool=Audio+Metadata+Remover">>
-  <meta property="og:image:width" content="1200">>
-  <meta property="og:image:height" content="630">>
+<meta charset="UTF-8">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+<link rel="preconnect" href="https://static.cloudflareinsights.com" crossorigin>
+<link rel="dns-prefetch" href="https://static.cloudflareinsights.com">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta property="og:title" content="Audio Metadata Remover — Presend">
+  <meta property="og:description" content="Strip ID3 tags and hidden metadata from MP3 and M4A files without re-encoding, without sending data to servers.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://presend.pages.dev/tools/audio-metadata-remover">
+  <meta property="og:image" content="https://presend.pages.dev/api/og?tool=Audio+Metadata+Remover">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
 <title>Удаление метаданных аудио (теги ID3) — Онлайн бесплатно | представить</title>
-<meta name="robots" content="index, follow">>
-  <meta name="description" content="Strip ID3 tags, artist, album art and other hidden metadata from MP3 and M4A files. 100% private, runs entirely in your browser. Free.">>
-  <link rel="icon" href="/favicon.ico" sizes="any">>
-  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">>
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png">>
-<link href="../style.min.css" rel="preload" as="style">></link>
-    <link href="../style.min.css" rel="stylesheet" fetchpriority="high">></link>
-<link rel="canonical" href="https://presend.pages.dev/ru/tools/audio-metadata-remover">></link>
-<meta name="twitter:card" content="summary_large_image">><meta name="twitter:title" content="Audio Metadata Remover — Presend">>
-<meta name="twitter:description" content="Strip ID3 tags and hidden metadata from MP3 and M4A files without re-encoding, without sending data to servers.">>
-<script type="application/ld+json">>
+<meta name="robots" content="index, follow">
+  <meta name="description" content="Strip ID3 tags, artist, album art and other hidden metadata from MP3 and M4A files. 100% private, runs entirely in your browser. Free.">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link href="../style.min.css" rel="preload" as="style">
+    <link href="../style.min.css" rel="stylesheet" fetchpriority="high">
+<link rel="canonical" href="https://presend.pages.dev/ru/tools/audio-metadata-remover">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Audio Metadata Remover — Presend">
+<meta name="twitter:description" content="Strip ID3 tags and hidden metadata from MP3 and M4A files without re-encoding, without sending data to servers.">
+<script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
@@ -42,7 +42,7 @@
 }
 </script>
 <!--seo-app-->
-<script type="application/ld+json">>
+<script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
@@ -54,7 +54,7 @@
 }
 </script>
 <!--seo-breadcrumb-->
-<script type="application/ld+json">>
+<script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "Organization",
@@ -65,16 +65,56 @@
 }
 </script>
 <!--seo-org-->
-<script type="application/ld+json">>
-{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
-    {"@type":"Question","name":"What metadata is removed?","acceptedAnswer":{"@type":"Answer","text":"ID3v1 and ID3v2 tags from MP3 files (artist, album, title, comments, embedded album art), and metadata atoms from M4A/AAC files."}},
-    {"@type":"Question","name":"Does this re-encode my audio?","acceptedAnswer":{"@type":"Answer","text":"No. Only the metadata is removed. The audio data itself is copied byte-for-byte, so quality and file size stay essentially the same."}},
-    {"@type":"Question","name":"What formats are supported?","acceptedAnswer":{"@type":"Answer","text":"MP3 and M4A/AAC currently."}},
-    {"@type":"Question","name":"Is my file uploaded anywhere?","acceptedAnswer":{"@type":"Answer","text":"No. Everything happens locally in your browser using JavaScript. Your audio never leaves your device."}}
-]}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Какие аудиометаданные можно удалить?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Инструмент удаляет теги ID3 (название, исполнитель, альбом, год, жанр, номер трека), обложку альбома и другие встроенные метаданные из файлов MP3, M4A, WAV, FLAC, OGG и WMA."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Повлияет ли удаление метаданных на качество звука?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Нет. Инструмент удаляет только теги метаданных без перекодирования звука. Качество звука остается точно таким же, как и в исходном файле."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Загружен ли мой аудиофайл на сервер?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Никогда. Вся обработка происходит локально в вашем браузере с использованием JavaScript. Ваш аудиофайл никогда не покидает ваше устройство."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Могу ли я обрабатывать несколько файлов одновременно?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Да. Вы можете выбрать несколько аудиофайлов, и инструмент удалит метаданные из них одновременно. Каждый очищенный файл можно скачать отдельно."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Какие форматы поддерживаются?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Поддерживаются файлы MP3, M4A (AAC), WAV, FLAC, OGG и WMA. Инструмент автоматически определяет формат и обрабатывает соответствующий формат метаданных."
+      }
+    }
+  ]
+}
 </script>
 <!--seo-faq-->
-<script type="application/ld+json">>
+<script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "HowTo",
@@ -97,57 +137,57 @@
 <link rel="alternate" hreflang="ja" href="https://presend.pages.dev/ja/tools/audio-metadata-remover" />
 <link rel="alternate" hreflang="ru" href="https://presend.pages.dev/ru/tools/audio-metadata-remover" />
 <link rel="alternate" hreflang="hi" href="https://presend.pages.dev/hi/tools/audio-metadata-remover" />
-<link rel="alternate" hreflang="x-default" href="https://presend.pages.dev/tools/audio-metadata-remover" />></link>
-<meta property="og:locale" content="ru_RU">></meta>
+<link rel="alternate" hreflang="x-default" href="https://presend.pages.dev/tools/audio-metadata-remover" />
+<meta property="og:locale" content="ru_RU">
 </head>
-<body class="tool-page">>
+<body class="tool-page">
 
-<header class="site-header wrap">>
-  <a class="brand" href="/">><span class="brand-mark">>●</span>представить</a>
-  <a class="nav-link" href="/">>Все инструменты</a>
+<header class="site-header wrap">
+  <a class="brand" href="/"><span class="brand-mark">●</span>представить</a>
+  <a class="nav-link" href="/">Все инструменты</a>
 </header>
 
-<main class="wrap">>
-  <a class="tool-back" href="/">>← Назад</a>
+<main class="wrap">
+  <a class="tool-back" href="/">← Назад</a>
   <h1>Удаление метаданных аудио</h1>
-  <p class="lede">>Файлы MP3 и M4A часто содержат встроенные метаданные об исполнителе, альбоме, комментариях и обложках альбомов, иногда включая информацию, которой вы не хотели делиться. Это удаляет скрытые данные без перекодирования, поэтому качество звука и размер файла остаются прежними. Файл обрабатывается только на вашем устройстве.</p>
+  <p class="lede">Файлы MP3 и M4A часто содержат встроенные метаданные об исполнителе, альбоме, комментариях и обложках альбомов, иногда включая информацию, которой вы не хотели делиться. Это удаляет скрытые данные без перекодирования, поэтому качество звука и размер файла остаются прежними. Файл обрабатывается только на вашем устройстве.</p>
 
-  <span class="trust-badge">>Ваши файлы никогда не отправляются на наши серверы</span>
+  <span class="trust-badge">Ваши файлы никогда не отправляются на наши серверы</span>
 
-  <div style="margin-top: 2rem;">>
-    <div class="dropzone" id="dropzone" tabindex="0" role="button" aria-label="Choose an audio file or drop it here">>
-      <p class="primary">>Перетащите сюда файл MP3 или M4A или нажмите, чтобы выбрать один.</p>
-      <p class="secondary">>.mp3 или .m4a. Ничего не покидает ваше устройство.</p>
-      <input type="file" id="fileInput" accept=".mp3,.m4a,audio/mpeg,audio/mp4,audio/x-m4a">>
+  <div style="margin-top: 2rem;">
+    <div class="dropzone" id="dropzone" tabindex="0" role="button" aria-label="Choose an audio file or drop it here">
+      <p class="primary">Перетащите сюда файл MP3 или M4A или нажмите, чтобы выбрать один.</p>
+      <p class="secondary">.mp3 или .m4a. Ничего не покидает ваше устройство.</p>
+      <input type="file" id="fileInput" accept=".mp3,.m4a,audio/mpeg,audio/mp4,audio/x-m4a">
     </div>
-    <p class="error-msg" id="errorMsg">></p>
-    <div class="result" id="result">>
-      <div class="result-row">>
+    <p class="error-msg" id="errorMsg"></p>
+    <div class="result" id="result">
+      <div class="result-row">
         <div>
-          <div class="filename" id="resultName">></div>
-          <div class="meta" id="resultMeta">></div>
+          <div class="filename" id="resultName"></div>
+          <div class="meta" id="resultMeta"></div>
         </div>
-        <a class="btn" id="downloadLink" download="None">>Скачать очищенный звук</a>
-        <button class="btn ghost" id="shareBtn" type="button" style="margin-left:0.5rem;">>🔗 Скопируйте ссылку «Поделиться»</button>
+        <a class="btn" id="downloadLink" download>Скачать очищенный звук</a>
+        <button class="btn ghost" id="shareBtn" type="button" style="margin-left:0.5rem;">🔗 Скопируйте ссылку «Поделиться»</button>
       </div>
-      <button class="btn ghost" id="resetBtn" type="button">>Очистить другой файл</button>
+      <button class="btn ghost" id="resetBtn" type="button">Очистить другой файл</button>
     </div>
   </div>
 
-<section class="wrap" style="margin-top:3rem;">>
-  <h2 style="font-family:var(--font-display);font-size:1.1rem;">>Сопутствующие инструменты</h2>
-  <div class="tool-grid" style="margin-top:1rem;">>
-      <a class="tool-card" href="/tools/video-metadata-remover">>
+<section class="wrap" style="margin-top:3rem;">
+  <h2 style="font-family:var(--font-display);font-size:1.1rem;">Сопутствующие инструменты</h2>
+  <div class="tool-grid" style="margin-top:1rem;">
+      <a class="tool-card" href="/tools/video-metadata-remover">
         <div><h3>Удаление метаданных видео</h3><p>Удалить скрытое местоположение GPS и данные устройства из видео.</p></div>
-        <span class="go">>Открыть →</span>
+        <span class="go">Открыть →</span>
       </a>
-      <a class="tool-card" href="/tools/exif-remover">>
+      <a class="tool-card" href="/tools/exif-remover">
         <div><h3>EXIF для удаления</h3><p>Удаление скрытых данных о местоположении и камере с фотографии.</p></div>
-        <span class="go">>Открыть →</span>
+        <span class="go">Открыть →</span>
       </a>
-      <a class="tool-card" href="/tools/office-metadata-remover">>
+      <a class="tool-card" href="/tools/office-metadata-remover">
         <div><h3>Удаление метаданных Office</h3><p>Удаление скрытых данных об авторе и редакции из файлов Word, Excel и PowerPoint.</p></div>
-        <span class="go">>Открыть →</span>
+        <span class="go">Открыть →</span>
       </a>
   </div>
 </section>
@@ -155,13 +195,13 @@
 <!--seo-related-tools-->
 </main>
 
-<section class="wrap" style="margin-top:3rem;">>
-  <h2 style="font-family:var(--font-display);font-size:1.1rem;">>Какие метаданные скрываются в файлах MP3 и M4A?</h2>
-  <p style="color:var(--color-muted);max-width:60ch;line-height:1.7;margin-top:0.75rem;">>Аудиофайлы содержат больше, чем просто звук. В файлах MP3 используются теги ID3 для хранения исполнителя, альбома, названия трека, года, жанра, комментариев и иногда встроенной обложки — и все это хранится рядом с аудиоданными. Файлы M4A/AAC используют аналогичную структуру метаданных внутри своего формата контейнера. Эта информация часто добавляется автоматически при копировании программного обеспечения, DAW или инструментов редактирования подкастов и может выявить версии программного обеспечения, личные комментарии или историю файлов, которыми вы не собирались делиться. Наше средство для удаления метаданных аудио удаляет все это, оставляя фактические аудиоданные совершенно нетронутыми — без перекодирования, без потери качества, без изменения размера файла, кроме самих удаленных метаданных. Все работает локально в вашем браузере.</p>
+<section class="wrap" style="margin-top:3rem;">
+  <h2 style="font-family:var(--font-display);font-size:1.1rem;">Какие метаданные скрываются в файлах MP3 и M4A?</h2>
+  <p style="color:var(--color-muted);max-width:60ch;line-height:1.7;margin-top:0.75rem;">Аудиофайлы содержат больше, чем просто звук. В файлах MP3 используются теги ID3 для хранения исполнителя, альбома, названия трека, года, жанра, комментариев и иногда встроенной обложки — и все это хранится рядом с аудиоданными. Файлы M4A/AAC используют аналогичную структуру метаданных внутри своего формата контейнера. Эта информация часто добавляется автоматически при копировании программного обеспечения, DAW или инструментов редактирования подкастов и может выявить версии программного обеспечения, личные комментарии или историю файлов, которыми вы не собирались делиться. Наше средство для удаления метаданных аудио удаляет все это, оставляя фактические аудиоданные совершенно нетронутыми — без перекодирования, без потери качества, без изменения размера файла, кроме самих удаленных метаданных. Все работает локально в вашем браузере.</p>
 </section>
 
-<footer class="site-footer wrap">>
-  <p>Presend — бесплатные браузерные инструменты.<a href="/about">>О</a> · <a href="/privacy">>Конфиденциальность</a></p>
+<footer class="site-footer wrap">
+  <p>Presend — бесплатные браузерные инструменты.<a href="/about">О</a> · <a href="/privacy">Конфиденциальность</a></p>
 </footer>
 
 <script>
@@ -373,9 +413,9 @@ fetch('/api/track', {
 }).catch(() => {});
 </script>
 <!-- Cloudflare Web Analytics -->
-<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon="{"token": "37606631a94f4ce69f54a301c7763f01"}">></script>
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon="{"token": "37606631a94f4ce69f54a301c7763f01"}"></script>
 <!-- End Cloudflare Web Analytics -->
-<script src="/sw-register.js">></script>
+<script src="/sw-register.js"></script>
 <script>
 document.getElementById('shareBtn').addEventListener('click', async function() {
   const btn = this;

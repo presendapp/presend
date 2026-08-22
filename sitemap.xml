@@ -3949,6 +3949,54 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://presend.pages.dev/tools/disposable-email-checker</loc>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://presend.pages.dev/fr/tools/disposable-email-checker</loc>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://presend.pages.dev/es/tools/disposable-email-checker</loc>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://presend.pages.dev/de/tools/disposable-email-checker</loc>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://presend.pages.dev/pt/tools/disposable-email-checker</loc>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://presend.pages.dev/ja/tools/disposable-email-checker</loc>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://presend.pages.dev/ru/tools/disposable-email-checker</loc>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://presend.pages.dev/hi/tools/disposable-email-checker</loc>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://presend.pages.dev/tools/password-generator</loc>
     <lastmod>2026-08-21</lastmod>
     <changefreq>weekly</changefreq>

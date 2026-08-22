@@ -1,31 +1,31 @@
-
-<html lang="fr">>
+<!DOCTYPE html>
+<html lang="fr">
 <head>
-<meta charset="UTF-8">>
-<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin="None">>
-<link rel="dns-prefetch" href="https://cdn.jsdelivr.net">>
-<link rel="preconnect" href="https://static.cloudflareinsights.com" crossorigin="None">>
-<link rel="dns-prefetch" href="https://static.cloudflareinsights.com">>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">>
-  <meta property="og:title" content="Suppresseur de métadonnées audio — Presend">>
-  <meta property="og:description" content="Supprimez les métadonnées de vos fichiers audio localement dans votre navigateur. Vos fichiers ne quittent jamais votre appareil.">>
-  <meta property="og:type" content="website">>
-  <meta property="og:url" content="https://presend.pages.dev/tools/audio-metadata-remover">>
-  <meta property="og:image" content="https://presend.pages.dev/api/og?tool=Audio+Metadata+Remover">>
-  <meta property="og:image:width" content="1200">>
-  <meta property="og:image:height" content="630">>
+<meta charset="UTF-8">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+<link rel="preconnect" href="https://static.cloudflareinsights.com" crossorigin>
+<link rel="dns-prefetch" href="https://static.cloudflareinsights.com">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta property="og:title" content="Suppresseur de métadonnées audio — Presend">
+  <meta property="og:description" content="Supprimez les métadonnées de vos fichiers audio localement dans votre navigateur. Vos fichiers ne quittent jamais votre appareil.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://presend.pages.dev/tools/audio-metadata-remover">
+  <meta property="og:image" content="https://presend.pages.dev/api/og?tool=Audio+Metadata+Remover">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
 <title>Supprimez les métadonnées audio — Gratuit en ligne | Presend</title>
-<meta name="robots" content="index, follow">>
-  <meta name="description" content="Supprimez les métadonnées EXIF et les tags ID3 de vos fichiers audio localement dans votre navigateur. Vos fichiers ne quittent jamais votre appareil.">>
-  <link rel="icon" href="/favicon.ico" sizes="any">>
-  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">>
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png">>
-<link href="../style.min.css" rel="preload" as="style">></link>
-    <link href="../style.min.css" rel="stylesheet" fetchpriority="high">></link>
-<link rel="canonical" href="https://presend.pages.dev/fr/tools/audio-metadata-remover">></link>
-<meta name="twitter:card" content="summary_large_image">><meta name="twitter:title" content="Suppresseur de métadonnées audio — Presend">>
-<meta name="twitter:description" content="Supprimez les métadonnées de vos fichiers audio localement dans votre navigateur. Vos fichiers ne quittent jamais votre appareil.">>
-<script type="application/ld+json">>
+<meta name="robots" content="index, follow">
+  <meta name="description" content="Supprimez les métadonnées EXIF et les tags ID3 de vos fichiers audio localement dans votre navigateur. Vos fichiers ne quittent jamais votre appareil.">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link href="../style.min.css" rel="preload" as="style">
+    <link href="../style.min.css" rel="stylesheet" fetchpriority="high">
+<link rel="canonical" href="https://presend.pages.dev/fr/tools/audio-metadata-remover">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Suppresseur de métadonnées audio — Presend">
+<meta name="twitter:description" content="Supprimez les métadonnées de vos fichiers audio localement dans votre navigateur. Vos fichiers ne quittent jamais votre appareil.">
+<script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
@@ -42,7 +42,7 @@
 }
 </script>
 <!--seo-app-->
-<script type="application/ld+json">>
+<script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
@@ -54,7 +54,7 @@
 }
 </script>
 <!--seo-breadcrumb-->
-<script type="application/ld+json">>
+<script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "Organization",
@@ -65,16 +65,56 @@
 }
 </script>
 <!--seo-org-->
-<script type="application/ld+json">>
-{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
-    {"@type":"Question","name":"What metadata is removed?","acceptedAnswer":{"@type":"Answer","text":"ID3v1 and ID3v2 tags from MP3 files (artist, album, title, comments, embedded album art), and metadata atoms from M4A/AAC files."}},
-    {"@type":"Question","name":"Does this re-encode my audio?","acceptedAnswer":{"@type":"Answer","text":"No. Only the metadata is removed. The audio data itself is copied byte-for-byte, so quality and file size stay essentially the same."}},
-    {"@type":"Question","name":"What formats are supported?","acceptedAnswer":{"@type":"Answer","text":"MP3 and M4A/AAC currently."}},
-    {"@type":"Question","name":"Is my file uploaded anywhere?","acceptedAnswer":{"@type":"Answer","text":"No. Tout se passe localement dans votre navigateur grâce à JavaScript. Votre audio ne quitte jamais votre appareil. Votre audio ne quitte jamais votre appareil."}}
-]}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Quelles métadonnées audio peuvent être supprimées ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "L'outil supprime les tags ID3 (titre, artiste, album, année, genre, numéro de piste), les pochettes d'album et autres métadonnées intégrées des fichiers MP3, M4A, WAV, FLAC, OGG et WMA."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "La suppression des métadonnées affecte-t-elle la qualité audio ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Non. L'outil supprime uniquement les tags de métadonnées sans ré-encoder l'audio. La qualité sonore reste exactement la même que celle du fichier original."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Mon fichier audio est-il téléversé sur un serveur ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Jamais. Tout le traitement se fait localement dans votre navigateur grâce à JavaScript. Votre fichier audio ne quitte jamais votre appareil."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Puis-je traiter plusieurs fichiers à la fois ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Oui. Vous pouvez sélectionner plusieurs fichiers audio et l'outil supprimera les métadonnées de tous simultanément. Chaque fichier nettoyé peut être téléchargé individuellement."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Quels formats sont pris en charge ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Les fichiers MP3, M4A (AAC), WAV, FLAC, OGG et WMA sont pris en charge. L'outil détecte le format automatiquement et gère le format de métadonnées approprié."
+      }
+    }
+  ]
+}
 </script>
 <!--seo-faq-->
-<script type="application/ld+json">>
+<script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "HowTo",
@@ -97,57 +137,57 @@
 <link rel="alternate" hreflang="ja" href="https://presend.pages.dev/ja/tools/audio-metadata-remover" />
 <link rel="alternate" hreflang="ru" href="https://presend.pages.dev/ru/tools/audio-metadata-remover" />
 <link rel="alternate" hreflang="hi" href="https://presend.pages.dev/hi/tools/audio-metadata-remover" />
-<link rel="alternate" hreflang="x-default" href="https://presend.pages.dev/tools/audio-metadata-remover" />></link>
-<meta property="og:locale" content="fr_FR">></meta>
+<link rel="alternate" hreflang="x-default" href="https://presend.pages.dev/tools/audio-metadata-remover" />
+<meta property="og:locale" content="fr_FR">
 </head>
-<body class="tool-page">>
+<body class="tool-page">
 
-<header class="site-header wrap">>
-  <a class="brand" href="/">><span class="brand-mark">>●</span>Présenter</a>
-  <a class="nav-link" href="/">>Tous les outils</a>
+<header class="site-header wrap">
+  <a class="brand" href="/"><span class="brand-mark">●</span>Présenter</a>
+  <a class="nav-link" href="/">Tous les outils</a>
 </header>
 
-<main class="wrap">>
-  <a class="tool-back" href="/">>← Retour</a>
+<main class="wrap">
+  <a class="tool-back" href="/">← Retour</a>
   <h1>Suppresseur de métadonnées audio</h1>
-  <p class="lede">>Les fichiers MP3 et M4A contiennent souvent des métadonnées intégrées sur l'artiste, l'album, le commentaire et la pochette de l'album, comprenant parfois des informations que vous n'aviez pas l'intention de partager. Cela supprime les données cachées sans réencodage, de sorte que la qualité audio et la taille du fichier restent les mêmes. Le fichier est traité uniquement sur votre appareil.</p>
+  <p class="lede">Les fichiers MP3 et M4A contiennent souvent des métadonnées intégrées sur l'artiste, l'album, le commentaire et la pochette de l'album, comprenant parfois des informations que vous n'aviez pas l'intention de partager. Cela supprime les données cachées sans réencodage, de sorte que la qualité audio et la taille du fichier restent les mêmes. Le fichier est traité uniquement sur votre appareil.</p>
 
-  <span class="trust-badge">>Vos fichiers ne sont jamais envoyés sur nos serveurs</span>
+  <span class="trust-badge">Vos fichiers ne sont jamais envoyés sur nos serveurs</span>
 
-  <div style="margin-top: 2rem;">>
-    <div class="dropzone" id="dropzone" tabindex="0" role="button" aria-label="Choose an audio file or drop it here">>
-      <p class="primary">>Déposez un fichier MP3 ou M4A ici, ou cliquez pour en choisir un</p>
-      <p class="secondary">>.mp3 ou .m4a. Rien ne quitte votre appareil.</p>
-      <input type="file" id="fileInput" accept=".mp3,.m4a,audio/mpeg,audio/mp4,audio/x-m4a">>
+  <div style="margin-top: 2rem;">
+    <div class="dropzone" id="dropzone" tabindex="0" role="button" aria-label="Choose an audio file or drop it here">
+      <p class="primary">Déposez un fichier MP3 ou M4A ici, ou cliquez pour en choisir un</p>
+      <p class="secondary">.mp3 ou .m4a. Rien ne quitte votre appareil.</p>
+      <input type="file" id="fileInput" accept=".mp3,.m4a,audio/mpeg,audio/mp4,audio/x-m4a">
     </div>
-    <p class="error-msg" id="errorMsg">></p>
-    <div class="result" id="result">>
-      <div class="result-row">>
+    <p class="error-msg" id="errorMsg"></p>
+    <div class="result" id="result">
+      <div class="result-row">
         <div>
-          <div class="filename" id="resultName">></div>
-          <div class="meta" id="resultMeta">></div>
+          <div class="filename" id="resultName"></div>
+          <div class="meta" id="resultMeta"></div>
         </div>
-        <a class="btn" id="downloadLink" download="None">>Télécharger l'audio nettoyé</a>
-        <button class="btn ghost" id="shareBtn" type="button" style="margin-left:0.5rem;">>🔗 Copier le lien de partage</button>
+        <a class="btn" id="downloadLink" download>Télécharger l'audio nettoyé</a>
+        <button class="btn ghost" id="shareBtn" type="button" style="margin-left:0.5rem;">🔗 Copier le lien de partage</button>
       </div>
-      <button class="btn ghost" id="resetBtn" type="button">>Nettoyer un autre fichier</button>
+      <button class="btn ghost" id="resetBtn" type="button">Nettoyer un autre fichier</button>
     </div>
   </div>
 
-<section class="wrap" style="margin-top:3rem;">>
-  <h2 style="font-family:var(--font-display);font-size:1.1rem;">>Outils associés</h2>
-  <div class="tool-grid" style="margin-top:1rem;">>
-      <a class="tool-card" href="/tools/video-metadata-remover">>
+<section class="wrap" style="margin-top:3rem;">
+  <h2 style="font-family:var(--font-display);font-size:1.1rem;">Outils associés</h2>
+  <div class="tool-grid" style="margin-top:1rem;">
+      <a class="tool-card" href="/tools/video-metadata-remover">
         <div><h3>Suppresseur de métadonnées vidéo</h3><p>Supprimez la localisation GPS cachée et les données de l'appareil des vidéos.</p></div>
-        <span class="go">>Ouvrir →</span>
+        <span class="go">Ouvrir →</span>
       </a>
-      <a class="tool-card" href="/tools/exif-remover">>
+      <a class="tool-card" href="/tools/exif-remover">
         <div><h3>Suppresseur EXIF</h3><p>Supprimez l’emplacement caché et les données de l’appareil photo d’une photo.</p></div>
-        <span class="go">>Ouvrir →</span>
+        <span class="go">Ouvrir →</span>
       </a>
-      <a class="tool-card" href="/tools/office-metadata-remover">>
+      <a class="tool-card" href="/tools/office-metadata-remover">
         <div><h3>Suppresseur de métadonnées Office</h3><p>Supprimez les données d'auteur et de révision cachées des fichiers Word, Excel et PowerPoint.</p></div>
-        <span class="go">>Ouvrir →</span>
+        <span class="go">Ouvrir →</span>
       </a>
   </div>
 </section>
@@ -155,13 +195,13 @@
 <!--seo-related-tools-->
 </main>
 
-<section class="wrap" style="margin-top:3rem;">>
-  <h2 style="font-family:var(--font-display);font-size:1.1rem;">>Quelles métadonnées se cachent dans les fichiers MP3 et M4A ?</h2>
-  <p style="color:var(--color-muted);max-width:60ch;line-height:1.7;margin-top:0.75rem;">>Les fichiers audio contiennent bien plus que du son. Les fichiers MP3 utilisent des balises ID3 pour stocker l'artiste, l'album, le titre de la piste, l'année, le genre, les commentaires et parfois la pochette intégrée, le tout stocké juste à côté des données audio. Les fichiers M4A/AAC utilisent une structure de métadonnées similaire dans leur format conteneur. Ces informations sont souvent ajoutées automatiquement par des logiciels d'extraction, des DAW ou des outils d'édition de podcasts, et peuvent révéler des versions de logiciels, des commentaires personnels ou l'historique des fichiers que vous n'aviez pas l'intention de partager. Notre outil de suppression de métadonnées audio supprime tout cela tout en laissant les données audio réelles complètement intactes : pas de réencodage, pas de perte de qualité, pas de changement dans la taille du fichier au-delà des métadonnées supprimées elles-mêmes. Tout s'exécute localement dans votre navigateur.</p>
+<section class="wrap" style="margin-top:3rem;">
+  <h2 style="font-family:var(--font-display);font-size:1.1rem;">Quelles métadonnées se cachent dans les fichiers MP3 et M4A ?</h2>
+  <p style="color:var(--color-muted);max-width:60ch;line-height:1.7;margin-top:0.75rem;">Les fichiers audio contiennent bien plus que du son. Les fichiers MP3 utilisent des balises ID3 pour stocker l'artiste, l'album, le titre de la piste, l'année, le genre, les commentaires et parfois la pochette intégrée, le tout stocké juste à côté des données audio. Les fichiers M4A/AAC utilisent une structure de métadonnées similaire dans leur format conteneur. Ces informations sont souvent ajoutées automatiquement par des logiciels d'extraction, des DAW ou des outils d'édition de podcasts, et peuvent révéler des versions de logiciels, des commentaires personnels ou l'historique des fichiers que vous n'aviez pas l'intention de partager. Notre outil de suppression de métadonnées audio supprime tout cela tout en laissant les données audio réelles complètement intactes : pas de réencodage, pas de perte de qualité, pas de changement dans la taille du fichier au-delà des métadonnées supprimées elles-mêmes. Tout s'exécute localement dans votre navigateur.</p>
 </section>
 
-<footer class="site-footer wrap">>
-  <p>Present – ​​outils gratuits basés sur un navigateur.<a href="/about">>À propos</a> · <a href="/privacy">>Confidentialité</a></p>
+<footer class="site-footer wrap">
+  <p>Present – ​​outils gratuits basés sur un navigateur.<a href="/about">À propos</a> · <a href="/privacy">Confidentialité</a></p>
 </footer>
 
 <script>
@@ -373,9 +413,9 @@ fetch('/api/track', {
 }).catch(() => {});
 </script>
 <!-- Cloudflare Web Analytics -->
-<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon="{"token": "37606631a94f4ce69f54a301c7763f01"}">></script>
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon="{"token": "37606631a94f4ce69f54a301c7763f01"}"></script>
 <!-- End Cloudflare Web Analytics -->
-<script src="/sw-register.js">></script>
+<script src="/sw-register.js"></script>
 <script>
 document.getElementById('shareBtn').addEventListener('click', async function() {
   const btn = this;

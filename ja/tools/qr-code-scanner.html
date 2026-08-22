@@ -1,31 +1,31 @@
-
-<html lang="ja">>
+<!DOCTYPE html>
+<html lang="ja">
 <head>
-<meta charset="UTF-8">>
-<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin="None">>
-<link rel="dns-prefetch" href="https://cdn.jsdelivr.net">>
-<link rel="preconnect" href="https://static.cloudflareinsights.com" crossorigin="None">>
-<link rel="dns-prefetch" href="https://static.cloudflareinsights.com">>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">>
-  <meta property="og:title" content="QR Code Scanner — Presend">>
-  <meta property="og:description" content="Scan and decode QR codes from an image or your camera without sending data to servers.">>
-  <meta property="og:type" content="website">>
-  <meta property="og:url" content="https://presend.pages.dev/tools/qr-code-scanner">>
-  <meta property="og:image" content="https://presend.pages.dev/api/og?tool=QR+Code+Scanner">>
-  <meta property="og:image:width" content="1200">>
-  <meta property="og:image:height" content="630">>
+<meta charset="UTF-8">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+<link rel="preconnect" href="https://static.cloudflareinsights.com" crossorigin>
+<link rel="dns-prefetch" href="https://static.cloudflareinsights.com">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta property="og:title" content="QR Code Scanner — Presend">
+  <meta property="og:description" content="Scan and decode QR codes from an image or your camera without sending data to servers.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://presend.pages.dev/tools/qr-code-scanner">
+  <meta property="og:image" content="https://presend.pages.dev/api/og?tool=QR+Code+Scanner">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
 <title>データを送信せずに QR コードをスキャン — 無料オンライン |プレゼンする</title>
-<meta name="robots" content="index, follow">>
-  <meta name="description" content="Decode QR codes from an uploaded image or your camera. 100% private, runs entirely in your browser. Free.">>
-  <link rel="icon" href="/favicon.ico" sizes="any">>
-  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">>
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png">>
-<link href="../style.min.css" rel="preload" as="style">></link>
-    <link href="../style.min.css" rel="stylesheet" fetchpriority="high">></link>
-<link rel="canonical" href="https://presend.pages.dev/ja/tools/qr-code-scanner">></link>
-<meta name="twitter:card" content="summary_large_image">><meta name="twitter:title" content="QR Code Scanner — Presend">>
-<meta name="twitter:description" content="Scan and decode QR codes from an image or your camera without sending data to servers.">>
-<script type="application/ld+json">>
+<meta name="robots" content="index, follow">
+  <meta name="description" content="Decode QR codes from an uploaded image or your camera. 100% private, runs entirely in your browser. Free.">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link href="../style.min.css" rel="preload" as="style">
+    <link href="../style.min.css" rel="stylesheet" fetchpriority="high">
+<link rel="canonical" href="https://presend.pages.dev/ja/tools/qr-code-scanner">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="QR Code Scanner — Presend">
+<meta name="twitter:description" content="Scan and decode QR codes from an image or your camera without sending data to servers.">
+<script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
@@ -42,7 +42,7 @@
 }
 </script>
 <!--seo-app-->
-<script type="application/ld+json">>
+<script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
@@ -54,7 +54,7 @@
 }
 </script>
 <!--seo-breadcrumb-->
-<script type="application/ld+json">>
+<script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "Organization",
@@ -65,16 +65,56 @@
 }
 </script>
 <!--seo-org-->
-<script type="application/ld+json">>
-{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
-    {"@type":"Question","name":"Is the QR code image uploaded anywhere?","acceptedAnswer":{"@type":"Answer","text":"No. The image is decoded entirely in your browser using JavaScript. サーバーに何も送信されることはありません。"}},
-    {"@type":"Question","name":"Can I scan with my camera?","acceptedAnswer":{"@type":"Answer","text":"Yes. Click 'Use camera' to scan a QR code live. The video feed never leaves your device."}},
-    {"@type":"Question","name":"What image formats are supported?","acceptedAnswer":{"@type":"Answer","text":"JPG, PNG, WebP and most common image formats."}},
-    {"@type":"Question","name":"What can a QR code contain?","acceptedAnswer":{"@type":"Answer","text":"URLs, plain text, WiFi credentials, contact details, email addresses, and more. We decode and display the raw content."}}
-]}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "この QR コード スキャナーは安全に使用できますか?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "はい。 QR コード スキャナーは完全にブラウザ内で実行されます。画像やカメラ フィードがサーバーにアップロードされることはありません。すべては JavaScript を使用してローカルで処理されます。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "スクリーンショットから QR コードをスキャンできますか?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "絶対に。任意の画像ファイル (PNG、JPG、WebP、GIF) をアップロードするか、スクリーンショットを直接貼り付けることができます。このツールは QR コードを瞬時にデコードします。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "これは携帯電話でも機能しますか?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "はい。このツールは、デスクトップとモバイル デバイスの両方で、Chrome、Safari、Firefox、Edge を含むすべての最新ブラウザで動作します。携帯電話のカメラを直接使用することもできます。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "どのような種類の QR コードをスキャンできますか?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "URL、テキスト、Wi-Fi 認証情報、連絡先カード (vCard)、電子メール アドレス、電話番号などが含まれる標準の QR コードをスキャンできます。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "アプリをインストールする必要がありますか?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "インストールは必要ありません。これはブラウザで直接動作する Web ベースのツールです。使用することを選択した場合、ダウンロードやアカウント、カメラへのアクセス以外の許可は必要ありません。"
+      }
+    }
+  ]
+}
 </script>
 <!--seo-faq-->
-<script type="application/ld+json">>
+<script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "HowTo",
@@ -97,62 +137,62 @@
 <link rel="alternate" hreflang="ja" href="https://presend.pages.dev/ja/tools/qr-code-scanner" />
 <link rel="alternate" hreflang="ru" href="https://presend.pages.dev/ru/tools/qr-code-scanner" />
 <link rel="alternate" hreflang="hi" href="https://presend.pages.dev/hi/tools/qr-code-scanner" />
-<link rel="alternate" hreflang="x-default" href="https://presend.pages.dev/tools/qr-code-scanner" />></link>
-<meta property="og:locale" content="ja_JP">></meta>
+<link rel="alternate" hreflang="x-default" href="https://presend.pages.dev/tools/qr-code-scanner" />
+<meta property="og:locale" content="ja_JP">
 </head>
-<body class="tool-page">>
+<body class="tool-page">
 
-<header class="site-header wrap">>
-  <a class="brand" href="/">><span class="brand-mark">>●</span>プレゼンする</a>
-  <a class="nav-link" href="/">>みんなのツール</a>
+<header class="site-header wrap">
+  <a class="brand" href="/"><span class="brand-mark">●</span>プレゼンする</a>
+  <a class="nav-link" href="/">みんなのツール</a>
 </header>
 
-<main class="wrap">>
-  <a class="tool-back" href="/">>← 戻る</a>
+<main class="wrap">
+  <a class="tool-back" href="/">← 戻る</a>
   <h1>QRコードスキャナー</h1>
-  <p class="lede">>画像またはカメラから QR コードをデコードします。すべてがブラウザ内で瞬時に行われ、どこにも何も送信されません。</p>
+  <p class="lede">画像またはカメラから QR コードをデコードします。すべてがブラウザ内で瞬時に行われ、どこにも何も送信されません。</p>
 
-  <span class="trust-badge">>ファイルが当社のサーバーに送信されることはありません</span>
+  <span class="trust-badge">ファイルが当社のサーバーに送信されることはありません</span>
 
-  <div style="margin-top: 2rem;">>
-    <div class="dropzone" id="dropzone" style="background:var(--color-bg-raised); border:2px dashed var(--color-line); border-radius:var(--radius); padding:2rem; text-align:center; cursor:pointer;">>
-      <p style="margin:0; color:var(--color-muted);">>ここに QR コード画像をドロップするか、クリックしてファイルを選択してください</p>
-      <input type="file" id="fileInput" accept="image/*" style="display:none;">>
+  <div style="margin-top: 2rem;">
+    <div class="dropzone" id="dropzone" style="background:var(--color-bg-raised); border:2px dashed var(--color-line); border-radius:var(--radius); padding:2rem; text-align:center; cursor:pointer;">
+      <p style="margin:0; color:var(--color-muted);">ここに QR コード画像をドロップするか、クリックしてファイルを選択してください</p>
+      <input type="file" id="fileInput" accept="image/*" style="display:none;">
     </div>
 
-    <div style="text-align:center; margin-top:1rem;">>
-      <button class="btn ghost" id="cameraBtn" type="button">>📷 代わりにカメラを使用してください</button>
+    <div style="text-align:center; margin-top:1rem;">
+      <button class="btn ghost" id="cameraBtn" type="button">📷 代わりにカメラを使用してください</button>
     </div>
 
-    <video id="cameraVideo" playsinline="None" style="display:none; width:100%; max-width:480px; margin:1rem auto; display:none; border-radius:var(--radius);">></video>
-    <canvas id="hiddenCanvas" style="display:none;">></canvas>
+    <video id="cameraVideo" playsinline style="display:none; width:100%; max-width:480px; margin:1rem auto; display:none; border-radius:var(--radius);"></video>
+    <canvas id="hiddenCanvas" style="display:none;"></canvas>
 
-    <p class="error-msg" id="errorMsg">></p>
+    <p class="error-msg" id="errorMsg"></p>
 
-    <div class="result" id="result" style="text-align:center; display:none;">>
-      <p style="font-size:0.9rem; color:var(--color-muted); margin-bottom:0.4rem;">>デコードされたコンテンツ:</p>
-      <div id="decodedOutput" style="background:var(--color-bg-raised); border:1px solid var(--color-line); border-radius:var(--radius); padding:1rem; word-break:break-all; text-align:left; font-family:monospace;">></div>
-      <div style="margin-top:1rem;">>
-        <button class="btn" id="copyBtn" type="button">>コンテンツをコピーする</button>
-        <button class="btn ghost" id="resetBtn" type="button" style="margin-left:0.5rem;">>別のスキャン</button>
+    <div class="result" id="result" style="text-align:center; display:none;">
+      <p style="font-size:0.9rem; color:var(--color-muted); margin-bottom:0.4rem;">デコードされたコンテンツ:</p>
+      <div id="decodedOutput" style="background:var(--color-bg-raised); border:1px solid var(--color-line); border-radius:var(--radius); padding:1rem; word-break:break-all; text-align:left; font-family:monospace;"></div>
+      <div style="margin-top:1rem;">
+        <button class="btn" id="copyBtn" type="button">コンテンツをコピーする</button>
+        <button class="btn ghost" id="resetBtn" type="button" style="margin-left:0.5rem;">別のスキャン</button>
       </div>
     </div>
   </div>
 
-<section class="wrap" style="margin-top:3rem;">>
-  <h2 style="font-family:var(--font-display);font-size:1.1rem;">>関連ツール</h2>
-  <div class="tool-grid" style="margin-top:1rem;">>
-      <a class="tool-card" href="/tools/qr-code-generator">>
+<section class="wrap" style="margin-top:3rem;">
+  <h2 style="font-family:var(--font-display);font-size:1.1rem;">関連ツール</h2>
+  <div class="tool-grid" style="margin-top:1rem;">
+      <a class="tool-card" href="/tools/qr-code-generator">
         <div><h3>QRコードジェネレーター</h3><p>テキスト、URL、WiFi パスワードからスキャン可能な QR コードを作成します。</p></div>
-        <span class="go">>Open →</span>
+        <span class="go">Open →</span>
       </a>
-      <a class="tool-card" href="/tools/url-cleaner">>
+      <a class="tool-card" href="/tools/url-cleaner">
         <div><h3>URLクリーナー</h3><p>URL から追跡パラメータを削除します。</p></div>
-        <span class="go">>開く→</span>
+        <span class="go">開く→</span>
       </a>
-      <a class="tool-card" href="/tools/password-generator">>
+      <a class="tool-card" href="/tools/password-generator">
         <div><h3>パスワードジェネレータ</h3><p>強力なランダムパスワードを生成します。</p></div>
-        <span class="go">>開く→</span>
+        <span class="go">開く→</span>
       </a>
   </div>
 </section>
@@ -160,16 +200,16 @@
 <!--seo-related-tools-->
 </main>
 
-<section class="wrap" style="margin-top:3rem;">>
-  <h2 style="font-family:var(--font-display);font-size:1.1rem;">>QRコードのスキャンはどのように機能しますか?</h2>
-  <p style="color:var(--color-muted);max-width:60ch;line-height:1.7;margin-top:0.75rem;">>QR コードは、黒と白の正方形のグリッドを使用してデータをエンコードし、スキャナーがそれを読み取って元のテキスト、リンク、または連絡先の詳細を再構築します。当社の QR コード スキャナーは、JavaScript 画像処理を使用してこれをブラウザで直接デコードします。画像がサーバーにアップロードされることはなく、カメラ映像が送信または保存されることもありません。 QR コードを含む写真またはスクリーンショットをアップロードするか、デバイスのカメラを使用してライブでスキャンすることができます。これは、見慣れない QR コードを含むリンクを開いたり、印刷物、画面、ドキュメントから QR コードを読み取る前にそのコードを確認する場合に特に便利です。デコードされたコンテンツはプレーン テキストとして即座に表示され、URL の場合はコピーまたはクリックすることができます。</p>
+<section class="wrap" style="margin-top:3rem;">
+  <h2 style="font-family:var(--font-display);font-size:1.1rem;">QRコードのスキャンはどのように機能しますか?</h2>
+  <p style="color:var(--color-muted);max-width:60ch;line-height:1.7;margin-top:0.75rem;">QR コードは、黒と白の正方形のグリッドを使用してデータをエンコードし、スキャナーがそれを読み取って元のテキスト、リンク、または連絡先の詳細を再構築します。当社の QR コード スキャナーは、JavaScript 画像処理を使用してこれをブラウザで直接デコードします。画像がサーバーにアップロードされることはなく、カメラ映像が送信または保存されることもありません。 QR コードを含む写真またはスクリーンショットをアップロードするか、デバイスのカメラを使用してライブでスキャンすることができます。これは、見慣れない QR コードを含むリンクを開いたり、印刷物、画面、ドキュメントから QR コードを読み取る前にそのコードを確認する場合に特に便利です。デコードされたコンテンツはプレーン テキストとして即座に表示され、URL の場合はコピーまたはクリックすることができます。</p>
 </section>
 
-<footer class="site-footer wrap">>
-  <p>Presend — 無料のブラウザベースのツール。<a href="/about">>について</a> · <a href="/privacy">>プライバシー</a></p>
+<footer class="site-footer wrap">
+  <p>Presend — 無料のブラウザベースのツール。<a href="/about">について</a> · <a href="/privacy">プライバシー</a></p>
 </footer>
 
-<script defer="None" src="/vendor/jsqr.min.js">></script>
+<script defer src="/vendor/jsqr.min.js"></script>
 <script>
 (function () {
   const dropzone = document.getElementById('dropzone');
@@ -312,8 +352,8 @@ fetch('/api/track', {
 }).catch(() => {});
 </script>
 <!-- Cloudflare Web Analytics -->
-<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon="{"token": "37606631a94f4ce69f54a301c7763f01"}">></script>
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon="{"token": "37606631a94f4ce69f54a301c7763f01"}"></script>
 <!-- End Cloudflare Web Analytics -->
-<script src="/sw-register.js">></script>
+<script src="/sw-register.js"></script>
 </body>
 </html>

@@ -66,12 +66,52 @@
 </script>
 <!--seo-org-->
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
-    {"@type":"Question","name":"What metadata is removed?","acceptedAnswer":{"@type":"Answer","text":"ID3v1 and ID3v2 tags from MP3 files (artist, album, title, comments, embedded album art), and metadata atoms from M4A/AAC files."}},
-    {"@type":"Question","name":"Does this re-encode my audio?","acceptedAnswer":{"@type":"Answer","text":"No. Only the metadata is removed. The audio data itself is copied byte-for-byte, so quality and file size stay essentially the same."}},
-    {"@type":"Question","name":"What formats are supported?","acceptedAnswer":{"@type":"Answer","text":"MP3 and M4A/AAC currently."}},
-    {"@type":"Question","name":"Is my file uploaded anywhere?","acceptedAnswer":{"@type":"Answer","text":"No. Everything happens locally in your browser using JavaScript. Your audio never leaves your device."}}
-]}
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What audio metadata can be removed?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The tool removes ID3 tags (title, artist, album, year, genre, track number), album artwork, and other embedded metadata from MP3, M4A, WAV, FLAC, OGG, and WMA files."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Will removing metadata affect audio quality?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. The tool strips only the metadata tags without re-encoding the audio. The sound quality remains exactly the same as the original file."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is my audio file uploaded to a server?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Never. All processing happens locally in your browser using JavaScript. Your audio file never leaves your device."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I process multiple files at once?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. You can select multiple audio files and the tool will remove metadata from all of them simultaneously. Each cleaned file can be downloaded individually."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What formats are supported?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "MP3, M4A (AAC), WAV, FLAC, OGG, and WMA files are supported. The tool detects the format automatically and handles the appropriate metadata format."
+      }
+    }
+  ]
+}
 </script>
 <!--seo-faq-->
 <script type="application/ld+json">

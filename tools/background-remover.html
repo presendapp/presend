@@ -66,7 +66,54 @@
 }
 </script>
 <!--seo-org-->
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[    {"@type":"Question","name":"Is my image uploaded?","acceptedAnswer":{"@type":"Answer","text":"No. The AI model runs entirely in your browser using WebAssembly and WebGL. Your image never leaves your device."}},    {"@type":"Question","name":"What image formats work?","acceptedAnswer":{"@type":"Answer","text":"JPG, PNG, WebP, and most common image formats."}},    {"@type":"Question","name":"Is there a size limit?","acceptedAnswer":{"@type":"Answer","text":"Depends on your device's RAM and GPU. Images up to 2048px work well on most devices."}},    {"@type":"Question","name":"How accurate is it?","acceptedAnswer":{"@type":"Answer","text":"Very accurate for portraits, products, and clear subjects. Complex hair or fuzzy edges may need touch-ups."}},    {"@type":"Question","name":"Can I use it commercially?","acceptedAnswer":{"@type":"Answer","text":"Yes. The processed images are yours. No watermark, no attribution required."}}]}</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How does the AI background removal work?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The tool uses a lightweight neural network (RMBG model) that runs directly in your browser. It detects the subject in your photo and separates it from the background without uploading anything to a server."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What image formats are supported?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "JPG, PNG, WebP, and BMP files are supported. The output is a PNG with a transparent background, perfect for logos, product photos, and portraits."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is there a resolution limit?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The tool handles images up to 4096x4096 pixels. For best results, use clear photos with good contrast between the subject and background."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I use this for commercial projects?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. The tool is free to use for both personal and commercial projects. No attribution required. The processed images are yours to use as you wish."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does it work on mobile?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. The AI model runs efficiently on mobile browsers. Processing may take slightly longer on older devices, but the quality remains the same."
+      }
+    }
+  ]
+}
+</script>
 <!--seo-faq-->
 <script type="application/ld+json">
 {

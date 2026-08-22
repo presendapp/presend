@@ -1,31 +1,31 @@
-
-<html lang="ja">>
+<!DOCTYPE html>
+<html lang="ja">
 <head>
-<meta charset="UTF-8">>
-<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin="None">>
-<link rel="dns-prefetch" href="https://cdn.jsdelivr.net">>
-<link rel="preconnect" href="https://static.cloudflareinsights.com" crossorigin="None">>
-<link rel="dns-prefetch" href="https://static.cloudflareinsights.com">>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">>
-  <meta property="og:title" content="Video Compressor — Presend">>
-  <meta property="og:description" content="Compress MP4 and MOV videos to reduce file size without leaving your browser. Powered by FFmpeg.wasm.">>
-  <meta property="og:type" content="website">>
-  <meta property="og:url" content="https://presend.pages.dev/tools/video-compressor">>
-  <meta property="og:image" content="https://presend.pages.dev/api/og?tool=Video+Compressor">>
-  <meta property="og:image:width" content="1200">>
-  <meta property="og:image:height" content="630">>
+<meta charset="UTF-8">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+<link rel="preconnect" href="https://static.cloudflareinsights.com" crossorigin>
+<link rel="dns-prefetch" href="https://static.cloudflareinsights.com">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta property="og:title" content="Video Compressor — Presend">
+  <meta property="og:description" content="Compress MP4 and MOV videos to reduce file size without leaving your browser. Powered by FFmpeg.wasm.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://presend.pages.dev/tools/video-compressor">
+  <meta property="og:image" content="https://presend.pages.dev/api/og?tool=Video+Compressor">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
 <title>アップロードせずにビデオを圧縮 — オンラインで無料 |プレゼンする</title>
-<meta name="robots" content="index, follow">>
-  <meta name="description" content="Shrink MP4 and MOV file sizes with adjustable quality. FFmpegを使用して、ブラウザ内で完全に実行されます。wasm. ビデオはデバイスから離れることはありません。">>
-  <link rel="icon" href="/favicon.ico" sizes="any">>
-  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">>
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png">>
-<link href="../style.min.css" rel="preload" as="style">></link>
-    <link href="../style.min.css" rel="stylesheet" fetchpriority="high">></link>
-<link rel="canonical" href="https://presend.pages.dev/ja/tools/video-compressor">></link>
-<meta name="twitter:card" content="summary_large_image">><meta name="twitter:title" content="Video Compressor — Presend">>
-<meta name="twitter:description" content="Compress MP4 and MOV videos to reduce file size without leaving your browser. Powered by FFmpeg.wasm.">>
-<script type="application/ld+json">>
+<meta name="robots" content="index, follow">
+  <meta name="description" content="Shrink MP4 and MOV file sizes with adjustable quality. FFmpegを使用して、ブラウザ内で完全に実行されます。wasm. ビデオはデバイスから離れることはありません。">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link href="../style.min.css" rel="preload" as="style">
+    <link href="../style.min.css" rel="stylesheet" fetchpriority="high">
+<link rel="canonical" href="https://presend.pages.dev/ja/tools/video-compressor">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Video Compressor — Presend">
+<meta name="twitter:description" content="Compress MP4 and MOV videos to reduce file size without leaving your browser. Powered by FFmpeg.wasm.">
+<script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
@@ -43,7 +43,7 @@
 </script>
 <!--seo-app-->
 
-<script type="application/ld+json">>
+<script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
@@ -55,7 +55,7 @@
 }
 </script>
 <!--seo-breadcrumb-->
-<script type="application/ld+json">>
+<script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "Organization",
@@ -66,9 +66,54 @@
 }
 </script>
 <!--seo-org-->
-<script type="application/ld+json">>{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[    {"@type":"Question","name":"Is my video uploaded?","acceptedAnswer":{"@type":"Answer","text":"No. FFmpeg.wasm runs entirely in your browser. ビデオはデバイスから離れることはありません。"}},    {"@type":"Question","name":"What formats are supported?","acceptedAnswer":{"@type":"Answer","text":"MP4, MOV, and most common video formats that FFmpeg supports."}},    {"@type":"Question","name":"What is CRF?","acceptedAnswer":{"@type":"Answer","text":"Constant Rate Factor. Lower values = higher quality, larger files. 23 is default, 28 is good for web sharing."}},    {"@type":"Question","name":"Is there a file size limit?","acceptedAnswer":{"@type":"Answer","text":"Depends on your device's RAM. Generally up to a few hundred MB works well."}},    {"@type":"Question","name":"Will quality degrade?","acceptedAnswer":{"@type":"Answer","text":"Yes, compression reduces quality to save space. Use the preview to find the right balance."}}]}</script>
+<script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "圧縮するとビデオの品質が低下しますか?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "このツールは、ファイル サイズと品質のバランスをインテリジェントに調整する CRF (Constant Rate Factor) エンコードを使用します。品質スライダーを調整できます。値が低い = 品質は向上しますがファイルが大きくなり、値が高い = 品質が多少低下するがファイルが小さくなります。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "どのようなビデオ形式がサポートされていますか?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "このツールは、MP4、MOV、AVI、MKV、WebM、および FLV ファイルをサポートしています。出力は MP4 (H.264) で、すべてのデバイスとプラットフォーム間で最大限の互換性を実現します。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "ファイルサイズの制限はありますか?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "人為的な制限はありません。ただし、非常に大きなファイル (2 GB を超える) を使用すると、ブラウザでメモリの問題が発生する可能性があります。このツールは、FFmpeg.wasm を使用してビデオを完全にローカルで処理します。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "圧縮にはどのくらい時間がかかりますか?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "圧縮時間は、デバイスの CPU、ビデオ解像度、および必要な品質によって異なります。一般的な 1 分間の 1080p ビデオは、最新のコンピューターでは 30 ～ 90 秒かかります。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "私のビデオはどこかにアップロードされていますか?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "絶対に違います。圧縮プロセス全体は、WebAssembly にコンパイルされた FFmpeg を使用してブラウザ内でローカルに実行されます。ビデオがデバイスから離れることはありません。"
+      }
+    }
+  ]
+}</script>
 <!--seo-faq-->
-<script type="application/ld+json">>
+<script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "HowTo",
@@ -83,20 +128,20 @@
 }
 </script>
 <!--seo-howto-->
-<link rel="manifest" href="/manifest.json">>
-<meta name="twitter:card" content="summary_large_image">>
-<meta name="twitter:title" content="Video Compressor — Presend">>
-<meta name="twitter:description" content="Compress MP4 and MOV videos to reduce file size without leaving your browser. Powered by FFmpeg.wasm.">>
-<link rel="alternate" hreflang="en" href="https://presend.pages.dev/ja/tools/video-compressor">></link>
-<link rel="alternate" hreflang="fr" href="https://presend.pages.dev/fr/tools/video-compressor">></link>
-<link rel="alternate" hreflang="es" href="https://presend.pages.dev/es/tools/video-compressor">></link>
-<link rel="alternate" hreflang="de" href="https://presend.pages.dev/de/tools/video-compressor">></link>
-<link rel="alternate" hreflang="pt" href="https://presend.pages.dev/pt/tools/video-compressor">></link>
-<link rel="alternate" hreflang="ja" href="https://presend.pages.dev/ja/tools/video-compressor">></link>
-<link rel="alternate" hreflang="ru" href="https://presend.pages.dev/ru/tools/video-compressor">></link>
-<link rel="alternate" hreflang="hi" href="https://presend.pages.dev/hi/tools/video-compressor">></link>
-<link rel="alternate" hreflang="x-default" href="https://presend.pages.dev/ja/tools/video-compressor">></link>
-<meta property="og:locale" content="ja_JP">></meta>
+<link rel="manifest" href="/manifest.json">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Video Compressor — Presend">
+<meta name="twitter:description" content="Compress MP4 and MOV videos to reduce file size without leaving your browser. Powered by FFmpeg.wasm.">
+<link rel="alternate" hreflang="en" href="https://presend.pages.dev/ja/tools/video-compressor">
+<link rel="alternate" hreflang="fr" href="https://presend.pages.dev/fr/tools/video-compressor">
+<link rel="alternate" hreflang="es" href="https://presend.pages.dev/es/tools/video-compressor">
+<link rel="alternate" hreflang="de" href="https://presend.pages.dev/de/tools/video-compressor">
+<link rel="alternate" hreflang="pt" href="https://presend.pages.dev/pt/tools/video-compressor">
+<link rel="alternate" hreflang="ja" href="https://presend.pages.dev/ja/tools/video-compressor">
+<link rel="alternate" hreflang="ru" href="https://presend.pages.dev/ru/tools/video-compressor">
+<link rel="alternate" hreflang="hi" href="https://presend.pages.dev/hi/tools/video-compressor">
+<link rel="alternate" hreflang="x-default" href="https://presend.pages.dev/ja/tools/video-compressor">
+<meta property="og:locale" content="ja_JP">
 <style>
 .dropzone { background:var(--color-bg-raised); border:2px dashed var(--color-line); border-radius:var(--radius); padding:2rem; text-align:center; cursor:pointer; transition:border-color 0.2s; }
 .dropzone:hover, .dropzone.dragover { border-color:var(--color-accent); }
@@ -118,93 +163,93 @@
 @keyframes spin { to { transform:rotate(360deg); } }
 </style>
 </head>
-<body class="tool-page">>
+<body class="tool-page">
 
-<header class="site-header wrap">>
-  <a class="brand" href="/">><span class="brand-mark">>●</span>プレゼンする</a>
-  <a class="nav-link" href="/">>みんなのツール</a>
+<header class="site-header wrap">
+  <a class="brand" href="/"><span class="brand-mark">●</span>プレゼンする</a>
+  <a class="nav-link" href="/">みんなのツール</a>
 </header>
 
-<main class="wrap">>
-  <a class="tool-back" href="/">>← 戻る</a>
+<main class="wrap">
+  <a class="tool-back" href="/">← 戻る</a>
   <h1>ビデオコンプレッサー</h1>
-  <p class="lede">>MP4 および MOV ファイルを共有する前に圧縮してください。 FFmpeg.wasm を利用 — ビデオは完全にブラウザ内で処理され、アップロードされることはありません。</p>
+  <p class="lede">MP4 および MOV ファイルを共有する前に圧縮してください。 FFmpeg.wasm を利用 — ビデオは完全にブラウザ内で処理され、アップロードされることはありません。</p>
 
-  <span class="trust-badge">>あなたのビデオが当社のサーバーに送信されることはありません</span>
+  <span class="trust-badge">あなたのビデオが当社のサーバーに送信されることはありません</span>
 
-  <div style="margin-top: 2rem;">>
-    <div class="dropzone" id="dropzone" tabindex="0" role="button" aria-label="Choose a video or drop it here">>
-      <p class="primary">>ここにビデオをドロップするか、クリックしてビデオを選択してください</p>
-      <p class="secondary">>.mp4 または .mov。デバイスの RAM に応じて最大 ~500MB。</p>
-      <input type="file" id="fileInput" accept=".mp4,.mov,video/mp4,video/quicktime">>
+  <div style="margin-top: 2rem;">
+    <div class="dropzone" id="dropzone" tabindex="0" role="button" aria-label="Choose a video or drop it here">
+      <p class="primary">ここにビデオをドロップするか、クリックしてビデオを選択してください</p>
+      <p class="secondary">.mp4 または .mov。デバイスの RAM に応じて最大 ~500MB。</p>
+      <input type="file" id="fileInput" accept=".mp4,.mov,video/mp4,video/quicktime">
     </div>
-    <p class="error-msg" id="errorMsg">></p>
+    <p class="error-msg" id="errorMsg"></p>
 
-    <div class="result" id="result">>
-      <div class="result-row">>
+    <div class="result" id="result">
+      <div class="result-row">
         <div>
-          <div class="filename" id="resultName">></div>
-          <div class="meta" id="resultMeta">></div>
+          <div class="filename" id="resultName"></div>
+          <div class="meta" id="resultMeta"></div>
         </div>
       </div>
 
-      <div class="quality-row">>
+      <div class="quality-row">
         <label>品質 (CRF)</label>
-        <input type="range" id="crfSlider" min="18" max="35" step="1" value="28">>
-        <span class="quality-val" id="crfVal">>28</span>
-        <span style="font-size:0.8rem; color:var(--color-muted);">>低い = 品質が高く、ファイルが大きくなります</span>
+        <input type="range" id="crfSlider" min="18" max="35" step="1" value="28">
+        <span class="quality-val" id="crfVal">28</span>
+        <span style="font-size:0.8rem; color:var(--color-muted);">低い = 品質が高く、ファイルが大きくなります</span>
       </div>
 
-      <div class="progress-wrap">><div class="progress-bar" id="progressBar">></div></div>
-      <div class="status" id="status" style="text-align:center; color:var(--color-muted); font-size:0.9rem;">></div>
+      <div class="progress-wrap"><div class="progress-bar" id="progressBar"></div></div>
+      <div class="status" id="status" style="text-align:center; color:var(--color-muted); font-size:0.9rem;"></div>
 
-      <div class="btn-row" style="display:flex; gap:0.5rem; margin-top:1rem; flex-wrap:wrap;">>
-        <button class="btn" id="compressBtn" type="button">><span class="spinner" id="btnSpinner" style="display:none;">></span>ビデオを圧縮する</button>
-        <a class="btn" id="downloadLink" download="None" style="display:none;">>⬇️ ダウンロード</a>
-        <button class="btn ghost" id="resetBtn" type="button">>別のものを圧縮する</button>
+      <div class="btn-row" style="display:flex; gap:0.5rem; margin-top:1rem; flex-wrap:wrap;">
+        <button class="btn" id="compressBtn" type="button"><span class="spinner" id="btnSpinner" style="display:none;"></span>ビデオを圧縮する</button>
+        <a class="btn" id="downloadLink" download style="display:none;">⬇️ ダウンロード</a>
+        <button class="btn ghost" id="resetBtn" type="button">別のものを圧縮する</button>
       </div>
     </div>
   </div>
 
-<section class="wrap" style="margin-top:3rem;">>
-  <h2 style="font-family:var(--font-display);font-size:1.1rem;">>関連ツール</h2>
-  <div class="tool-grid" style="margin-top:1rem;">>
-      <a class="tool-card" href="/tools/image-compressor">>
+<section class="wrap" style="margin-top:3rem;">
+  <h2 style="font-family:var(--font-display);font-size:1.1rem;">関連ツール</h2>
+  <div class="tool-grid" style="margin-top:1rem;">
+      <a class="tool-card" href="/tools/image-compressor">
         <div><h3>画像圧縮器</h3><p>写真を電子メールで送信したりアップロードしたりする前に、写真のファイル サイズを縮小します。</p></div>
-        <span class="go">>開く→</span>
+        <span class="go">開く→</span>
       </a>
-      <a class="tool-card" href="/tools/video-metadata-remover">>
+      <a class="tool-card" href="/tools/video-metadata-remover">
         <div><h3>ビデオメタデータリムーバー</h3><p>MP4/MOV ビデオから隠された GPS およびデバイス データを削除します。</p></div>
-        <span class="go">>開く→</span>
+        <span class="go">開く→</span>
       </a>
-      <a class="tool-card" href="/tools/image-resizer">>
+      <a class="tool-card" href="/tools/image-resizer">
         <div><h3>画像リサイザー</h3><p>写真のサイズを正確な寸法に変更します。</p></div>
-        <span class="go">>開く→</span>
+        <span class="go">開く→</span>
       </a>
   </div>
 </section>
 
-<section class="wrap" style="margin-top:3rem;">>
-  <h2 style="font-family:var(--font-display);font-size:1.1rem;">>もっと詳しく知る</h2>
-  <p style="color:var(--color-muted);max-width:60ch;line-height:1.7;margin-top:0.75rem;">>
-    <a href="/ja/tools/landings/compress-video-online">>このツールに関する詳細なガイドをお読みください</a>
+<section class="wrap" style="margin-top:3rem;">
+  <h2 style="font-family:var(--font-display);font-size:1.1rem;">もっと詳しく知る</h2>
+  <p style="color:var(--color-muted);max-width:60ch;line-height:1.7;margin-top:0.75rem;">
+    <a href="/ja/tools/landings/compress-video-online">このツールに関する詳細なガイドをお読みください</a>
   </p>
 </section>
 
 <!--seo-related-tools-->
 </main>
 
-<section class="wrap" style="margin-top:3rem;">>
-  <h2 style="font-family:var(--font-display);font-size:1.1rem;">>FFmpeg.wasm はどのように機能しますか?</h2>
-  <p style="color:var(--var(--color-muted);max-width:60ch;line-height:1.7;margin-top:0.75rem;">>
-    <a href="https://ffmpegwasm.netlify.app/" target="_blank" rel="noopener">>FFmpeg.wasm</a>は、業界標準の FFmpeg ビデオ処理ツールの WebAssembly ポートです。これは完全にブラウザのサンドボックス内で実行されます。サーバーもクラウドもアップロードもありません。ビデオ ファイルはブラウザのメモリにロードされ、WASM エンジンによって処理され、その結果がダウンロードとして提供されます。デバイスから離れる唯一のデータは、最初の読み込み時に CDN からフェッチされた約 25 MB の FFmpeg.wasm バイナリです (後でキャッシュされます)。これは、機密性の高いビデオ、独自の映像、またはオンライン サービスに信頼したくないコンテンツを圧縮するのに最適です。</p>
+<section class="wrap" style="margin-top:3rem;">
+  <h2 style="font-family:var(--font-display);font-size:1.1rem;">FFmpeg.wasm はどのように機能しますか?</h2>
+  <p style="color:var(--var(--color-muted);max-width:60ch;line-height:1.7;margin-top:0.75rem;">
+    <a href="https://ffmpegwasm.netlify.app/" target="_blank" rel="noopener">FFmpeg.wasm</a>は、業界標準の FFmpeg ビデオ処理ツールの WebAssembly ポートです。これは完全にブラウザのサンドボックス内で実行されます。サーバーもクラウドもアップロードもありません。ビデオ ファイルはブラウザのメモリにロードされ、WASM エンジンによって処理され、その結果がダウンロードとして提供されます。デバイスから離れる唯一のデータは、最初の読み込み時に CDN からフェッチされた約 25 MB の FFmpeg.wasm バイナリです (後でキャッシュされます)。これは、機密性の高いビデオ、独自の映像、またはオンライン サービスに信頼したくないコンテンツを圧縮するのに最適です。</p>
 </section>
 
-<footer class="site-footer wrap">>
-  <p>Presend — 無料のブラウザベースのツール。<a href="/about">>について</a> · <a href="/privacy">>プライバシー</a></p>
+<footer class="site-footer wrap">
+  <p>Presend — 無料のブラウザベースのツール。<a href="/about">について</a> · <a href="/privacy">プライバシー</a></p>
 </footer>
 
-<script type="module">>
+<script type="module">
 import { FFmpeg } from 'https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.12.10/dist/esm/index.js';
 import { fetchFile } from 'https://cdn.jsdelivr.net/npm/@ffmpeg/util@0.12.1/dist/esm/index.js';
 
@@ -402,6 +447,6 @@ document.getElementById('shareBtn') && document.getElementById('shareBtn').addEv
   }
 });
 </script>
-<script src="/sw-register.js">></script>
+<script src="/sw-register.js"></script>
 </body>
 </html>

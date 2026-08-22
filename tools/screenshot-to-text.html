@@ -66,7 +66,54 @@
 }
 </script>
 <!--seo-org-->
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[    {"@type":"Question","name":"Is my image uploaded?","acceptedAnswer":{"@type":"Answer","text":"No. Tesseract.js runs entirely in your browser via WebAssembly. Your screenshot never leaves your device."}},    {"@type":"Question","name":"What languages are supported?","acceptedAnswer":{"@type":"Answer","text":"100+ languages including English, French, Spanish, German, Chinese, Japanese, Arabic, Hindi, and more."}},    {"@type":"Question","name":"Can I paste a screenshot directly?","acceptedAnswer":{"@type":"Answer","text":"Yes. Press Ctrl+V (or Cmd+V) anywhere on the page to paste from your clipboard."}},    {"@type":"Question","name":"How accurate is it?","acceptedAnswer":{"@type":"Answer","text":"Very accurate for clear, high-contrast text. Handwriting and low-quality scans may have errors."}},    {"@type":"Question","name":"Is there a file size limit?","acceptedAnswer":{"@type":"Answer","text":"Depends on your device's RAM. Images up to ~10MB work well on most devices."}}]}</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is OCR and how does it work?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "OCR (Optical Character Recognition) is technology that extracts text from images. This tool uses Tesseract.js, a powerful open-source OCR engine that runs entirely in your browser."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Which languages can the OCR recognize?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The tool supports 100+ languages including English, French, Spanish, German, Portuguese, Japanese, Russian, Hindi, Chinese, Arabic, and many more. You can select the language before processing."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is my image uploaded to a server?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. The OCR processing happens entirely in your browser using Tesseract.js compiled to WebAssembly. Your images never leave your device."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I extract text from handwritten notes?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The tool works best with printed text. Handwriting recognition is possible but accuracy varies depending on the legibility and style of the handwriting."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What image formats are supported?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "PNG, JPG, WebP, GIF, and BMP files are supported. You can upload files, paste from clipboard, or drag and drop images directly into the tool."
+      }
+    }
+  ]
+}
+</script>
 <!--seo-faq-->
 <script type="application/ld+json">
 {

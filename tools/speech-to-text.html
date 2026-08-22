@@ -66,7 +66,54 @@
 }
 </script>
 <!--seo-org-->
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[    {"@type":"Question","name":"Is my voice sent to a server?","acceptedAnswer":{"@type":"Answer","text":"No. This tool uses your browser's built-in Web Speech API. The audio is processed locally by your operating system."}},    {"@type":"Question","name":"Which browsers work?","acceptedAnswer":{"@type":"Answer","text":"Chrome, Edge, and Safari on desktop and mobile. Firefox does not support speech recognition yet."}},    {"@type":"Question","name":"What languages are supported?","acceptedAnswer":{"@type":"Answer","text":"Depends on your browser and OS. Most major languages are supported."}},    {"@type":"Question","name":"Is there a time limit?","acceptedAnswer":{"@type":"Answer","text":"No. You can transcribe for as long as your browser allows."}},    {"@type":"Question","name":"Can I download the transcript?","acceptedAnswer":{"@type":"Answer","text":"Yes, click the download button to save as a .txt file."}}]}</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Is my voice recorded or uploaded?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Speech recognition is performed locally by your browser's built-in Web Speech API. Your audio is processed on your device and never sent to any server."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Which languages are supported?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Most major languages are supported including English, Spanish, French, German, Italian, Portuguese, Japanese, Russian, Hindi, Chinese, Korean, and many others. Support depends on your browser and operating system."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does it work offline?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, in supported browsers. Chrome and Edge use on-device speech recognition models that work without an internet connection once loaded."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I download the transcription?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. You can copy the transcribed text to your clipboard or download it as a plain text file. The text is formatted with timestamps if you enable that option."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why isn't Firefox supported?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Firefox does not currently implement the Web Speech API for speech recognition. We recommend using Chrome, Edge, or Safari for the best experience."
+      }
+    }
+  ]
+}
+</script>
 <!--seo-faq-->
 <script type="application/ld+json">
 {

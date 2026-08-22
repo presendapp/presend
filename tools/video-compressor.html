@@ -66,7 +66,54 @@
 }
 </script>
 <!--seo-org-->
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[    {"@type":"Question","name":"Is my video uploaded?","acceptedAnswer":{"@type":"Answer","text":"No. FFmpeg.wasm runs entirely in your browser. Your video never leaves your device."}},    {"@type":"Question","name":"What formats are supported?","acceptedAnswer":{"@type":"Answer","text":"MP4, MOV, and most common video formats that FFmpeg supports."}},    {"@type":"Question","name":"What is CRF?","acceptedAnswer":{"@type":"Answer","text":"Constant Rate Factor. Lower values = higher quality, larger files. 23 is default, 28 is good for web sharing."}},    {"@type":"Question","name":"Is there a file size limit?","acceptedAnswer":{"@type":"Answer","text":"Depends on your device's RAM. Generally up to a few hundred MB works well."}},    {"@type":"Question","name":"Will quality degrade?","acceptedAnswer":{"@type":"Answer","text":"Yes, compression reduces quality to save space. Use the preview to find the right balance."}}]}</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Will compressing reduce video quality?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The tool uses CRF (Constant Rate Factor) encoding which intelligently balances file size and quality. You can adjust the quality slider: lower values = better quality but larger files, higher values = smaller files with some quality loss."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What video formats are supported?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The tool supports MP4, MOV, AVI, MKV, WebM, and FLV files. Output is MP4 (H.264) for maximum compatibility across all devices and platforms."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is there a file size limit?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "There is no artificial limit. However, very large files (over 2GB) may cause memory issues in the browser. The tool processes videos entirely locally using FFmpeg.wasm."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How long does compression take?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Compression time depends on your device's CPU, the video resolution, and the desired quality. A typical 1-minute 1080p video takes 30-90 seconds on a modern computer."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is my video uploaded anywhere?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Absolutely not. The entire compression process runs locally in your browser using FFmpeg compiled to WebAssembly. Your video never leaves your device."
+      }
+    }
+  ]
+}
+</script>
 <!--seo-faq-->
 <script type="application/ld+json">
 {
