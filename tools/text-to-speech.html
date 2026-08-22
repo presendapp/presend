@@ -92,7 +92,7 @@
       "name": "Can I download the audio?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Yes. Use the Record button to capture the synthesized speech and download it as a WAV file. The recording is done locally in your browser."
+        "text": "Not directly from the tool, since browsers don't provide an API to capture synthesized speech output. You can use your operating system's built-in screen/audio recorder (Windows: Win+G, macOS: Cmd+Shift+5) while the audio plays."
       }
     },
     {
@@ -125,7 +125,7 @@
   "step": [
     { "@type": "HowToStep", "position": 1, "name": "Enter your text", "text": "Type or paste the text you want to hear spoken aloud into the text area.", "url": "https://presend.pages.dev/tools/text-to-speech#step1" },
     { "@type": "HowToStep", "position": 2, "name": "Choose a voice", "text": "Select your preferred language and voice from the dropdown menu.", "url": "https://presend.pages.dev/tools/text-to-speech#step2" },
-    { "@type": "HowToStep", "position": 3, "name": "Listen or record", "text": "Click Speak to hear the text, or Record to capture it as a downloadable WAV file.", "url": "https://presend.pages.dev/tools/text-to-speech#step3" }
+    { "@type": "HowToStep", "position": 3, "name": "Listen and adjust", "text": "Click Speak to hear the text. Use Pause or Stop to control playback, and adjust the voice, speed, or pitch for a more natural result.", "url": "https://presend.pages.dev/tools/text-to-speech#step3" }
   ]
 }
 </script>
@@ -196,11 +196,13 @@
 
       <div class="btn-row">
         <button class="btn" id="speakBtn" type="button">🔊 Speak</button>
-        <button class="btn" id="recordBtn" type="button">⏺️ Record</button>
         <button class="btn ghost" id="pauseBtn" type="button">⏸️ Pause</button>
         <button class="btn ghost" id="stopBtn" type="button">⏹️ Stop</button>
       </div>
       <div class="status" id="status">Ready</div>
+      <p style="color:var(--color-muted); font-size:0.85rem; margin-top:0.5rem;">
+        Tip: to save the audio as a file, use your OS's built-in screen/audio recorder while playback runs (Windows: Win+G, macOS: Cmd+Shift+5).
+      </p>
     </div>
   </div>
 
@@ -235,7 +237,7 @@
 <section class="wrap" style="margin-top:3rem;">
   <h2 style="font-family:var(--font-display);font-size:1.1rem;">How does it work?</h2>
   <p style="color:var(--color-muted);max-width:60ch;line-height:1.7;margin-top:0.75rem;">
-    This tool uses the <a href="https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesis" target="_blank" rel="noopener">Web Speech API's speechSynthesis interface</a>, a native browser feature available in all modern browsers. Your operating system provides the voices — on Windows you get Microsoft voices, on macOS you get Siri-quality voices, and on Android/iOS you get the device's native TTS engine. Because synthesis happens entirely on your device, no text is ever transmitted to our servers. The optional recording feature captures the audio output from your browser using the Web Audio API and encodes it as a WAV file, also entirely locally.
+    This tool uses the <a href="https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesis" target="_blank" rel="noopener">Web Speech API's speechSynthesis interface</a>, a native browser feature available in all modern browsers. Your operating system provides the voices — on Windows you get Microsoft voices, on macOS you get Siri-quality voices, and on Android/iOS you get the device's native TTS engine. Because synthesis happens entirely on your device, no text is ever transmitted to our servers. Browsers don't expose an API to capture speechSynthesis output directly, so to save the audio as a file, use your operating system's built-in screen or audio recorder while playback runs.
   </p>
 </section>
 
@@ -254,7 +256,6 @@
   const rateVal = document.getElementById('rateVal');
   const pitchVal = document.getElementById('pitchVal');
   const speakBtn = document.getElementById('speakBtn');
-  const recordBtn = document.getElementById('recordBtn');
   const pauseBtn = document.getElementById('pauseBtn');
   const stopBtn = document.getElementById('stopBtn');
   const status = document.getElementById('status');
@@ -267,37 +268,54 @@
   controls.style.display = 'block';
 
   let voices = [];
-  let mediaRecorder = null;
-  let audioChunks = [];
-  let isRecording = false;
+
+  // Higher score = more natural-sounding voice. Browsers vary wildly in
+  // voice quality; the OS "default" is often the worst pick (e.g. robotic
+  // espeak-ng voices on Linux). We surface known high-quality engines first.
+  function scoreVoice(v) {
+    const name = v.name.toLowerCase();
+    let score = 0;
+    if (/natural|neural|premium|enhanced|wavenet|studio/.test(name)) score += 100;
+    if (/online/.test(name)) score += 40; // e.g. "Microsoft ... Online (Natural)"
+    if (/google/.test(name)) score += 30;
+    if (v.localService === false) score += 10; // cloud-backed voices tend to sound better
+    return score;
+  }
 
   function loadVoices() {
     voices = speechSynthesis.getVoices().filter(v => v.lang);
     voiceSelect.innerHTML = '';
-    const byLang = {};
-    voices.forEach(v => {
-      const lang = v.lang.split('-')[0];
-      if (!byLang[lang]) byLang[lang] = [];
-      byLang[lang].push(v);
-    });
-    const langs = Object.keys(byLang).sort();
-    langs.forEach(lang => {
-      const optgroup = document.createElement('optgroup');
-      optgroup.label = new Intl.DisplayNames(['en'], { type: 'language' }).of(lang) || lang;
-      byLang[lang].forEach(v => {
-        const opt = document.createElement('option');
-        opt.value = v.name;
-        opt.textContent = v.name + (v.default ? ' (default)' : '');
-        if (v.default) opt.selected = true;
-        optgroup.appendChild(opt);
-      });
-      voiceSelect.appendChild(optgroup);
-    });
     if (voices.length === 0) {
       const opt = document.createElement('option');
       opt.textContent = 'Default system voice';
       voiceSelect.appendChild(opt);
+      return;
     }
+    const byLang = {};
+    voices.forEach(v => {
+      const lang = v.lang.split('-')[0];
+      (byLang[lang] = byLang[lang] || []).push(v);
+    });
+    const langs = Object.keys(byLang).sort();
+    const userLang = (navigator.language || 'en').split('-')[0];
+    let preferredName = null;
+    langs.forEach(lang => {
+      const optgroup = document.createElement('optgroup');
+      optgroup.label = new Intl.DisplayNames(['en'], { type: 'language' }).of(lang) || lang;
+      const sorted = byLang[lang].slice().sort((a, b) => scoreVoice(b) - scoreVoice(a));
+      sorted.forEach(v => {
+        const opt = document.createElement('option');
+        opt.value = v.name;
+        opt.textContent = scoreVoice(v) >= 100 ? v.name + ' ⭐ high quality' : v.name;
+        optgroup.appendChild(opt);
+      });
+      voiceSelect.appendChild(optgroup);
+      if (lang === userLang && !preferredName) preferredName = sorted[0].name;
+    });
+    if (!preferredName) {
+      preferredName = voices.slice().sort((a, b) => scoreVoice(b) - scoreVoice(a))[0].name;
+    }
+    voiceSelect.value = preferredName;
   }
 
   loadVoices();
@@ -338,52 +356,11 @@
   stopBtn.addEventListener('click', () => {
     speechSynthesis.cancel();
     status.textContent = 'Stopped';
-    if (isRecording && mediaRecorder) {
-      mediaRecorder.stop();
-      isRecording = false;
-      recordBtn.textContent = '⏺️ Record';
-      recordBtn.classList.remove('recording');
-    }
   });
 
   rateSlider.addEventListener('input', () => { rateVal.textContent = rateSlider.value + '×'; });
   pitchSlider.addEventListener('input', () => { pitchVal.textContent = pitchSlider.value + '×'; });
 
-  // Recording via Web Audio API + MediaRecorder
-  recordBtn.addEventListener('click', async () => {
-    if (isRecording) {
-      mediaRecorder.stop();
-      isRecording = false;
-      recordBtn.textContent = '⏺️ Record';
-      recordBtn.classList.remove('recording');
-      status.textContent = 'Processing recording...';
-      return;
-    }
-
-    try {
-      const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      const dest = audioCtx.createMediaStreamDestination();
-      const osc = audioCtx.createOscillator(); // placeholder, we'll capture synthesis output
-      // Actually, we can't directly capture speechSynthesis output. 
-      // Use a workaround: capture system audio via getDisplayMedia with audio
-      const stream = await navigator.mediaDevices.getDisplayMedia({ video: true, audio: true });
-      // But this requires screen sharing... Alternative: just inform user
-      // Simpler approach: use AudioContext + MediaRecorder on the dest stream won't work for TTS
-      // Best UX: record using getUserMedia on loopback (not possible in browsers)
-      // So we offer a download link that uses a data URI approach or just inform
-      
-      status.textContent = 'Recording not available in browsers without screen capture. Use Speak instead.';
-      recordBtn.disabled = true;
-      recordBtn.title = 'Browser limitation: cannot capture synthesized audio directly';
-    } catch (e) {
-      status.textContent = 'Recording requires screen sharing permission. Use Speak instead.';
-    }
-  });
-
-  // Override record to be a helpful message since true loopback recording isn't possible in standard Web APIs
-  recordBtn.addEventListener('click', () => {
-    status.textContent = 'Tip: Most browsers cannot record synthesized speech directly. Use your OS screen recorder (Win+G, Cmd+Shift+5) to capture audio while clicking Speak.';
-  }, { once: true });
 })();
 </script>
 <script>
