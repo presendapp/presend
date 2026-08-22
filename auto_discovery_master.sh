@@ -8,7 +8,7 @@
 set -e
 
 LOG_FILE="/tmp/presend_discovery_$(date +%Y%m%d_%H%M%S).log"
-PROJECT_DIR="/home/victor-barbier/Bureau/microtools-clean/microtools"
+PROJECT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'

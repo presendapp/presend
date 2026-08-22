@@ -1,0 +1,59 @@
+name: SEO Automation
+
+on:
+  schedule:
+    # IndexNow — tous les jours à 6h00 UTC
+    - cron: '0 6 * * *'
+    # Daily SEO (sitemap + Google Indexing + IndexNow + ping) — tous les jours à 9h00 UTC
+    - cron: '0 9 * * *'
+    # Auto Discovery (DNS/SSL/WHOIS + Wayback) — chaque dimanche à 2h00 UTC
+    - cron: '0 2 * * 0'
+  workflow_dispatch: {}  # permet de lancer manuellement depuis l'onglet Actions
+
+jobs:
+  indexnow:
+    if: github.event.schedule == '0 6 * * *' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Run IndexNow submission
+        run: python3 indexnow_submit.py
+
+  daily-seo:
+    if: github.event.schedule == '0 9 * * *' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install google-auth google-auth-oauthlib
+      - name: Write Google service account credentials
+        run: echo '${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}' > google-service-account.json
+      - name: Run daily SEO
+        run: python3 daily_seo.py
+      - name: Clean up credentials
+        if: always()
+        run: rm -f google-service-account.json
+
+  auto-discovery:
+    if: github.event.schedule == '0 2 * * 0' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install google-auth google-auth-oauthlib
+      - name: Write Google service account credentials
+        run: echo '${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}' > google-service-account.json
+      - name: Run auto discovery master
+        run: bash auto_discovery_master.sh
+      - name: Clean up credentials
+        if: always()
+        run: rm -f google-service-account.json
