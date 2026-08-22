@@ -29,19 +29,16 @@ jobs:
           python-version: '3.11'
       - name: Install dependencies
         run: pip install google-auth google-auth-oauthlib
-      - name: Write Google service account credentials
+      - name: Decode and write Google service account credentials
         env:
-          GOOGLE_CREDS: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
-        run: printf '%s' "$GOOGLE_CREDS" > google-service-account.json
-      - name: Debug credentials file (safe, no content shown)
+          GOOGLE_CREDS_B64: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
         run: |
-          echo "Taille du fichier en octets:"
+          echo "$GOOGLE_CREDS_B64" | base64 -d > google-service-account.json
+          echo "Taille du fichier:"
           wc -c google-service-account.json
-          echo "Premier caractère (doit être '{'):"
+          echo "Premier caractère:"
           head -c 1 google-service-account.json
           echo ""
-          echo "Nombre de lignes:"
-          wc -l google-service-account.json
       - name: Run daily SEO
         run: python3 daily_seo.py
       - name: Clean up credentials
@@ -58,10 +55,11 @@ jobs:
           python-version: '3.11'
       - name: Install dependencies
         run: pip install google-auth google-auth-oauthlib
-      - name: Write Google service account credentials
+      - name: Decode and write Google service account credentials
         env:
-          GOOGLE_CREDS: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
-        run: printf '%s' "$GOOGLE_CREDS" > google-service-account.json
+          GOOGLE_CREDS_B64: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
+        run: |
+          echo "$GOOGLE_CREDS_B64" | base64 -d > google-service-account.json
       - name: Run auto discovery master
         run: bash auto_discovery_master.sh
       - name: Clean up credentials
