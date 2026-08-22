@@ -1,7 +1,6 @@
-const CACHE_NAME = 'presend-v1';
+const CACHE_NAME = 'presend-v2';
 const STATIC_ASSETS = [
-  '/',
-  '/style.css',
+  '/style.min.css',
   '/favicon.ico',
   '/manifest.json'
 ];
@@ -19,5 +18,16 @@ self.addEventListener('activate', (e) => {
 });
 
 self.addEventListener('fetch', (e) => {
-  e.respondWith(caches.match(e.request).then(r => r || fetch(e.request)));
+  const isNavigation = e.request.mode === 'navigate';
+  if (isNavigation) {
+    // Network-first for HTML pages, so content updates show immediately.
+    e.respondWith(
+      fetch(e.request).catch(() => caches.match(e.request))
+    );
+    return;
+  }
+  // Cache-first for static assets (CSS, icons, manifest).
+  e.respondWith(
+    caches.match(e.request).then(r => r || fetch(e.request))
+  );
 });
