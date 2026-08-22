@@ -61,16 +61,16 @@
   "name": "Presend",
   "url": "https://presend.pages.dev/",
   "logo": "https://presend.pages.dev/og-image.png",
-  "description": "Free browser-based tools to clean, compress, convert and check your files before you share them. Nothing is ever uploaded."
+  "description": "Free browser-based tools to clean, compress, convert and check your files before you share them. Rien n'est jamais téléversé."
 }
 </script>
 <!--seo-org-->
 <script type="application/ld+json">>
 {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
-    {"@type":"Question","name":"Is the QR code image uploaded anywhere?","acceptedAnswer":{"@type":"Answer","text":"No. L'image est décodée entièrement dans votre navigateur grâce à JavaScript. Nothing is ever sent to a server."}},
-    {"@type":"Question","name":"Can I scan with my camera?","acceptedAnswer":{"@type":"Answer","text":"Yes. Click 'Use camera' to scan a QR code live. The video feed never leaves your device."}},
-    {"@type":"Question","name":"What image formats are supported?","acceptedAnswer":{"@type":"Answer","text":"JPG, PNG, WebP and most common image formats."}},
-    {"@type":"Question","name":"What can a QR code contain?","acceptedAnswer":{"@type":"Answer","text":"URLs, plain text, WiFi credentials, contact details, email addresses, and more. We decode and display the raw content."}}
+    {"@type":"Question","name":"Is the QR code image uploaded anywhere?","acceptedAnswer":{"@type":"Answer","text":"No. L'image est décodée entièrement dans votre navigateur grâce à JavaScript. Rien n'est jamais envoyé à un serveur."}},
+    {"@type":"Question","name":"Can I scan with my camera?","acceptedAnswer":{"@type":"Answer","text":"Yes. Click 'Use camera' to scan a QR code live. Le flux vidéo ne quitte jamais votre appareil."}},
+    {"@type":"Question","name":"What image formats are supported?","acceptedAnswer":{"@type":"Answer","text":"JPG, PNG, WebP et la plupart des formats d'image courants."}},
+    {"@type":"Question","name":"What can a QR code contain?","acceptedAnswer":{"@type":"Answer","text":"URLs, plain text, WiFi credentials, contact details, email addresses, and more. Nous décodons et affichons le contenu brut."}}
 ]}
 </script>
 <!--seo-faq-->
@@ -84,7 +84,7 @@
   "step": [
     { "@type": "HowToStep", "position": 1, "name": "Choose a scan method", "text": "Upload an image containing a QR code, or click 'Use camera' to scan live.", "url": "https://presend.pages.dev/tools/qr-code-scanner#step1" },
     { "@type": "HowToStep", "position": 2, "name": "Let it decode", "text": "The QR code is detected and decoded automatically, entirely on your device.", "url": "https://presend.pages.dev/tools/qr-code-scanner#step2" },
-    { "@type": "HowToStep", "position": 3, "name": "Copy or open the result", "text": "The decoded content appears instantly. Copy it, or click it directly if it's a link.", "url": "https://presend.pages.dev/tools/qr-code-scanner#step3" }
+    { "@type": "HowToStep", "position": 3, "name": "Copy or open the result", "text": "Le contenu décodé apparaît instantanément. Copiez-le, ou cliquez directement dessus s'il s'agit d'un lien.", "url": "https://presend.pages.dev/tools/qr-code-scanner#step3" }
   ]
 }
 </script>
@@ -211,7 +211,7 @@
   function decodeImageFile(file) {
     clearError();
     if (!file || !file.type.startsWith('image/')) {
-      showError('Please choose an image file.');
+      showError('Veuillez choisir un fichier image.');
       return;
     }
     const img = new Image();
@@ -230,7 +230,7 @@
       }
       URL.revokeObjectURL(img.src);
     };
-    img.onerror = () => showError('Could not load this image.');
+    img.onerror = () => showError('Impossible de charger cette image.');
     img.src = URL.createObjectURL(file);
   }
 
@@ -256,7 +256,7 @@
       await cameraVideo.play();
       scanFrame();
     } catch (err) {
-      showError('Could not access camera. Check permissions or try uploading an image instead.');
+      showError('Impossible d'accéder à la caméra. Check permissions or try uploading an image instead.');
     }
   }
 
