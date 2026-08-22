@@ -2,13 +2,10 @@ name: SEO Automation
 
 on:
   schedule:
-    # IndexNow — tous les jours à 6h00 UTC
     - cron: '0 6 * * *'
-    # Daily SEO (sitemap + Google Indexing + IndexNow + ping) — tous les jours à 9h00 UTC
     - cron: '0 9 * * *'
-    # Auto Discovery (DNS/SSL/WHOIS + Wayback) — chaque dimanche à 2h00 UTC
     - cron: '0 2 * * 0'
-  workflow_dispatch: {}  # permet de lancer manuellement depuis l'onglet Actions
+  workflow_dispatch: {}
 
 jobs:
   indexnow:
@@ -33,7 +30,9 @@ jobs:
       - name: Install dependencies
         run: pip install google-auth google-auth-oauthlib
       - name: Write Google service account credentials
-        run: echo '${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}' > google-service-account.json
+        env:
+          GOOGLE_CREDS: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
+        run: printf '%s' "$GOOGLE_CREDS" > google-service-account.json
       - name: Run daily SEO
         run: python3 daily_seo.py
       - name: Clean up credentials
@@ -51,7 +50,9 @@ jobs:
       - name: Install dependencies
         run: pip install google-auth google-auth-oauthlib
       - name: Write Google service account credentials
-        run: echo '${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}' > google-service-account.json
+        env:
+          GOOGLE_CREDS: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
+        run: printf '%s' "$GOOGLE_CREDS" > google-service-account.json
       - name: Run auto discovery master
         run: bash auto_discovery_master.sh
       - name: Clean up credentials
