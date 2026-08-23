@@ -465,6 +465,9 @@
         voice: aiVoiceSelect.value,
         speed: parseFloat(aiRateSlider.value)
       });
+      console.log('Kokoro audio object:', audio);
+      console.log('audio.audio:', audio.audio, 'length:', audio.audio ? audio.audio.length : 'N/A');
+      console.log('audio.sampling_rate:', audio.sampling_rate);
       lastAudioBlob = encodeWav16(audio.audio, audio.sampling_rate);
       audioPlayer.src = URL.createObjectURL(lastAudioBlob);
       audioPlayer.style.display = 'block';
