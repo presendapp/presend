@@ -297,6 +297,8 @@
   const audioPlayer = document.getElementById('audioPlayer');
   const downloadBtn = document.getElementById('downloadBtn');
   const browserTip = document.getElementById('browserTip');
+  const aiLoader = document.getElementById('aiLoader');
+  const aiLoaderText = document.getElementById('aiLoaderText');
 
   const LANG_CONFIGS = {
     en: { engine: 'kokoro' },
@@ -445,6 +447,8 @@
   async function loadAIModel() {
     if (isCancelled) throw new Error('Cancelled');
     if (aiModel) return aiModel;
+    aiLoader.style.display = 'flex';
+    aiLoaderText.textContent = 'Loading AI voice model...';
     if (langConfig.engine === 'kokoro') {
       const { KokoroTTS } = await import('https://cdn.jsdelivr.net/npm/kokoro-js@1.2.1/+esm');
       if (isCancelled) throw new Error('Cancelled');
@@ -483,6 +487,7 @@
       }), 300000, 'AI voice model loading timed out after 5 minutes. Please check your connection and try again.');
       if (isCancelled) throw new Error('Cancelled');
     }
+    aiLoader.style.display = 'none';
     return aiModel;
   }
 
@@ -528,6 +533,7 @@
     isCancelled = false;
     const text = textInput.value.trim();
     if (!text) return;
+    aiLoader.style.display = 'flex';
     if (langConfig.engine === 'kokoro' && looksNonEnglish(text)) {
       status.textContent = 'AI Voice currently supports English only. Switch off AI Voice for other languages.';
       return;
@@ -572,6 +578,7 @@
       }
     } finally {
       speakBtn.disabled = false;
+      aiLoader.style.display = 'none';
     }
   }
 

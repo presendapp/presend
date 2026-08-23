@@ -155,6 +155,9 @@
 .btn-row .btn { flex:1; min-width:120px; }
 .btn-row .btn.recording { background:#dc3545; color:#fff; }
 .status { text-align:center; color:var(--color-muted); font-size:0.9rem; margin-top:0.75rem; min-height:1.5em; }
+.ai-loader { display:flex; align-items:center; justify-content:center; gap:0.6rem; margin-top:0.75rem; color:var(--color-muted); font-size:0.9rem; }
+.ai-loader .spinner { width:18px; height:18px; border:2px solid var(--color-line); border-top-color:var(--color-accent); border-radius:50%; animation:spin 1s linear infinite; }
+@keyframes spin { to { transform:rotate(360deg); } }
 .no-support { background:var(--color-bg-raised); border:1px solid var(--color-line); border-radius:var(--radius); padding:1.2rem; text-align:center; color:var(--color-muted); }
 .no-support strong { color:var(--color-text); display:block; margin-bottom:0.5rem; }
 </style>
@@ -228,6 +231,10 @@
         <button class="btn ghost" id="stopBtn" type="button">⏹️ Stop</button>
         <button class="btn ghost" id="downloadBtn" type="button" style="display:none;" disabled>⬇️ Download WAV</button>
       </div>
+      <div class="ai-loader" id="aiLoader" style="display:none;">
+        <div class="spinner"></div>
+        <span id="aiLoaderText">Loading AI voice model...</span>
+      </div>
       <div class="status" id="status">Ready</div>
       <p id="browserTip" style="color:var(--color-muted); font-size:0.85rem; margin-top:0.5rem;">
         Tip: to save the audio as a file, use your OS's built-in screen/audio recorder while playback runs (Windows: Win+G, macOS: Cmd+Shift+5).
@@ -297,6 +304,8 @@
   const audioPlayer = document.getElementById('audioPlayer');
   const downloadBtn = document.getElementById('downloadBtn');
   const browserTip = document.getElementById('browserTip');
+  const aiLoader = document.getElementById('aiLoader');
+  const aiLoaderText = document.getElementById('aiLoaderText');
 
   const LANG_CONFIGS = {
     en: { engine: 'kokoro' },
@@ -445,6 +454,8 @@
   async function loadAIModel() {
     if (isCancelled) throw new Error('Cancelled');
     if (aiModel) return aiModel;
+    aiLoader.style.display = 'flex';
+    aiLoaderText.textContent = 'Loading AI voice model...';
     if (langConfig.engine === 'kokoro') {
       const { KokoroTTS } = await import('https://cdn.jsdelivr.net/npm/kokoro-js@1.2.1/+esm');
       if (isCancelled) throw new Error('Cancelled');
@@ -483,6 +494,7 @@
       }), 300000, 'AI voice model loading timed out after 5 minutes. Please check your connection and try again.');
       if (isCancelled) throw new Error('Cancelled');
     }
+    aiLoader.style.display = 'none';
     return aiModel;
   }
 
@@ -528,6 +540,7 @@
     isCancelled = false;
     const text = textInput.value.trim();
     if (!text) return;
+    aiLoader.style.display = 'flex';
     if (langConfig.engine === 'kokoro' && looksNonEnglish(text)) {
       status.textContent = 'AI Voice currently supports English only. Switch off AI Voice for other languages.';
       return;
@@ -572,6 +585,7 @@
       }
     } finally {
       speakBtn.disabled = false;
+      aiLoader.style.display = 'none';
     }
   }
 
