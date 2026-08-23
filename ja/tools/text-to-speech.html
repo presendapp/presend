@@ -443,13 +443,19 @@
       });
     } else if (langConfig.engine === 'mms') {
       const { pipeline } = await import('https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.5.1/+esm');
+      let filesLoaded = 0;
+      const totalFiles = 4; // approx: config, tokenizer, model, vocab
       aiModel = await pipeline('text-to-speech', langConfig.model, {
         device: 'wasm',
         progress_callback: (p) => {
-          if (p && p.status === 'progress' && typeof p.progress === 'number') {
-            status.textContent = `Loading AI voice model... ${Math.round(p.progress)}%`;
-          } else if (p && p.status === 'ready') {
-            status.textContent = 'Model ready.';
+          if (!p) return;
+          if (p.status === 'progress' && typeof p.progress === 'number') {
+            const filePct = Math.round(p.progress);
+            const overall = Math.round((filesLoaded / totalFiles) * 100 + (p.progress / totalFiles));
+            status.textContent = `Loading AI voice model... ${filePct}% (file ${filesLoaded + 1}/${totalFiles})`;
+          } else if (p.status === 'done') {
+            filesLoaded++;
+            status.textContent = `Loading AI voice model... (${filesLoaded}/${totalFiles} files ready)`;
           }
         }
       });
