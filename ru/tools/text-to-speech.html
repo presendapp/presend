@@ -427,13 +427,20 @@
     return /[\u3040-\u30ff\u3400-\u9fff\uac00-\ud7af\u0400-\u04ff\u0600-\u06ff\u0900-\u097f\u0590-\u05ff\u0e00-\u0e7f]/.test(text);
   }
 
+  function loadWithTimeout(promise, ms, message) {
+    return Promise.race([
+      promise,
+      new Promise((_, reject) => setTimeout(() => reject(new Error(message)), ms))
+    ]);
+  }
+
   async function loadAIModel() {
     if (isCancelled) throw new Error('Cancelled');
     if (aiModel) return aiModel;
     if (langConfig.engine === 'kokoro') {
       const { KokoroTTS } = await import('https://cdn.jsdelivr.net/npm/kokoro-js@1.2.1/+esm');
       if (isCancelled) throw new Error('Cancelled');
-      aiModel = await KokoroTTS.from_pretrained('onnx-community/Kokoro-82M-v1.0-ONNX', {
+      aiModel = await loadWithTimeout(KokoroTTS.from_pretrained('onnx-community/Kokoro-82M-v1.0-ONNX', {
         dtype: 'q8',
         device: 'wasm',
         progress_callback: (p) => {
@@ -444,7 +451,7 @@
             status.textContent = 'Model ready.';
           }
         }
-      });
+      }), 300000, 'AI voice model loading timed out after 5 minutes. Please check your connection and try again.');
       if (isCancelled) throw new Error('Cancelled');
     } else if (langConfig.engine === 'mms') {
       if (isCancelled) throw new Error('Cancelled');
@@ -452,7 +459,7 @@
       if (isCancelled) throw new Error('Cancelled');
       let filesLoaded = 0;
       const totalFiles = 4; // approx: config, tokenizer, model, vocab
-      aiModel = await pipeline('text-to-speech', langConfig.model, {
+      aiModel = await loadWithTimeout(pipeline('text-to-speech', langConfig.model, {
         device: 'wasm',
         progress_callback: (p) => {
           if (isCancelled) throw new Error('Cancelled');
@@ -465,7 +472,7 @@
             status.textContent = `Loading AI voice model... (${filesLoaded}/${totalFiles} files ready)`;
           }
         }
-      });
+      }), 300000, 'AI voice model loading timed out after 5 minutes. Please check your connection and try again.');
       if (isCancelled) throw new Error('Cancelled');
     }
     return aiModel;
