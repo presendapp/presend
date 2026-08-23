@@ -339,7 +339,13 @@
     let preferredName = null;
     langs.forEach(lang => {
       const optgroup = document.createElement('optgroup');
-      optgroup.label = new Intl.DisplayNames(['en'], { type: 'language' }).of(lang) || lang;
+      let langLabel = lang;
+      try {
+        langLabel = new Intl.DisplayNames(['en'], { type: 'language' }).of(lang) || lang;
+      } catch (e) {
+        langLabel = lang;
+      }
+      optgroup.label = langLabel;
       const sorted = byLang[lang].slice().sort((a, b) => scoreVoice(b) - scoreVoice(a));
       sorted.forEach(v => {
         const opt = document.createElement('option');
