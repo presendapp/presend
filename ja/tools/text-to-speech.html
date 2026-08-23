@@ -316,6 +316,12 @@
 
   controls.style.display = 'block';
 
+  // Hide AI Voice toggle if WebAssembly is not available (required for both Kokoro and MMS)
+  if (typeof WebAssembly === 'undefined' || !WebAssembly.instantiate) {
+    const aiWrap = document.getElementById('aiVoiceWrap');
+    if (aiWrap) aiWrap.style.display = 'none';
+  }
+
   if (!langConfig.engine) {
     const wrap = document.getElementById('aiVoiceWrap');
     if (wrap) wrap.style.display = 'none';
