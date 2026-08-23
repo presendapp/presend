@@ -528,7 +528,8 @@
     downloadBtn.disabled = true;
     try {
       if (!aiModel) {
-        status.textContent = 'Loading AI voice model (first time only)...';
+        const sizeHint = langConfig.engine === 'kokoro' ? '~80MB' : '~150MB';
+        status.textContent = `Loading AI voice model (first time only, ${sizeHint})... This may take a few minutes.`;
         await loadAIModel();
       }
       status.textContent = 'Generating speech...';
