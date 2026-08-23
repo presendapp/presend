@@ -178,7 +178,7 @@
       <label for="textInput" style="display:block; font-size:0.9rem; color:var(--color-muted); margin-bottom:0.4rem;">あなたのテキスト</label>
       <textarea id="textInput" placeholder="Type or paste text here to hear it spoken..." spellcheck="false">こんにちは！これは、ブラウザに組み込まれた音声合成エンジンのデモンストレーションです。すべてはデバイス上でローカルに行われます。</textarea>
 
-      <div style="margin-top:1.5rem; padding:0.9rem 1rem; border:1px solid var(--color-line); border-radius:var(--radius); background:var(--color-bg-raised);">
+      <div id="aiVoiceWrap" style="margin-top:1.5rem; padding:0.9rem 1rem; border:1px solid var(--color-line); border-radius:var(--radius); background:var(--color-bg-raised);">
         <label style="display:flex; align-items:center; gap:0.6rem; font-weight:500; cursor:pointer;">
           <input type="checkbox" id="aiVoiceToggle">
           🤖 AIボイス（ベータ版）— より自然な音声。英語のみ対応。初回のみ約80MBのローカルダウンロード、完全にプライベートです。
@@ -296,12 +296,35 @@
   const downloadBtn = document.getElementById('downloadBtn');
   const browserTip = document.getElementById('browserTip');
 
+  const LANG_CONFIGS = {
+    en: { engine: 'kokoro' },
+    fr: { engine: 'mms', model: 'Xenova/mms-tts-fra' },
+    es: { engine: 'mms', model: 'Xenova/mms-tts-spa' },
+    de: { engine: 'mms', model: 'Xenova/mms-tts-deu' },
+    pt: { engine: 'mms', model: 'Xenova/mms-tts-por' },
+    ru: { engine: 'mms', model: 'Xenova/mms-tts-rus' },
+    hi: { engine: 'mms', model: 'Xenova/mms-tts-hin' },
+    ja: { engine: null }
+  };
+  const pathLang = location.pathname.split('/').filter(Boolean)[0];
+  const langConfig = LANG_CONFIGS[pathLang] || LANG_CONFIGS.en;
+
   if (!('speechSynthesis' in window)) {
     supportMsg.innerHTML = '<div class="no-support"><strong>Your browser does not support text-to-speech.</strong><br>Please use a modern browser like Chrome, Edge, Firefox, or Safari.</div>';
     return;
   }
 
   controls.style.display = 'block';
+
+  if (!langConfig.engine) {
+    const wrap = document.getElementById('aiVoiceWrap');
+    if (wrap) wrap.style.display = 'none';
+  } else if (langConfig.engine === 'mms') {
+    if (aiVoiceSelect.previousElementSibling) aiVoiceSelect.previousElementSibling.style.display = 'none';
+    aiVoiceSelect.style.display = 'none';
+    const speedRow = aiRateSlider.closest('.rate-pitch-row');
+    if (speedRow) speedRow.style.display = 'none';
+  }
 
   let voices = [];
 
@@ -381,15 +404,9 @@
     speechSynthesis.speak(utter);
   }
 
-  // ---- AI Voice (Kokoro, 100% local WASM model, English only) ----
-  let kokoroTTS = null;
+  // ---- AI Voice (Kokoro for English, MMS-TTS for other languages, 100% local) ----
+  let aiModel = null;
   let lastAudioBlob = null;
-
-  function looksNonEnglish(text) {
-    // Flags scripts that are clearly not English so we warn early
-    // instead of silently producing garbled output.
-    return /[\u3040-\u30ff\u3400-\u9fff\uac00-\ud7af\u0400-\u04ff\u0600-\u06ff\u0900-\u097f\u0590-\u05ff\u0e00-\u0e7f]/.test(text);
-  }
 
   aiVoiceToggle.addEventListener('change', () => {
     const on = aiVoiceToggle.checked;
@@ -402,29 +419,48 @@
     status.textContent = 'Ready';
   });
 
-  aiRateSlider.addEventListener('input', () => { aiRateVal.textContent = aiRateSlider.value + '×'; });
+  aiRateSlider.addEventListener('input', () => { aiRateVal.textContent = aiRateSlider.value + '\u00d7'; });
 
-  async function loadKokoro() {
-    if (kokoroTTS) return kokoroTTS;
-    const { KokoroTTS } = await import('https://cdn.jsdelivr.net/npm/kokoro-js@1.2.1/+esm');
-    kokoroTTS = await KokoroTTS.from_pretrained('onnx-community/Kokoro-82M-v1.0-ONNX', {
-      dtype: 'q8',
-      device: 'wasm',
-      progress_callback: (p) => {
-        if (p && p.status === 'progress' && typeof p.progress === 'number') {
-          status.textContent = `Loading AI voice model... ${Math.round(p.progress)}%`;
-        } else if (p && p.status === 'ready') {
-          status.textContent = 'Model ready.';
-        }
-      }
-    });
-    return kokoroTTS;
+  function looksNonEnglish(text) {
+    // Only relevant for the English-only Kokoro engine.
+    return /[\u3040-\u30ff\u3400-\u9fff\uac00-\ud7af\u0400-\u04ff\u0600-\u06ff\u0900-\u097f\u0590-\u05ff\u0e00-\u0e7f]/.test(text);
   }
 
-  // Encode raw Float32 PCM samples as a 16-bit PCM WAV blob. Kokoro's
-  // built-in toBlob() emits 32-bit float WAV, which most browsers'
-  // <audio> element silently refuses to play even though it's a valid
-  // file — 16-bit PCM is the format with universal playback support.
+  async function loadAIModel() {
+    if (aiModel) return aiModel;
+    if (langConfig.engine === 'kokoro') {
+      const { KokoroTTS } = await import('https://cdn.jsdelivr.net/npm/kokoro-js@1.2.1/+esm');
+      aiModel = await KokoroTTS.from_pretrained('onnx-community/Kokoro-82M-v1.0-ONNX', {
+        dtype: 'q8',
+        device: 'wasm',
+        progress_callback: (p) => {
+          if (p && p.status === 'progress' && typeof p.progress === 'number') {
+            status.textContent = `Loading AI voice model... ${Math.round(p.progress)}%`;
+          } else if (p && p.status === 'ready') {
+            status.textContent = 'Model ready.';
+          }
+        }
+      });
+    } else if (langConfig.engine === 'mms') {
+      const { pipeline } = await import('https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.5.1/+esm');
+      aiModel = await pipeline('text-to-speech', langConfig.model, {
+        dtype: 'q8',
+        progress_callback: (p) => {
+          if (p && p.status === 'progress' && typeof p.progress === 'number') {
+            status.textContent = `Loading AI voice model... ${Math.round(p.progress)}%`;
+          } else if (p && p.status === 'ready') {
+            status.textContent = 'Model ready.';
+          }
+        }
+      });
+    }
+    return aiModel;
+  }
+
+  // Encode raw Float32 PCM samples as a 16-bit PCM WAV blob. The models'
+  // built-in toBlob() (when present) emits 32-bit float WAV, which most
+  // browsers' <audio> element silently refuses to play even though it's a
+  // valid file -- 16-bit PCM is the format with universal playback support.
   function encodeWav16(samples, sampleRate) {
     const buffer = new ArrayBuffer(44 + samples.length * 2);
     const view = new DataView(buffer);
@@ -434,8 +470,8 @@
     writeStr(8, 'WAVE');
     writeStr(12, 'fmt ');
     view.setUint32(16, 16, true);
-    view.setUint16(20, 1, true); // PCM
-    view.setUint16(22, 1, true); // mono
+    view.setUint16(20, 1, true);
+    view.setUint16(22, 1, true);
     view.setUint32(24, sampleRate, true);
     view.setUint32(28, sampleRate * 2, true);
     view.setUint16(32, 2, true);
@@ -453,22 +489,29 @@
   async function speakAI() {
     const text = textInput.value.trim();
     if (!text) return;
-    if (looksNonEnglish(text)) {
+    if (langConfig.engine === 'kokoro' && looksNonEnglish(text)) {
       status.textContent = 'AI Voice currently supports English only. Switch off AI Voice for other languages.';
       return;
     }
     speakBtn.disabled = true;
     downloadBtn.disabled = true;
     try {
-      if (!kokoroTTS) {
-        status.textContent = 'Loading AI voice model (first time only, ~80MB)...';
-        await loadKokoro();
+      if (!aiModel) {
+        status.textContent = 'Loading AI voice model (first time only)...';
+        await loadAIModel();
       }
       status.textContent = 'Generating speech...';
-      const audio = await kokoroTTS.generate(text, {
-        voice: aiVoiceSelect.value,
-        speed: parseFloat(aiRateSlider.value)
-      });
+      let audio;
+      if (langConfig.engine === 'kokoro') {
+        audio = await aiModel.generate(text, {
+          voice: aiVoiceSelect.value,
+          speed: parseFloat(aiRateSlider.value)
+        });
+      } else if (langConfig.engine === 'mms') {
+        audio = await aiModel(text);
+      } else {
+        return;
+      }
       lastAudioBlob = encodeWav16(audio.audio, audio.sampling_rate);
       audioPlayer.src = URL.createObjectURL(lastAudioBlob);
       audioPlayer.style.display = 'block';
