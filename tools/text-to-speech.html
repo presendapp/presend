@@ -180,7 +180,15 @@
       <label for="textInput" style="display:block; font-size:0.9rem; color:var(--color-muted); margin-bottom:0.4rem;">Your text</label>
       <textarea id="textInput" placeholder="Type or paste text here to hear it spoken..." spellcheck="false">Hello! This is a demonstration of your browser's built-in text-to-speech engine. Everything happens locally on your device.</textarea>
 
-      <label style="display:block; font-size:0.9rem; color:var(--color-muted); margin-top:1rem; margin-bottom:0.3rem;">Voice</label>
+      <div style="margin-top:1.5rem; padding:0.9rem 1rem; border:1px solid var(--color-line); border-radius:var(--radius); background:var(--color-bg-raised);">
+        <label style="display:flex; align-items:center; gap:0.6rem; font-weight:500; cursor:pointer;">
+          <input type="checkbox" id="aiVoiceToggle">
+          🤖 AI Voice (Beta) — noticeably more natural. English only. One-time ~80MB local download, still 100% private.
+        </label>
+      </div>
+
+      <div id="browserControls">
+      <label for="voiceSelect" style="display:block; font-size:0.9rem; color:var(--color-muted); margin-top:1rem; margin-bottom:0.3rem;">Voice</label>
       <select id="voiceSelect" class="voice-select"></select>
 
       <div class="rate-pitch-row">
@@ -193,14 +201,35 @@
           <input type="range" id="pitchSlider" min="0.5" max="2" step="0.1" value="1">
         </div>
       </div>
+      </div>
+
+      <div id="aiControls" style="display:none;">
+        <label for="aiVoiceSelect" style="display:block; font-size:0.9rem; color:var(--color-muted); margin-top:1rem; margin-bottom:0.3rem;">AI Voice</label>
+        <select id="aiVoiceSelect" class="voice-select">
+          <option value="af_heart">Heart (American, female)</option>
+          <option value="af_bella">Bella (American, female)</option>
+          <option value="am_michael">Michael (American, male)</option>
+          <option value="am_adam">Adam (American, male)</option>
+          <option value="bf_emma">Emma (British, female)</option>
+          <option value="bm_george">George (British, male)</option>
+        </select>
+        <div class="rate-pitch-row">
+          <div>
+            <label><span>Speed</span><span id="aiRateVal">1.0×</span></label>
+            <input type="range" id="aiRateSlider" min="0.5" max="2" step="0.1" value="1">
+          </div>
+        </div>
+        <audio id="audioPlayer" style="width:100%; margin-top:0.9rem; display:none;" controls></audio>
+      </div>
 
       <div class="btn-row">
         <button class="btn" id="speakBtn" type="button">🔊 Speak</button>
         <button class="btn ghost" id="pauseBtn" type="button">⏸️ Pause</button>
         <button class="btn ghost" id="stopBtn" type="button">⏹️ Stop</button>
+        <button class="btn ghost" id="downloadBtn" type="button" style="display:none;" disabled>⬇️ Download WAV</button>
       </div>
       <div class="status" id="status">Ready</div>
-      <p style="color:var(--color-muted); font-size:0.85rem; margin-top:0.5rem;">
+      <p id="browserTip" style="color:var(--color-muted); font-size:0.85rem; margin-top:0.5rem;">
         Tip: to save the audio as a file, use your OS's built-in screen/audio recorder while playback runs (Windows: Win+G, macOS: Cmd+Shift+5).
       </p>
     </div>
@@ -259,6 +288,15 @@
   const pauseBtn = document.getElementById('pauseBtn');
   const stopBtn = document.getElementById('stopBtn');
   const status = document.getElementById('status');
+  const aiVoiceToggle = document.getElementById('aiVoiceToggle');
+  const browserControls = document.getElementById('browserControls');
+  const aiControls = document.getElementById('aiControls');
+  const aiVoiceSelect = document.getElementById('aiVoiceSelect');
+  const aiRateSlider = document.getElementById('aiRateSlider');
+  const aiRateVal = document.getElementById('aiRateVal');
+  const audioPlayer = document.getElementById('audioPlayer');
+  const downloadBtn = document.getElementById('downloadBtn');
+  const browserTip = document.getElementById('browserTip');
 
   if (!('speechSynthesis' in window)) {
     supportMsg.innerHTML = '<div class="no-support"><strong>Your browser does not support text-to-speech.</strong><br>Please use a modern browser like Chrome, Edge, Firefox, or Safari.</div>';
@@ -339,9 +377,108 @@
     speechSynthesis.speak(utter);
   }
 
-  speakBtn.addEventListener('click', speak);
+  // ---- AI Voice (Kokoro, 100% local WASM model, English only) ----
+  let kokoroTTS = null;
+  let lastAudioBlob = null;
+
+  function looksNonEnglish(text) {
+    // Flags scripts that are clearly not English so we warn early
+    // instead of silently producing garbled output.
+    return /[\u3040-\u30ff\u3400-\u9fff\uac00-\ud7af\u0400-\u04ff\u0600-\u06ff\u0900-\u097f\u0590-\u05ff\u0e00-\u0e7f]/.test(text);
+  }
+
+  aiVoiceToggle.addEventListener('change', () => {
+    const on = aiVoiceToggle.checked;
+    browserControls.style.display = on ? 'none' : 'block';
+    aiControls.style.display = on ? 'block' : 'none';
+    downloadBtn.style.display = on ? 'inline-block' : 'none';
+    browserTip.style.display = on ? 'none' : 'block';
+    speechSynthesis.cancel();
+    audioPlayer.pause();
+    status.textContent = 'Ready';
+  });
+
+  aiRateSlider.addEventListener('input', () => { aiRateVal.textContent = aiRateSlider.value + '×'; });
+
+  async function loadKokoro() {
+    if (kokoroTTS) return kokoroTTS;
+    const { KokoroTTS } = await import('https://cdn.jsdelivr.net/npm/kokoro-js@1.2.1/+esm');
+    kokoroTTS = await KokoroTTS.from_pretrained('onnx-community/Kokoro-82M-v1.0-ONNX', {
+      dtype: 'q8',
+      device: 'wasm',
+      progress_callback: (p) => {
+        if (p && p.status === 'progress' && typeof p.progress === 'number') {
+          status.textContent = `Loading AI voice model... ${Math.round(p.progress)}%`;
+        } else if (p && p.status === 'ready') {
+          status.textContent = 'Model ready.';
+        }
+      }
+    });
+    return kokoroTTS;
+  }
+
+  async function speakAI() {
+    const text = textInput.value.trim();
+    if (!text) return;
+    if (looksNonEnglish(text)) {
+      status.textContent = 'AI Voice currently supports English only. Switch off AI Voice for other languages.';
+      return;
+    }
+    speakBtn.disabled = true;
+    downloadBtn.disabled = true;
+    try {
+      if (!kokoroTTS) {
+        status.textContent = 'Loading AI voice model (first time only, ~80MB)...';
+        await loadKokoro();
+      }
+      status.textContent = 'Generating speech...';
+      const audio = await kokoroTTS.generate(text, {
+        voice: aiVoiceSelect.value,
+        speed: parseFloat(aiRateSlider.value)
+      });
+      lastAudioBlob = audio.toBlob();
+      audioPlayer.src = URL.createObjectURL(lastAudioBlob);
+      audioPlayer.style.display = 'block';
+      await audioPlayer.play();
+      downloadBtn.disabled = false;
+      status.textContent = 'Speaking...';
+      audioPlayer.onended = () => { status.textContent = 'Finished'; };
+    } catch (e) {
+      status.textContent = 'Error generating AI voice: ' + e.message;
+    } finally {
+      speakBtn.disabled = false;
+    }
+  }
+
+  downloadBtn.addEventListener('click', () => {
+    if (!lastAudioBlob) return;
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(lastAudioBlob);
+    a.download = 'speech.wav';
+    a.click();
+  });
+
+  speakBtn.addEventListener('click', () => {
+    if (aiVoiceToggle.checked) {
+      speakAI();
+    } else {
+      speak();
+    }
+  });
 
   pauseBtn.addEventListener('click', () => {
+    if (aiVoiceToggle.checked) {
+      if (audioPlayer.src) {
+        if (audioPlayer.paused) {
+          audioPlayer.play();
+          status.textContent = 'Speaking...';
+        } else {
+          audioPlayer.pause();
+          status.textContent = 'Paused';
+        }
+      }
+      return;
+    }
     if (speechSynthesis.speaking) {
       if (speechSynthesis.paused) {
         speechSynthesis.resume();
@@ -354,6 +491,12 @@
   });
 
   stopBtn.addEventListener('click', () => {
+    if (aiVoiceToggle.checked) {
+      audioPlayer.pause();
+      audioPlayer.currentTime = 0;
+      status.textContent = 'Stopped';
+      return;
+    }
     speechSynthesis.cancel();
     status.textContent = 'Stopped';
   });
