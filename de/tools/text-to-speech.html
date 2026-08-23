@@ -471,6 +471,15 @@
     return aiModel;
   }
 
+  // Normalize various TTS output formats to { audio: Float32Array, sampling_rate: number }
+  function normalizeAudio(result) {
+    if (!result) return null;
+    if (result.audio instanceof Float32Array) return result;
+    if (result instanceof Float32Array) return { audio: result, sampling_rate: 16000 };
+    if (Array.isArray(result) && result[0]) return normalizeAudio(result[0]);
+    return null;
+  }
+
   // Encode raw Float32 PCM samples as a 16-bit PCM WAV blob. The models'
   // built-in toBlob() (when present) emits 32-bit float WAV, which most
   // browsers' <audio> element silently refuses to play even though it's a
@@ -530,7 +539,12 @@
       } else {
         return;
       }
-      lastAudioBlob = encodeWav16(audio.audio, audio.sampling_rate);
+      const normalized = normalizeAudio(audio);
+      if (!normalized) {
+        status.textContent = 'Error: unexpected audio format from AI model.';
+        return;
+      }
+      lastAudioBlob = encodeWav16(normalized.audio, normalized.sampling_rate);
       audioPlayer.src = URL.createObjectURL(lastAudioBlob);
       audioPlayer.style.display = 'block';
       await audioPlayer.play();
