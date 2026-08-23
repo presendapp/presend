@@ -153,6 +153,9 @@
 .btn-row .btn { flex:1; min-width:120px; }
 .btn-row .btn.recording { background:#dc3545; color:#fff; }
 .status { text-align:center; color:var(--color-muted); font-size:0.9rem; margin-top:0.75rem; min-height:1.5em; }
+.ai-loader { display:flex; align-items:center; justify-content:center; gap:0.6rem; margin-top:0.75rem; color:var(--color-muted); font-size:0.9rem; }
+.ai-loader .spinner { width:18px; height:18px; border:2px solid var(--color-line); border-top-color:var(--color-accent); border-radius:50%; animation:spin 1s linear infinite; }
+@keyframes spin { to { transform:rotate(360deg); } }
 .no-support { background:var(--color-bg-raised); border:1px solid var(--color-line); border-radius:var(--radius); padding:1.2rem; text-align:center; color:var(--color-muted); }
 .no-support strong { color:var(--color-text); display:block; margin-bottom:0.5rem; }
 </style>
@@ -228,7 +231,9 @@
         <button class="btn ghost" id="stopBtn" type="button">⏹️ Стоп</button>
         <button class="btn ghost" id="downloadBtn" type="button" style="display:none;" disabled>⬇️ Скачать WAV</button>
       </div>
-      <div class="status" id="status">Готовый</div>
+      <div class="ai-loader" id="aiLoader" style="display:none;">
+        <div class="spinner"></div>
+            <div class="status" id="status">Готовый</div>
       <p id="browserTip" style="color:var(--color-muted); font-size:0.85rem; margin-top:0.5rem;">
         Совет: чтобы сохранить аудио как файл, используйте встроенный в вашу ОС рекордер экрана/звука во время воспроизведения (Windows: Win+G, macOS: Cmd+Shift+5).
       </p>
