@@ -1,5 +1,5 @@
 export async function onRequestGet() {
-  const today = "2026-08-15";
+  const today = "2026-08-23";
   const urls = [
     { loc: "https://presend.pages.dev/", priority: "1.0", changefreq: "weekly" },
     { loc: "https://presend.pages.dev/fr/", priority: "0.9", changefreq: "weekly" },
@@ -84,6 +84,12 @@ export async function onRequestGet() {
     { loc: "https://presend.pages.dev/tools/landings/strong-password-generator-online", priority: "0.8", changefreq: "monthly" },
     { loc: "https://presend.pages.dev/tools/landings/wcag-color-contrast-checker", priority: "0.8", changefreq: "monthly" },
     { loc: "https://presend.pages.dev/tools/landings/word-counter-online", priority: "0.8", changefreq: "monthly" },
+    { loc: "https://presend.pages.dev/tools/link-preview", priority: "0.9", changefreq: "monthly" },
+    { loc: "https://presend.pages.dev/tools/phone-validator", priority: "0.9", changefreq: "monthly" },
+    { loc: "https://presend.pages.dev/tools/text-moderator", priority: "0.9", changefreq: "monthly" },
+    { loc: "https://presend.pages.dev/tools/ip-geolocation", priority: "0.9", changefreq: "monthly" },
+    { loc: "https://presend.pages.dev/tools/html-to-pdf", priority: "0.9", changefreq: "monthly" },
+    { loc: "https://presend.pages.dev/tools/document-preview", priority: "0.9", changefreq: "monthly" },
   ];
 
   let xml = '<?xml version="1.0" encoding="UTF-8"?>\n';
