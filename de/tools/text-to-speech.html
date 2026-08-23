@@ -540,9 +540,6 @@
         });
       } else if (langConfig.engine === 'mms') {
         audio = await aiModel(text);
-        console.log('MMS audio output:', audio);
-        console.log('audio.audio:', audio.audio, 'length:', audio.audio ? audio.audio.length : 'N/A');
-        console.log('audio.sampling_rate:', audio.sampling_rate);
       } else {
         return;
       }
