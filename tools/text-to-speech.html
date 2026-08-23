@@ -373,7 +373,7 @@
       (byLang[lang] = byLang[lang] || []).push(v);
     });
     const langs = Object.keys(byLang).sort();
-    const userLang = (navigator.language || 'en').split('-')[0];
+    const pageLang = pathLang || (navigator.language || 'en').split('-')[0];
     let preferredName = null;
     langs.forEach(lang => {
       const optgroup = document.createElement('optgroup');
@@ -392,7 +392,7 @@
         optgroup.appendChild(opt);
       });
       voiceSelect.appendChild(optgroup);
-      if (lang === userLang && !preferredName) preferredName = sorted[0].name;
+      if (lang === pageLang && !preferredName) preferredName = sorted[0].name;
     });
     if (!preferredName) {
       preferredName = voices.slice().sort((a, b) => scoreVoice(b) - scoreVoice(a))[0].name;
