@@ -408,6 +408,7 @@
 
   // ---- AI Voice (Kokoro for English, MMS-TTS for other languages, 100% local) ----
   let aiModel = null;
+  let isCancelled = false;
   let lastAudioBlob = null;
 
   aiVoiceToggle.addEventListener('change', () => {
@@ -429,13 +430,16 @@
   }
 
   async function loadAIModel() {
+    if (isCancelled) throw new Error('Cancelled');
     if (aiModel) return aiModel;
     if (langConfig.engine === 'kokoro') {
       const { KokoroTTS } = await import('https://cdn.jsdelivr.net/npm/kokoro-js@1.2.1/+esm');
+      if (isCancelled) throw new Error('Cancelled');
       aiModel = await KokoroTTS.from_pretrained('onnx-community/Kokoro-82M-v1.0-ONNX', {
         dtype: 'q8',
         device: 'wasm',
         progress_callback: (p) => {
+          if (isCancelled) throw new Error('Cancelled');
           if (p && p.status === 'progress' && typeof p.progress === 'number') {
             status.textContent = `Loading AI voice model... ${Math.round(p.progress)}%`;
           } else if (p && p.status === 'ready') {
@@ -443,17 +447,20 @@
           }
         }
       });
+      if (isCancelled) throw new Error('Cancelled');
     } else if (langConfig.engine === 'mms') {
+      if (isCancelled) throw new Error('Cancelled');
       const { pipeline } = await import('https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.5.1/+esm');
+      if (isCancelled) throw new Error('Cancelled');
       let filesLoaded = 0;
       const totalFiles = 4; // approx: config, tokenizer, model, vocab
       aiModel = await pipeline('text-to-speech', langConfig.model, {
         device: 'wasm',
         progress_callback: (p) => {
+          if (isCancelled) throw new Error('Cancelled');
           if (!p) return;
           if (p.status === 'progress' && typeof p.progress === 'number') {
             const filePct = Math.round(p.progress);
-            const overall = Math.round((filesLoaded / totalFiles) * 100 + (p.progress / totalFiles));
             status.textContent = `Loading AI voice model... ${filePct}% (file ${filesLoaded + 1}/${totalFiles})`;
           } else if (p.status === 'done') {
             filesLoaded++;
@@ -461,6 +468,7 @@
           }
         }
       });
+      if (isCancelled) throw new Error('Cancelled');
     }
     return aiModel;
   }
@@ -495,6 +503,7 @@
   }
 
   async function speakAI() {
+    isCancelled = false;
     const text = textInput.value.trim();
     if (!text) return;
     if (langConfig.engine === 'kokoro' && looksNonEnglish(text)) {
@@ -531,7 +540,11 @@
       status.textContent = 'Speaking...';
       audioPlayer.onended = () => { status.textContent = 'Finished'; };
     } catch (e) {
-      status.textContent = 'Error generating AI voice: ' + e.message;
+      if (e.message === 'Cancelled') {
+        status.textContent = 'Stopped';
+      } else {
+        status.textContent = 'Error generating AI voice: ' + e.message;
+      }
     } finally {
       speakBtn.disabled = false;
     }
@@ -579,8 +592,11 @@
 
   stopBtn.addEventListener('click', () => {
     if (aiVoiceToggle.checked) {
+      isCancelled = true;
       audioPlayer.pause();
       audioPlayer.currentTime = 0;
+      speakBtn.disabled = false;
+      downloadBtn.disabled = true;
       status.textContent = 'Stopped';
       return;
     }
