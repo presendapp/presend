@@ -446,7 +446,7 @@
     } else if (langConfig.engine === 'mms') {
       const { pipeline } = await import('https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.5.1/+esm');
       aiModel = await pipeline('text-to-speech', langConfig.model, {
-        dtype: 'q8',
+        device: 'wasm',
         progress_callback: (p) => {
           if (p && p.status === 'progress' && typeof p.progress === 'number') {
             status.textContent = `Loading AI voice model... ${Math.round(p.progress)}%`;
