@@ -1,0 +1,151 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Presend API",
+    "description": "Free utility API: file hashing, UUID generation, Base64 encoding, JWT decoding, URL tracking-parameter cleaning, and IP geolocation. No authentication required.",
+    "version": "1.0.0",
+    "contact": {
+      "url": "https://presend.pages.dev/api"
+    },
+    "license": {
+      "name": "MIT",
+      "url": "https://github.com/presendapp/presend/blob/main/LICENSE"
+    }
+  },
+  "servers": [
+    { "url": "https://presend.pages.dev/api", "description": "Production" }
+  ],
+  "paths": {
+    "/hash": {
+      "post": {
+        "summary": "Hash a file",
+        "description": "Returns SHA-256, SHA-1 and SHA-512 for a file up to 20MB.",
+        "requestBody": {
+          "required": true,
+          "content": { "application/octet-stream": { "schema": { "type": "string", "format": "binary" } } }
+        },
+        "responses": {
+          "200": {
+            "description": "Hash results",
+            "content": { "application/json": { "schema": {
+              "type": "object",
+              "properties": {
+                "size_bytes": { "type": "integer" },
+                "hashes": {
+                  "type": "object",
+                  "properties": {
+                    "sha256": { "type": "string" },
+                    "sha1": { "type": "string" },
+                    "sha512": { "type": "string" }
+                  }
+                }
+              }
+            } } }
+          },
+          "413": { "description": "File too large" },
+          "429": { "description": "Rate limit exceeded" }
+        }
+      }
+    },
+    "/url-clean": {
+      "get": {
+        "summary": "Clean a single URL",
+        "description": "Strips 60+ tracking parameters from a URL.",
+        "parameters": [
+          { "name": "url", "in": "query", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "Cleaned URL", "content": { "application/json": { "schema": {
+            "type": "object",
+            "properties": {
+              "original": { "type": "string" },
+              "clean": { "type": "string" },
+              "removed": { "type": "integer" },
+              "valid": { "type": "boolean" }
+            }
+          } } } },
+          "429": { "description": "Rate limit exceeded" }
+        }
+      },
+      "post": {
+        "summary": "Clean a batch of URLs",
+        "description": "Strips tracking parameters from up to 100 URLs at once.",
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": {
+            "type": "object",
+            "properties": { "urls": { "type": "array", "items": { "type": "string" }, "maxItems": 100 } },
+            "required": ["urls"]
+          } } }
+        },
+        "responses": {
+          "200": { "description": "Cleaned URLs batch" },
+          "429": { "description": "Rate limit exceeded" }
+        }
+      }
+    },
+    "/uuid": {
+      "get": {
+        "summary": "Generate UUIDs",
+        "description": "Generates up to 100 random UUID v4 values.",
+        "parameters": [
+          { "name": "count", "in": "query", "required": false, "schema": { "type": "integer", "default": 1, "maximum": 100 } }
+        ],
+        "responses": {
+          "200": { "description": "Generated UUIDs", "content": { "application/json": { "schema": {
+            "type": "object",
+            "properties": {
+              "count": { "type": "integer" },
+              "uuids": { "type": "array", "items": { "type": "string" } }
+            }
+          } } } },
+          "429": { "description": "Rate limit exceeded" }
+        }
+      }
+    },
+    "/base64": {
+      "get": {
+        "summary": "Encode or decode Base64",
+        "parameters": [
+          { "name": "action", "in": "query", "required": true, "schema": { "type": "string", "enum": ["encode", "decode"] } },
+          { "name": "text", "in": "query", "required": true, "schema": { "type": "string", "maxLength": 10000 } }
+        ],
+        "responses": {
+          "200": { "description": "Encoded/decoded result" },
+          "400": { "description": "Invalid input" },
+          "429": { "description": "Rate limit exceeded" }
+        }
+      }
+    },
+    "/jwt-decode": {
+      "get": {
+        "summary": "Decode a JWT",
+        "description": "Decodes the header and payload of a JWT. Does not verify the signature.",
+        "parameters": [
+          { "name": "token", "in": "query", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "Decoded JWT", "content": { "application/json": { "schema": {
+            "type": "object",
+            "properties": {
+              "header": { "type": "object" },
+              "payload": { "type": "object" },
+              "signature_verified": { "type": "boolean" }
+            }
+          } } } },
+          "400": { "description": "Invalid JWT" },
+          "429": { "description": "Rate limit exceeded" }
+        }
+      }
+    },
+    "/ip": {
+      "get": {
+        "summary": "Get caller IP geolocation",
+        "description": "Returns the caller's IP with city, country, currency, language, EU and VPN flags.",
+        "responses": {
+          "200": { "description": "IP geolocation data" }
+        }
+      }
+    }
+  }
+}
