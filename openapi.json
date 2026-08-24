@@ -13,7 +13,10 @@
     }
   },
   "servers": [
-    { "url": "https://presend.pages.dev/api", "description": "Production" }
+    {
+      "url": "https://presend.pages.dev/api",
+      "description": "Production"
+    }
   ],
   "paths": {
     "/hash": {
@@ -22,28 +25,51 @@
         "description": "Returns SHA-256, SHA-1 and SHA-512 for a file up to 20MB.",
         "requestBody": {
           "required": true,
-          "content": { "application/octet-stream": { "schema": { "type": "string", "format": "binary" } } }
+          "content": {
+            "application/octet-stream": {
+              "schema": {
+                "type": "string",
+                "format": "binary"
+              }
+            }
+          }
         },
         "responses": {
           "200": {
             "description": "Hash results",
-            "content": { "application/json": { "schema": {
-              "type": "object",
-              "properties": {
-                "size_bytes": { "type": "integer" },
-                "hashes": {
+            "content": {
+              "application/json": {
+                "schema": {
                   "type": "object",
                   "properties": {
-                    "sha256": { "type": "string" },
-                    "sha1": { "type": "string" },
-                    "sha512": { "type": "string" }
+                    "size_bytes": {
+                      "type": "integer"
+                    },
+                    "hashes": {
+                      "type": "object",
+                      "properties": {
+                        "sha256": {
+                          "type": "string"
+                        },
+                        "sha1": {
+                          "type": "string"
+                        },
+                        "sha512": {
+                          "type": "string"
+                        }
+                      }
+                    }
                   }
                 }
               }
-            } } }
+            }
           },
-          "413": { "description": "File too large" },
-          "429": { "description": "Rate limit exceeded" }
+          "413": {
+            "description": "File too large"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          }
         }
       }
     },
@@ -52,19 +78,43 @@
         "summary": "Clean a single URL",
         "description": "Strips 60+ tracking parameters from a URL.",
         "parameters": [
-          { "name": "url", "in": "query", "required": true, "schema": { "type": "string" } }
+          {
+            "name": "url",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
         ],
         "responses": {
-          "200": { "description": "Cleaned URL", "content": { "application/json": { "schema": {
-            "type": "object",
-            "properties": {
-              "original": { "type": "string" },
-              "clean": { "type": "string" },
-              "removed": { "type": "integer" },
-              "valid": { "type": "boolean" }
+          "200": {
+            "description": "Cleaned URL",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "original": {
+                      "type": "string"
+                    },
+                    "clean": {
+                      "type": "string"
+                    },
+                    "removed": {
+                      "type": "integer"
+                    },
+                    "valid": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
             }
-          } } } },
-          "429": { "description": "Rate limit exceeded" }
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          }
         }
       },
       "post": {
@@ -72,15 +122,33 @@
         "description": "Strips tracking parameters from up to 100 URLs at once.",
         "requestBody": {
           "required": true,
-          "content": { "application/json": { "schema": {
-            "type": "object",
-            "properties": { "urls": { "type": "array", "items": { "type": "string" }, "maxItems": 100 } },
-            "required": ["urls"]
-          } } }
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "urls": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "maxItems": 100
+                  }
+                },
+                "required": [
+                  "urls"
+                ]
+              }
+            }
+          }
         },
         "responses": {
-          "200": { "description": "Cleaned URLs batch" },
-          "429": { "description": "Rate limit exceeded" }
+          "200": {
+            "description": "Cleaned URLs batch"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          }
         }
       }
     },
@@ -89,17 +157,42 @@
         "summary": "Generate UUIDs",
         "description": "Generates up to 100 random UUID v4 values.",
         "parameters": [
-          { "name": "count", "in": "query", "required": false, "schema": { "type": "integer", "default": 1, "maximum": 100 } }
+          {
+            "name": "count",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 1,
+              "maximum": 100
+            }
+          }
         ],
         "responses": {
-          "200": { "description": "Generated UUIDs", "content": { "application/json": { "schema": {
-            "type": "object",
-            "properties": {
-              "count": { "type": "integer" },
-              "uuids": { "type": "array", "items": { "type": "string" } }
+          "200": {
+            "description": "Generated UUIDs",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "count": {
+                      "type": "integer"
+                    },
+                    "uuids": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
             }
-          } } } },
-          "429": { "description": "Rate limit exceeded" }
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          }
         }
       }
     },
@@ -107,13 +200,38 @@
       "get": {
         "summary": "Encode or decode Base64",
         "parameters": [
-          { "name": "action", "in": "query", "required": true, "schema": { "type": "string", "enum": ["encode", "decode"] } },
-          { "name": "text", "in": "query", "required": true, "schema": { "type": "string", "maxLength": 10000 } }
+          {
+            "name": "action",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "encode",
+                "decode"
+              ]
+            }
+          },
+          {
+            "name": "text",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "maxLength": 10000
+            }
+          }
         ],
         "responses": {
-          "200": { "description": "Encoded/decoded result" },
-          "400": { "description": "Invalid input" },
-          "429": { "description": "Rate limit exceeded" }
+          "200": {
+            "description": "Encoded/decoded result"
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          }
         }
       }
     },
@@ -122,19 +240,43 @@
         "summary": "Decode a JWT",
         "description": "Decodes the header and payload of a JWT. Does not verify the signature.",
         "parameters": [
-          { "name": "token", "in": "query", "required": true, "schema": { "type": "string" } }
+          {
+            "name": "token",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
         ],
         "responses": {
-          "200": { "description": "Decoded JWT", "content": { "application/json": { "schema": {
-            "type": "object",
-            "properties": {
-              "header": { "type": "object" },
-              "payload": { "type": "object" },
-              "signature_verified": { "type": "boolean" }
+          "200": {
+            "description": "Decoded JWT",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "header": {
+                      "type": "object"
+                    },
+                    "payload": {
+                      "type": "object"
+                    },
+                    "signature_verified": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
             }
-          } } } },
-          "400": { "description": "Invalid JWT" },
-          "429": { "description": "Rate limit exceeded" }
+          },
+          "400": {
+            "description": "Invalid JWT"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          }
         }
       }
     },
@@ -143,7 +285,95 @@
         "summary": "Get caller IP geolocation",
         "description": "Returns the caller's IP with city, country, currency, language, EU and VPN flags.",
         "responses": {
-          "200": { "description": "IP geolocation data" }
+          "200": {
+            "description": "IP geolocation data"
+          }
+        }
+      }
+    },
+    "/timestamp": {
+      "get": {
+        "summary": "Convert timestamps",
+        "description": "Current time, or convert between Unix timestamp and ISO date.",
+        "parameters": [
+          {
+            "name": "unix",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "date",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Converted timestamp"
+          }
+        }
+      }
+    },
+    "/color": {
+      "get": {
+        "summary": "Convert color formats",
+        "description": "Convert between hex, RGB and HSL.",
+        "parameters": [
+          {
+            "name": "hex",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "rgb",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "hsl",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Converted color"
+          }
+        }
+      }
+    },
+    "/user-agent": {
+      "get": {
+        "summary": "Parse a User-Agent string",
+        "parameters": [
+          {
+            "name": "ua",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Parsed User-Agent"
+          }
         }
       }
     }
