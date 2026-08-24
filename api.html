@@ -111,6 +111,16 @@
     <a class="tool-card" href="/tools/password-generator"><div><h3>Password Generator</h3><p>Cryptographically secure passwords (client-side)</p></div><span class="go">Docs →</span></a>
   </div>
 
+  <h2>Embeddable Widget</h2>
+  <p style="color:var(--color-muted); max-width:60ch;">
+    Drop a working tool into your own site — no iframe, powered by our API directly. Supports: url-cleaner, uuid, color.
+  </p>
+  <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">&lt;div data-presend-tool="url-cleaner"&gt;&lt;/div&gt;
+&lt;script src="https://presend.pages.dev/widget.js" async&gt;&lt;/script&gt;</pre>
+  <p style="color:var(--color-muted); max-width:60ch; font-size:0.9rem;">
+    Add <code>data-badge="false"</code> to hide the "Powered by Presend" credit link.
+  </p>
+
   <h2>OpenAPI Spec</h2>
   <p style="color:var(--color-muted); max-width:60ch;">
     Machine-readable spec for all server-side endpoints: <a href="/openapi.json">openapi.json</a>
