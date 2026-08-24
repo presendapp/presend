@@ -1,9 +1,18 @@
+function escapeXml(str) {
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&apos;');
+}
+
 export async function onRequestGet(context) {
   const { request } = context;
   const url = new URL(request.url);
-  const tool = url.searchParams.get('tool') || 'Presend';
-  const subtitle = url.searchParams.get('subtitle') || 'Free Privacy Tools';
-  
+  const tool = escapeXml((url.searchParams.get('tool') || 'Presend').slice(0, 100));
+  const subtitle = escapeXml((url.searchParams.get('subtitle') || 'Free Privacy Tools').slice(0, 150));
+
   const svg = `
 <svg width="1200" height="630" xmlns="http://www.w3.org/2000/svg">
   <rect width="1200" height="630" fill="#1F3A5F"/>
@@ -12,11 +21,12 @@ export async function onRequestGet(context) {
   <text x="600" y="380" font-family="Arial, sans-serif" font-size="36" fill="#6c757d" text-anchor="middle">${subtitle}</text>
   <text x="600" y="480" font-family="Arial, sans-serif" font-size="24" fill="#0066cc" text-anchor="middle">presend.pages.dev — 100% browser-based, zero upload</text>
 </svg>`;
-  
+
   return new Response(svg, {
     headers: {
       'Content-Type': 'image/svg+xml',
-      'Cache-Control': 'public, max-age=86400'
+      'Cache-Control': 'public, max-age=86400',
+      'X-Content-Type-Options': 'nosniff',
     }
   });
 }

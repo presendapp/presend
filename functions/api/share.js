@@ -1,23 +1,50 @@
+const MAX_DATA_LENGTH = 5000;
+
+async function checkRateLimit(env, clientIP) {
+  if (!env.PRESEND_ANALYTICS) return true;
+  const now = Math.floor(Date.now() / 60000);
+  const rateKey = `rate:share:${clientIP}:${now}`;
+  let count = await env.PRESEND_ANALYTICS.get(rateKey);
+  count = count ? parseInt(count) : 0;
+  if (count >= 10) return false;
+  await env.PRESEND_ANALYTICS.put(rateKey, (count + 1).toString(), { expirationTtl: 120 });
+  return true;
+}
+
 export async function onRequestPost(context) {
   const { request, env } = context;
-  
+  const clientIP = request.headers.get('CF-Connecting-IP') || 'unknown';
+
+  const allowed = await checkRateLimit(env, clientIP);
+  if (!allowed) {
+    return new Response(JSON.stringify({ error: 'Rate limit exceeded. Max 10 shares per minute.' }), {
+      status: 429,
+      headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
+    });
+  }
+
   try {
     const body = await request.json();
-    const tool = body.tool || 'home';
-    const data = body.data || '';
-    
-    // Génère un hash court (8 caractères)
+    const tool = String(body.tool || 'home').slice(0, 100);
+    const data = String(body.data || '');
+
+    if (data.length > MAX_DATA_LENGTH) {
+      return new Response(JSON.stringify({ error: `Data too long (max ${MAX_DATA_LENGTH} chars)` }), {
+        status: 400,
+        headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
+      });
+    }
+
     const hash = Array.from(crypto.getRandomValues(new Uint8Array(6)))
       .map(b => b.toString(36).padStart(2, '0'))
       .join('')
       .slice(0, 8);
-    
+
     const key = `share:${hash}`;
     const value = JSON.stringify({ tool, data, created: Date.now() });
-    
-    // Stockage KV (expire après 30 jours)
+
     await env.PRESEND_ANALYTICS.put(key, value, { expirationTtl: 2592000 });
-    
+
     return new Response(JSON.stringify({
       success: true,
       hash,
