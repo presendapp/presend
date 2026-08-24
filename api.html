@@ -59,6 +59,18 @@
   <p style="color:var(--color-muted); max-width:60ch;">Returns the caller's IP with geolocation, currency, language and EU/VPN flags.</p>
   <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl https://presend.pages.dev/api/ip</pre>
 
+  <h3>GET /api/uuid</h3>
+  <p style="color:var(--color-muted); max-width:60ch;">Generates random UUIDs (v4), up to 100 per request.</p>
+  <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/uuid?count=5"</pre>
+
+  <h3>GET /api/base64</h3>
+  <p style="color:var(--color-muted); max-width:60ch;">Encode or decode Base64 text.</p>
+  <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/base64?action=encode&text=hello"</pre>
+
+  <h3>GET /api/jwt-decode</h3>
+  <p style="color:var(--color-muted); max-width:60ch;">Decodes a JWT's header and payload (does not verify the signature).</p>
+  <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/jwt-decode?token=eyJhbGci..."</pre>
+
   <h2>Client-side tools (embed)</h2>
   <p style="color:var(--color-muted); max-width:60ch;">
     File-processing tools (EXIF removal, PDF compression, etc.) run entirely in the browser — nothing is uploaded, so there's no server endpoint for these. Embed them directly:
@@ -76,6 +88,9 @@
     <a class="tool-card" href="/tools/file-hash-checker"><div><h3>File Hash Checker</h3><p>SHA-256 / SHA-1 / SHA-512 — server API available</p></div><span class="go">Docs →</span></a>
     <a class="tool-card" href="/tools/url-cleaner"><div><h3>URL Cleaner</h3><p>Strip tracking params — server API available</p></div><span class="go">Docs →</span></a>
     <a class="tool-card" href="/tools/ip-geolocation"><div><h3>IP Geolocation</h3><p>IP, location, currency — server API available</p></div><span class="go">Docs →</span></a>
+    <a class="tool-card" href="/api"><div><h3>UUID Generator</h3><p>Random UUIDs — server API available</p></div><span class="go">Docs →</span></a>
+    <a class="tool-card" href="/api"><div><h3>Base64 Encoder/Decoder</h3><p>Encode/decode text — server API available</p></div><span class="go">Docs →</span></a>
+    <a class="tool-card" href="/api"><div><h3>JWT Decoder</h3><p>Decode JWT tokens — server API available</p></div><span class="go">Docs →</span></a>
     <a class="tool-card" href="/tools/exif-remover"><div><h3>EXIF Remover</h3><p>Strip GPS and metadata from photos (client-side)</p></div><span class="go">Docs →</span></a>
     <a class="tool-card" href="/tools/pdf-compress"><div><h3>PDF Compress</h3><p>Reduce PDF file size (client-side)</p></div><span class="go">Docs →</span></a>
     <a class="tool-card" href="/tools/password-generator"><div><h3>Password Generator</h3><p>Cryptographically secure passwords (client-side)</p></div><span class="go">Docs →</span></a>
