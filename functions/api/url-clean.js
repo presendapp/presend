@@ -10,6 +10,18 @@ const TRACKING_PARAMS = [
   'spJobID','spMailingID','spUserID','spReportId','cvid','oicd','srsltid','gs_lcrp','gs_lp','gs_lcp','mibextid','sxsrf'
 ];
 
+
+async function checkRateLimit(env, clientIP, bucket) {
+  if (!env.PRESEND_ANALYTICS) return true;
+  const now = Math.floor(Date.now() / 60000);
+  const rateKey = `rate:${bucket}:${clientIP}:${now}`;
+  let count = await env.PRESEND_ANALYTICS.get(rateKey);
+  count = count ? parseInt(count) : 0;
+  if (count >= 30) return false;
+  await env.PRESEND_ANALYTICS.put(rateKey, (count + 1).toString(), { expirationTtl: 120 });
+  return true;
+}
+
 function corsHeaders(extra = {}) {
   return {
     'Access-Control-Allow-Origin': '*',
@@ -41,7 +53,15 @@ export async function onRequestOptions() {
 }
 
 export async function onRequestGet(context) {
-  const { searchParams } = new URL(context.request.url);
+  const { request, env } = context;
+  const clientIP = request.headers.get('CF-Connecting-IP') || 'unknown';
+  const allowed = await checkRateLimit(env, clientIP, 'urlclean');
+  if (!allowed) {
+    return new Response(JSON.stringify({ error: 'Rate limit exceeded. Max 60 requests per minute.' }), {
+      status: 429, headers: { 'Content-Type': 'application/json', ...corsHeaders() },
+    });
+  }
+  const { searchParams } = new URL(request.url);
   const url = searchParams.get('url');
 
   if (!url) {
@@ -59,8 +79,16 @@ export async function onRequestGet(context) {
 }
 
 export async function onRequestPost(context) {
+  const { request, env } = context;
+  const clientIP = request.headers.get('CF-Connecting-IP') || 'unknown';
+  const allowed = await checkRateLimit(env, clientIP, 'urlclean');
+  if (!allowed) {
+    return new Response(JSON.stringify({ error: 'Rate limit exceeded. Max 60 requests per minute.' }), {
+      status: 429, headers: { 'Content-Type': 'application/json', ...corsHeaders() },
+    });
+  }
   try {
-    const body = await context.request.json();
+    const body = await request.json();
     const urls = Array.isArray(body.urls) ? body.urls : null;
 
     if (!urls || urls.length === 0) {

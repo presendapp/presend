@@ -1,6 +1,18 @@
 // POST un fichier en binaire brut, reçois les hash SHA-256/SHA-1/SHA-512.
 // Usage: curl -X POST --data-binary @fichier.pdf https://presend.pages.dev/api/hash
 
+
+async function checkRateLimit(env, clientIP, bucket) {
+  if (!env.PRESEND_ANALYTICS) return true;
+  const now = Math.floor(Date.now() / 60000);
+  const rateKey = `rate:${bucket}:${clientIP}:${now}`;
+  let count = await env.PRESEND_ANALYTICS.get(rateKey);
+  count = count ? parseInt(count) : 0;
+  if (count >= 30) return false;
+  await env.PRESEND_ANALYTICS.put(rateKey, (count + 1).toString(), { expirationTtl: 120 });
+  return true;
+}
+
 const MAX_SIZE = 20 * 1024 * 1024; // 20MB — limite CPU/mémoire raisonnable pour Workers gratuit
 const ALGOS = ['SHA-256', 'SHA-1', 'SHA-512'];
 
@@ -33,7 +45,15 @@ export async function onRequestGet() {
 }
 
 export async function onRequestPost(context) {
-  const { request } = context;
+  const { request, env } = context;
+  const clientIP = request.headers.get('CF-Connecting-IP') || 'unknown';
+
+  const allowed = await checkRateLimit(env, clientIP, 'hash');
+  if (!allowed) {
+    return new Response(JSON.stringify({ error: 'Rate limit exceeded. Max 30 requests per minute.' }), {
+      status: 429, headers: { 'Content-Type': 'application/json', ...corsHeaders() },
+    });
+  }
 
   const contentLength = parseInt(request.headers.get('content-length') || '0', 10);
   if (contentLength > MAX_SIZE) {
