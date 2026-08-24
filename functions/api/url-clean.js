@@ -1,0 +1,92 @@
+// GET ?url=<url> pour une seule URL, ou POST { urls: [...] } pour un batch (max 100).
+
+const TRACKING_PARAMS = [
+  'utm_source','utm_medium','utm_campaign','utm_term','utm_content','utm_id','utm_source_platform','utm_creative_format','utm_marketing_tactic',
+  'fbclid','gclid','dclid','wbraid','gbraid','ttclid','igshid','si','ref','referrer','source','medium','campaign',
+  'yclid','msclkid','li_fat_id','mc_cid','mc_eid','mkt_tok','trk_contact','trk_msg','trk_module','trk_sid',
+  'ef_id','epik','pk_campaign','pk_kwd','pk_keyword','piwik_campaign','piwik_kwd','mtm_source','mtm_medium','mtm_campaign','mtm_keyword','mtm_content','mtm_cid','mtm_group','mtm_placement','mtm_source_platform',
+  'sccid','rb_clickid','irclickid','irgwc','clickid','affiliate','aff_id','aff_sub','aff_sub2','aff_sub3','aff_sub4','aff_sub5','subid','subid2','subid3',
+  'wickedid','twclid','liid','scid','rbid','pd_rd_r','pd_rd_w','pd_rd_wg','pf_rd_r','pf_rd_p','pf_rd_s','pf_rd_t','pf_rd_i','pd_rd_i','pd_rd_m',
+  'spJobID','spMailingID','spUserID','spReportId','cvid','oicd','srsltid','gs_lcrp','gs_lp','gs_lcp','mibextid','sxsrf'
+];
+
+function corsHeaders(extra = {}) {
+  return {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type',
+    ...extra,
+  };
+}
+
+function cleanUrl(raw) {
+  raw = (raw || '').trim();
+  if (!raw) return null;
+  try {
+    const url = new URL(raw);
+    let removed = 0;
+    TRACKING_PARAMS.forEach((p) => {
+      if (url.searchParams.has(p)) { url.searchParams.delete(p); removed++; }
+    });
+    const search = url.searchParams.toString();
+    url.search = search ? '?' + search : '';
+    return { original: raw, clean: url.toString(), removed, valid: true };
+  } catch (e) {
+    return { original: raw, clean: raw, removed: 0, valid: false };
+  }
+}
+
+export async function onRequestOptions() {
+  return new Response(null, { headers: corsHeaders() });
+}
+
+export async function onRequestGet(context) {
+  const { searchParams } = new URL(context.request.url);
+  const url = searchParams.get('url');
+
+  if (!url) {
+    return new Response(JSON.stringify({
+      usage: 'GET /api/url-clean?url=<url>  —  ou POST { "urls": ["...", "..."] } pour 100 max.',
+      example: 'https://presend.pages.dev/api/url-clean?url=https://example.com/?utm_source=x',
+      tracking_params_removed: TRACKING_PARAMS.length,
+    }, null, 2), { headers: { 'Content-Type': 'application/json', ...corsHeaders() } });
+  }
+
+  const result = cleanUrl(url);
+  return new Response(JSON.stringify(result), {
+    headers: { 'Content-Type': 'application/json', 'Cache-Control': 'public, max-age=86400', ...corsHeaders() },
+  });
+}
+
+export async function onRequestPost(context) {
+  try {
+    const body = await context.request.json();
+    const urls = Array.isArray(body.urls) ? body.urls : null;
+
+    if (!urls || urls.length === 0) {
+      return new Response(JSON.stringify({ error: 'Envoie un JSON: { "urls": ["https://...", ...] }' }), {
+        status: 400, headers: { 'Content-Type': 'application/json', ...corsHeaders() },
+      });
+    }
+    if (urls.length > 100) {
+      return new Response(JSON.stringify({ error: 'Max 100 URLs par requête.' }), {
+        status: 400, headers: { 'Content-Type': 'application/json', ...corsHeaders() },
+      });
+    }
+
+    const results = urls.map(cleanUrl).filter(Boolean);
+    const totalRemoved = results.reduce((sum, r) => sum + r.removed, 0);
+
+    return new Response(JSON.stringify({
+      count: results.length,
+      total_tracking_params_removed: totalRemoved,
+      results,
+    }), {
+      headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-store', ...corsHeaders() },
+    });
+  } catch (e) {
+    return new Response(JSON.stringify({ error: 'JSON invalide.', detail: e.message }), {
+      status: 400, headers: { 'Content-Type': 'application/json', ...corsHeaders() },
+    });
+  }
+}
