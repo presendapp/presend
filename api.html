@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <title>Presend API for Developers — Free, Privacy-First</title>
-<meta name="description" content="Free API for file privacy tools: EXIF removal, PDF compression, metadata cleaning. All processing client-side. No API keys required.">
+<meta name="description" content="Free API for privacy tools: file hashing, URL cleaning, IP geolocation. Server-side endpoints, no API key required.">
 <meta property="og:title" content="Presend API for Developers">
-<meta property="og:description" content="Free privacy tools API. Remove EXIF, compress PDFs, clean metadata — all client-side, no upload.">
+<meta property="og:description" content="Free developer API: SHA hashing, URL tracking-param removal, IP geolocation, plus embeddable client-side tools.">
 <meta property="og:image" content="https://presend.pages.dev/og-image.png">
 <link rel="canonical" href="https://presend.pages.dev/api">
 <link href="style.min.css" rel="stylesheet">
@@ -14,7 +14,7 @@
   "@context": "https://schema.org",
   "@type": "WebAPI",
   "name": "Presend API",
-  "description": "Free client-side API for file privacy tools",
+  "description": "Free API for file privacy and utility tools",
   "url": "https://presend.pages.dev/api",
   "provider": {
     "@type": "Organization",
@@ -29,15 +29,40 @@
 </header>
 <main class="wrap">
   <h1>Presend API for Developers</h1>
-  <p class="lede">Free, privacy-first tools you can embed in your own applications. No API keys. No rate limits. No server required.</p>
-  
-  <h2>How it works</h2>
+  <p class="lede">Free server-side endpoints for common utility tasks, plus embeddable client-side tools. No API key required. No signup.</p>
+
+  <h2>Server-side endpoints</h2>
   <p style="color:var(--color-muted); max-width:60ch;">
-    Unlike traditional APIs, Presend tools run entirely in the user's browser using JavaScript. 
-    You can embed them as iframes or link directly to specific tools with pre-filled parameters.
+    These run on Cloudflare's edge network and return JSON. Fair-use only — no official SLA, and heavy or automated traffic may be throttled without notice.
   </p>
-  
-  <h2>Embed a Tool</h2>
+
+  <h3>POST /api/hash</h3>
+  <p style="color:var(--color-muted); max-width:60ch;">Returns SHA-256, SHA-1 and SHA-512 for any file up to 20MB.</p>
+  <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl -X POST --data-binary @file.pdf \
+  https://presend.pages.dev/api/hash
+
+# {"size_bytes":17,"hashes":{"sha256":"...","sha1":"...","sha512":"..."}}</pre>
+
+  <h3>GET /api/url-clean</h3>
+  <p style="color:var(--color-muted); max-width:60ch;">Strips 60+ tracking parameters (utm_*, fbclid, gclid...) from a URL.</p>
+  <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/url-clean?url=https://example.com/?utm_source=x"
+
+# {"clean":"https://example.com/","removed":1,"valid":true}</pre>
+
+  <h3>POST /api/url-clean</h3>
+  <p style="color:var(--color-muted); max-width:60ch;">Same, batched — up to 100 URLs per request.</p>
+  <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl -X POST -H "Content-Type: application/json" \
+  -d '{"urls":["https://a.com?fbclid=x","https://b.com?gclid=y"]}' \
+  https://presend.pages.dev/api/url-clean</pre>
+
+  <h3>GET /api/ip</h3>
+  <p style="color:var(--color-muted); max-width:60ch;">Returns the caller's IP with geolocation, currency, language and EU/VPN flags.</p>
+  <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl https://presend.pages.dev/api/ip</pre>
+
+  <h2>Client-side tools (embed)</h2>
+  <p style="color:var(--color-muted); max-width:60ch;">
+    File-processing tools (EXIF removal, PDF compression, etc.) run entirely in the browser — nothing is uploaded, so there's no server endpoint for these. Embed them directly:
+  </p>
   <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">
 &lt;iframe 
   src="https://presend.pages.dev/tools/exif-remover?embed=1" 
@@ -45,22 +70,17 @@
   height="600" 
   frameborder="0"
 &gt;&lt;/iframe&gt;</pre>
-  
-  <h2>Direct Links with Parameters</h2>
-  <ul style="color:var(--color-muted);">
-    <li><code>/tools/exif-remover?autostart=1</code> — Auto-start processing</li>
-    <li><code>/tools/pdf-compress?quality=high</code> — Pre-set compression</li>
-    <li><code>/tools/password-generator?length=16&symbols=1</code> — Custom password</li>
-  </ul>
-  
+
   <h2>Available Tools</h2>
   <div class="tool-grid">
-    <a class="tool-card" href="/tools/exif-remover"><div><h3>EXIF Remover</h3><p>Strip GPS and metadata from photos</p></div><span class="go">Docs →</span></a>
-    <a class="tool-card" href="/tools/pdf-compress"><div><h3>PDF Compress</h3><p>Reduce PDF file size</p></div><span class="go">Docs →</span></a>
-    <a class="tool-card" href="/tools/image-compressor"><div><h3>Image Compressor</h3><p>Shrink photos without quality loss</p></div><span class="go">Docs →</span></a>
-    <a class="tool-card" href="/tools/password-generator"><div><h3>Password Generator</h3><p>Cryptographically secure passwords</p></div><span class="go">Docs →</span></a>
+    <a class="tool-card" href="/tools/file-hash-checker"><div><h3>File Hash Checker</h3><p>SHA-256 / SHA-1 / SHA-512 — server API available</p></div><span class="go">Docs →</span></a>
+    <a class="tool-card" href="/tools/url-cleaner"><div><h3>URL Cleaner</h3><p>Strip tracking params — server API available</p></div><span class="go">Docs →</span></a>
+    <a class="tool-card" href="/tools/ip-geolocation"><div><h3>IP Geolocation</h3><p>IP, location, currency — server API available</p></div><span class="go">Docs →</span></a>
+    <a class="tool-card" href="/tools/exif-remover"><div><h3>EXIF Remover</h3><p>Strip GPS and metadata from photos (client-side)</p></div><span class="go">Docs →</span></a>
+    <a class="tool-card" href="/tools/pdf-compress"><div><h3>PDF Compress</h3><p>Reduce PDF file size (client-side)</p></div><span class="go">Docs →</span></a>
+    <a class="tool-card" href="/tools/password-generator"><div><h3>Password Generator</h3><p>Cryptographically secure passwords (client-side)</p></div><span class="go">Docs →</span></a>
   </div>
-  
+
   <h2>Open Source</h2>
   <p style="color:var(--color-muted); max-width:60ch;">
     All tools are open source. Contribute on GitHub or fork for your own projects.
