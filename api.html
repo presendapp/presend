@@ -111,6 +111,17 @@
     <a class="tool-card" href="/tools/password-generator"><div><h3>Password Generator</h3><p>Cryptographically secure passwords (client-side)</p></div><span class="go">Docs →</span></a>
   </div>
 
+  <h2>npm Package</h2>
+  <p style="color:var(--color-muted); max-width:60ch;">
+    A zero-dependency JS client wrapping every endpoint above.
+  </p>
+  <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">npm install presend-api</pre>
+  <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">const presend = require('presend-api');
+const { uuids } = await presend.generateUuid(3);</pre>
+  <p style="color:var(--color-muted); max-width:60ch; font-size:0.9rem;">
+    <a href="https://www.npmjs.com/package/presend-api">View on npm</a>
+  </p>
+
   <h2>Embeddable Widget</h2>
   <p style="color:var(--color-muted); max-width:60ch;">
     Drop a working tool into your own site — no iframe, powered by our API directly. Supports: url-cleaner, uuid, color.
