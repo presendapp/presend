@@ -136,6 +136,31 @@
         <input type="range" id="sizeSlider" min="128" max="600" step="8" value="300" style="width:100%;">
       </div>
 
+      <details style="margin-top:1rem;">
+        <summary style="cursor:pointer; color:var(--color-muted); font-size:0.9rem; user-select:none;">Advanced options</summary>
+        <div style="margin-top:0.8rem; display:grid; gap:0.8rem;">
+          <div style="display:flex; gap:1rem; align-items:center;">
+            <label style="font-size:0.85rem; color:var(--color-muted); flex:1;">
+              Foreground
+              <input type="color" id="colorDark" value="#000000" style="width:100%; height:2.2rem; margin-top:0.3rem; border:1px solid var(--color-line); border-radius:6px; cursor:pointer;">
+            </label>
+            <label style="font-size:0.85rem; color:var(--color-muted); flex:1;">
+              Background
+              <input type="color" id="colorLight" value="#ffffff" style="width:100%; height:2.2rem; margin-top:0.3rem; border:1px solid var(--color-line); border-radius:6px; cursor:pointer;">
+            </label>
+          </div>
+          <label style="font-size:0.85rem; color:var(--color-muted);">
+            Error correction level
+            <select id="correctLevel" style="width:100%; margin-top:0.3rem; padding:0.5rem; border:1px solid var(--color-line); border-radius:6px; background:var(--color-bg-raised); color:var(--color-text);">
+              <option value="L">Low (~7% damage tolerance) — smallest code</option>
+              <option value="M" selected>Medium (~15%) — recommended default</option>
+              <option value="Q">Quartile (~25%) — good for printed materials</option>
+              <option value="H">High (~30%) — best if adding a logo overlay</option>
+            </select>
+          </label>
+        </div>
+      </details>
+
       <button class="btn" id="generateBtn" type="button" style="width:100%; margin-top:1rem;">Generate QR code</button>
     </div>
     <p class="error-msg" id="errorMsg"></p>
@@ -144,6 +169,7 @@
       <div id="qrOutput" style="display:inline-block; background:#fff; padding:1rem; border-radius:var(--radius); margin:1.2rem 0;"></div>
       <div>
         <a class="btn" id="downloadLink" download>Download PNG</a>
+        <button class="btn ghost" id="downloadSvgBtn" type="button" style="margin-left:0.5rem;">Download SVG</button>
         <button class="btn ghost" id="shareBtn" type="button" style="margin-left:0.5rem;">🔗 Copy share link</button>
       </div>
     </div>
@@ -199,8 +225,13 @@
   const result = document.getElementById('result');
   const qrOutput = document.getElementById('qrOutput');
   const downloadLink = document.getElementById('downloadLink');
+  const downloadSvgBtn = document.getElementById('downloadSvgBtn');
+  const colorDarkInput = document.getElementById('colorDark');
+  const colorLightInput = document.getElementById('colorLight');
+  const correctLevelSelect = document.getElementById('correctLevel');
 
   const MAX_LENGTH = 1500; // QR codes have a hard data ceiling; keep well under it
+  let currentQr = null; // keep a reference to build the SVG export
 
   function showError(msg) {
     errorMsg.textContent = msg;
@@ -211,10 +242,30 @@
     errorMsg.classList.remove('visible');
   }
 
+  function buildSvg(qr, colorDark, colorLight) {
+    // Reads the internal module matrix from qrcode.js to draw a true vector SVG,
+    // rather than embedding the rendered PNG — scales losslessly for print.
+    const inner = qr._oQRCode;
+    if (!inner) return null;
+    const count = inner.getModuleCount();
+    const cell = 10; // arbitrary unit size; SVG scales freely regardless
+    const size = count * cell;
+    let rects = '';
+    for (let row = 0; row < count; row++) {
+      for (let col = 0; col < count; col++) {
+        if (inner.isDark(row, col)) {
+          rects += `<rect x="${col * cell}" y="${row * cell}" width="${cell}" height="${cell}" fill="${colorDark}"/>`;
+        }
+      }
+    }
+    return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${size} ${size}"><rect width="${size}" height="${size}" fill="${colorLight}"/>${rects}</svg>`;
+  }
+
   function generate() {
     clearError();
     result.classList.remove('visible');
     qrOutput.innerHTML = '';
+    currentQr = null;
 
     const text = textInput.value.trim();
     if (!text) {
@@ -227,13 +278,18 @@
     }
 
     const size = Number(sizeSlider.value);
+    const colorDark = colorDarkInput.value;
+    const colorLight = colorLightInput.value;
+    const correctLevel = QRCode.CorrectLevel[correctLevelSelect.value] || QRCode.CorrectLevel.M;
 
     try {
-      new QRCode(qrOutput, {
+      currentQr = new QRCode(qrOutput, {
         text: text,
         width: size,
         height: size,
-        correctLevel: QRCode.CorrectLevel.M
+        colorDark: colorDark,
+        colorLight: colorLight,
+        correctLevel: correctLevel
       });
 
       // qrcode.js renders async via an internal image; wait a tick before reading the canvas
@@ -249,6 +305,22 @@
       showError('Could not generate a QR code from this input.');
     }
   }
+
+  downloadSvgBtn.addEventListener('click', () => {
+    if (!currentQr) return;
+    const svg = buildSvg(currentQr, colorDarkInput.value, colorLightInput.value);
+    if (!svg) {
+      showError('SVG export is not available for this QR code.');
+      return;
+    }
+    const blob = new Blob([svg], { type: 'image/svg+xml' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'qr-code.svg';
+    a.click();
+    URL.revokeObjectURL(url);
+  });
 
   sizeSlider.addEventListener('input', () => {
     sizeValue.textContent = sizeSlider.value + 'px';
