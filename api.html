@@ -83,6 +83,18 @@
   <p style="color:var(--color-muted); max-width:60ch;">Parses a User-Agent string into browser, OS and device type.</p>
   <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/user-agent"</pre>
 
+  <h3>GET /api/password</h3>
+  <p style="color:var(--color-muted); max-width:60ch;">Generates a cryptographically secure password with entropy estimate.</p>
+  <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/password?length=20&symbols=1"</pre>
+
+  <h3>GET /api/email-validate</h3>
+  <p style="color:var(--color-muted); max-width:60ch;">Validates email syntax and checks for a valid MX record (real deliverability check).</p>
+  <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/email-validate?email=foo@example.com"</pre>
+
+  <h3>GET /api/favicon</h3>
+  <p style="color:var(--color-muted); max-width:60ch;">Fetches the favicon URL for any domain.</p>
+  <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/favicon?domain=github.com"</pre>
+
   <h2>Client-side tools (embed)</h2>
   <p style="color:var(--color-muted); max-width:60ch;">
     File-processing tools (EXIF removal, PDF compression, etc.) run entirely in the browser — nothing is uploaded, so there's no server endpoint for these. Embed them directly:
@@ -106,6 +118,9 @@
     <a class="tool-card" href="/api"><div><h3>Timestamp Converter</h3><p>Unix/ISO date conversion — server API</p></div><span class="go">Docs →</span></a>
     <a class="tool-card" href="/api"><div><h3>Color Converter</h3><p>Hex/RGB/HSL — server API</p></div><span class="go">Docs →</span></a>
     <a class="tool-card" href="/api"><div><h3>User-Agent Parser</h3><p>Browser/OS detection — server API</p></div><span class="go">Docs →</span></a>
+    <a class="tool-card" href="/api"><div><h3>Password Generator API</h3><p>Secure passwords with entropy — server API</p></div><span class="go">Docs →</span></a>
+    <a class="tool-card" href="/api"><div><h3>Email Validator</h3><p>Syntax + MX record check — server API</p></div><span class="go">Docs →</span></a>
+    <a class="tool-card" href="/api"><div><h3>Favicon Fetcher</h3><p>Get any site's favicon — server API</p></div><span class="go">Docs →</span></a>
     <a class="tool-card" href="/tools/exif-remover"><div><h3>EXIF Remover</h3><p>Strip GPS and metadata from photos (client-side)</p></div><span class="go">Docs →</span></a>
     <a class="tool-card" href="/tools/pdf-compress"><div><h3>PDF Compress</h3><p>Reduce PDF file size (client-side)</p></div><span class="go">Docs →</span></a>
     <a class="tool-card" href="/tools/password-generator"><div><h3>Password Generator</h3><p>Cryptographically secure passwords (client-side)</p></div><span class="go">Docs →</span></a>

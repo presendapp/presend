@@ -376,6 +376,120 @@
           }
         }
       }
+    },
+    "/password": {
+      "get": {
+        "summary": "Generate a secure password",
+        "parameters": [
+          {
+            "name": "length",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 16,
+              "maximum": 128
+            }
+          },
+          {
+            "name": "symbols",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "0",
+                "1"
+              ]
+            }
+          },
+          {
+            "name": "uppercase",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "0",
+                "1"
+              ]
+            }
+          },
+          {
+            "name": "numbers",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "0",
+                "1"
+              ]
+            }
+          },
+          {
+            "name": "exclude_ambiguous",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "0",
+                "1"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Generated password with entropy estimate"
+          }
+        }
+      }
+    },
+    "/email-validate": {
+      "get": {
+        "summary": "Validate an email address",
+        "description": "Checks syntax and verifies the domain has a valid MX record.",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Validation result"
+          }
+        }
+      }
+    },
+    "/favicon": {
+      "get": {
+        "summary": "Fetch a domain's favicon URL",
+        "parameters": [
+          {
+            "name": "domain",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Favicon URL"
+          },
+          "400": {
+            "description": "Disallowed domain"
+          }
+        }
+      }
     }
   }
 }
