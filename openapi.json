@@ -490,6 +490,72 @@
           }
         }
       }
+    },
+    "/csv-json": {
+      "get": {
+        "summary": "Convert between JSON and CSV (GET)",
+        "parameters": [
+          {
+            "name": "direction",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "json-to-csv",
+                "csv-to-json"
+              ]
+            }
+          },
+          {
+            "name": "data",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Converted data"
+          }
+        }
+      },
+      "post": {
+        "summary": "Convert between JSON and CSV (POST)",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "direction": {
+                    "type": "string",
+                    "enum": [
+                      "json-to-csv",
+                      "csv-to-json"
+                    ]
+                  },
+                  "data": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "direction",
+                  "data"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Converted data"
+          }
+        }
+      }
     }
   }
 }
