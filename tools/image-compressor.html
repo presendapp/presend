@@ -180,6 +180,28 @@
         </label>
         <input type="range" id="qualitySlider" min="10" max="100" value="80" style="width:100%;">
       </div>
+      <div style="margin-bottom:1.2rem;">
+        <label for="formatSelect" style="display:block; font-size:0.9rem; color:var(--color-muted); margin-bottom:0.4rem;">Output format</label>
+        <select id="formatSelect" style="width:100%; padding:0.5rem; border:1px solid var(--color-line); border-radius:6px; background:var(--color-bg-raised); color:var(--color-text);">
+          <option value="original">Same as original</option>
+          <option value="image/jpeg">JPG</option>
+          <option value="image/webp">WebP (smaller, wide support)</option>
+          <option value="image/avif" id="avifOption" style="display:none;">AVIF (smallest, newer browsers)</option>
+          <option value="image/png">PNG (lossless)</option>
+        </select>
+      </div>
+      <div id="previewCompare" style="display:none; margin-bottom:1.2rem;">
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.6rem;">
+          <div>
+            <div style="font-size:0.8rem; color:var(--color-muted); margin-bottom:0.3rem; text-align:center;">Original</div>
+            <img id="previewOriginal" style="width:100%; border-radius:6px; border:1px solid var(--color-line);">
+          </div>
+          <div>
+            <div style="font-size:0.8rem; color:var(--color-muted); margin-bottom:0.3rem; text-align:center;">Compressed</div>
+            <img id="previewCompressed" style="width:100%; border-radius:6px; border:1px solid var(--color-line);">
+          </div>
+        </div>
+      </div>
 
       <div class="result-row">
         <div>
@@ -247,13 +269,17 @@
   const resetBtn = document.getElementById('resetBtn');
   const qualitySlider = document.getElementById('qualitySlider');
   const qualityValue = document.getElementById('qualityValue');
-
+  const formatSelect = document.getElementById('formatSelect');
+  const avifOption = document.getElementById('avifOption');
+  const previewCompare = document.getElementById('previewCompare');
+  const previewOriginal = document.getElementById('previewOriginal');
+  const previewCompressed = document.getElementById('previewCompressed');
   const MAX_SIZE = 25 * 1024 * 1024; // 25MB
-
   let currentFile = null;
   let currentImg = null;
   let originalSize = 0;
   let debounceTimer = null;
+  let originalObjectUrl = null;
 
   function showError(msg) {
     errorMsg.textContent = msg;
@@ -269,48 +295,69 @@
     return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
   }
 
+  // Detect AVIF support by attempting a tiny encode; not all browsers support it yet.
+  function detectAvifSupport() {
+    try {
+      const c = document.createElement('canvas');
+      c.width = 1; c.height = 1;
+      c.toBlob(function (blob) {
+        if (blob && blob.type === 'image/avif') {
+          avifOption.style.display = 'block';
+        }
+      }, 'image/avif');
+    } catch (e) { /* AVIF not supported, leave hidden */ }
+  }
+  detectAvifSupport();
+
+  function resolveOutputType() {
+    const selected = formatSelect.value;
+    if (selected === 'original') {
+      return currentFile.type === 'image/png' ? 'image/png' : currentFile.type;
+    }
+    return selected;
+  }
+
   function compressAndRender() {
     if (!currentImg || !currentFile) return;
-
     const canvas = document.createElement('canvas');
     canvas.width = currentImg.naturalWidth;
     canvas.height = currentImg.naturalHeight;
     const ctx = canvas.getContext('2d');
     ctx.drawImage(currentImg, 0, 0);
-
     // PNG has no lossy quality parameter in Canvas API; for PNG we compress
     // by re-encoding (which already strips metadata and can reduce size on
-    // its own). For JPG/WebP the quality slider directly controls output size.
-    const outputType = currentFile.type === 'image/png' ? 'image/png' : currentFile.type;
+    // its own). For JPG/WebP/AVIF the quality slider directly controls output size.
+    const outputType = resolveOutputType();
     const quality = outputType === 'image/png' ? undefined : Number(qualitySlider.value) / 100;
-
     canvas.toBlob(function (blob) {
       if (!blob) {
-        showError('Something went wrong compressing this image. Try a different file.');
+        showError('Something went wrong compressing this image. Try a different file or format.');
         return;
       }
       const cleanUrl = URL.createObjectURL(blob);
       const base = currentFile.name.replace(/\.[^.]+$/, '');
-      const ext = outputType === 'image/png' ? 'png' : outputType === 'image/webp' ? 'webp' : 'jpg';
+      const extMap = { 'image/png': 'png', 'image/webp': 'webp', 'image/avif': 'avif', 'image/jpeg': 'jpg' };
+      const ext = extMap[outputType] || 'jpg';
       const outName = base + '-compressed.' + ext;
-
       downloadLink.href = cleanUrl;
       downloadLink.download = outName;
       resultName.textContent = outName;
-
       if (blob.size < originalSize) {
         const pct = Math.round((1 - blob.size / originalSize) * 100);
         resultMeta.textContent = humanSize(originalSize) + ' → ' + humanSize(blob.size) + ' (' + pct + '% smaller)';
       } else {
         resultMeta.textContent = humanSize(blob.size) + ' — already small, little to gain here';
       }
+      // Side-by-side before/after preview
+      previewCompressed.src = cleanUrl;
+      previewCompare.style.display = 'block';
     }, outputType, quality);
   }
 
   function handleFile(file) {
     clearError();
     result.classList.remove('visible');
-
+    previewCompare.style.display = 'none';
     if (!file) return;
     if (!['image/jpeg', 'image/png', 'image/webp'].includes(file.type)) {
       showError('Please choose a JPG, PNG or WebP image.');
@@ -320,13 +367,13 @@
       showError('This file is larger than 25MB. Try a smaller photo.');
       return;
     }
-
     currentFile = file;
     originalSize = file.size;
-
+    if (originalObjectUrl) URL.revokeObjectURL(originalObjectUrl);
+    originalObjectUrl = URL.createObjectURL(file);
+    previewOriginal.src = originalObjectUrl;
     const img = new Image();
     const objectUrl = URL.createObjectURL(file);
-
     img.onload = function () {
       currentImg = img;
       result.classList.add('visible');
@@ -339,19 +386,17 @@
     };
     img.src = objectUrl;
   }
-
   qualitySlider.addEventListener('input', () => {
     qualityValue.textContent = qualitySlider.value + '%';
     clearTimeout(debounceTimer);
     debounceTimer = setTimeout(compressAndRender, 150);
   });
-
+  formatSelect.addEventListener('change', compressAndRender);
   dropzone.addEventListener('click', () => fileInput.click());
   dropzone.addEventListener('keydown', (e) => {
     if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fileInput.click(); }
   });
   fileInput.addEventListener('change', (e) => handleFile(e.target.files[0]));
-
   ['dragenter', 'dragover'].forEach(evt =>
     dropzone.addEventListener(evt, (e) => { e.preventDefault(); dropzone.classList.add('dragover'); })
   );
@@ -359,12 +404,12 @@
     dropzone.addEventListener(evt, (e) => { e.preventDefault(); dropzone.classList.remove('dragover'); })
   );
   dropzone.addEventListener('drop', (e) => handleFile(e.dataTransfer.files[0]));
-
   resetBtn.addEventListener('click', () => {
     fileInput.value = '';
     currentFile = null;
     currentImg = null;
     result.classList.remove('visible');
+    previewCompare.style.display = 'none';
     clearError();
   });
 })();
