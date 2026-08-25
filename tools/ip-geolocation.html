@@ -281,8 +281,15 @@
             attribution: '&copy; OpenStreetMap contributors'
           }).addTo(leafletMap);
           L.marker([lat, lon]).addTo(leafletMap);
+          // Le conteneur était display:none à l'initialisation ; Leaflet a besoin
+          // qu'on lui redise sa taille réelle une fois le reflow effectué.
+          requestAnimationFrame(() => {
+            leafletMap.invalidateSize();
+            leafletMap.setView([lat, lon], 10);
+          });
         } else {
           leafletMap.setView([lat, lon], 10);
+          requestAnimationFrame(() => leafletMap.invalidateSize());
         }
       } else {
         realMap.style.display = 'none';
