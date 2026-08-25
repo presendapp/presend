@@ -8,6 +8,15 @@ async function checkRateLimit(env, clientIP, bucket) {
   count = count ? parseInt(count) : 0;
   if (count >= 30) return false;
   await env.PRESEND_ANALYTICS.put(rateKey, (count + 1).toString(), { expirationTtl: 120 });
+
+  // Tracking d'usage (best-effort, ne bloque jamais la requête si ça échoue)
+  try {
+    const today = new Date().toISOString().split('T')[0];
+    const visitKey = `api-visits:${bucket}:${today}`;
+    const visits = await env.PRESEND_ANALYTICS.get(visitKey);
+    await env.PRESEND_ANALYTICS.put(visitKey, ((visits ? parseInt(visits) : 0) + 1).toString());
+  } catch (e) { /* tracking best-effort */ }
+
   return true;
 }
 
