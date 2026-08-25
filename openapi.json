@@ -556,6 +556,47 @@
           }
         }
       }
+    },
+    "/password-breach": {
+      "get": {
+        "summary": "Check if a password has been breached",
+        "description": "Uses HIBP k-anonymity \u2014 only 5 hash chars are sent externally.",
+        "parameters": [
+          {
+            "name": "password",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Breach status"
+          }
+        }
+      }
+    },
+    "/email-disposable": {
+      "get": {
+        "summary": "Detect disposable email domains",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Disposable status"
+          }
+        }
+      }
     }
   }
 }

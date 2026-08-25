@@ -101,6 +101,14 @@
   -d '{"direction":"json-to-csv","data":"[{\"a\":1}]"}' \
   https://presend.pages.dev/api/csv-json</pre>
 
+  <h3>GET /api/password-breach</h3>
+  <p style="color:var(--color-muted); max-width:60ch;">Checks if a password appears in known data breaches (HIBP k-anonymity — your password is never sent or logged in full).</p>
+  <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/password-breach?password=..."</pre>
+
+  <h3>GET /api/email-disposable</h3>
+  <p style="color:var(--color-muted); max-width:60ch;">Detects disposable/throwaway email providers from a list of 576+ known domains.</p>
+  <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/email-disposable?email=foo@mailinator.com"</pre>
+
   <h2>Client-side tools (embed)</h2>
   <p style="color:var(--color-muted); max-width:60ch;">
     File-processing tools (EXIF removal, PDF compression, etc.) run entirely in the browser — nothing is uploaded, so there's no server endpoint for these. Embed them directly:
@@ -128,6 +136,8 @@
     <a class="tool-card" href="/api"><div><h3>Email Validator</h3><p>Syntax + MX record check — server API</p></div><span class="go">Docs →</span></a>
     <a class="tool-card" href="/api"><div><h3>Favicon Fetcher</h3><p>Get any site's favicon — server API</p></div><span class="go">Docs →</span></a>
     <a class="tool-card" href="/api"><div><h3>CSV/JSON Converter</h3><p>Bidirectional — server API</p></div><span class="go">Docs →</span></a>
+    <a class="tool-card" href="/api"><div><h3>Password Breach Check</h3><p>HIBP-powered — server API</p></div><span class="go">Docs →</span></a>
+    <a class="tool-card" href="/api"><div><h3>Disposable Email Detector</h3><p>576+ known domains — server API</p></div><span class="go">Docs →</span></a>
     <a class="tool-card" href="/tools/exif-remover"><div><h3>EXIF Remover</h3><p>Strip GPS and metadata from photos (client-side)</p></div><span class="go">Docs →</span></a>
     <a class="tool-card" href="/tools/pdf-compress"><div><h3>PDF Compress</h3><p>Reduce PDF file size (client-side)</p></div><span class="go">Docs →</span></a>
     <a class="tool-card" href="/tools/password-generator"><div><h3>Password Generator</h3><p>Cryptographically secure passwords (client-side)</p></div><span class="go">Docs →</span></a>
