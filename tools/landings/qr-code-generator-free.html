@@ -117,6 +117,30 @@
         "@type": "Answer",
         "text": "No. Static QR codes never expire. They contain the raw data you entered and work as long as the URL or text remains valid."
       }
+    },
+    {
+      "@type": "Question",
+      "name": "What can I encode in a QR code?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "URLs, plain text, phone numbers (as tel: links), email addresses (as mailto: links), and WiFi network credentials."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is there a size or length limit?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "QR codes can hold up to a few thousand characters, though very long text produces a denser, harder-to-scan code."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does this work offline once generated?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Once created, scanning the code doesn't require the original page to be online."
+      }
     }
   ]
 }
@@ -141,7 +165,33 @@
       <li>No signup, no watermarks</li>
       <li>Download high-resolution PNG</li>
       <li>Works for links, text, WiFi and more</li>
+      <li>Static codes — they never expire or stop working</li>
+      <li>No internet connection needed once the code is scanned</li>
     </ul>
+  </div>
+
+  <div style="margin-top:3rem;">
+    <h2 style="font-family: var(--font-display); font-size:1.1rem;">How it works</h2>
+    <ol style="color:var(--color-muted); padding-left:1.2rem; line-height:1.8;">
+      <li>Type or paste your link, text, phone number, or WiFi credentials</li>
+      <li>The QR code renders instantly in your browser — nothing is sent to a server</li>
+      <li>Download the PNG and print it, embed it, or share it digitally</li>
+    </ol>
+  </div>
+
+  <div style="margin-top:3rem;">
+    <h2 style="font-family: var(--font-display); font-size:1.1rem;">Common uses</h2>
+    <p style="color:var(--color-muted); max-width:60ch;">Business cards linking to a portfolio, restaurant menus, event tickets, WiFi passwords for guests, product packaging linking to instructions, marketing flyers, and contactless payment links all commonly use QR codes generated this way.</p>
+  </div>
+
+  <div style="margin-top:3rem;">
+    <h2 style="font-family: var(--font-display); font-size:1.1rem;">FAQ</h2>
+    <div style="color:var(--color-muted); line-height:1.8;">
+      <p><strong>Do generated QR codes expire?</strong><br>No. Static QR codes never expire. They contain the raw data you entered and work as long as the URL or text remains valid.</p>
+      <p><strong>What can I encode in a QR code?</strong><br>URLs, plain text, phone numbers (as tel: links), email addresses (as mailto: links), and WiFi network credentials.</p>
+      <p><strong>Is there a size or length limit?</strong><br>QR codes can hold up to a few thousand characters, though very long text produces a denser, harder-to-scan code. For URLs and short text, there's no practical limit.</p>
+      <p><strong>Does this work offline once generated?</strong><br>Yes. Once a QR code is created and saved, scanning it doesn't require your device or the original page to be online — only the content it links to (like a website) needs connectivity.</p>
+    </div>
   </div>
 </main>
 <footer class="site-footer wrap">
