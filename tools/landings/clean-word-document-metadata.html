@@ -123,6 +123,16 @@
   </div>
   <h2 style="font-family:var(--font-display); font-size:1.2rem; margin-top:3rem;">How it works</h2>
   <p style="color:var(--color-muted); max-width:60ch;">Microsoft Office files contain extensive metadata in their core.xml files, including author name, company, creation date, modification history, and even previous author names. When you share these documents, this metadata is exposed. Our tool opens the Office package, removes all identifying metadata, and repackages the file.</p>
+
+  <h2 style="font-family:var(--font-display); font-size:1.2rem; margin-top:2rem;">In a multi-team or client setting</h2>
+  <p style="color:var(--color-muted); max-width:60ch;">A document that's passed through legal, then marketing, then an external agency accumulates a trail of author names and companies in its metadata — sending the final version to a client or the press without cleaning it can reveal internal team structure, which vendor drafted a section, or who reviewed what, none of which is meant for external eyes.</p>
+
+  <h2 style="font-family:var(--font-display); font-size:1.2rem; margin-top:2rem;">FAQ</h2>
+  <div style="color:var(--color-muted); line-height:1.8;">
+    <p><strong>Does this remove tracked changes and comments too?</strong><br>It targets metadata fields (author, company, dates); for visible tracked changes and comments, make sure to accept/reject changes and delete comments in Word first, then run this tool for the remaining hidden metadata.</p>
+    <p><strong>Is the document content or formatting altered?</strong><br>No — only metadata is stripped, the visible document stays exactly as it was.</p>
+  </div>
+
   <h2 style="font-family:var(--font-display); font-size:1.2rem; margin-top:2rem;">Related tools</h2>
   <div class="tool-grid">
     <a class="tool-card" href="/tools/exif-remover"><div><h3>EXIF Remover</h3><p>Strip hidden location data from photos.</p></div><span class="go">Open →</span></a>

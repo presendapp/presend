@@ -123,6 +123,16 @@
   </div>
   <h2 style="font-family:var(--font-display); font-size:1.2rem; margin-top:3rem;">How it works</h2>
   <p style="color:var(--color-muted); max-width:60ch;">MP4 and MOV files store metadata in their container headers, including GPS coordinates, device model, and recording settings. This data is invisible when watching the video but easily extractable. Our video metadata remover strips all container-level metadata without re-encoding the video.</p>
+
+  <h2 style="font-family:var(--font-display); font-size:1.2rem; margin-top:2rem;">Before you post publicly</h2>
+  <p style="color:var(--color-muted); max-width:60ch;">Most major social platforms strip metadata automatically on upload, but not all of them do, and messaging apps like WhatsApp or Telegram often preserve it when sending the original file. If you're sending a video directly rather than through a platform that re-processes it, checking and removing location data first is the only way to be sure it's gone.</p>
+
+  <h2 style="font-family:var(--font-display); font-size:1.2rem; margin-top:2rem;">FAQ</h2>
+  <div style="color:var(--color-muted); line-height:1.8;">
+    <p><strong>Do social media platforms already remove this automatically?</strong><br>Many do during upload, but not all, and re-shares or direct file transfers often skip that processing — so it's safer not to assume.</p>
+    <p><strong>Does this affect video quality or audio sync?</strong><br>No. Only header metadata is removed; the video and audio streams themselves are untouched.</p>
+  </div>
+
   <h2 style="font-family:var(--font-display); font-size:1.2rem; margin-top:2rem;">Related tools</h2>
   <div class="tool-grid">
     <a class="tool-card" href="/tools/exif-remover"><div><h3>EXIF Remover</h3><p>Strip hidden location data from photos.</p></div><span class="go">Open →</span></a>
