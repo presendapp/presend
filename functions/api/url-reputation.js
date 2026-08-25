@@ -53,9 +53,19 @@ export async function onRequestGet(context) {
   const timeout = setTimeout(() => controller.abort(), 8000);
 
   try {
+    if (!env.URLHAUS_AUTH_KEY) {
+      clearTimeout(timeout);
+      return new Response(JSON.stringify({ error: 'Service temporarily misconfigured. Try again later.' }), {
+        status: 503, headers: { 'Content-Type': 'application/json', ...corsHeaders() },
+      });
+    }
+
     const res = await fetch('https://urlhaus-api.abuse.ch/v1/url/', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Auth-Key': env.URLHAUS_AUTH_KEY,
+      },
       body: 'url=' + encodeURIComponent(targetUrl),
       signal: controller.signal,
     });
