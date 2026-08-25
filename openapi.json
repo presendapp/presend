@@ -597,6 +597,68 @@
           }
         }
       }
+    },
+    "/security-headers": {
+      "get": {
+        "summary": "Audit HTTP security headers",
+        "parameters": [
+          {
+            "name": "url",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Security grade and per-header breakdown"
+          }
+        }
+      }
+    },
+    "/url-reputation": {
+      "get": {
+        "summary": "Check URL against malware/phishing database",
+        "description": "Uses URLhaus (abuse.ch).",
+        "parameters": [
+          {
+            "name": "url",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Reputation result"
+          }
+        }
+      }
+    },
+    "/subdomains": {
+      "get": {
+        "summary": "Passive subdomain discovery",
+        "description": "Via Certificate Transparency logs (crt.sh). Depends on a third-party service with occasional downtime.",
+        "parameters": [
+          {
+            "name": "domain",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of discovered subdomains"
+          }
+        }
+      }
     }
   }
 }

@@ -109,6 +109,18 @@
   <p style="color:var(--color-muted); max-width:60ch;">Detects disposable/throwaway email providers from a list of 576+ known domains.</p>
   <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/email-disposable?email=foo@mailinator.com"</pre>
 
+  <h3>GET /api/security-headers</h3>
+  <p style="color:var(--color-muted); max-width:60ch;">Audits HTTP security headers (CSP, HSTS, X-Frame-Options...) and gives a letter grade.</p>
+  <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/security-headers?url=https://example.com"</pre>
+
+  <h3>GET /api/url-reputation</h3>
+  <p style="color:var(--color-muted); max-width:60ch;">Checks a URL against URLhaus, a public malware/phishing database.</p>
+  <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/url-reputation?url=https://example.com"</pre>
+
+  <h3>GET /api/subdomains</h3>
+  <p style="color:var(--color-muted); max-width:60ch;">Passive subdomain discovery via Certificate Transparency logs (crt.sh) — for auditing your own attack surface. Note: depends on crt.sh, which has occasional downtime outside our control.</p>
+  <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/subdomains?domain=example.com"</pre>
+
   <h2>Client-side tools (embed)</h2>
   <p style="color:var(--color-muted); max-width:60ch;">
     File-processing tools (EXIF removal, PDF compression, etc.) run entirely in the browser — nothing is uploaded, so there's no server endpoint for these. Embed them directly:
@@ -138,6 +150,9 @@
     <a class="tool-card" href="/api"><div><h3>CSV/JSON Converter</h3><p>Bidirectional — server API</p></div><span class="go">Docs →</span></a>
     <a class="tool-card" href="/api"><div><h3>Password Breach Check</h3><p>HIBP-powered — server API</p></div><span class="go">Docs →</span></a>
     <a class="tool-card" href="/api"><div><h3>Disposable Email Detector</h3><p>576+ known domains — server API</p></div><span class="go">Docs →</span></a>
+    <a class="tool-card" href="/api"><div><h3>Security Headers Analyzer</h3><p>CSP, HSTS grade — server API</p></div><span class="go">Docs →</span></a>
+    <a class="tool-card" href="/api"><div><h3>URL Reputation Check</h3><p>Malware/phishing lookup — server API</p></div><span class="go">Docs →</span></a>
+    <a class="tool-card" href="/api"><div><h3>Attack Surface Discovery</h3><p>Passive subdomain enum — server API</p></div><span class="go">Docs →</span></a>
     <a class="tool-card" href="/tools/exif-remover"><div><h3>EXIF Remover</h3><p>Strip GPS and metadata from photos (client-side)</p></div><span class="go">Docs →</span></a>
     <a class="tool-card" href="/tools/pdf-compress"><div><h3>PDF Compress</h3><p>Reduce PDF file size (client-side)</p></div><span class="go">Docs →</span></a>
     <a class="tool-card" href="/tools/password-generator"><div><h3>Password Generator</h3><p>Cryptographically secure passwords (client-side)</p></div><span class="go">Docs →</span></a>
