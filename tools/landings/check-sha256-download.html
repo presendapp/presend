@@ -123,6 +123,16 @@
   </div>
   <h2 style="font-family:var(--font-display); font-size:1.2rem; margin-top:3rem;">How it works</h2>
   <p style="color:var(--color-muted); max-width:60ch;">Software distributors often publish SHA-256 hashes alongside their downloads. By comparing the hash of your downloaded file with the published value, you can verify that the file has not been corrupted during transfer or modified by a malicious actor. Our tool calculates hashes entirely in your browser.</p>
+
+  <h2 style="font-family:var(--font-display); font-size:1.2rem; margin-top:2rem;">When mirrors and third-party sites are involved</h2>
+  <p style="color:var(--color-muted); max-width:60ch;">Downloading Linux ISOs, open-source software, or large files from mirror sites rather than the original publisher's server is common practice — mirrors occasionally serve outdated, corrupted, or in rare malicious cases tampered files. Checking against the hash published on the official site catches this before you run or install anything.</p>
+
+  <h2 style="font-family:var(--font-display); font-size:1.2rem; margin-top:2rem;">FAQ</h2>
+  <div style="color:var(--color-muted); line-height:1.8;">
+    <p><strong>Where do I find the "official" hash to compare against?</strong><br>Check the publisher's official download page or release notes — reputable software projects list checksums there, not on third-party mirror sites.</p>
+    <p><strong>What if the hashes don't match?</strong><br>Don't run or install the file. Re-download from the official source, and if it still doesn't match, treat the file as untrustworthy.</p>
+  </div>
+
   <h2 style="font-family:var(--font-display); font-size:1.2rem; margin-top:2rem;">Related tools</h2>
   <div class="tool-grid">
     <a class="tool-card" href="/tools/exif-remover"><div><h3>EXIF Remover</h3><p>Strip hidden location data from photos.</p></div><span class="go">Open →</span></a>

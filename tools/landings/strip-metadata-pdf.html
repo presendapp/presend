@@ -131,6 +131,16 @@
   </div>
   <h2 style="font-family:var(--font-display); font-size:1.2rem; margin-top:3rem;">How it works</h2>
   <p style="color:var(--color-muted); max-width:60ch;">When you export a document to PDF, it automatically embeds metadata such as the author's name, the organization, the software version, and creation dates. This information can be read by anyone who receives the file. Our browser-based tool removes all embedded metadata permanently.</p>
+
+  <h2 style="font-family:var(--font-display); font-size:1.2rem; margin-top:2rem;">For legal and official documents</h2>
+  <p style="color:var(--color-muted); max-width:60ch;">Court filings, FOIA requests, whistleblower submissions, and public records disclosures have specific reasons to strip metadata — the software version and creation timestamp embedded in a PDF has, in real cases, been used to identify a document's true origin or contradict a stated timeline, even when the visible content gave nothing away.</p>
+
+  <h2 style="font-family:var(--font-display); font-size:1.2rem; margin-top:2rem;">FAQ</h2>
+  <div style="color:var(--color-muted); line-height:1.8;">
+    <p><strong>Does this remove metadata added by digital signatures?</strong><br>Standard metadata fields are stripped; if your PDF has a certified digital signature, removing metadata may invalidate that signature since it changes the file — sign after cleaning, not before.</p>
+    <p><strong>Is this enough to fully anonymize a document?</strong><br>Metadata removal covers the file's embedded properties, not identifying information within the visible text itself — review the content separately if full anonymity is required.</p>
+  </div>
+
   <h2 style="font-family:var(--font-display); font-size:1.2rem; margin-top:2rem;">Related tools</h2>
   <div class="tool-grid">
     <a class="tool-card" href="/tools/exif-remover"><div><h3>EXIF Remover</h3><p>Strip hidden location data from photos.</p></div><span class="go">Open →</span></a>
