@@ -139,6 +139,16 @@
   </div>
   <h2 style="font-family:var(--font-display); font-size:1.2rem; margin-top:3rem;">Why remove GPS from photos?</h2>
   <p style="color:var(--color-muted); max-width:60ch;">Posting a photo with EXIF metadata can reveal your home address, workplace, or travel patterns. Our tool removes all embedded GPS coordinates, camera model, and timestamps — entirely on your device.</p>
+
+  <h2 style="font-family:var(--font-display); font-size:1.2rem; margin-top:3rem;">Where this data comes from</h2>
+  <p style="color:var(--color-muted); max-width:60ch;">Smartphones embed GPS coordinates automatically by default in every photo's EXIF data, along with the exact time, camera settings, and device model. This data isn't visible when viewing the photo normally, but any website, app, or person who downloads the original file can extract it with free, widely available tools.</p>
+
+  <h2 style="font-family:var(--font-display); font-size:1.2rem; margin-top:3rem;">FAQ</h2>
+  <div style="color:var(--color-muted); line-height:1.8;">
+    <p><strong>Does removing EXIF data reduce photo quality?</strong><br>No. Only the metadata is stripped — the image pixels themselves are untouched.</p>
+    <p><strong>Is my photo uploaded anywhere?</strong><br>No. Processing happens entirely in your browser using the File API — the photo never leaves your device.</p>
+    <p><strong>Does this also work on screenshots?</strong><br>Screenshots typically don't contain GPS data since they're not captured by a camera, but running them through the tool is still safe and will strip any metadata present.</p>
+  </div>
 </main>
 <footer class="site-footer wrap">
   <p>Presend — free browser-based tools. <a href="/about">About</a> · <a href="/privacy">Privacy</a> · <a href="/api">API</a></p>

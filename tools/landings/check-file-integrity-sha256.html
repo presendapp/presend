@@ -139,7 +139,27 @@
       <li>Verify downloads haven't been tampered with</li>
       <li>Check file integrity after transfers</li>
       <li>Supports SHA-256, SHA-1 and SHA-512</li>
+      <li>Also available as a server API for CI/CD pipelines</li>
     </ul>
+  </div>
+
+  <div style="margin-top:3rem;">
+    <h2 style="font-family: var(--font-display); font-size:1.1rem;">How to use a checksum</h2>
+    <p style="color:var(--color-muted); max-width:60ch;">Software publishers often list a SHA-256 hash next to their download link. After downloading, run the file through this tool and compare the result character by character — even a single differing character means the file was altered or corrupted, and shouldn't be trusted.</p>
+  </div>
+
+  <div style="margin-top:3rem;">
+    <h2 style="font-family: var(--font-display); font-size:1.1rem;">Why this matters</h2>
+    <p style="color:var(--color-muted); max-width:60ch;">A mismatched hash can mean a corrupted download, a man-in-the-middle tampering during transfer, or — in rarer cases — a compromised mirror serving malware disguised as legitimate software. Checking the hash before running an installer is one of the simplest ways to catch this.</p>
+  </div>
+
+  <div style="margin-top:3rem;">
+    <h2 style="font-family: var(--font-display); font-size:1.1rem;">FAQ</h2>
+    <div style="color:var(--color-muted); line-height:1.8;">
+      <p><strong>Which algorithm should I use?</strong><br>Use whichever the publisher provides. SHA-256 is the current standard for most software; SHA-1 is older and considered weak for security purposes but still used for basic integrity checks.</p>
+      <p><strong>Is my file uploaded to check the hash?</strong><br>No. The hash is calculated entirely in your browser using the Web Crypto API — the file itself is never transmitted.</p>
+      <p><strong>Can I check very large files?</strong><br>Yes, files are processed in chunks locally, so there's no practical size limit beyond your device's available memory.</p>
+    </div>
   </div>
 </main>
 <footer class="site-footer wrap">
