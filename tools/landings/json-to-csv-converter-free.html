@@ -139,9 +139,28 @@
     <h2 style="font-family: var(--font-display); font-size:1.1rem;">Why use this?</h2>
     <ul style="color:var(--color-muted); padding-left:1.2rem; line-height:1.8;">
       <li>Convert JSON ↔ CSV both ways</li>
-      <li>Handles nested objects gracefully</li>
       <li>Preview before downloading</li>
+      <li>Also available as a server API for scripts and pipelines</li>
     </ul>
+  </div>
+
+  <div style="margin-top:3rem;">
+    <h2 style="font-family: var(--font-display); font-size:1.1rem;">How it handles your data</h2>
+    <p style="color:var(--color-muted); max-width:60ch;">JSON arrays of flat objects convert cleanly to CSV rows and columns. Nested objects (an object inside another object) are converted to their string representation rather than flattened into separate columns — for deeply nested data, consider restructuring it first or processing it with a script.</p>
+  </div>
+
+  <div style="margin-top:3rem;">
+    <h2 style="font-family: var(--font-display); font-size:1.1rem;">Common uses</h2>
+    <p style="color:var(--color-muted); max-width:60ch;">Exporting API responses into a spreadsheet for non-technical teammates, preparing data for import into tools that only accept CSV, or converting a CSV export back to JSON for use in a script — all without installing anything or writing conversion code.</p>
+  </div>
+
+  <div style="margin-top:3rem;">
+    <h2 style="font-family: var(--font-display); font-size:1.1rem;">FAQ</h2>
+    <div style="color:var(--color-muted); line-height:1.8;">
+      <p><strong>Does it flatten nested JSON objects into columns?</strong><br>No — nested objects are converted to their text representation, not split into separate columns. For flat JSON (no nested objects), conversion is clean and direct.</p>
+      <p><strong>Is there a size limit?</strong><br>Very large files may slow down the browser since everything processes locally, but there's no artificial cap.</p>
+      <p><strong>Can I automate this instead of using the browser tool?</strong><br>Yes — a free API endpoint (/api/csv-json) is available for scripts and pipelines, documented on the API page.</p>
+    </div>
   </div>
 </main>
 <footer class="site-footer wrap">

@@ -138,10 +138,30 @@
   <div style="margin-top:3rem;">
     <h2 style="font-family: var(--font-display); font-size:1.1rem;">Why use this?</h2>
     <ul style="color:var(--color-muted); padding-left:1.2rem; line-height:1.8;">
-      <li>Remove 50+ tracking parameters</li>
+      <li>Remove 60+ tracking parameters</li>
       <li>Copy clean links instantly</li>
       <li>No data sent to any server</li>
+      <li>Batch-clean up to 100 URLs via the API</li>
     </ul>
+  </div>
+
+  <div style="margin-top:3rem;">
+    <h2 style="font-family: var(--font-display); font-size:1.1rem;">What gets removed</h2>
+    <p style="color:var(--color-muted); max-width:60ch;">Common tracking parameters like utm_source, utm_campaign, fbclid (Facebook), gclid (Google Ads), and dozens of platform-specific affiliate and analytics tags are stripped. The destination itself is never changed — only the tracking data attached to the link.</p>
+  </div>
+
+  <div style="margin-top:3rem;">
+    <h2 style="font-family: var(--font-display); font-size:1.1rem;">Why this matters for privacy</h2>
+    <p style="color:var(--color-muted); max-width:60ch;">Tracking parameters let the sender identify exactly who clicked, when, and often link that click back to your email address or social profile. Removing them before sharing a link — especially in a group chat, forum, or newsletter — prevents that link from silently reporting back who engaged with it.</p>
+  </div>
+
+  <div style="margin-top:3rem;">
+    <h2 style="font-family: var(--font-display); font-size:1.1rem;">FAQ</h2>
+    <div style="color:var(--color-muted); line-height:1.8;">
+      <p><strong>Will the cleaned link still work the same way?</strong><br>Yes. Removing tracking parameters doesn't affect the destination page — only the tracking data attached to the URL is removed.</p>
+      <p><strong>Can I clean multiple links at once?</strong><br>Yes, paste one URL per line to clean several at once, or use the batch API endpoint for up to 100 URLs per request.</p>
+      <p><strong>Does this protect me from all tracking?</strong><br>It removes URL-based tracking parameters specifically. It doesn't affect cookies, browser fingerprinting, or tracking that happens after you click the link.</p>
+    </div>
   </div>
 </main>
 <footer class="site-footer wrap">

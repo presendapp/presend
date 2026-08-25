@@ -149,7 +149,27 @@
       <li>Strip GPS coordinates from MP4/MOV</li>
       <li>Remove device model and software info</li>
       <li>No quality loss — no re-encoding</li>
+      <li>Fast — metadata removal doesn't require re-processing the video itself</li>
     </ul>
+  </div>
+
+  <div style="margin-top:3rem;">
+    <h2 style="font-family: var(--font-display); font-size:1.1rem;">Why videos leak location</h2>
+    <p style="color:var(--color-muted); max-width:60ch;">Most smartphones embed the exact GPS coordinates where a video was recorded directly into the file's metadata, along with device model, OS version, and sometimes the exact recording timestamp. This metadata usually isn't visible when watching the video, but it survives when the file is shared or uploaded — potentially revealing a home address, workplace, or daily routine.</p>
+  </div>
+
+  <div style="margin-top:3rem;">
+    <h2 style="font-family: var(--font-display); font-size:1.1rem;">When this matters</h2>
+    <p style="color:var(--color-muted); max-width:60ch;">Before posting a video publicly on social media, sending it to someone you don't fully trust, or uploading it anywhere the metadata might be extracted and viewed by others — removing location data first prevents your movements from being traceable through the file itself.</p>
+  </div>
+
+  <div style="margin-top:3rem;">
+    <h2 style="font-family: var(--font-display); font-size:1.1rem;">FAQ</h2>
+    <div style="color:var(--color-muted); line-height:1.8;">
+      <p><strong>Does removing metadata reduce video quality?</strong><br>No. Metadata removal doesn't touch the video or audio streams — only the header data is stripped, so quality is unaffected.</p>
+      <p><strong>Which formats are supported?</strong><br>MP4 and MOV, the most common formats produced by smartphones and cameras.</p>
+      <p><strong>Is my video uploaded to check or remove the metadata?</strong><br>No. Processing happens entirely in your browser — the video file never leaves your device.</p>
+    </div>
   </div>
 </main>
 <footer class="site-footer wrap">
