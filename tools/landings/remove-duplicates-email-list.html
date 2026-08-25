@@ -141,7 +141,27 @@
       <li>Remove duplicate addresses</li>
       <li>Fix formatting and spacing</li>
       <li>Sort alphabetically or by domain</li>
+      <li>Catches case-insensitive duplicates (John@x.com and john@x.com)</li>
     </ul>
+  </div>
+
+  <div style="margin-top:3rem;">
+    <h2 style="font-family: var(--font-display); font-size:1.1rem;">Common situations</h2>
+    <p style="color:var(--color-muted); max-width:60ch;">Merging contact lists from multiple sources, cleaning up a newsletter list before a campaign, combining exported CRM data, or consolidating sign-ups collected across different forms often produces the same address multiple times — sometimes with different capitalization or trailing spaces that make them look distinct to spreadsheet tools.</p>
+  </div>
+
+  <div style="margin-top:3rem;">
+    <h2 style="font-family: var(--font-display); font-size:1.1rem;">Why duplicate emails matter</h2>
+    <p style="color:var(--color-muted); max-width:60ch;">Sending to the same person twice hurts deliverability metrics and can trigger spam complaints. Most email service providers also charge per contact, so deduplicating before upload avoids unnecessary costs.</p>
+  </div>
+
+  <div style="margin-top:3rem;">
+    <h2 style="font-family: var(--font-display); font-size:1.1rem;">FAQ</h2>
+    <div style="color:var(--color-muted); line-height:1.8;">
+      <p><strong>Does it detect "John@x.com" and "john@x.com" as duplicates?</strong><br>Yes. Email addresses are compared case-insensitively, matching how most mail servers treat them.</p>
+      <p><strong>Will it validate that addresses are real?</strong><br>No, this tool only cleans formatting and removes duplicates. Use the Email Validator or Disposable Email Checker tools to verify deliverability.</p>
+      <p><strong>What format should I paste?</strong><br>One email per line, or comma/semicolon-separated — the tool detects common formats automatically.</p>
+    </div>
   </div>
 </main>
 <footer class="site-footer wrap">
