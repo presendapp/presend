@@ -2,47 +2,54 @@ name: Daily SEO
 
 on:
   schedule:
-    # 9h00 UTC chaque jour, équivalent au cron local qu'on remplace
     - cron: '0 9 * * *'
-  workflow_dispatch: {}  # permet aussi un déclenchement manuel depuis GitHub
+  workflow_dispatch: {}
 
 jobs:
   daily-seo:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     permissions:
-      contents: write  # nécessaire pour committer le sitemap/blog régénérés
+      contents: write
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # historique complet, nécessaire pour get_recently_modified_urls()
+          fetch-depth: 0
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
+          python-version: '3.11'
 
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Restore Google service account key
-        run: echo "$GOOGLE_SERVICE_ACCOUNT_JSON" > google-service-account.json
-        working-directory: ./
+      - name: Decode and write Google service account credentials
         env:
-          GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
+          GOOGLE_CREDS_B64: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
+        run: |
+          python3 -c "
+          import base64, os, json
+          b64 = os.environ['GOOGLE_CREDS_B64']
+          decoded = base64.b64decode(b64)
+          with open('google-service-account.json', 'wb') as f:
+              f.write(decoded)
+          with open('google-service-account.json', 'r') as f:
+              data = json.load(f)
+          print('OK - project:', data['project_id'])
+          "
 
-      - name: Run daily SEO pipeline
+      - name: Run daily SEO
         run: python3 daily_seo.py
 
-      - name: Clean up service account key
-        if: always()  # s'exécute même si l'étape précédente a échoué, pour ne jamais laisser la clé traîner
+      - name: Clean up credentials
+        if: always()
         run: rm -f google-service-account.json
 
       - name: Commit and push changes
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add sitemap.xml blog/ .indexing_quota_state.pkl 2>/dev/null || true
-          git diff --staged --quiet || git commit -m "chore: daily SEO auto-update (sitemap, blog, quota state)"
+          git add sitemap.xml blog/ .indexing_quota_state.pkl .indexing_rotation_state.pkl 2>/dev/null || true
+          git diff --staged --quiet || git commit -m "chore: daily SEO auto-update"
           git push
