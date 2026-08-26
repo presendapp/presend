@@ -129,6 +129,11 @@
           <div class="meta" id="resultMeta"></div>
         </div>
       </div>
+      <div style="margin-top:1.2rem;">
+        <label for="compareInput" style="display:block; font-size:0.9rem; color:var(--color-muted); margin-bottom:0.4rem;">Compare against a published hash (optional)</label>
+        <input type="text" id="compareInput" placeholder="Paste the hash published by the software vendor" style="width:100%; padding:0.6rem; border:1px solid var(--color-line); border-radius:6px; background:var(--color-bg-raised); color:var(--color-text); font-family:var(--font-mono); font-size:0.85rem;">
+        <div id="compareResult" style="display:none; margin-top:0.6rem; padding:0.7rem 0.9rem; border-radius:var(--radius); font-size:0.9rem;"></div>
+      </div>
       <div id="hashList" style="display:flex; flex-direction:column; gap:0.6rem; margin-top:0.8rem;"></div>
       <button class="btn ghost" id="resetBtn" type="button" style="margin-top:1rem;">Check another file</button>
         <button class="btn ghost" id="shareBtn" type="button" style="margin-left:0.5rem;">🔗 Copy share link</button>
@@ -180,6 +185,8 @@
   const resultMeta = document.getElementById('resultMeta');
   const hashList = document.getElementById('hashList');
   const resetBtn = document.getElementById('resetBtn');
+  const compareInput = document.getElementById('compareInput');
+  const compareResult = document.getElementById('compareResult');
 
   const MAX_SIZE = 500 * 1024 * 1024; // 500MB, hashing is memory-bound in-browser
   const ALGOS = [
@@ -187,6 +194,8 @@
     { label: 'SHA-1', name: 'SHA-1' },
     { label: 'SHA-512', name: 'SHA-512' }
   ];
+
+  let computedHashes = {}; // { 'SHA-256': 'abc...', ... }
 
   function showError(msg) {
     errorMsg.textContent = msg;
@@ -205,25 +214,68 @@
     return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
   }
 
+  // Matches a pasted hash to the right algorithm by its length, since
+  // SHA-256/1/512 produce fixed, distinct hex lengths.
+  function matchAlgoByLength(hash) {
+    const len = hash.length;
+    if (len === 64) return 'SHA-256';
+    if (len === 40) return 'SHA-1';
+    if (len === 128) return 'SHA-512';
+    return null;
+  }
+
+  function checkComparison() {
+    const pasted = compareInput.value.trim().toLowerCase().replace(/\s/g, '');
+    if (!pasted) {
+      compareResult.style.display = 'none';
+      return;
+    }
+    if (Object.keys(computedHashes).length === 0) {
+      compareResult.style.display = 'none';
+      return;
+    }
+    const algo = matchAlgoByLength(pasted);
+    if (!algo) {
+      compareResult.style.display = 'block';
+      compareResult.style.background = 'rgba(184, 134, 11, 0.1)';
+      compareResult.style.border = '1px solid rgba(184, 134, 11, 0.4)';
+      compareResult.innerHTML = '⚠️ That doesn\\'t look like a valid SHA-256, SHA-1 or SHA-512 hash (unexpected length).';
+      return;
+    }
+    const computed = (computedHashes[algo] || '').toLowerCase();
+    const matches = computed === pasted;
+    compareResult.style.display = 'block';
+    if (matches) {
+      compareResult.style.background = 'rgba(22, 163, 74, 0.1)';
+      compareResult.style.border = '1px solid rgba(22, 163, 74, 0.4)';
+      compareResult.innerHTML = '✅ Match — this file\\'s ' + algo + ' hash is identical to the one you pasted.';
+    } else {
+      compareResult.style.background = 'rgba(220, 38, 38, 0.1)';
+      compareResult.style.border = '1px solid rgba(220, 38, 38, 0.4)';
+      compareResult.innerHTML = '❌ Mismatch — this file\\'s ' + algo + ' hash does NOT match. The file may be corrupted, incomplete, or tampered with.';
+    }
+  }
+
   async function handleFile(file) {
     clearError();
     result.classList.remove('visible');
     hashList.innerHTML = '';
+    computedHashes = {};
+    compareInput.value = '';
+    compareResult.style.display = 'none';
     if (!file) return;
     if (file.size > MAX_SIZE) {
       showError('This file is larger than 500MB. Try a smaller file.');
       return;
     }
-
     resultName.textContent = file.name;
     resultMeta.textContent = humanSize(file.size) + ' — hashing…';
-
     try {
       const buffer = await file.arrayBuffer();
       for (const algo of ALGOS) {
         const digest = await crypto.subtle.digest(algo.name, buffer);
         const hex = bufToHex(digest);
-
+        computedHashes[algo.name] = hex;
         const row = document.createElement('div');
         row.style.cssText = 'background:var(--color-bg-raised); border:1px solid var(--color-line); border-radius:var(--radius); padding:0.7rem 0.9rem;';
         row.innerHTML = `
@@ -244,32 +296,14 @@
       }
       resultMeta.textContent = humanSize(file.size);
       result.classList.add('visible');
+      checkComparison();
     } catch (err) {
       showError('Could not hash this file. Try again or use a different file.');
     }
   }
 
-  dropzone.addEventListener('click', () => fileInput.click());
-  dropzone.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fileInput.click(); }
-  });
-  fileInput.addEventListener('change', (e) => handleFile(e.target.files[0]));
+  compareInput.addEventListener('input', checkComparison);
 
-  ['dragenter', 'dragover'].forEach(evt =>
-    dropzone.addEventListener(evt, (e) => { e.preventDefault(); dropzone.classList.add('dragover'); })
-  );
-  ['dragleave', 'drop'].forEach(evt =>
-    dropzone.addEventListener(evt, (e) => { e.preventDefault(); dropzone.classList.remove('dragover'); })
-  );
-  dropzone.addEventListener('drop', (e) => handleFile(e.dataTransfer.files[0]));
-
-  resetBtn.addEventListener('click', () => {
-    fileInput.value = '';
-    result.classList.remove('visible');
-    hashList.innerHTML = '';
-    clearError();
-  });
-})();
 </script>
 <script>
 // Privacy-first page view tracking
