@@ -57,9 +57,20 @@ Unlike most online file converters and editors, Presend never uploads your files
 - [FAQ](https://presend.pages.dev/faq): Common questions about how the tools work
 - [Alternatives](https://presend.pages.dev/alternatives): Compare Presend with other online tools
 
+## API for Developers
+Presend also offers 18 free, no-signup, no-API-key server-side endpoints at [presend.pages.dev/api](https://presend.pages.dev/api), running on Cloudflare's edge network. Full docs and an OpenAPI spec are available at [presend.pages.dev/openapi.json](https://presend.pages.dev/openapi.json).
+- Hashing: SHA-256/1/512 file hashing (`POST /api/hash`)
+- Security: password generation with entropy estimate, HIBP k-anonymity breach check, JWT decode, HTTP security header audit with letter grade
+- Validation: email syntax + MX record check, disposable email detection (576+ domains)
+- Cybersecurity: URL malware/phishing reputation check (URLhaus), passive subdomain discovery via Certificate Transparency logs
+- Everyday utilities: UUID generation, Base64 encode/decode, timestamp conversion, color format conversion, User-Agent parsing, JSON↔CSV conversion, favicon fetch, URL tracking-parameter removal (single or batch up to 100), IP geolocation
+- A zero-dependency npm client is available: `npm install presend-api` ([npmjs.com/package/presend-api](https://www.npmjs.com/package/presend-api))
+- No official SLA; fair-use rate limits typically 20-60 requests/minute per IP
+
 ## Technical Details
-- **Architecture**: Static HTML/CSS/JS, no backend server
-- **Processing**: 100% client-side using Web APIs (Canvas, Web Crypto, FileReader, Streams)
-- **Privacy**: No cookies, no analytics, no data collection, no third-party requests
+- **Architecture**: Static HTML/CSS/JS for client-side tools; Cloudflare Pages Functions (edge, serverless) for the API layer
+- **Client-side tools processing**: 100% client-side using Web APIs (Canvas, Web Crypto, FileReader, Streams) — files never uploaded
+- **API endpoints**: Some endpoints call third-party services to provide their function (Have I Been Pwned via k-anonymity, URLhaus, Certificate Transparency logs via crt.sh, ipinfo.io for geolocation) — no file content is ever sent to these, only the specific query needed (e.g. a URL to check, a partial password hash)
+- **Analytics**: Cloudflare Web Analytics (aggregate, no cookies) plus best-effort anonymous internal counters for tool/endpoint usage — no per-user tracking, no IP storage
 - **Open Source**: Available on GitHub (link in footer)
 - **Languages**: English, French, Spanish, German, Portuguese, Japanese, Russian, Hindi
