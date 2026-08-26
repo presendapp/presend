@@ -189,6 +189,54 @@
   const readingTime = document.getElementById('readingTime');
   const copyBtn = document.getElementById('copyBtn');
   const clearBtn = document.getElementById('clearBtn');
+  const readabilitySection = document.getElementById('readabilitySection');
+  const readabilityLabel = document.getElementById('readabilityLabel');
+  const readabilityBar = document.getElementById('readabilityBar');
+  const readabilityScore = document.getElementById('readabilityScore');
+  const keywordsSection = document.getElementById('keywordsSection');
+  const keywordsList = document.getElementById('keywordsList');
+
+  const STOP_WORDS = new Set(['the','a','an','and','or','but','is','are','was','were','be','been','being',
+    'to','of','in','on','at','for','with','by','from','as','this','that','these','those','it','its',
+    'i','you','he','she','we','they','my','your','his','her','our','their','not','no','do','does','did',
+    'have','has','had','will','would','can','could','should','may','might','must','shall','if','then',
+    'so','than','too','very','just','about','into','over','after','before','also','more','most','some',
+    'all','any','each','other','such','only','own','same','so','than','up','out','off','again','further']);
+
+  // Rough English syllable counter — counts vowel groups, adjusts for common patterns.
+  function countSyllables(word) {
+    word = word.toLowerCase().replace(/[^a-z]/g, '');
+    if (word.length <= 3) return 1;
+    word = word.replace(/(?:[^laeiouy]es|ed|[^laeiouy]e)$/, '');
+    word = word.replace(/^y/, '');
+    const matches = word.match(/[aeiouy]{1,2}/g);
+    return matches ? matches.length : 1;
+  }
+
+  function fleschScore(words, sentences, syllables) {
+    if (words === 0 || sentences === 0) return null;
+    return 206.835 - 1.015 * (words / sentences) - 84.6 * (syllables / words);
+  }
+
+  function fleschLabel(score) {
+    if (score >= 90) return { label: 'Very easy — 5th grade', pct: 100 };
+    if (score >= 70) return { label: 'Easy — conversational', pct: 82 };
+    if (score >= 60) return { label: 'Standard — 8th-9th grade', pct: 65 };
+    if (score >= 50) return { label: 'Fairly difficult — high school', pct: 48 };
+    if (score >= 30) return { label: 'Difficult — college level', pct: 30 };
+    return { label: 'Very difficult — academic/technical', pct: 12 };
+  }
+
+  function topKeywords(text, limit) {
+    const words = (text.toLowerCase().match(/[a-z']+/g) || [])
+      .filter(w => w.length > 2 && !STOP_WORDS.has(w));
+    const freq = {};
+    words.forEach(w => { freq[w] = (freq[w] || 0) + 1; });
+    return Object.entries(freq)
+      .filter(([, count]) => count > 1)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, limit);
+  }
 
   function update() {
     const text = inputText.value;
@@ -208,25 +256,42 @@
     lineCount.textContent = lines;
     readingTime.textContent = words > 0 ? 'Reading time: ~' + minutes + ' min' : 'Reading time: —';
     copyBtn.disabled = !text;
+
+    // Readability — needs a reasonable sample to be meaningful
+    if (words >= 30 && sentences > 0) {
+      const wordList = text.trim().split(/\s+/);
+      const totalSyllables = wordList.reduce((sum, w) => sum + countSyllables(w), 0);
+      const score = fleschScore(words, sentences, totalSyllables);
+      if (score !== null) {
+        const clamped = Math.max(0, Math.min(100, score));
+        const info = fleschLabel(score);
+        readabilityLabel.textContent = info.label;
+        readabilityBar.style.width = info.pct + '%';
+        readabilityScore.textContent = 'Score: ' + Math.round(clamped) + '/100 (higher = easier to read)';
+        readabilitySection.style.display = 'block';
+      }
+    } else {
+      readabilitySection.style.display = 'none';
+    }
+
+    // Top keywords — needs a reasonable sample too
+    if (words >= 20) {
+      const keywords = topKeywords(text, 8);
+      if (keywords.length > 0) {
+        keywordsList.innerHTML = keywords.map(([word, count]) =>
+          `<span style="background:var(--color-bg-raised); border:1px solid var(--color-line); border-radius:999px; padding:0.3rem 0.8rem; font-size:0.85rem;">${word} <span style="color:var(--color-muted);">×${count}</span></span>`
+        ).join('');
+        keywordsSection.style.display = 'block';
+      } else {
+        keywordsSection.style.display = 'none';
+      }
+    } else {
+      keywordsSection.style.display = 'none';
+    }
   }
 
   inputText.addEventListener('input', update);
-
   copyBtn.addEventListener('click', async () => {
-    try {
-      await navigator.clipboard.writeText(inputText.value);
-      copyBtn.textContent = 'Copied!';
-      setTimeout(() => copyBtn.textContent = 'Copy text', 2000);
-    } catch (e) {}
-  });
-
-  clearBtn.addEventListener('click', () => {
-    inputText.value = '';
-    update();
-  });
-
-  update();
-})();
 </script>
 
 <script type="application/ld+json">
