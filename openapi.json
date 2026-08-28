@@ -598,6 +598,46 @@
         }
       }
     },
+    "/email-verify": {
+      "get": {
+        "summary": "Combined email verification",
+        "description": "Chains syntax check, MX lookup, disposable-domain detection, and generic/role-account detection in a single call.",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Combined verification result",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "email": { "type": "string" },
+                    "syntax_valid": { "type": "boolean" },
+                    "domain": { "type": "string" },
+                    "mx_checked": { "type": "boolean" },
+                    "has_mx": { "type": "boolean", "nullable": true },
+                    "mx_count": { "type": "integer" },
+                    "disposable": { "type": "boolean", "nullable": true },
+                    "role_account": { "type": "boolean", "nullable": true },
+                    "valid": { "type": "boolean" },
+                    "reason": { "type": "string", "nullable": true }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/security-headers": {
       "get": {
         "summary": "Audit HTTP security headers",
