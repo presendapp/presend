@@ -1,3 +1,14 @@
+
+async function checkRateLimit(env, clientIP, bucket) {
+  if (!env.PRESEND_ANALYTICS) return true;
+  const now = Math.floor(Date.now() / 60000);
+  const rateKey = `rate:${bucket}:${clientIP}:${now}`;
+  let count = await env.PRESEND_ANALYTICS.get(rateKey);
+  count = count ? parseInt(count) : 0;
+  if (count >= 60) return false;
+  await env.PRESEND_ANALYTICS.put(rateKey, (count + 1).toString(), { expirationTtl: 120 });
+  return true;
+}
 function escapeXml(str) {
   return String(str)
     .replace(/&/g, '&amp;')
@@ -8,7 +19,12 @@ function escapeXml(str) {
 }
 
 export async function onRequestGet(context) {
-  const { request } = context;
+  const { request, env } = context;
+  const clientIP = request.headers.get('CF-Connecting-IP') || 'unknown';
+  const allowed = await checkRateLimit(env, clientIP, 'og');
+  if (!allowed) {
+    return new Response('Rate limit exceeded', { status: 429 });
+  }
   const url = new URL(request.url);
   const tool = escapeXml((url.searchParams.get('tool') || 'Presend').slice(0, 100));
   const subtitle = escapeXml((url.searchParams.get('subtitle') || 'Free Privacy Tools').slice(0, 150));
@@ -27,6 +43,16 @@ export async function onRequestGet(context) {
       'Content-Type': 'image/svg+xml',
       'Cache-Control': 'public, max-age=86400',
       'X-Content-Type-Options': 'nosniff',
+    }
+  });
+}
+
+export async function onRequestOptions() {
+  return new Response(null, {
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET, OPTIONS",
+      "Access-Control-Allow-Headers": "Content-Type"
     }
   });
 }

@@ -1,3 +1,14 @@
+
+async function checkRateLimit(env, clientIP, bucket) {
+  if (!env.PRESEND_ANALYTICS) return true;
+  const now = Math.floor(Date.now() / 60000);
+  const rateKey = `rate:${bucket}:${clientIP}:${now}`;
+  let count = await env.PRESEND_ANALYTICS.get(rateKey);
+  count = count ? parseInt(count) : 0;
+  if (count >= 60) return false;
+  await env.PRESEND_ANALYTICS.put(rateKey, (count + 1).toString(), { expirationTtl: 120 });
+  return true;
+}
 // GET /api/api-stats — lecture des compteurs d'usage par endpoint (agrégés par jour)
 
 export async function onRequestGet(context) {
@@ -32,4 +43,14 @@ export async function onRequestGet(context) {
       status: 500, headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
     });
   }
+}
+
+export async function onRequestOptions() {
+  return new Response(null, {
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET, OPTIONS",
+      "Access-Control-Allow-Headers": "Content-Type"
+    }
+  });
 }

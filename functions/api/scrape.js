@@ -231,3 +231,13 @@ function decodeHtmlEntities(text) {
   };
   return text.replace(/&[#a-zA-Z0-9]+;/g, (entity) => entities[entity] || entity);
 }
+
+export async function onRequestOptions() {
+  return new Response(null, {
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET, OPTIONS",
+      "Access-Control-Allow-Headers": "Content-Type"
+    }
+  });
+}
