@@ -56,8 +56,21 @@ export async function onRequestPost(context) {
   }
 }
 
+// Admin-only: requires the X-Admin-Key header to match the FEEDBACK_ADMIN_KEY
+// secret (set via `wrangler pages secret put FEEDBACK_ADMIN_KEY`). Without
+// this check, anyone could read every visitor's submitted feedback message.
 export async function onRequestGet(context) {
-  const { env } = context;
+  const { request, env } = context;
+
+  const providedKey = request.headers.get("X-Admin-Key") || "";
+  const expectedKey = env.FEEDBACK_ADMIN_KEY || "";
+  if (!expectedKey || providedKey !== expectedKey) {
+    return new Response(JSON.stringify({ error: "Unauthorized" }), {
+      status: 401,
+      headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
+    });
+  }
+
   try {
     const { results } = await env.DB.prepare("SELECT * FROM feedback ORDER BY created_at DESC LIMIT 50").all();
     return new Response(JSON.stringify({ feedback: results, count: results.length }), {
