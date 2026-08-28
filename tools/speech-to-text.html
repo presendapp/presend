@@ -248,6 +248,7 @@
   <p>Presend — free browser-based tools. <a href="/about">About</a> · <a href="/privacy">Privacy</a> · <a href="/api">API</a></p>
 </footer>
 
+<script src="/js/presets.js"></script>
 <script>
 (function () {
   const supportMsg = document.getElementById('supportMsg');
@@ -256,6 +257,16 @@
   const status = document.getElementById('status');
   const transcriptBox = document.getElementById('transcriptBox');
   const langSelect = document.getElementById('langSelect');
+  const TOOL_ID = 'speech-to-text';
+  (async function restorePreset() {
+    try {
+      const saved = await PresendPresets.get(TOOL_ID);
+      if (saved && saved.lang) {
+        const exists = Array.from(langSelect.options).some(o => o.value === saved.lang);
+        if (exists) langSelect.value = saved.lang;
+      }
+    } catch (e) { /* no saved preset, ignore */ }
+  })();
   const copyBtn = document.getElementById('copyBtn');
   const downloadBtn = document.getElementById('downloadBtn');
   const clearBtn = document.getElementById('clearBtn');
@@ -337,6 +348,7 @@
   });
 
   langSelect.addEventListener('change', () => {
+    PresendPresets.set(TOOL_ID, { lang: langSelect.value });
     if (isRecording) {
       recognition.stop();
       setTimeout(() => {

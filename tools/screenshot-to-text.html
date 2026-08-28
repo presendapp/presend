@@ -276,6 +276,7 @@
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+<script src="/js/presets.js"></script>
 <script>
 (function () {
   const dropzone = document.getElementById('dropzone');
@@ -288,6 +289,16 @@
   const previewImg = document.getElementById('previewImg');
   const textOutput = document.getElementById('textOutput');
   const langSelect = document.getElementById('langSelect');
+  const TOOL_ID = 'screenshot-to-text';
+  (async function restorePreset() {
+    try {
+      const saved = await PresendPresets.get(TOOL_ID);
+      if (saved && saved.lang) {
+        const exists = Array.from(langSelect.options).some(o => o.value === saved.lang);
+        if (exists) langSelect.value = saved.lang;
+      }
+    } catch (e) { /* no saved preset, ignore */ }
+  })();
   const copyBtn = document.getElementById('copyBtn');
   const downloadBtn = document.getElementById('downloadBtn');
   const resetBtn = document.getElementById('resetBtn');
@@ -408,6 +419,7 @@
   });
 
   langSelect.addEventListener('change', () => {
+    PresendPresets.set(TOOL_ID, { lang: langSelect.value });
     if (previewImg.src && previewImg.src !== window.location.href) {
       processImage(previewImg.src);
     }

@@ -219,6 +219,7 @@
   <p>Presend — free browser-based tools. <a href="/about">About</a> · <a href="/privacy">Privacy</a> · <a href="/api">API</a></p>
 </footer>
 
+<script src="/js/presets.js"></script>
 <script type="module">
 import { parsePhoneNumberFromString, getCountries, getCountryCallingCode } from 'https://cdn.jsdelivr.net/npm/libphonenumber-js@1.12.6/+esm';
 
@@ -236,6 +237,19 @@ const resE164 = document.getElementById('resE164');
 const resIntl = document.getElementById('resIntl');
 const resNational = document.getElementById('resNational');
 const resUri = document.getElementById('resUri');
+const TOOL_ID = 'phone-validator';
+(async function restorePreset() {
+  try {
+    const saved = await PresendPresets.get(TOOL_ID);
+    if (saved && saved.country) {
+      const exists = Array.from(countrySelect.options).some(o => o.value === saved.country);
+      if (exists) countrySelect.value = saved.country;
+    }
+  } catch (e) { /* no saved preset, ignore */ }
+})();
+countrySelect.addEventListener('change', () => {
+  PresendPresets.set(TOOL_ID, { country: countrySelect.value });
+});
 
 function getCountryName(code) {
   const names = {

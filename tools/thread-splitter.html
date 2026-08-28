@@ -174,11 +174,13 @@
   <p>Presend — free browser-based tools. Runs locally. No account, no tracking.</p>
 </footer>
 
+<script src="/js/presets.js"></script>
 <script>
 (function () {
   const LIMITS = { twitter: 280, linkedin: 3000, mastodon: 500 };
   let platform = 'twitter';
   let limit = LIMITS.twitter;
+  const TOOL_ID = 'thread-splitter';
 
   const inputText = document.getElementById('inputText');
   const splitBtn = document.getElementById('splitBtn');
@@ -197,8 +199,9 @@
   function showError(msg) { errorMsg.textContent = msg; errorMsg.classList.add('visible'); }
   function clearError() { errorMsg.textContent = ''; errorMsg.classList.remove('visible'); }
 
-  function setPlatform(p) {
+  function setPlatform(p, skipSave) {
     platform = p;
+    if (!skipSave) PresendPresets.set(TOOL_ID, { platform: p, customLimit: customLimit.value });
     [btnTwitter, btnLinkedIn, btnMastodon, btnCustom].forEach(b => b.classList.add('ghost'));
     if (p === 'twitter') { btnTwitter.classList.remove('ghost'); limit = LIMITS.twitter; customLimit.style.display = 'none'; }
     if (p === 'linkedin') { btnLinkedIn.classList.remove('ghost'); limit = LIMITS.linkedin; customLimit.style.display = 'none'; }
@@ -269,10 +272,21 @@
     clearError();
   });
 
+  (async function restorePreset() {
+    try {
+      const saved = await PresendPresets.get(TOOL_ID);
+      if (saved && saved.platform) {
+        if (saved.customLimit != null) customLimit.value = saved.customLimit;
+        setPlatform(saved.platform, true);
+      }
+    } catch (e) { /* no saved preset, ignore */ }
+  })();
+
   btnTwitter.addEventListener('click', () => setPlatform('twitter'));
   btnLinkedIn.addEventListener('click', () => setPlatform('linkedin'));
   btnMastodon.addEventListener('click', () => setPlatform('mastodon'));
   btnCustom.addEventListener('click', () => setPlatform('custom'));
+  customLimit.addEventListener('change', () => { if (platform === 'custom') PresendPresets.set(TOOL_ID, { platform, customLimit: customLimit.value }); });
 
   function escapeHtml(t) { return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 })();

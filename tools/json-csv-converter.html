@@ -183,9 +183,11 @@
   <p>Presend — free browser-based tools. Runs locally. No account, no tracking.</p>
 </footer>
 
+<script src="/js/presets.js"></script>
 <script>
 (function () {
   let mode = 'json-to-csv';
+  const TOOL_ID = 'json-csv-converter';
 
   const inputArea = document.getElementById('inputArea');
   const inputLabel = document.getElementById('inputLabel');
@@ -209,8 +211,9 @@
     errorMsg.classList.remove('visible');
   }
 
-  function setMode(newMode) {
+  function setMode(newMode, skipSave) {
     mode = newMode;
+    if (!skipSave) PresendPresets.set(TOOL_ID, { mode: newMode });
     if (mode === 'json-to-csv') {
       modeJsonToCsv.classList.remove('ghost');
       modeCsvToJson.classList.add('ghost');
@@ -335,6 +338,13 @@
     downloadBtn.disabled = true;
     clearError();
   });
+
+  (async function restorePreset() {
+    try {
+      const saved = await PresendPresets.get(TOOL_ID);
+      if (saved && saved.mode) setMode(saved.mode, true);
+    } catch (e) { /* no saved preset, ignore */ }
+  })();
 
   modeJsonToCsv.addEventListener('click', () => setMode('json-to-csv'));
   modeCsvToJson.addEventListener('click', () => setMode('csv-to-json'));

@@ -171,6 +171,7 @@
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 <script src="/js/feedback.js" async defer></script>
 
+<script src="/js/presets.js"></script>
 <script>
 const dropzone = document.getElementById('dropzone');
 const fileInput = document.getElementById('fileInput');
@@ -185,6 +186,15 @@ const resultName = document.getElementById('resultName');
 const resultMeta = document.getElementById('resultMeta');
 const downloadLink = document.getElementById('downloadLink');
 const errorDiv = document.getElementById('error');
+const TOOL_ID = 'image-resizer';
+(async function restorePreset() {
+  try {
+    const saved = await PresendPresets.get(TOOL_ID);
+    if (saved && typeof saved.keepRatio === 'boolean') {
+      keepRatio.checked = saved.keepRatio;
+    }
+  } catch (e) { /* no saved preset, ignore */ }
+})();
 
 let img = null;
 let originalRatio = 1;
@@ -207,6 +217,9 @@ document.querySelectorAll('.preset').forEach(btn => {
     heightInput.value = btn.dataset.h;
     keepRatio.checked = false;
   });
+});
+keepRatio.addEventListener('change', () => {
+  PresendPresets.set(TOOL_ID, { keepRatio: keepRatio.checked });
 });
 
 widthInput.addEventListener('input', () => {

@@ -215,6 +215,7 @@
 </footer>
 
 <script defer src="/vendor/qrcode.min.js"></script>
+<script src="/js/presets.js"></script>
 <script>
 (function () {
   const textInput = document.getElementById('textInput');
@@ -229,6 +230,18 @@
   const colorDarkInput = document.getElementById('colorDark');
   const colorLightInput = document.getElementById('colorLight');
   const correctLevelSelect = document.getElementById('correctLevel');
+  const TOOL_ID = 'qr-code-generator';
+  (async function restorePreset() {
+    try {
+      const saved = await PresendPresets.get(TOOL_ID);
+      if (saved) {
+        if (saved.size != null) { sizeSlider.value = saved.size; sizeValue.textContent = saved.size + 'px'; }
+        if (saved.correctLevel) correctLevelSelect.value = saved.correctLevel;
+        if (saved.colorDark) colorDarkInput.value = saved.colorDark;
+        if (saved.colorLight) colorLightInput.value = saved.colorLight;
+      }
+    } catch (e) { /* no saved preset, ignore */ }
+  })();
 
   const MAX_LENGTH = 1500; // QR codes have a hard data ceiling; keep well under it
   let currentQr = null; // keep a reference to build the SVG export
@@ -322,8 +335,20 @@
     URL.revokeObjectURL(url);
   });
 
+  function saveQrPreset() {
+    PresendPresets.set(TOOL_ID, {
+      size: Number(sizeSlider.value),
+      correctLevel: correctLevelSelect.value,
+      colorDark: colorDarkInput.value,
+      colorLight: colorLightInput.value
+    });
+  }
   sizeSlider.addEventListener('input', () => {
     sizeValue.textContent = sizeSlider.value + 'px';
+    saveQrPreset();
+  });
+  [correctLevelSelect, colorDarkInput, colorLightInput].forEach(el => {
+    el.addEventListener('change', saveQrPreset);
   });
   generateBtn.addEventListener('click', generate);
   textInput.addEventListener('keydown', (e) => {

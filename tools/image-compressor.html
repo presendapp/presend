@@ -219,6 +219,10 @@
 <section class="wrap" style="margin-top:3rem;">
   <h2 style="font-family:var(--font-display);font-size:1.1rem;">Related tools</h2>
   <div class="tool-grid" style="margin-top:1rem;">
+      <a class='tool-card' href='/tools/clean-and-compress-photo'>
+        <div><h3>⚡ Clean &amp; Compress Photo</h3><p>Do both in one pass — strip EXIF, then compress.</p></div>
+        <span class="go">Open →</span>
+      </a>
       <a class='tool-card' href='/tools/exif-remover'>
         <div><h3>EXIF Remover</h3><p>Strip hidden location and camera data from a photo.</p></div>
         <span class="go">Open →</span>
@@ -257,6 +261,7 @@
   <p>Presend — free browser-based tools. <a href="/about">About</a> · <a href="/privacy">Privacy</a> · <a href="/api">API</a></p>
 </footer>
 
+<script src="/js/presets.js"></script>
 <script>
 (function () {
   const dropzone = document.getElementById('dropzone');
@@ -274,6 +279,7 @@
   const previewCompare = document.getElementById('previewCompare');
   const previewOriginal = document.getElementById('previewOriginal');
   const previewCompressed = document.getElementById('previewCompressed');
+  const TOOL_ID = 'image-compressor';
   const MAX_SIZE = 25 * 1024 * 1024; // 25MB
   let currentFile = null;
   let currentImg = null;
@@ -308,6 +314,21 @@
     } catch (e) { /* AVIF not supported, leave hidden */ }
   }
   detectAvifSupport();
+
+  (async function restorePreset() {
+    try {
+      const saved = await PresendPresets.get(TOOL_ID);
+      if (saved) {
+        if (saved.quality != null) {
+          qualitySlider.value = saved.quality;
+          qualityValue.textContent = saved.quality + '%';
+        }
+        if (saved.format) {
+          formatSelect.value = saved.format;
+        }
+      }
+    } catch (e) { /* no saved preset, ignore */ }
+  })();
 
   function resolveOutputType() {
     const selected = formatSelect.value;
@@ -390,8 +411,12 @@
     qualityValue.textContent = qualitySlider.value + '%';
     clearTimeout(debounceTimer);
     debounceTimer = setTimeout(compressAndRender, 150);
+    PresendPresets.set(TOOL_ID, { quality: Number(qualitySlider.value), format: formatSelect.value });
   });
-  formatSelect.addEventListener('change', compressAndRender);
+  formatSelect.addEventListener('change', () => {
+    compressAndRender();
+    PresendPresets.set(TOOL_ID, { quality: Number(qualitySlider.value), format: formatSelect.value });
+  });
   dropzone.addEventListener('click', () => fileInput.click());
   dropzone.addEventListener('keydown', (e) => {
     if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fileInput.click(); }

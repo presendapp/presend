@@ -281,6 +281,7 @@
   <p>Presend — free browser-based tools. <a href="/about">About</a> · <a href="/privacy">Privacy</a> · <a href="/api">API</a></p>
 </footer>
 
+<script src="/js/presets.js"></script>
 <script>
 (function () {
   const supportMsg = document.getElementById('supportMsg');
@@ -296,6 +297,7 @@
   const stopBtn = document.getElementById('stopBtn');
   const status = document.getElementById('status');
   const aiVoiceToggle = document.getElementById('aiVoiceToggle');
+  const TOOL_ID = 'text-to-speech';
   const browserControls = document.getElementById('browserControls');
   const aiControls = document.getElementById('aiControls');
   const aiVoiceSelect = document.getElementById('aiVoiceSelect');
@@ -358,6 +360,24 @@
     return score;
   }
 
+  function restoreNonVoicePreset() {
+    PresendPresets.get(TOOL_ID).then(saved => {
+      if (!saved) return;
+      if (saved.rate != null) {
+        rateSlider.value = saved.rate;
+        rateVal.textContent = saved.rate + '×';
+      }
+      if (saved.pitch != null) {
+        pitchSlider.value = saved.pitch;
+        pitchVal.textContent = saved.pitch + '×';
+      }
+      if (typeof saved.aiVoice === 'boolean' && saved.aiVoice !== aiVoiceToggle.checked) {
+        aiVoiceToggle.checked = saved.aiVoice;
+        aiVoiceToggle.dispatchEvent(new Event('change', { bubbles: true }));
+      }
+    }).catch(() => {});
+  }
+
   function loadVoices() {
     voices = speechSynthesis.getVoices().filter(v => v.lang);
     voiceSelect.innerHTML = '';
@@ -365,6 +385,7 @@
       const opt = document.createElement('option');
       opt.textContent = 'Default system voice';
       voiceSelect.appendChild(opt);
+      restoreNonVoicePreset();
       return;
     }
     const byLang = {};
@@ -398,6 +419,13 @@
       preferredName = voices.slice().sort((a, b) => scoreVoice(b) - scoreVoice(a))[0].name;
     }
     voiceSelect.value = preferredName;
+    PresendPresets.get(TOOL_ID).then(saved => {
+      if (saved && saved.voiceName) {
+        const exists = voices.some(v => v.name === saved.voiceName);
+        if (exists) voiceSelect.value = saved.voiceName;
+      }
+    }).catch(() => {});
+    restoreNonVoicePreset();
   }
 
   loadVoices();
@@ -426,8 +454,18 @@
   let isCancelled = false;
   let lastAudioBlob = null;
 
+  function saveTtsPreset() {
+    PresendPresets.set(TOOL_ID, {
+      voiceName: voiceSelect.value,
+      rate: rateSlider.value,
+      pitch: pitchSlider.value,
+      aiVoice: aiVoiceToggle.checked
+    });
+  }
+
   aiVoiceToggle.addEventListener('change', () => {
     const on = aiVoiceToggle.checked;
+    saveTtsPreset();
     browserControls.style.display = on ? 'none' : 'block';
     aiControls.style.display = on ? 'block' : 'none';
     downloadBtn.style.display = on ? 'inline-block' : 'none';
@@ -643,8 +681,9 @@
     status.textContent = 'Stopped';
   });
 
-  rateSlider.addEventListener('input', () => { rateVal.textContent = rateSlider.value + '×'; });
-  pitchSlider.addEventListener('input', () => { pitchVal.textContent = pitchSlider.value + '×'; });
+  rateSlider.addEventListener('input', () => { rateVal.textContent = rateSlider.value + '×'; saveTtsPreset(); });
+  pitchSlider.addEventListener('input', () => { pitchVal.textContent = pitchSlider.value + '×'; saveTtsPreset(); });
+  voiceSelect.addEventListener('change', saveTtsPreset);
 
 })();
 </script>
