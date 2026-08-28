@@ -77,6 +77,13 @@
 <h2>How We Protect Your Data</h2>
   <p style="color:var(--color-muted); max-width:60ch;"><strong>We do not collect, store, or transmit any of your data.</strong> All file processing happens entirely in your browser using JavaScript. Your files never leave your device.</p>
   <p style="color:var(--color-muted); max-width:60ch; margin-top:1rem;">We do not use cookies, analytics trackers, or third-party scripts that could identify you. The only external requests made are to load this website's own assets from the same domain.</p>
+
+  <h2 id="extension" style="margin-top:2.5rem;">Presend Browser Extension</h2>
+  <p style="color:var(--color-muted); max-width:60ch;">The Presend browser extension ("Clean with Presend") lets you right-click any image on a web page to remove hidden EXIF/GPS metadata and download a cleaned copy.</p>
+  <p style="color:var(--color-muted); max-width:60ch; margin-top:1rem;"><strong>What it does:</strong> when you choose "Clean with Presend" from the right-click menu, the extension fetches the image you selected, processes it locally using your browser's own canvas rendering (which strips all embedded metadata by design), and saves the cleaned file to your Downloads folder.</p>
+  <p style="color:var(--color-muted); max-width:60ch; margin-top:1rem;"><strong>What it does not do:</strong> the extension does not send your image, or any part of it, to Presend's servers or to any third party. It does not track which pages you visit, does not collect analytics, and does not store any data beyond the current browser session. The image never leaves your device.</p>
+  <p style="color:var(--color-muted); max-width:60ch; margin-top:1rem;"><strong>Why it requests broad host permissions:</strong> the extension needs permission to read images on any site so the right-click option works everywhere you might encounter a photo you want to clean — for example on social media, webmail, or messaging apps. This permission is used only to fetch the specific image you right-clicked; the extension does not read or monitor page content otherwise.</p>
+  <p style="color:var(--color-muted); max-width:60ch; margin-top:1rem;">Source code: <a href="https://github.com/presendapp/presend-extension">github.com/presendapp/presend-extension</a></p>
 </main>
 <footer class="site-footer wrap">
   <p>Presend — free browser-based tools. <a href="/about">About</a> · <a href="/privacy">Privacy</a> · <a href="/api">API</a></p>
