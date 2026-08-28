@@ -130,9 +130,20 @@
   <p style="color:var(--color-muted); max-width:60ch;">Passive subdomain discovery via Certificate Transparency logs (crt.sh) — for auditing your own attack surface. Note: depends on crt.sh, which has occasional downtime outside our control.</p>
   <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/subdomains?domain=example.com"</pre>
 
+  <h2>Chained workflows</h2>
+  <p style="color:var(--color-muted); max-width:60ch;">
+    These two endpoints chain multiple operations server-side in a single call — no other free API we know of does this. Processing is stateless: nothing is written to disk, nothing is logged, the file is discarded the moment the response is sent.
+  </p>
+  <h3>POST /api/merge-and-compress-pdf</h3>
+  <p style="color:var(--color-muted); max-width:60ch;">Merges 2+ PDF files into one document, then compresses the result and strips metadata (title, author, producer) — in one request instead of two.</p>
+  <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl -X POST -F "files=@a.pdf" -F "files=@b.pdf" https://presend.pages.dev/api/merge-and-compress-pdf -o merged.pdf</pre>
+  <h3>POST /api/clean-image</h3>
+  <p style="color:var(--color-muted); max-width:60ch;">Strips EXIF/GPS from JPEG and text metadata from PNG via direct binary parsing — pixel data is never re-encoded, so there\'s zero quality loss (unlike canvas-based approaches, which always recompress).</p>
+  <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl -X POST --data-binary @photo.jpg -H "Content-Type: image/jpeg" https://presend.pages.dev/api/clean-image -o clean.jpg</pre>
+
   <h2>Client-side tools (embed)</h2>
   <p style="color:var(--color-muted); max-width:60ch;">
-    File-processing tools (EXIF removal, PDF compression, etc.) run entirely in the browser — nothing is uploaded, so there's no server endpoint for these. Embed them directly:
+    Most file-processing tools (EXIF removal, PDF compression, etc.) also run entirely in the browser as standalone widgets — nothing is uploaded. Use these instead of the API above when you want a drop-in UI rather than a server call. Embed them directly:
   </p>
   <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">
 &lt;iframe 

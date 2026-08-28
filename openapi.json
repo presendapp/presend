@@ -659,6 +659,87 @@
           }
         }
       }
+    },
+    "/merge-and-compress-pdf": {
+      "post": {
+        "summary": "Merge and compress PDFs",
+        "description": "Merges 2+ PDF files into one document, then compresses the result and strips metadata (title, author, producer). Chains two operations in a single call — most free APIs require calling merge and compress separately and gluing the results together yourself.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "files": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "format": "binary"
+                    },
+                    "description": "2 or more PDF files, max 20 files / 30MB total."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Merged and compressed PDF file",
+            "content": {
+              "application/pdf": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/clean-image": {
+      "post": {
+        "summary": "Strip image metadata (EXIF/GPS)",
+        "description": "Removes EXIF/GPS data from JPEG (APP1 segment) and text metadata from PNG (tEXt/zTXt/iTXt/eXIf/tIME chunks) via direct binary parsing. Pixel data is never re-encoded, so there is zero quality loss — unlike canvas-based approaches, which always recompress.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "image/jpeg": {
+              "schema": {
+                "type": "string",
+                "format": "binary"
+              }
+            },
+            "image/png": {
+              "schema": {
+                "type": "string",
+                "format": "binary"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Cleaned image, same format as input",
+            "content": {
+              "image/jpeg": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              },
+              "image/png": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 }
