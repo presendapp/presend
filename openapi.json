@@ -578,6 +578,47 @@
         }
       }
     },
+    "/password-check": {
+      "post": {
+        "summary": "Combined password strength + breach check",
+        "description": "Chains entropy/strength scoring with an optional HIBP breach check in a single call. Password is sent in the JSON body, never in a URL.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["password"],
+                "properties": {
+                  "password": { "type": "string" },
+                  "check_breach": { "type": "boolean", "default": true }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Strength analysis and optional breach result",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "length": { "type": "integer" },
+                    "entropy_bits": { "type": "integer" },
+                    "strength": { "type": "string", "enum": ["very_weak", "weak", "fair", "good", "strong"] },
+                    "estimated_crack_time": { "type": "string" },
+                    "checks": { "type": "object" },
+                    "breach": { "type": "object", "nullable": true }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/email-disposable": {
       "get": {
         "summary": "Detect disposable email domains",

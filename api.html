@@ -114,6 +114,10 @@
   <p style="color:var(--color-muted); max-width:60ch;">Checks if a password appears in known data breaches (HIBP k-anonymity — your password is never sent or logged in full).</p>
   <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/password-breach?password=..."</pre>
 
+  <h3>POST /api/password-check</h3>
+  <p style="color:var(--color-muted); max-width:60ch;">Combines strength/entropy scoring with an optional breach check in one call — the password travels in the POST body, never in a URL. Same k-anonymity guarantee as password-breach.</p>
+  <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl -X POST -H "Content-Type: application/json" -d '{"password":"..."}' https://presend.pages.dev/api/password-check</pre>
+
   <h3>GET /api/email-disposable</h3>
   <p style="color:var(--color-muted); max-width:60ch;">Detects disposable/throwaway email providers from a list of 576+ known domains.</p>
   <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/email-disposable?email=foo@mailinator.com"</pre>
