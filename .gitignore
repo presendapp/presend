@@ -55,3 +55,4 @@ venv/
 !translate_landing.py
 !translate_new_landings.py
 !translate_new_tools.py
+.wrangler
