@@ -3541,6 +3541,24 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://presend.pages.dev/tools/clean-and-compress-photo</loc>
+    <lastmod>2026-08-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://presend.pages.dev/tools/merge-and-compress-pdf</loc>
+    <lastmod>2026-08-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://presend.pages.dev/tools/convert-and-compress-heic</loc>
+    <lastmod>2026-08-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://presend.pages.dev/tools/file-hash-checker</loc>
     <lastmod>2026-08-21</lastmod>
     <changefreq>weekly</changefreq>
