@@ -283,10 +283,40 @@
     "/ip": {
       "get": {
         "summary": "Get caller IP geolocation",
-        "description": "Returns the caller's IP with city, country, currency, language, EU and VPN flags.",
+        "description": "Returns the caller's IP with city, country, currency, language, EU flag, and Tor exit-node detection (official Tor Project public list). Geolocation is read directly from Cloudflare's edge \u2014 no third-party API call.",
         "responses": {
           "200": {
-            "description": "IP geolocation data"
+            "description": "IP geolocation data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ip": { "type": "string" },
+                    "city": { "type": "string", "nullable": true },
+                    "region": { "type": "string", "nullable": true },
+                    "country": { "type": "string", "nullable": true },
+                    "continent": { "type": "string", "nullable": true },
+                    "latitude": { "type": "string", "nullable": true },
+                    "longitude": { "type": "string", "nullable": true },
+                    "postal": { "type": "string", "nullable": true },
+                    "timezone": { "type": "string", "nullable": true },
+                    "asn": { "type": "integer", "nullable": true },
+                    "org": { "type": "string", "nullable": true },
+                    "currency": { "type": "string", "nullable": true },
+                    "language": { "type": "string", "nullable": true },
+                    "is_eu": { "type": "boolean", "nullable": true },
+                    "tor": {
+                      "type": "object",
+                      "properties": {
+                        "checked": { "type": "boolean" },
+                        "is_tor": { "type": "boolean", "nullable": true }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }

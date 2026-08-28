@@ -1,100 +1,70 @@
-export async function onRequestGet(context) {
-  const { request } = context;
-  
-  // Get the visitor's real IP from Cloudflare
-  const clientIP = request.headers.get('cf-connecting-ip') || 
-                   request.headers.get('x-forwarded-for') || 
-                   'unknown';
-  
+// GET /api/ip — geolocation, currency, language, EU flag, and Tor exit-node
+// detection for the caller's own IP.
+//
+// Geolocation comes entirely from Cloudflare's request.cf object — free on
+// every plan, no external API call, no third-party rate limit or cost risk.
+// (This replaced a previous version that called ipinfo.io on every request,
+// an unprotected external dependency with its own quota.)
+
+const TOR_LIST_CACHE_KEY = 'tor-exit-list-cache';
+const TOR_LIST_TTL_SECONDS = 3600; // refresh hourly
+
+async function checkRateLimit(env, clientIP, bucket) {
+  if (!env.PRESEND_ANALYTICS) return true;
+  const now = Math.floor(Date.now() / 60000);
+  const rateKey = `rate:${bucket}:${clientIP}:${now}`;
+  let count = await env.PRESEND_ANALYTICS.get(rateKey);
+  count = count ? parseInt(count) : 0;
+  if (count >= 60) return false;
+  await env.PRESEND_ANALYTICS.put(rateKey, (count + 1).toString(), { expirationTtl: 120 });
+
   try {
-    // Call ipinfo.io from the server side (no CORS issues)
-    const response = await fetch(`https://ipinfo.io/${clientIP}/json`, {
-      headers: {
-        'User-Agent': 'Presend/1.0 (https://presend.pages.dev)'
-      }
-    });
-    
-    if (!response.ok) {
-      throw new Error(`HTTP ${response.status}`);
+    if (Math.random() < 0.1) {
+      const today = new Date().toISOString().split('T')[0];
+      const visitKey = `api-visits:${bucket}:${today}`;
+      const visits = await env.PRESEND_ANALYTICS.get(visitKey);
+      await env.PRESEND_ANALYTICS.put(visitKey, ((visits ? parseInt(visits) : 0) + 10).toString());
     }
-    
-    const data = await response.json();
-    
-    // Enrich with additional data
-    const result = {
-      ip: data.ip,
-      city: data.city,
-      region: data.region,
-      country: data.country,
-      country_name: getCountryName(data.country),
-      continent: getContinent(data.country),
-      latitude: data.loc ? data.loc.split(',')[0] : null,
-      longitude: data.loc ? data.loc.split(',')[1] : null,
-      postal: data.postal,
-      timezone: data.timezone,
-      org: data.org,
-      currency: getCurrency(data.country),
-      language: getLanguage(data.country),
-      is_eu: isEU(data.country),
-      is_vpn: isVPN(data.org),
-    };
-    
-    return new Response(JSON.stringify(result), {
-      headers: {
-        'Content-Type': 'application/json',
-        'Cache-Control': 'public, max-age=3600',
-        'Access-Control-Allow-Origin': '*',
+  } catch (e) { /* tracking best-effort */ }
+
+  return true;
+}
+
+function corsHeaders(extra = {}) {
+  return { 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'GET, OPTIONS', ...extra };
+}
+
+// Fetches the Tor Project's official public bulk exit-node list, cached in
+// KV to avoid re-downloading it on every single request. This is a real,
+// free, official data source — not a heuristic guess.
+async function isTorExitNode(ip, env) {
+  if (!ip || ip === 'unknown') return { checked: false, is_tor: null };
+
+  let listText = null;
+  try {
+    if (env.PRESEND_ANALYTICS) {
+      listText = await env.PRESEND_ANALYTICS.get(TOR_LIST_CACHE_KEY);
+    }
+  } catch (e) { /* cache miss, fall through to fetch */ }
+
+  if (!listText) {
+    try {
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 4000);
+      const res = await fetch('https://check.torproject.org/torbulkexitlist', { signal: controller.signal });
+      clearTimeout(timeout);
+      if (!res.ok) return { checked: false, is_tor: null };
+      listText = await res.text();
+      if (env.PRESEND_ANALYTICS) {
+        await env.PRESEND_ANALYTICS.put(TOR_LIST_CACHE_KEY, listText, { expirationTtl: TOR_LIST_TTL_SECONDS });
       }
-    });
-    
-  } catch (e) {
-    // Fallback: return at least the IP we detected
-    return new Response(JSON.stringify({
-      ip: clientIP,
-      error: e.message,
-      note: 'Geolocation service temporarily unavailable'
-    }), {
-      status: 503,
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-      }
-    });
+    } catch (e) {
+      return { checked: false, is_tor: null };
+    }
   }
-}
 
-function getCountryName(code) {
-  const names = {
-    US: 'United States', GB: 'United Kingdom', FR: 'France', DE: 'Germany',
-    ES: 'Spain', IT: 'Italy', CA: 'Canada', AU: 'Australia', JP: 'Japan',
-    BR: 'Brazil', IN: 'India', CN: 'China', RU: 'Russia', MX: 'Mexico',
-    NL: 'Netherlands', BE: 'Belgium', CH: 'Switzerland', SE: 'Sweden',
-    NO: 'Norway', DK: 'Denmark', FI: 'Finland', PL: 'Poland', AT: 'Austria',
-    PT: 'Portugal', IE: 'Ireland', NZ: 'New Zealand', SG: 'Singapore',
-    KR: 'South Korea', TW: 'Taiwan', HK: 'Hong Kong', AE: 'UAE', SA: 'Saudi Arabia',
-    TR: 'Turkey', ZA: 'South Africa', EG: 'Egypt', NG: 'Nigeria', KE: 'Kenya',
-    AR: 'Argentina', CL: 'Chile', CO: 'Colombia', PE: 'Peru', VE: 'Venezuela',
-    ID: 'Indonesia', MY: 'Malaysia', TH: 'Thailand', PH: 'Philippines', VN: 'Vietnam'
-  };
-  return names[code] || code;
-}
-
-function getContinent(code) {
-  const continents = {
-    AF: 'Africa', AN: 'Antarctica', AS: 'Asia', EU: 'Europe',
-    NA: 'North America', OC: 'Oceania', SA: 'South America'
-  };
-  // Simplified mapping
-  const mapping = {
-    US: 'NA', CA: 'NA', MX: 'NA', BR: 'SA', AR: 'SA', CL: 'SA', CO: 'SA', PE: 'SA', VE: 'SA',
-    GB: 'EU', FR: 'EU', DE: 'EU', ES: 'EU', IT: 'EU', NL: 'EU', BE: 'EU', CH: 'EU', SE: 'EU',
-    NO: 'EU', DK: 'EU', FI: 'EU', PL: 'EU', AT: 'EU', PT: 'EU', IE: 'EU', RU: 'EU', TR: 'EU',
-    CN: 'AS', JP: 'AS', IN: 'AS', KR: 'AS', TW: 'AS', HK: 'AS', SG: 'AS', ID: 'AS', MY: 'AS',
-    TH: 'AS', PH: 'AS', VN: 'AS', AE: 'AS', SA: 'AS',
-    AU: 'OC', NZ: 'OC',
-    ZA: 'AF', EG: 'AF', NG: 'AF', KE: 'AF'
-  };
-  return continents[mapping[code]] || 'Unknown';
+  const exitIPs = new Set(listText.split('\n').map((l) => l.trim()).filter(Boolean));
+  return { checked: true, is_tor: exitIPs.has(ip) };
 }
 
 function getCurrency(code) {
@@ -107,9 +77,9 @@ function getCurrency(code) {
     BR: 'BRL', MX: 'MXN', AR: 'ARS', CL: 'CLP', CO: 'COP', PE: 'PEN', VE: 'VES',
     RU: 'RUB', TR: 'TRY', ZA: 'ZAR', EG: 'EGP', NG: 'NGN', KE: 'KES',
     SG: 'SGD', HK: 'HKD', TW: 'TWD', KR: 'KRW', TH: 'THB', MY: 'MYR',
-    ID: 'IDR', PH: 'PHP', VN: 'VND', AE: 'AED', SA: 'SAR'
+    ID: 'IDR', PH: 'PHP', VN: 'VND', AE: 'AED', SA: 'SAR',
   };
-  return currencies[code] || 'Unknown';
+  return currencies[code] || null;
 }
 
 function getLanguage(code) {
@@ -121,17 +91,49 @@ function getLanguage(code) {
     AR: 'es', CL: 'es', CO: 'es', PE: 'es', VE: 'es',
     TR: 'tr', ZA: 'en', EG: 'ar', NG: 'en', KE: 'en',
     SG: 'en', HK: 'zh', TW: 'zh', KR: 'ko', TH: 'th', MY: 'ms',
-    ID: 'id', PH: 'en', VN: 'vi', AE: 'ar', SA: 'ar'
+    ID: 'id', PH: 'en', VN: 'vi', AE: 'ar', SA: 'ar',
   };
-  return languages[code] || 'en';
+  return languages[code] || null;
 }
 
-function isEU(code) {
-  return ['AT','BE','BG','HR','CY','CZ','DK','EE','FI','FR','DE','GR','HU','IE','IT','LV','LT','LU','MT','NL','PL','PT','RO','SK','SI','ES','SE'].includes(code);
+export async function onRequestOptions() {
+  return new Response(null, { headers: corsHeaders() });
 }
 
-function isVPN(org) {
-  if (!org) return false;
-  const vpnKeywords = ['VPN','Virtual Private Network','Proxy','Tor','Cloudflare','Fastly','Akamai'];
-  return vpnKeywords.some(k => org.toLowerCase().includes(k.toLowerCase()));
+export async function onRequestGet(context) {
+  const { request, env } = context;
+  const clientIP = request.headers.get('cf-connecting-ip') || request.headers.get('x-forwarded-for') || 'unknown';
+
+  const allowed = await checkRateLimit(env, clientIP, 'ip');
+  if (!allowed) {
+    return new Response(JSON.stringify({ error: 'Rate limit exceeded. Max 60 requests per minute.' }), {
+      status: 429, headers: { 'Content-Type': 'application/json', ...corsHeaders() },
+    });
+  }
+
+  const cf = request.cf || {};
+  const country = cf.country || null;
+  const torResult = await isTorExitNode(clientIP, env);
+
+  const result = {
+    ip: clientIP,
+    city: cf.city || null,
+    region: cf.region || null,
+    country,
+    continent: cf.continent || null,
+    latitude: cf.latitude || null,
+    longitude: cf.longitude || null,
+    postal: cf.postalCode || null,
+    timezone: cf.timezone || null,
+    asn: cf.asn || null,
+    org: cf.asOrganization || null,
+    currency: country ? getCurrency(country) : null,
+    language: country ? getLanguage(country) : null,
+    is_eu: typeof cf.isEUCountry !== 'undefined' ? cf.isEUCountry === '1' || cf.isEUCountry === true : null,
+    tor: torResult,
+  };
+
+  return new Response(JSON.stringify(result), {
+    headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-store', ...corsHeaders() },
+  });
 }
