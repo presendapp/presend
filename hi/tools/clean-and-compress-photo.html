@@ -1,28 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta property="og:title" content="Clean & Compress Photo (Workflow) — Presend">
+  <meta property="og:title" content="फोटो साफ़ और कंप्रेस करें (वर्कफ़्लो) — Presend">
   <meta property="og:description" content="Strip EXIF/GPS metadata and compress a photo in one pass — chained locally in your browser, nothing uploaded.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://presend.pages.dev/tools/clean-and-compress-photo">
-<title>Clean & Compress a Photo — Free Chained Workflow, No Upload | Presend</title>
+<title>फोटो साफ़ करें और कंप्रेस करें — मुफ़्त चेन वर्कफ़्लो, अपलोड नहीं | Presend</title>
 <meta name="robots" content="index, follow">
   <meta name="description" content="Remove hidden EXIF/GPS metadata AND compress your photo in a single pass. Two tools chained together, 100% private, runs entirely in your browser. Free.">
   <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<link href="../style.min.css" rel="preload" as="style"/>
-    <link href="../style.min.css" rel="stylesheet" fetchpriority="high"/>
-<link rel="canonical" href="https://presend.pages.dev/tools/clean-and-compress-photo" />
-<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Clean & Compress Photo (Workflow) — Presend">
+<link href="../../style.min.css" rel="preload" as="style"/>
+    <link href="../../style.min.css" rel="stylesheet" fetchpriority="high"/>
+<link rel="canonical" href="https://presend.pages.dev/hi/tools/clean-and-compress-photo" />
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="फोटो साफ़ और कंप्रेस करें (वर्कफ़्लो) — Presend">
 <meta name="twitter:description" content="Strip EXIF/GPS metadata and compress a photo in one pass — chained locally in your browser, nothing uploaded.">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
-  "name": "Clean & Compress Photo Workflow",
+  "name": "फोटो साफ़ और कंप्रेस वर्कफ़्लो",
   "applicationCategory": "UtilitiesApplication",
   "operatingSystem": "Any",
   "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
@@ -45,34 +45,34 @@
 <body class="tool-page">
 
 <header class="site-header wrap">
-  <a class='brand' href='/'><span class="brand-mark">●</span> Presend</a>
-  <a class='nav-link' href='/'>All tools</a> <a class="nav-link" href="/api">API</a>
+  <a class='brand' href='/hi/'><span class="brand-mark">●</span> Presend</a>
+  <a class='nav-link' href='/hi/'>सभी उपकरण</a> <a class="nav-link" href="/api">API</a>
 </header>
 
 <main class="wrap">
-  <a class='tool-back' href='/'>← Back</a>
+  PLACEHOLDER/a>
   <p><a href="/">← Presend</a></p>
-  <h1>Clean &amp; Compress Photo</h1>
-  <p class="lede">A chained workflow: strips hidden EXIF/GPS metadata, then compresses the result — in one pass, entirely in your browser. Two tools, one click.</p>
+  <h1>फोटो साफ़ करें &amp; कंप्रेस करें</h1>
+  <p class="lede">एक चेन वर्कफ़्लो: छुपे हुए EXIF/GPS मेटाडेटा हटाता है, फिर परिणाम को कंप्रेस करता है — एक ही बार में, पूरी तरह से आपके ब्राउज़र में। दो टूल, एक क्लिक।</p>
 
-  <span class="trust-badge">Your files are never sent to our servers</span>
+  <span class="trust-badge">आपकी फ़ाइलें कभी भी हमारे सर्वर पर नहीं भेजी जातीं</span>
 
   <div style="margin-top: 2rem;">
     <div class="dropzone" id="dropzone" tabindex="0" role="button" aria-label="Choose a photo or drop it here">
-      <p class="primary">Drop a photo here, or click to choose one</p>
-      <p class="secondary">JPG, PNG or WebP. Nothing leaves your device.</p>
+      <p class="primary">यहाँ फोटो डालें, या चुनने के लिए क्लिक करें</p>
+      <p class="secondary">JPG, PNG या WebP। आपके डिवाइस से कुछ भी बाहर नहीं जाता।</p>
       <input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp">
     </div>
     <p class="error-msg" id="errorMsg"></p>
 
     <div style="margin-top:1rem;" id="qualityRow">
-      <label>Compression quality: <span id="qualityValue">80%</span></label><br>
+      <label>कंप्रेशन गुणवत्ता: <span id="qualityValue">80%</span></label><br>
       <input type="range" id="qualitySlider" min="10" max="100" value="80" style="width:100%;">
     </div>
 
     <div id="stepsBox" style="display:none; margin-top:1.5rem;">
-      <div class="workflow-step" id="step1Box">1. Removing EXIF/GPS metadata… <span id="step1Status"></span></div>
-      <div class="workflow-step" id="step2Box">2. Compressing… <span id="step2Status"></span></div>
+      <div class="workflow-step" id="step1Box">1. EXIF/GPS मेटाडेटा हटाया जा रहा है… <span id="step1Status"></span></div>
+      <div class="workflow-step" id="step2Box">2. कंप्रेस हो रहा है… <span id="step2Status"></span></div>
     </div>
 
     <div class="result" id="result">
@@ -81,15 +81,15 @@
           <div class="filename" id="resultName"></div>
           <div class="meta" id="resultMeta"></div>
         </div>
-        <a class="btn" id="downloadLink" download>Download cleaned &amp; compressed photo</a>
+        <a class="btn" id="downloadLink" download>साफ़ &amp; कंप्रेस्ड फोटो डाउनलोड करें</a>
       </div>
-      <button class="btn ghost" id="resetBtn" type="button">Process another photo</button>
+      <button class="btn ghost" id="resetBtn" type="button">दूसरी फोटो प्रोसेस करें</button>
     </div>
   </div>
 </main>
 
 <footer class="site-footer wrap">
-  <p>Presend — free browser-based tools. <a href="/about">About</a> · <a href="/privacy">Privacy</a> · <a href="/api">API</a></p>
+  <p>Presend — मुफ़्त ब्राउज़र-आधारित उपकरण। <a href="/about">जानकारी</a> · <a href="/privacy">Privacy</a> · <a href="/api">API</a></p>
 </footer>
 
 <script src="/js/presets.js"></script>

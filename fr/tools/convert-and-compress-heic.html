@@ -1,30 +1,30 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
 <meta charset="UTF-8">
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta property="og:title" content="Convert & Compress HEIC (Workflow) — Presend">
+  <meta property="og:title" content="Convertir et compresser HEIC (Workflow) — Presend">
   <meta property="og:description" content="Convert an iPhone HEIC photo to JPG and compress it — chained locally in your browser, nothing uploaded.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://presend.pages.dev/tools/convert-and-compress-heic">
-<title>Convert HEIC to JPG & Compress — Free Chained Workflow, No Upload | Presend</title>
+<title>Convertir HEIC en JPG et compresser — Workflow gratuit, sans upload | Presend</title>
 <meta name="robots" content="index, follow">
   <meta name="description" content="Convert an iPhone HEIC photo to JPG AND compress it in a single pass. Two tools chained together, 100% private, runs entirely in your browser. Free.">
   <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<link href="../style.min.css" rel="preload" as="style"/>
-    <link href="../style.min.css" rel="stylesheet" fetchpriority="high"/>
-<link rel="canonical" href="https://presend.pages.dev/tools/convert-and-compress-heic" />
-<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Convert & Compress HEIC (Workflow) — Presend">
+<link href="../../style.min.css" rel="preload" as="style"/>
+    <link href="../../style.min.css" rel="stylesheet" fetchpriority="high"/>
+<link rel="canonical" href="https://presend.pages.dev/fr/tools/convert-and-compress-heic" />
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Convertir et compresser HEIC (Workflow) — Presend">
 <meta name="twitter:description" content="Convert an iPhone HEIC photo to JPG and compress it — chained locally in your browser, nothing uploaded.">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
-  "name": "Convert & Compress HEIC Workflow",
+  "name": "Workflow Convertir et compresser HEIC",
   "applicationCategory": "UtilitiesApplication",
   "operatingSystem": "Any",
   "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
@@ -47,32 +47,32 @@
 <body class="tool-page">
 
 <header class="site-header wrap">
-  <a class='brand' href='/'><span class="brand-mark">●</span> Presend</a>
-  <a class='nav-link' href='/'>All tools</a> <a class="nav-link" href="/api">API</a>
+  <a class='brand' href='/fr/'><span class="brand-mark">●</span> Presend</a>
+  <a class='nav-link' href='/fr/'>Tous les outils</a> <a class="nav-link" href="/api">API</a>
 </header>
 
 <main class="wrap">
-  <a class='tool-back' href='/'>← Back</a>
-  <h1>Convert HEIC to JPG &amp; Compress</h1>
-  <p class="lede">A chained workflow: converts an iPhone HEIC photo to JPG, then compresses the result — in one pass, entirely in your browser. Two tools, one click.</p>
-  <span class="trust-badge">Your files are never sent to our servers</span>
+  PLACEHOLDER/a>
+  <h1>Convertir HEIC en JPG &amp; compresser</h1>
+  <p class="lede">Un workflow enchaîné : convertit une photo HEIC d'iPhone en JPG, puis compresse le résultat — en une seule fois, entièrement dans votre navigateur. Deux outils, un clic.</p>
+  <span class="trust-badge">Vos fichiers ne sont jamais envoyés à nos serveurs</span>
 
   <div style="margin-top: 2rem;">
     <div class="dropzone" id="dropzone" tabindex="0" role="button" aria-label="Choose a HEIC photo or drop it here">
-      <p class="primary">Drop a HEIC photo here, or click to choose one</p>
-      <p class="secondary">.heic or .heif. Nothing leaves your device.</p>
+      <p class="primary">Déposez une photo HEIC ici, ou cliquez pour en choisir une</p>
+      <p class="secondary">.heic ou .heif. Rien ne quitte votre appareil.</p>
       <input type="file" id="fileInput" accept=".heic,.heif,image/heic,image/heif">
     </div>
     <p class="error-msg" id="errorMsg"></p>
 
     <div style="margin-top:1rem;" id="qualityRow">
-      <label>Compression quality: <span id="qualityValue">80%</span></label><br>
+      <label>Qualité de compression : <span id="qualityValue">80%</span></label><br>
       <input type="range" id="qualitySlider" min="10" max="100" value="80" style="width:100%;">
     </div>
 
     <div id="stepsBox" style="display:none; margin-top:1.5rem;">
-      <div class="workflow-step" id="step1Box">1. Converting HEIC to JPG… <span id="step1Status"></span></div>
-      <div class="workflow-step" id="step2Box">2. Compressing… <span id="step2Status"></span></div>
+      <div class="workflow-step" id="step1Box">1. Conversion HEIC vers JPG… <span id="step1Status"></span></div>
+      <div class="workflow-step" id="step2Box">2. Compression… <span id="step2Status"></span></div>
     </div>
 
     <div class="result" id="result">
@@ -81,15 +81,15 @@
           <div class="filename" id="resultName"></div>
           <div class="meta" id="resultMeta"></div>
         </div>
-        <a class="btn" id="downloadLink" download>Download JPG</a>
+        <a class="btn" id="downloadLink" download>Télécharger le JPG</a>
       </div>
-      <button class="btn ghost" id="resetBtn" type="button">Process another photo</button>
+      <button class="btn ghost" id="resetBtn" type="button">Traiter une autre photo</button>
     </div>
   </div>
 </main>
 
 <footer class="site-footer wrap">
-  <p>Presend — free browser-based tools. <a href="/about">About</a> · <a href="/privacy">Privacy</a> · <a href="/api">API</a></p>
+  <p>Presend — outils gratuits basés sur le navigateur. <a href="/about">À propos</a> · <a href="/privacy">Privacy</a> · <a href="/api">API</a></p>
 </footer>
 
 <script defer src="/vendor/heic2any.min.js"></script>

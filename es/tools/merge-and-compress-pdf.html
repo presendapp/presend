@@ -1,28 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta property="og:title" content="Merge & Compress PDFs (Workflow) — Presend">
+  <meta property="og:title" content="Combinar y comprimir PDFs (Flujo) — Presend">
   <meta property="og:description" content="Combine multiple PDFs into one document, then compress it — chained locally in your browser, nothing uploaded.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://presend.pages.dev/tools/merge-and-compress-pdf">
-<title>Merge & Compress PDFs — Free Chained Workflow, No Upload | Presend</title>
+<title>Combinar y comprimir PDFs — Flujo gratuito, sin subida | Presend</title>
 <meta name="robots" content="index, follow">
   <meta name="description" content="Combine multiple PDF files into one document AND compress the result in a single pass. Two tools chained together, 100% private, runs entirely in your browser. Free.">
   <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<link href="../style.min.css" rel="preload" as="style"/>
-    <link href="../style.min.css" rel="stylesheet" fetchpriority="high"/>
-<link rel="canonical" href="https://presend.pages.dev/tools/merge-and-compress-pdf" />
-<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Merge & Compress PDFs (Workflow) — Presend">
+<link href="../../style.min.css" rel="preload" as="style"/>
+    <link href="../../style.min.css" rel="stylesheet" fetchpriority="high"/>
+<link rel="canonical" href="https://presend.pages.dev/es/tools/merge-and-compress-pdf" />
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Combinar y comprimir PDFs (Flujo) — Presend">
 <meta name="twitter:description" content="Combine multiple PDFs into one document, then compress it — chained locally in your browser, nothing uploaded.">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
-  "name": "Merge & Compress PDF Workflow",
+  "name": "Flujo Combinar y comprimir PDF",
   "applicationCategory": "UtilitiesApplication",
   "operatingSystem": "Any",
   "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
@@ -46,31 +46,31 @@
 
 <header class="site-header wrap">
   <a class="brand" href="/"><span class="brand-mark">●</span> Presend</a>
-  <a class="nav-link" href="/">All tools</a> <a class="nav-link" href="/api">API</a>
+  <a class="nav-link" href="/">Todas las herramientas</a> <a class="nav-link" href="/api">API</a>
 </header>
 
 <main class="wrap">
-  <h1>Merge &amp; Compress PDFs</h1>
-  <p class="lede">A chained workflow: combines multiple PDFs into one document, then compresses the result — in one pass, entirely in your browser. Two tools, one click.</p>
+  <h1>Combinar &amp; comprimir PDFs</h1>
+  <p class="lede">Un flujo encadenado: combina varios PDFs en un solo documento y luego comprime el resultado — en un solo paso, totalmente en tu navegador. Dos herramientas, un clic.</p>
 
   <section class="tool-card" style="margin-top:2rem;">
     <div class="dropzone" id="dropzone" tabindex="0" role="button" aria-label="Upload PDF files to merge and compress">
       <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-      <p><strong>Drop PDF files here</strong> or click to browse</p>
-      <p style="color:var(--color-muted);font-size:0.85rem;">Select 2 or more PDFs. Drag to reorder.</p>
+      <p><strong>Suelta archivos PDF aquí</strong> o haz clic para explorar</p>
+      <p style="color:var(--color-muted);font-size:0.85rem;">Selecciona 2 o más PDFs. Arrastra para reordenar.</p>
       <input type="file" id="fileInput" accept=".pdf,application/pdf" multiple style="display:none;">
     </div>
 
     <div id="fileList" style="margin-top:1rem;"></div>
 
     <div id="controls" style="display:none;margin-top:1rem;text-align:center;">
-      <button class="btn" id="mergeBtn" type="button">Merge &amp; Compress</button>
-      <button class="btn ghost" id="clearBtn" type="button" style="margin-left:0.5rem;">Clear all</button>
+      <button class="btn" id="mergeBtn" type="button">Combinar &amp; comprimir</button>
+      <button class="btn ghost" id="clearBtn" type="button" style="margin-left:0.5rem;">Borrar todo</button>
     </div>
 
     <div id="stepsBox" style="display:none; margin-top:1.5rem;">
-      <div class="workflow-step" id="step1Box">1. Merging PDFs… <span id="step1Status"></span></div>
-      <div class="workflow-step" id="step2Box">2. Compressing… <span id="step2Status"></span></div>
+      <div class="workflow-step" id="step1Box">1. Combinando PDFs… <span id="step1Status"></span></div>
+      <div class="workflow-step" id="step2Box">2. Comprimiendo… <span id="step2Status"></span></div>
     </div>
 
     <div id="result" style="display:none;margin-top:1.5rem;">
@@ -79,7 +79,7 @@
           <div class="result-name" id="resultName"></div>
           <div class="result-meta" id="resultMeta"></div>
         </div>
-        <a class="btn" id="downloadLink" download>Download merged &amp; compressed PDF</a>
+        <a class="btn" id="downloadLink" download>Descargar PDF combinado &amp; comprimido</a>
       </div>
     </div>
 
@@ -88,7 +88,7 @@
 </main>
 
 <footer class="site-footer wrap">
-  <p>Presend — free browser-based tools. <a href="/about">About</a> · <a href="/privacy">Privacy</a> · <a href="/api">API</a></p>
+  <p>Presend — herramientas gratuitas basadas en navegador. <a href="/about">Acerca de</a> · <a href="/privacy">Privacy</a> · <a href="/api">API</a></p>
 </footer>
 
 <script defer src="/vendor/pdf-lib.min.js"></script>
@@ -236,7 +236,7 @@
       showError('Could not process these PDFs. They may be encrypted or corrupted.');
       stepsBox.style.display = 'none';
     } finally {
-      mergeBtn.textContent = 'Merge & Compress';
+      mergeBtn.textContent = 'Combinar & comprimir';
       mergeBtn.disabled = false;
     }
   });
