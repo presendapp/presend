@@ -44,6 +44,12 @@ Unlike most online file converters and editors, Presend never uploads your files
 - [Thread Splitter](https://presend.pages.dev/tools/thread-splitter): Split long text into Twitter/X or LinkedIn thread format
 - [Word Counter](https://presend.pages.dev/tools/word-counter): Count words, characters, sentences and estimate reading time
 
+## Workflows (Chained Tools)
+Client-side tools that chain two operations into one pass — no competitor we're aware of offers this for free browser-based tools.
+- [Clean & Compress Photo](https://presend.pages.dev/tools/clean-and-compress-photo): Strip EXIF/GPS metadata, then compress — in one pass, no upload
+- [Merge & Compress PDFs](https://presend.pages.dev/tools/merge-and-compress-pdf): Combine multiple PDFs into one document, then compress the result
+- [Convert & Compress HEIC](https://presend.pages.dev/tools/convert-and-compress-heic): Convert an iPhone HEIC photo to JPG, then compress it
+
 ## Guides & Resources
 - [How to Remove Metadata Before Sharing](https://presend.pages.dev/guides/how-to-remove-metadata-before-sharing): Step-by-step guide to cleaning files before sharing
 - [How to Compress Images for Email](https://presend.pages.dev/guides/how-to-compress-images-email): Reduce image size without losing quality
@@ -58,19 +64,21 @@ Unlike most online file converters and editors, Presend never uploads your files
 - [Alternatives](https://presend.pages.dev/alternatives): Compare Presend with other online tools
 
 ## API for Developers
-Presend also offers 18 free, no-signup, no-API-key server-side endpoints at [presend.pages.dev/api](https://presend.pages.dev/api), running on Cloudflare's edge network. Full docs and an OpenAPI spec are available at [presend.pages.dev/openapi.json](https://presend.pages.dev/openapi.json).
+Presend also offers 21 free, no-signup, no-API-key server-side endpoints at [presend.pages.dev/api](https://presend.pages.dev/api), running on Cloudflare's edge network. Full docs and an OpenAPI spec are available at [presend.pages.dev/openapi.json](https://presend.pages.dev/openapi.json).
+- **Chained endpoints** (the key differentiator — most free APIs only offer single-purpose calls): `POST /api/merge-and-compress-pdf` (merge 2+ PDFs and compress the result in one call), `POST /api/clean-image` (strip EXIF/GPS from JPEG/PNG via direct binary parsing — zero quality loss, no canvas re-encoding), `GET /api/email-verify` (syntax + MX + disposable-domain + role-account detection combined), `POST /api/password-check` (strength/entropy scoring + optional HIBP breach check combined, password sent in the body, never a URL)
 - Hashing: SHA-256/1/512 file hashing (`POST /api/hash`)
 - Security: password generation with entropy estimate, HIBP k-anonymity breach check, JWT decode, HTTP security header audit with letter grade
 - Validation: email syntax + MX record check, disposable email detection (576+ domains)
 - Cybersecurity: URL malware/phishing reputation check (URLhaus), passive subdomain discovery via Certificate Transparency logs
-- Everyday utilities: UUID generation, Base64 encode/decode, timestamp conversion, color format conversion, User-Agent parsing, JSON↔CSV conversion, favicon fetch, URL tracking-parameter removal (single or batch up to 100), IP geolocation
-- A zero-dependency npm client is available: `npm install presend-api` ([npmjs.com/package/presend-api](https://www.npmjs.com/package/presend-api))
+- Everyday utilities: UUID generation, Base64 encode/decode, timestamp conversion, color format conversion, User-Agent parsing, JSON↔CSV conversion, favicon fetch, URL tracking-parameter removal (single or batch up to 100), IP geolocation with Tor exit-node detection (official Tor Project list)
+- A zero-dependency npm client is available: `npm install presend-api` ([npmjs.com/package/presend-api](https://www.npmjs.com/package/presend-api)) — not yet updated to wrap the newest endpoints
 - No official SLA; fair-use rate limits typically 20-60 requests/minute per IP
 
 ## Technical Details
 - **Architecture**: Static HTML/CSS/JS for client-side tools; Cloudflare Pages Functions (edge, serverless) for the API layer
 - **Client-side tools processing**: 100% client-side using Web APIs (Canvas, Web Crypto, FileReader, Streams) — files never uploaded
-- **API endpoints**: Some endpoints call third-party services to provide their function (Have I Been Pwned via k-anonymity, URLhaus, Certificate Transparency logs via crt.sh, ipinfo.io for geolocation) — no file content is ever sent to these, only the specific query needed (e.g. a URL to check, a partial password hash)
+- **API endpoints**: Some endpoints call third-party services to provide their function (Have I Been Pwned via k-anonymity, URLhaus, Certificate Transparency logs via crt.sh, the Tor Project's public exit-node list) — no file content is ever sent to these, only the specific query needed (e.g. a URL to check, a partial password hash). IP geolocation (`/api/ip`) reads directly from Cloudflare's own edge network (no third-party call, no cost, no rate-limit risk).
+- **Browser extension**: "Presend — Clean Photos" lets you right-click any image on any website to strip EXIF/GPS metadata (with an optional compress step), entirely on-device. Source and releases: [github.com/presendapp/presend-extension](https://github.com/presendapp/presend-extension). Submitted to Firefox Add-ons and Opera Add-ons (pending review); direct download available now via GitHub releases.
 - **Analytics**: Cloudflare Web Analytics (aggregate, no cookies) plus best-effort anonymous internal counters for tool/endpoint usage — no per-user tracking, no IP storage
 - **Open Source**: Available on GitHub (link in footer)
 - **Languages**: English, French, Spanish, German, Portuguese, Japanese, Russian, Hindi
