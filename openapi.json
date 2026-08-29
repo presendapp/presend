@@ -761,6 +761,42 @@
         }
       }
     },
+    "/security-scan": {
+      "get": {
+        "summary": "Combined security posture report",
+        "description": "Combines security-headers, url-reputation, and subdomains into a single overall score and verdict, run in parallel.",
+        "parameters": [
+          {
+            "name": "url",
+            "in": "query",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Combined security report",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "url": { "type": "string" },
+                    "domain": { "type": "string" },
+                    "overall_score": { "type": "integer" },
+                    "overall_grade": { "type": "string" },
+                    "verdict": { "type": "string" },
+                    "security_headers": { "type": "object" },
+                    "reputation": { "type": "object" },
+                    "attack_surface": { "type": "object" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/security-headers": {
       "get": {
         "summary": "Audit HTTP security headers",

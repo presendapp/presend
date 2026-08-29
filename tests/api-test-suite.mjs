@@ -123,6 +123,17 @@ async function testIp() {
   check('ip: returns IP and geo fields', typeof j.ip === 'string' && 'tor' in j, JSON.stringify(j));
 }
 
+// --- Combined security scan ---
+async function testSecurityScan() {
+  const res = await fetch(BASE + '/api/security-scan?url=https://github.com');
+  const j = await res.json();
+  check(
+    'security-scan: combines headers + reputation + attack_surface',
+    typeof j.overall_score === 'number' && j.security_headers && 'checked' in j.reputation && 'checked' in j.attack_surface,
+    JSON.stringify(j).slice(0, 300)
+  );
+}
+
 // --- clean-image (binary upload) ---
 async function testCleanImage() {
   const fs = await import('fs');
@@ -165,6 +176,7 @@ async function main() {
   await testCase('Endpoints password', testPassword);
   await testCase('Endpoint téléphone', testPhone);
   await testCase('Endpoint IP', testIp);
+  await testCase('Endpoint security-scan', testSecurityScan);
   await testCase('clean-image (upload binaire)', testCleanImage);
   await testCase('merge-and-compress-pdf (upload multipart)', testMergePdf);
   await testCase('Préflight OPTIONS', testOptions);

@@ -129,6 +129,9 @@
   <p style="color:var(--color-muted); max-width:60ch;">Validates and formats a phone number (E.164, international, national) via libphonenumber-js. If no country is given for a number without a "+" prefix, the caller's IP-derived country is used automatically.</p>
   <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/phone-verify?number=%2B14155552671"</pre>
 
+  <h3>GET /api/security-scan</h3>
+  <p style="color:var(--color-muted); max-width:60ch;">Combines security-headers + url-reputation + subdomains into one report with an overall score and verdict — one call instead of three.</p>
+  <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/security-scan?url=https://example.com"</pre>
   <h3>GET /api/security-headers</h3>
   <p style="color:var(--color-muted); max-width:60ch;">Audits HTTP security headers (CSP, HSTS, X-Frame-Options...) and gives a letter grade.</p>
   <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/security-headers?url=https://example.com"</pre>
