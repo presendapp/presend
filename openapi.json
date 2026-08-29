@@ -709,6 +709,58 @@
         }
       }
     },
+    "/phone-verify": {
+      "get": {
+        "summary": "Validate and format a phone number",
+        "description": "Validates and formats via libphonenumber-js. If \u201ccountry\u201d is omitted for a number without a leading +, the caller's IP-derived country (Cloudflare edge geolocation) is used as the default.",
+        "parameters": [
+          {
+            "name": "number",
+            "in": "query",
+            "required": true,
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "country",
+            "in": "query",
+            "required": false,
+            "description": "ISO 3166-1 alpha-2 country code (e.g. US, FR), used to interpret a number with no leading +.",
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Validation and formatting result",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "number": { "type": "string" },
+                    "valid": { "type": "boolean" },
+                    "country": { "type": "string", "nullable": true },
+                    "country_calling_code": { "type": "string", "nullable": true },
+                    "type": { "type": "string", "nullable": true },
+                    "formats": {
+                      "type": "object",
+                      "nullable": true,
+                      "properties": {
+                        "e164": { "type": "string" },
+                        "international": { "type": "string" },
+                        "national": { "type": "string" },
+                        "uri": { "type": "string" }
+                      }
+                    },
+                    "default_country_used": { "type": "string", "nullable": true },
+                    "ip_inferred_country": { "type": "string", "nullable": true }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/security-headers": {
       "get": {
         "summary": "Audit HTTP security headers",

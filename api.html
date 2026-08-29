@@ -125,6 +125,10 @@
   <p style="color:var(--color-muted); max-width:60ch;">Combines syntax check, MX lookup, disposable-domain detection, and generic/role-account detection (info@, admin@...) in one call — most free email APIs only offer these as separate paid checks.</p>
   <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/email-verify?email=foo@example.com"</pre>
 
+  <h3>GET /api/phone-verify</h3>
+  <p style="color:var(--color-muted); max-width:60ch;">Validates and formats a phone number (E.164, international, national) via libphonenumber-js. If no country is given for a number without a "+" prefix, the caller's IP-derived country is used automatically.</p>
+  <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/phone-verify?number=%2B14155552671"</pre>
+
   <h3>GET /api/security-headers</h3>
   <p style="color:var(--color-muted); max-width:60ch;">Audits HTTP security headers (CSP, HSTS, X-Frame-Options...) and gives a letter grade.</p>
   <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/security-headers?url=https://example.com"</pre>

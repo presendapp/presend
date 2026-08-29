@@ -89,6 +89,21 @@ async function testPassword() {
   check('password-breach: known breach detected', j3.breached === true, JSON.stringify(j3));
 }
 
+// --- Phone endpoint ---
+async function testPhone() {
+  const res1 = await fetch(BASE + '/api/phone-verify?number=%2B14155552671');
+  const j1 = await res1.json();
+  check('phone-verify: E.164 number valid, no IP inference used', j1.valid === true && j1.country === 'US' && j1.ip_inferred_country === null, JSON.stringify(j1));
+
+  const res2 = await fetch(BASE + '/api/phone-verify?number=4155552671&country=US');
+  const j2 = await res2.json();
+  check('phone-verify: local number with explicit country', j2.valid === true && j2.formats.e164 === '+14155552671', JSON.stringify(j2));
+
+  const res3 = await fetch(BASE + '/api/phone-verify?number=abc123');
+  const j3 = await res3.json();
+  check('phone-verify: invalid number rejected', j3.valid === false, JSON.stringify(j3));
+}
+
 // --- IP endpoint ---
 async function testIp() {
   const res = await fetch(BASE + '/api/ip');
@@ -136,6 +151,7 @@ async function main() {
   await testCase('Endpoints GET simples', testSimpleGets);
   await testCase('Endpoints email', testEmail);
   await testCase('Endpoints password', testPassword);
+  await testCase('Endpoint téléphone', testPhone);
   await testCase('Endpoint IP', testIp);
   await testCase('clean-image (upload binaire)', testCleanImage);
   await testCase('merge-and-compress-pdf (upload multipart)', testMergePdf);
