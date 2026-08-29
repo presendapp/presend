@@ -58,3 +58,4 @@ venv/
 .wrangler
 .dev.vars
 !bing_submit.py
+!gsc_submit.py

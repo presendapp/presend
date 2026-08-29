@@ -11,30 +11,42 @@ jobs:
     timeout-minutes: 15
     permissions:
       contents: write
-
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-
       - name: Install dependencies
         run: pip install -r requirements.txt
-
       - name: Run daily SEO
         run: python3 daily_seo.py
         # Note: the Google Indexing API step inside daily_seo.py was disabled
         # on 2026-08-29. That API is officially restricted to JobPosting and
         # BroadcastEvent content, unrelated to this site, and using it for
         # general pages risks Google Cloud access revocation per the May 2025
-        # Search Relations clarification. No Google credentials are needed
-        # for this workflow anymore -- sitemap.xml and IndexNow (separate
+        # Search Relations clarification. sitemap.xml and IndexNow (separate
         # workflow) cover indexing legitimately and without content-type
         # restrictions.
-
+      - name: Decode Google service account credentials
+        env:
+          GOOGLE_CREDS_B64: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
+        run: |
+          python3 -c "
+          import base64, os
+          with open('google-service-account.json', 'wb') as f:
+              f.write(base64.b64decode(os.environ['GOOGLE_CREDS_B64']))
+          "
+      - name: Submit sitemap via Search Console API (legitimate, unrestricted)
+        run: python3 gsc_submit.py
+        # This uses webmasters.googleapis.com/webmasters/v3, NOT the
+        # Indexing API -- fully supported for any site/content type, this
+        # is literally what it's designed for. The service account already
+        # has Owner access on the presend.pages.dev Search Console property.
+      - name: Clean up credentials
+        if: always()
+        run: rm -f google-service-account.json
       - name: Commit and push changes
         run: |
           git config user.name "github-actions[bot]"
