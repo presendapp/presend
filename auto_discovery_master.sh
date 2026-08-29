@@ -49,6 +49,10 @@ for page in "/" "/tools/exif-remover" "/tools/pdf-compress" "/tools/image-compre
 done
 echo "   ✅ Pages archivées sur Wayback Machine" | tee -a "$LOG_FILE"
 
+# ─── 5b. Vérification des liens morts ──────────────────────────────────────
+echo -e "\n${YELLOW}🔗 Étape 5b: Vérification des liens morts${NC}" | tee -a "$LOG_FILE"
+python3 check_broken_links.py | tee -a "$LOG_FILE" || true
+
 # ─── 6. Rapport ────────────────────────────────────────────────────────────
 echo -e "\n${YELLOW}📊 Étape 6: Rapport${NC}" | tee -a "$LOG_FILE"
 URL_COUNT=$(grep -c "<loc>" sitemap.xml)
