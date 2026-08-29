@@ -134,6 +134,21 @@ async function testSecurityScan() {
   );
 }
 
+// --- Email anti-spoofing (SPF/DMARC/DKIM) ---
+async function testEmailSecurity() {
+  const res = await fetch(BASE + '/api/email-security?domain=google.com');
+  const j = await res.json();
+  check(
+    'email-security: SPF/DMARC parsed correctly for google.com',
+    j.spf.configured === true && j.dmarc.configured === true && j.dmarc.policy === 'reject' && j.dmarc.enforced === true,
+    JSON.stringify(j)
+  );
+
+  const res2 = await fetch(BASE + '/api/email-security?domain=not_a_valid_domain');
+  const j2 = await res2.json();
+  check('email-security: invalid domain rejected', res2.status === 400 && !!j2.error, JSON.stringify(j2));
+}
+
 // --- clean-image (binary upload) ---
 async function testCleanImage() {
   const fs = await import('fs');
@@ -177,6 +192,7 @@ async function main() {
   await testCase('Endpoint téléphone', testPhone);
   await testCase('Endpoint IP', testIp);
   await testCase('Endpoint security-scan', testSecurityScan);
+  await testCase('Endpoint email-security', testEmailSecurity);
   await testCase('clean-image (upload binaire)', testCleanImage);
   await testCase('merge-and-compress-pdf (upload multipart)', testMergePdf);
   await testCase('Préflight OPTIONS', testOptions);

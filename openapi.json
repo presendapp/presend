@@ -761,6 +761,40 @@
         }
       }
     },
+    "/email-security": {
+      "get": {
+        "summary": "Domain email anti-spoofing check (SPF/DMARC/DKIM)",
+        "description": "Checks SPF strength, DMARC policy, and a best-effort DKIM lookup against common selectors. DKIM has no fixed DNS location, so absence of a match does not prove DKIM is unconfigured.",
+        "parameters": [
+          {
+            "name": "domain",
+            "in": "query",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Anti-spoofing configuration report",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "domain": { "type": "string" },
+                    "score": { "type": "integer" },
+                    "verdict": { "type": "string" },
+                    "spf": { "type": "object" },
+                    "dmarc": { "type": "object" },
+                    "dkim": { "type": "object" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/security-scan": {
       "get": {
         "summary": "Combined security posture report",
