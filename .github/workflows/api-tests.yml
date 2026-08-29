@@ -1,0 +1,54 @@
+name: API Test Suite
+
+on:
+  schedule:
+    - cron: '0 12 * * *'
+  workflow_dispatch: {}
+
+jobs:
+  api-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install fixture dependencies
+        run: pip install --break-system-packages pillow piexif reportlab
+      - name: Generate test fixtures
+        run: |
+          mkdir -p /tmp/test-fixtures
+          python3 -c "
+          from PIL import Image
+          import piexif
+          from reportlab.pdfgen import canvas
+          img = Image.new('RGB', (50, 50), color=(100, 150, 200))
+          exif_dict = {'GPS': {piexif.GPSIFD.GPSLatitudeRef: b'N', piexif.GPSIFD.GPSLatitude: ((48,1),(51,1),(0,1))}}
+          img.save('/tmp/test-fixtures/photo.jpg', 'jpeg', exif=piexif.dump(exif_dict), quality=90)
+          for i in [1, 2]:
+              c = canvas.Canvas(f'/tmp/test-fixtures/doc{i}.pdf')
+              c.drawString(100, 750, f'Test doc {i}')
+              c.showPage()
+              c.save()
+          "
+      - name: Run API test suite
+        id: run_tests
+        run: bash tests/run-tests.sh
+      - name: Create issue on failure
+        if: failure()
+        run: |
+          EXISTING=$(gh issue list --state open --label "api-test-failure" --json number --jq '.[0].number')
+          if [ -z "$EXISTING" ]; then
+            gh issue create \
+              --title "API test suite failed ($(date -u +%Y-%m-%d))" \
+              --label "api-test-failure" \
+              --body "The scheduled API test suite failed. See the run log: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          else
+            gh issue comment "$EXISTING" --body "Still failing as of $(date -u +%Y-%m-%d). Run log: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          fi
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
