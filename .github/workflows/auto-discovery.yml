@@ -20,4 +20,6 @@ jobs:
       # it's officially restricted to JobPosting/BroadcastEvent content and
       # using it here risked Google Cloud access revocation for no benefit.
       - name: Run auto discovery master
+        env:
+          BING_API_KEY: ${{ secrets.BING_API_KEY }}
         run: timeout 480 bash auto_discovery_master.sh || true

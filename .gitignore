@@ -57,3 +57,4 @@ venv/
 !translate_new_tools.py
 .wrangler
 .dev.vars
+!bing_submit.py

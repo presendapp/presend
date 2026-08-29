@@ -38,6 +38,9 @@ python3 crawler_ping_system.py >> "$LOG_FILE" 2>&1 || true
 echo -e "\n${YELLOW}📡 Étape 4: Soumission SEO unifiée${NC}" | tee -a "$LOG_FILE"
 python3 submit_all.py | tee -a "$LOG_FILE"
 
+echo -e "\n${YELLOW}📡 Étape 4b: Soumission Bing Webmaster API${NC}" | tee -a "$LOG_FILE"
+python3 bing_submit.py | tee -a "$LOG_FILE" || true
+
 # ─── 5. Wayback Machine — archivage ────────────────────────────────────────
 echo -e "\n${YELLOW}📚 Étape 5: Wayback Machine Archiving${NC}" | tee -a "$LOG_FILE"
 for page in "/" "/tools/exif-remover" "/tools/pdf-compress" "/tools/image-compressor" "/tools/password-generator"; do
