@@ -5,7 +5,7 @@
 import * as PDFLibNS from '../../vendor/pdf-lib.min.js';
 const PDFDocument = PDFLibNS.PDFDocument || (PDFLibNS.default && PDFLibNS.default.PDFDocument);
 
-async function checkRateLimit(env, clientIP, bucket) {
+async function checkRateLimit(env, clientIP, bucket, isTest = false) {
   if (!env.PRESEND_ANALYTICS) return true;
   const now = Math.floor(Date.now() / 60000);
   const rateKey = `rate:${bucket}:${clientIP}:${now}`;
@@ -15,7 +15,7 @@ async function checkRateLimit(env, clientIP, bucket) {
   await env.PRESEND_ANALYTICS.put(rateKey, (count + 1).toString(), { expirationTtl: 120 });
 
   try {
-    if (Math.random() < 0.1) {
+    if (!isTest && Math.random() < 0.1) {
       const today = new Date().toISOString().split('T')[0];
       const visitKey = `api-visits:${bucket}:${today}`;
       const visits = await env.PRESEND_ANALYTICS.get(visitKey);
@@ -57,7 +57,7 @@ export async function onRequestPost(context) {
   const { request, env } = context;
   const clientIP = request.headers.get('CF-Connecting-IP') || 'unknown';
 
-  const allowed = await checkRateLimit(env, clientIP, 'merge-and-compress-pdf');
+  const allowed = await checkRateLimit(env, clientIP, 'merge-and-compress-pdf', request.headers.get('X-Presend-Test') === '1');
   if (!allowed) {
     return new Response(JSON.stringify({ error: 'Rate limit exceeded. Max 10 requests per minute.' }), {
       status: 429, headers: { 'Content-Type': 'application/json', ...corsHeaders() },

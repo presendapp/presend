@@ -2,7 +2,7 @@
 // Usage: curl -X POST --data-binary @fichier.pdf https://presend.pages.dev/api/hash
 
 
-async function checkRateLimit(env, clientIP, bucket) {
+async function checkRateLimit(env, clientIP, bucket, isTest = false) {
   if (!env.PRESEND_ANALYTICS) return true;
   const now = Math.floor(Date.now() / 60000);
   const rateKey = `rate:${bucket}:${clientIP}:${now}`;
@@ -14,7 +14,7 @@ async function checkRateLimit(env, clientIP, bucket) {
   // Tracking d'usage échantillonné (1 requête sur 10, multiplié par 10) pour économiser
   // le quota d'écritures KV — best-effort, ne bloque jamais la requête si ça échoue.
   try {
-    if (Math.random() < 0.1) {
+    if (!isTest && Math.random() < 0.1) {
       const today = new Date().toISOString().split('T')[0];
       const visitKey = `api-visits:${bucket}:${today}`;
       const visits = await env.PRESEND_ANALYTICS.get(visitKey);
@@ -60,7 +60,7 @@ export async function onRequestPost(context) {
   const { request, env } = context;
   const clientIP = request.headers.get('CF-Connecting-IP') || 'unknown';
 
-  const allowed = await checkRateLimit(env, clientIP, 'hash');
+  const allowed = await checkRateLimit(env, clientIP, 'hash', request.headers.get('X-Presend-Test') === '1');
   if (!allowed) {
     return new Response(JSON.stringify({ error: 'Rate limit exceeded. Max 30 requests per minute.' }), {
       status: 429, headers: { 'Content-Type': 'application/json', ...corsHeaders() },

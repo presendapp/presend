@@ -5,6 +5,18 @@
 const BASE = process.env.PRESEND_TEST_BASE || 'http://localhost:8788';
 const FIXTURES = '/tmp/test-fixtures';
 
+// Marque chaque requête de cette suite avec un en-tête distinctif, pour que
+// les endpoints excluent ce trafic de test des compteurs publics /api/api-stats
+// et /api/stats (voir checkRateLimit(..., isTest) dans functions/api/*.js).
+// Le rate limiting reste actif normalement -- seul le compteur de visites
+// affiché publiquement est exclu.
+const _originalFetch = globalThis.fetch;
+globalThis.fetch = (url, options = {}) => {
+  const headers = new Headers(options.headers || {});
+  headers.set('X-Presend-Test', '1');
+  return _originalFetch(url, { ...options, headers });
+};
+
 let passed = 0;
 let failed = 0;
 const failures = [];
