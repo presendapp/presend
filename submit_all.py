@@ -1,11 +1,17 @@
 #!/usr/bin/env python3
 """
 Script unifié de soumission SEO :
-- Google Indexing API (quota: 200/jour, rate limit strict)
 - IndexNow (Bing, Yandex, Seznam, Naver, Yep)
-- Ping sitemap (Google, Bing, Yandex)
+- Ping sitemap (Yandex uniquement -- Google/Bing ont désactivé leurs
+  endpoints de ping en 2022/2023, cf. audit du 29/08/2026)
 
 Lit dynamiquement les URLs depuis sitemap.xml
+
+NOTE (29/08/2026) : l'appel à l'API Google Indexing a été retiré. Cette API
+est officiellement restreinte au contenu JobPosting/BroadcastEvent (aucun
+sur ce site) et son usage pour du contenu générique risque une révocation
+d'accès depuis la clarification de l'équipe Search Relations de Google
+(mai 2025). sitemap.xml + IndexNow couvrent l'indexation légitimement.
 """
 import xml.etree.ElementTree as ET
 import json
@@ -199,9 +205,13 @@ def ping_sitemap():
     sitemap_url = urllib.parse.quote(f"https://{HOST}/sitemap.xml")
     results = {}
     
+    # Google (deprecated 2023, google.com/ping now returns 404) and Bing
+    # (deprecated 2022, bing.com/ping now returns 410 Gone) have both
+    # shut down their sitemap ping endpoints -- confirmed 29/08/2026.
+    # Bing/Yandex real-time discovery is handled by IndexNow instead.
+    # Yandex's ping endpoint has no recent confirmation either way, but
+    # costs nothing to keep as a best-effort extra signal.
     engines = {
-        "Google": f"https://www.google.com/ping?sitemap={sitemap_url}",
-        "Bing": f"https://www.bing.com/ping?sitemap={sitemap_url}",
         "Yandex": f"https://webmaster.yandex.ru/ping?sitemap={sitemap_url}",
     }
     
@@ -227,21 +237,12 @@ def main():
     all_urls = load_sitemap_urls()
     print(f"   ✅ {len(all_urls)} URLs trouvées dans {SITEMAP_FILE}")
     
-    # 2. Vérifier le fichier de compte de service
-    if not os.path.exists(SERVICE_ACCOUNT_FILE):
-        print(f"\n❌ Fichier '{SERVICE_ACCOUNT_FILE}' introuvable.")
-        sys.exit(1)
-    
-    # 3. Google Indexing API
-    print("\n" + "─" * 70)
-    print("🔑 1. GOOGLE INDEXING API")
-    print("─" * 70)
-    
-    access_token = get_access_token()
-    if access_token:
-        g_success, g_failed = submit_to_google(all_urls, access_token)
-        print(f"   ✅ Soumises: {g_success} | ❌ Échouées: {g_failed}")
-    else:
+    # 2. Google Indexing API -- DÉSACTIVÉ (audit du 29/08/2026, voir docstring
+    # en tête de fichier). Ne bloque plus l'exécution du reste du script :
+    # IndexNow et le ping sitemap ci-dessous n'ont jamais eu besoin de ces
+    # credentials et restent pleinement fonctionnels sans eux.
+    g_success = 0
+    if False:
         print("   ⚠️ Impossible d'obtenir le token Google")
         g_success = 0
     
@@ -274,17 +275,9 @@ def main():
     print("📊 RÉCAPITULATIF")
     print("=" * 70)
     print(f"   URLs dans sitemap : {len(all_urls)}")
-    print(f"   Google Indexing   : {g_success} soumises (quota: {GOOGLE_DAILY_LIMIT}/jour)")
+    print(f"   Google Indexing   : désactivé (hors périmètre officiel Google, voir en-tête du fichier)")
     print(f"   IndexNow          : {len(idx_success)}/{len(INDEXNOW_ENDPOINTS)} endpoints OK")
     print(f"   Ping sitemap      : {sum(ping_results.values())}/{len(ping_results)} moteurs")
-    
-    quota = load_quota_state()
-    remaining = GOOGLE_DAILY_LIMIT - quota["count"]
-    if remaining > 0:
-        print(f"   Quota Google restant: {remaining}/{GOOGLE_DAILY_LIMIT}")
-    else:
-        print(f"   ⚠️ Quota Google épuisé pour aujourd'hui")
-    
     print("=" * 70)
     print("✅ Terminé !")
     print("=" * 70)

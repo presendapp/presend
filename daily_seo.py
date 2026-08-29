@@ -297,9 +297,10 @@ def ping_sitemap():
     sitemap_url = urllib.parse.quote(f"https://{HOST}/sitemap.xml")
     results = {}
     
+    # Google (deprecated 2023, returns 404) and Bing (deprecated 2022,
+    # returns 410) shut down their sitemap ping endpoints -- confirmed
+    # 29/08/2026. Real-time discovery for both is handled by IndexNow.
     engines = {
-        "Google": f"https://www.google.com/ping?sitemap={sitemap_url}",
-        "Bing": f"https://www.bing.com/ping?sitemap={sitemap_url}",
         "Yandex": f"https://webmaster.yandex.ru/ping?sitemap={sitemap_url}",
     }
     
@@ -344,22 +345,18 @@ def main():
         rotation["index"] = (idx + GOOGLE_DAILY_LIMIT) % max(len(non_recent), 1)
         save_rotation_state(rotation)
     
-    # 4. Google Indexing API
+    # 4. Google Indexing API — DÉSACTIVÉ (audit du 29/08/2026).
+    # Google restreint officiellement cette API aux pages JobPosting et
+    # BroadcastEvent (VideoObject). Depuis la clarification de l'équipe
+    # Search Relations en mai 2025, l'utiliser pour du contenu générique
+    # (comme nos pages d'outils) est hors périmètre officiel, sans bénéfice
+    # garanti, et expose le compte de service à un risque de révocation.
+    # Le sitemap.xml (généré ci-dessus) et IndexNow (juste après) couvrent
+    # l'indexation de façon légitime et sans restriction de contenu.
     log("\n" + "─" * 60)
-    log("🔑 GOOGLE INDEXING API")
+    log("🔑 GOOGLE INDEXING API — désactivé (hors périmètre officiel Google)")
     log("─" * 60)
-    
-    if not os.path.exists(SERVICE_ACCOUNT_FILE):
-        log("❌ Clé Google Service Account introuvable")
-        g_success = 0
-    else:
-        access_token = get_access_token()
-        if access_token:
-            g_success, g_failed = submit_to_google(google_urls, access_token)
-            log(f"   Résultat: ✅ {g_success} | ❌ {g_failed}")
-        else:
-            log("   ⚠️ Token Google indisponible")
-            g_success = 0
+    g_success = 0
     
     # 5. IndexNow (TOUT le sitemap)
     log("\n" + "─" * 60)
@@ -391,8 +388,7 @@ def main():
     log("=" * 60)
     log(f"   URLs sitemap      : {len(all_urls)}")
     log(f"   URLs récentes     : {len(recent_urls)}")
-    log(f"   Google soumises   : {g_success}")
-    log(f"   Quota restant     : {remaining}/{GOOGLE_DAILY_LIMIT}")
+    log(f"   Google Indexing   : désactivé (hors périmètre officiel Google)")
     log(f"   IndexNow          : {len(idx_success)}/{len(INDEXNOW_ENDPOINTS)}")
     log(f"   Ping              : {sum(ping_results.values())}/{len(ping_results)}")
     log("=" * 60)

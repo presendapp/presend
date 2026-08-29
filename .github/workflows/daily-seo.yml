@@ -24,27 +24,16 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Decode and write Google service account credentials
-        env:
-          GOOGLE_CREDS_B64: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
-        run: |
-          python3 -c "
-          import base64, os, json
-          b64 = os.environ['GOOGLE_CREDS_B64']
-          decoded = base64.b64decode(b64)
-          with open('google-service-account.json', 'wb') as f:
-              f.write(decoded)
-          with open('google-service-account.json', 'r') as f:
-              data = json.load(f)
-          print('OK - project:', data['project_id'])
-          "
-
       - name: Run daily SEO
         run: python3 daily_seo.py
-
-      - name: Clean up credentials
-        if: always()
-        run: rm -f google-service-account.json
+        # Note: the Google Indexing API step inside daily_seo.py was disabled
+        # on 2026-08-29. That API is officially restricted to JobPosting and
+        # BroadcastEvent content, unrelated to this site, and using it for
+        # general pages risks Google Cloud access revocation per the May 2025
+        # Search Relations clarification. No Google credentials are needed
+        # for this workflow anymore -- sitemap.xml and IndexNow (separate
+        # workflow) cover indexing legitimately and without content-type
+        # restrictions.
 
       - name: Commit and push changes
         run: |

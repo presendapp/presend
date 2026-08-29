@@ -14,19 +14,10 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: Install dependencies
-        run: pip install google-auth google-auth-oauthlib
-      - name: Decode and write Google service account credentials
-        env:
-          GOOGLE_CREDS_B64: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
-        run: |
-          python3 -c "
-          import base64, os
-          with open('google-service-account.json', 'wb') as f:
-              f.write(base64.b64decode(os.environ['GOOGLE_CREDS_B64']))
-          "
+      # Note: no longer installs google-auth / decodes Google credentials.
+      # auto_discovery_master.sh -> submit_all.py no longer uses the Google
+      # Indexing API (disabled 2026-08-29, see submit_all.py header) since
+      # it's officially restricted to JobPosting/BroadcastEvent content and
+      # using it here risked Google Cloud access revocation for no benefit.
       - name: Run auto discovery master
         run: timeout 480 bash auto_discovery_master.sh || true
-      - name: Clean up credentials
-        if: always()
-        run: rm -f google-service-account.json
