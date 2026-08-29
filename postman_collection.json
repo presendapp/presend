@@ -1,0 +1,2672 @@
+{
+    "item": [
+        {
+            "name": "hash",
+            "description": "",
+            "item": [
+                {
+                    "id": "db7f6cf0-a026-4d99-af74-090297b1de27",
+                    "name": "Hash a file",
+                    "request": {
+                        "name": "Hash a file",
+                        "description": {
+                            "content": "Returns SHA-256, SHA-1 and SHA-512 for a file up to 20MB.",
+                            "type": "text/plain"
+                        },
+                        "url": {
+                            "path": [
+                                "hash"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [],
+                            "variable": []
+                        },
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/octet-stream"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "method": "POST",
+                        "body": {
+                            "mode": "file"
+                        },
+                        "auth": null
+                    },
+                    "response": [
+                        {
+                            "id": "1ed56fde-8cb9-406d-8427-dc762c6e6918",
+                            "name": "Hash results",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "hash"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/octet-stream"
+                                    },
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "method": "POST",
+                                "body": {
+                                    "mode": "file"
+                                }
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n  \"size_bytes\": \"<integer>\",\n  \"hashes\": {\n    \"sha256\": \"<string>\",\n    \"sha1\": \"<string>\",\n    \"sha512\": \"<string>\"\n  }\n}",
+                            "cookie": [],
+                            "_postman_previewlanguage": "json"
+                        },
+                        {
+                            "id": "5df132df-2cc3-4187-bf6d-b58628059113",
+                            "name": "File too large",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "hash"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/octet-stream"
+                                    }
+                                ],
+                                "method": "POST",
+                                "body": {
+                                    "mode": "file"
+                                }
+                            },
+                            "status": "Request Entity Too Large",
+                            "code": 413,
+                            "header": [],
+                            "cookie": [],
+                            "_postman_previewlanguage": "text"
+                        },
+                        {
+                            "id": "c921717d-f70c-4b0f-9c5c-78c72a683eb1",
+                            "name": "Rate limit exceeded",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "hash"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/octet-stream"
+                                    }
+                                ],
+                                "method": "POST",
+                                "body": {
+                                    "mode": "file"
+                                }
+                            },
+                            "status": "Too Many Requests",
+                            "code": 429,
+                            "header": [],
+                            "cookie": [],
+                            "_postman_previewlanguage": "text"
+                        }
+                    ],
+                    "event": [],
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    }
+                }
+            ]
+        },
+        {
+            "name": "url-clean",
+            "description": "",
+            "item": [
+                {
+                    "id": "e6959af2-7959-4437-9f7e-9e6ff816f852",
+                    "name": "Clean a single URL",
+                    "request": {
+                        "name": "Clean a single URL",
+                        "description": {
+                            "content": "Strips 60+ tracking parameters from a URL.",
+                            "type": "text/plain"
+                        },
+                        "url": {
+                            "path": [
+                                "url-clean"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [
+                                {
+                                    "disabled": false,
+                                    "description": {
+                                        "content": "(Required) ",
+                                        "type": "text/plain"
+                                    },
+                                    "key": "url",
+                                    "value": "<string>"
+                                }
+                            ],
+                            "variable": []
+                        },
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "method": "GET",
+                        "body": {},
+                        "auth": null
+                    },
+                    "response": [
+                        {
+                            "id": "dd8c4468-b0c8-4186-886d-9d5ac751f04c",
+                            "name": "Cleaned URL",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "url-clean"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [
+                                        {
+                                            "disabled": false,
+                                            "description": {
+                                                "content": "(Required) ",
+                                                "type": "text/plain"
+                                            },
+                                            "key": "url",
+                                            "value": "<string>"
+                                        }
+                                    ],
+                                    "variable": []
+                                },
+                                "header": [
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "method": "GET",
+                                "body": {}
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n  \"original\": \"<string>\",\n  \"clean\": \"<string>\",\n  \"removed\": \"<integer>\",\n  \"valid\": \"<boolean>\"\n}",
+                            "cookie": [],
+                            "_postman_previewlanguage": "json"
+                        },
+                        {
+                            "id": "bc75a871-4187-4a98-91f0-c4649a59c2c5",
+                            "name": "Rate limit exceeded",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "url-clean"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [
+                                        {
+                                            "disabled": false,
+                                            "description": {
+                                                "content": "(Required) ",
+                                                "type": "text/plain"
+                                            },
+                                            "key": "url",
+                                            "value": "<string>"
+                                        }
+                                    ],
+                                    "variable": []
+                                },
+                                "method": "GET",
+                                "body": {}
+                            },
+                            "status": "Too Many Requests",
+                            "code": 429,
+                            "header": [],
+                            "cookie": [],
+                            "_postman_previewlanguage": "text"
+                        }
+                    ],
+                    "event": [],
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    }
+                },
+                {
+                    "id": "b4ff10ab-9e3e-4145-9742-d38607abb3e4",
+                    "name": "Clean a batch of URLs",
+                    "request": {
+                        "name": "Clean a batch of URLs",
+                        "description": {
+                            "content": "Strips tracking parameters from up to 100 URLs at once.",
+                            "type": "text/plain"
+                        },
+                        "url": {
+                            "path": [
+                                "url-clean"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [],
+                            "variable": []
+                        },
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "method": "POST",
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"urls\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                            "options": {
+                                "raw": {
+                                    "headerFamily": "json",
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "auth": null
+                    },
+                    "response": [
+                        {
+                            "id": "dd0d6c11-7e4d-4fab-bd61-17062cbce879",
+                            "name": "Cleaned URLs batch",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "url-clean"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "method": "POST",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"urls\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                                    "options": {
+                                        "raw": {
+                                            "headerFamily": "json",
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "header": [],
+                            "cookie": [],
+                            "_postman_previewlanguage": "text"
+                        },
+                        {
+                            "id": "6235961f-03f6-4872-985b-0782118b41a8",
+                            "name": "Rate limit exceeded",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "url-clean"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "method": "POST",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"urls\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                                    "options": {
+                                        "raw": {
+                                            "headerFamily": "json",
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            },
+                            "status": "Too Many Requests",
+                            "code": 429,
+                            "header": [],
+                            "cookie": [],
+                            "_postman_previewlanguage": "text"
+                        }
+                    ],
+                    "event": [],
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    }
+                }
+            ]
+        },
+        {
+            "name": "uuid",
+            "description": "",
+            "item": [
+                {
+                    "id": "5ca153d9-52c7-406c-a539-253863b63088",
+                    "name": "Generate UUIDs",
+                    "request": {
+                        "name": "Generate UUIDs",
+                        "description": {
+                            "content": "Generates up to 100 random UUID v4 values.",
+                            "type": "text/plain"
+                        },
+                        "url": {
+                            "path": [
+                                "uuid"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [
+                                {
+                                    "disabled": false,
+                                    "description": {
+                                        "content": "",
+                                        "type": "text/plain"
+                                    },
+                                    "key": "count",
+                                    "value": "1"
+                                }
+                            ],
+                            "variable": []
+                        },
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "method": "GET",
+                        "body": {},
+                        "auth": null
+                    },
+                    "response": [
+                        {
+                            "id": "fb6e7bd2-a1cb-4cd7-ba26-7a172765b5c7",
+                            "name": "Generated UUIDs",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "uuid"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [
+                                        {
+                                            "disabled": false,
+                                            "description": {
+                                                "content": "",
+                                                "type": "text/plain"
+                                            },
+                                            "key": "count",
+                                            "value": "1"
+                                        }
+                                    ],
+                                    "variable": []
+                                },
+                                "header": [
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "method": "GET",
+                                "body": {}
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n  \"count\": \"<integer>\",\n  \"uuids\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                            "cookie": [],
+                            "_postman_previewlanguage": "json"
+                        },
+                        {
+                            "id": "cf8cc936-c39b-42c5-b4f7-1639eb415253",
+                            "name": "Rate limit exceeded",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "uuid"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [
+                                        {
+                                            "disabled": false,
+                                            "description": {
+                                                "content": "",
+                                                "type": "text/plain"
+                                            },
+                                            "key": "count",
+                                            "value": "1"
+                                        }
+                                    ],
+                                    "variable": []
+                                },
+                                "method": "GET",
+                                "body": {}
+                            },
+                            "status": "Too Many Requests",
+                            "code": 429,
+                            "header": [],
+                            "cookie": [],
+                            "_postman_previewlanguage": "text"
+                        }
+                    ],
+                    "event": [],
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    }
+                }
+            ]
+        },
+        {
+            "name": "base64",
+            "description": "",
+            "item": [
+                {
+                    "id": "2c09de79-6ea8-4b50-a6ad-fe0627ec623f",
+                    "name": "Encode or decode Base64",
+                    "request": {
+                        "name": "Encode or decode Base64",
+                        "description": {},
+                        "url": {
+                            "path": [
+                                "base64"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [
+                                {
+                                    "disabled": false,
+                                    "description": {
+                                        "content": "(Required)  (This can only be one of encode,decode)",
+                                        "type": "text/plain"
+                                    },
+                                    "key": "action",
+                                    "value": "decode"
+                                },
+                                {
+                                    "disabled": false,
+                                    "description": {
+                                        "content": "(Required) ",
+                                        "type": "text/plain"
+                                    },
+                                    "key": "text",
+                                    "value": "<string>"
+                                }
+                            ],
+                            "variable": []
+                        },
+                        "method": "GET",
+                        "body": {},
+                        "auth": null
+                    },
+                    "response": [
+                        {
+                            "id": "7d2fc951-2d0b-46ca-8276-cfa973076d20",
+                            "name": "Encoded/decoded result",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "base64"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [
+                                        {
+                                            "disabled": false,
+                                            "description": {
+                                                "content": "(Required)  (This can only be one of encode,decode)",
+                                                "type": "text/plain"
+                                            },
+                                            "key": "action",
+                                            "value": "decode"
+                                        },
+                                        {
+                                            "disabled": false,
+                                            "description": {
+                                                "content": "(Required) ",
+                                                "type": "text/plain"
+                                            },
+                                            "key": "text",
+                                            "value": "<string>"
+                                        }
+                                    ],
+                                    "variable": []
+                                },
+                                "method": "GET",
+                                "body": {}
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "header": [],
+                            "cookie": [],
+                            "_postman_previewlanguage": "text"
+                        },
+                        {
+                            "id": "d88564ee-dbe8-4cc1-86f6-664fd7471234",
+                            "name": "Invalid input",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "base64"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [
+                                        {
+                                            "disabled": false,
+                                            "description": {
+                                                "content": "(Required)  (This can only be one of encode,decode)",
+                                                "type": "text/plain"
+                                            },
+                                            "key": "action",
+                                            "value": "decode"
+                                        },
+                                        {
+                                            "disabled": false,
+                                            "description": {
+                                                "content": "(Required) ",
+                                                "type": "text/plain"
+                                            },
+                                            "key": "text",
+                                            "value": "<string>"
+                                        }
+                                    ],
+                                    "variable": []
+                                },
+                                "method": "GET",
+                                "body": {}
+                            },
+                            "status": "Bad Request",
+                            "code": 400,
+                            "header": [],
+                            "cookie": [],
+                            "_postman_previewlanguage": "text"
+                        },
+                        {
+                            "id": "6bfe5eaf-7071-4f63-a6ab-f6c4afcb4680",
+                            "name": "Rate limit exceeded",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "base64"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [
+                                        {
+                                            "disabled": false,
+                                            "description": {
+                                                "content": "(Required)  (This can only be one of encode,decode)",
+                                                "type": "text/plain"
+                                            },
+                                            "key": "action",
+                                            "value": "decode"
+                                        },
+                                        {
+                                            "disabled": false,
+                                            "description": {
+                                                "content": "(Required) ",
+                                                "type": "text/plain"
+                                            },
+                                            "key": "text",
+                                            "value": "<string>"
+                                        }
+                                    ],
+                                    "variable": []
+                                },
+                                "method": "GET",
+                                "body": {}
+                            },
+                            "status": "Too Many Requests",
+                            "code": 429,
+                            "header": [],
+                            "cookie": [],
+                            "_postman_previewlanguage": "text"
+                        }
+                    ],
+                    "event": [],
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    }
+                }
+            ]
+        },
+        {
+            "name": "jwt-decode",
+            "description": "",
+            "item": [
+                {
+                    "id": "bb91e9b3-8e4e-4f3b-a7c8-e3fa6c44029f",
+                    "name": "Decode a JWT",
+                    "request": {
+                        "name": "Decode a JWT",
+                        "description": {
+                            "content": "Decodes the header and payload of a JWT. Does not verify the signature.",
+                            "type": "text/plain"
+                        },
+                        "url": {
+                            "path": [
+                                "jwt-decode"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [
+                                {
+                                    "disabled": false,
+                                    "description": {
+                                        "content": "(Required) ",
+                                        "type": "text/plain"
+                                    },
+                                    "key": "token",
+                                    "value": "<string>"
+                                }
+                            ],
+                            "variable": []
+                        },
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "method": "GET",
+                        "body": {},
+                        "auth": null
+                    },
+                    "response": [
+                        {
+                            "id": "b941eda2-1d8e-446a-adae-c13757220d30",
+                            "name": "Decoded JWT",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "jwt-decode"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [
+                                        {
+                                            "disabled": false,
+                                            "description": {
+                                                "content": "(Required) ",
+                                                "type": "text/plain"
+                                            },
+                                            "key": "token",
+                                            "value": "<string>"
+                                        }
+                                    ],
+                                    "variable": []
+                                },
+                                "header": [
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "method": "GET",
+                                "body": {}
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n  \"header\": {},\n  \"payload\": {},\n  \"signature_verified\": \"<boolean>\"\n}",
+                            "cookie": [],
+                            "_postman_previewlanguage": "json"
+                        },
+                        {
+                            "id": "14ccc252-8d43-456c-9920-86b66f554c6e",
+                            "name": "Invalid JWT",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "jwt-decode"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [
+                                        {
+                                            "disabled": false,
+                                            "description": {
+                                                "content": "(Required) ",
+                                                "type": "text/plain"
+                                            },
+                                            "key": "token",
+                                            "value": "<string>"
+                                        }
+                                    ],
+                                    "variable": []
+                                },
+                                "method": "GET",
+                                "body": {}
+                            },
+                            "status": "Bad Request",
+                            "code": 400,
+                            "header": [],
+                            "cookie": [],
+                            "_postman_previewlanguage": "text"
+                        },
+                        {
+                            "id": "0afd83f4-315c-40e7-b3c2-264fd806b1b1",
+                            "name": "Rate limit exceeded",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "jwt-decode"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [
+                                        {
+                                            "disabled": false,
+                                            "description": {
+                                                "content": "(Required) ",
+                                                "type": "text/plain"
+                                            },
+                                            "key": "token",
+                                            "value": "<string>"
+                                        }
+                                    ],
+                                    "variable": []
+                                },
+                                "method": "GET",
+                                "body": {}
+                            },
+                            "status": "Too Many Requests",
+                            "code": 429,
+                            "header": [],
+                            "cookie": [],
+                            "_postman_previewlanguage": "text"
+                        }
+                    ],
+                    "event": [],
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    }
+                }
+            ]
+        },
+        {
+            "name": "ip",
+            "description": "",
+            "item": [
+                {
+                    "id": "60e71e74-5793-4e5b-8d73-6db6b5d828d3",
+                    "name": "Get caller IP geolocation",
+                    "request": {
+                        "name": "Get caller IP geolocation",
+                        "description": {
+                            "content": "Returns the caller's IP with city, country, currency, language, EU flag, and Tor exit-node detection (official Tor Project public list). Geolocation is read directly from Cloudflare's edge — no third-party API call.",
+                            "type": "text/plain"
+                        },
+                        "url": {
+                            "path": [
+                                "ip"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [],
+                            "variable": []
+                        },
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "method": "GET",
+                        "body": {},
+                        "auth": null
+                    },
+                    "response": [
+                        {
+                            "id": "ff2546e6-a6f3-43d9-91ce-5319cc0476dd",
+                            "name": "IP geolocation data",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "ip"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "header": [
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "method": "GET",
+                                "body": {}
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n  \"ip\": \"<string>\",\n  \"city\": \"<string>\",\n  \"region\": \"<string>\",\n  \"country\": \"<string>\",\n  \"continent\": \"<string>\",\n  \"latitude\": \"<string>\",\n  \"longitude\": \"<string>\",\n  \"postal\": \"<string>\",\n  \"timezone\": \"<string>\",\n  \"asn\": \"<integer>\",\n  \"org\": \"<string>\",\n  \"currency\": \"<string>\",\n  \"language\": \"<string>\",\n  \"is_eu\": \"<boolean>\",\n  \"tor\": {\n    \"checked\": \"<boolean>\",\n    \"is_tor\": \"<boolean>\"\n  }\n}",
+                            "cookie": [],
+                            "_postman_previewlanguage": "json"
+                        }
+                    ],
+                    "event": [],
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    }
+                }
+            ]
+        },
+        {
+            "name": "timestamp",
+            "description": "",
+            "item": [
+                {
+                    "id": "ae719efa-4c8b-42f7-b663-c30d6fd4e1e4",
+                    "name": "Convert timestamps",
+                    "request": {
+                        "name": "Convert timestamps",
+                        "description": {
+                            "content": "Current time, or convert between Unix timestamp and ISO date.",
+                            "type": "text/plain"
+                        },
+                        "url": {
+                            "path": [
+                                "timestamp"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [
+                                {
+                                    "disabled": false,
+                                    "description": {
+                                        "content": "",
+                                        "type": "text/plain"
+                                    },
+                                    "key": "unix",
+                                    "value": "<integer>"
+                                },
+                                {
+                                    "disabled": false,
+                                    "description": {
+                                        "content": "",
+                                        "type": "text/plain"
+                                    },
+                                    "key": "date",
+                                    "value": "<string>"
+                                }
+                            ],
+                            "variable": []
+                        },
+                        "method": "GET",
+                        "body": {},
+                        "auth": null
+                    },
+                    "response": [
+                        {
+                            "id": "79c50d53-c595-4721-96c9-7795cade3f86",
+                            "name": "Converted timestamp",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "timestamp"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [
+                                        {
+                                            "disabled": false,
+                                            "description": {
+                                                "content": "",
+                                                "type": "text/plain"
+                                            },
+                                            "key": "unix",
+                                            "value": "<integer>"
+                                        },
+                                        {
+                                            "disabled": false,
+                                            "description": {
+                                                "content": "",
+                                                "type": "text/plain"
+                                            },
+                                            "key": "date",
+                                            "value": "<string>"
+                                        }
+                                    ],
+                                    "variable": []
+                                },
+                                "method": "GET",
+                                "body": {}
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "header": [],
+                            "cookie": [],
+                            "_postman_previewlanguage": "text"
+                        }
+                    ],
+                    "event": [],
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    }
+                }
+            ]
+        },
+        {
+            "name": "color",
+            "description": "",
+            "item": [
+                {
+                    "id": "3667894f-3eff-4d13-a182-bf1fd8c9efea",
+                    "name": "Convert color formats",
+                    "request": {
+                        "name": "Convert color formats",
+                        "description": {
+                            "content": "Convert between hex, RGB and HSL.",
+                            "type": "text/plain"
+                        },
+                        "url": {
+                            "path": [
+                                "color"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [
+                                {
+                                    "disabled": false,
+                                    "description": {
+                                        "content": "",
+                                        "type": "text/plain"
+                                    },
+                                    "key": "hex",
+                                    "value": "<string>"
+                                },
+                                {
+                                    "disabled": false,
+                                    "description": {
+                                        "content": "",
+                                        "type": "text/plain"
+                                    },
+                                    "key": "rgb",
+                                    "value": "<string>"
+                                },
+                                {
+                                    "disabled": false,
+                                    "description": {
+                                        "content": "",
+                                        "type": "text/plain"
+                                    },
+                                    "key": "hsl",
+                                    "value": "<string>"
+                                }
+                            ],
+                            "variable": []
+                        },
+                        "method": "GET",
+                        "body": {},
+                        "auth": null
+                    },
+                    "response": [
+                        {
+                            "id": "a0c67b61-4672-4b7f-8d01-ed4db3348293",
+                            "name": "Converted color",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "color"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [
+                                        {
+                                            "disabled": false,
+                                            "description": {
+                                                "content": "",
+                                                "type": "text/plain"
+                                            },
+                                            "key": "hex",
+                                            "value": "<string>"
+                                        },
+                                        {
+                                            "disabled": false,
+                                            "description": {
+                                                "content": "",
+                                                "type": "text/plain"
+                                            },
+                                            "key": "rgb",
+                                            "value": "<string>"
+                                        },
+                                        {
+                                            "disabled": false,
+                                            "description": {
+                                                "content": "",
+                                                "type": "text/plain"
+                                            },
+                                            "key": "hsl",
+                                            "value": "<string>"
+                                        }
+                                    ],
+                                    "variable": []
+                                },
+                                "method": "GET",
+                                "body": {}
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "header": [],
+                            "cookie": [],
+                            "_postman_previewlanguage": "text"
+                        }
+                    ],
+                    "event": [],
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    }
+                }
+            ]
+        },
+        {
+            "name": "user-agent",
+            "description": "",
+            "item": [
+                {
+                    "id": "8b1be518-9a58-4887-abe5-82226c2849e6",
+                    "name": "Parse a User-Agent string",
+                    "request": {
+                        "name": "Parse a User-Agent string",
+                        "description": {},
+                        "url": {
+                            "path": [
+                                "user-agent"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [
+                                {
+                                    "disabled": false,
+                                    "description": {
+                                        "content": "",
+                                        "type": "text/plain"
+                                    },
+                                    "key": "ua",
+                                    "value": "<string>"
+                                }
+                            ],
+                            "variable": []
+                        },
+                        "method": "GET",
+                        "body": {},
+                        "auth": null
+                    },
+                    "response": [
+                        {
+                            "id": "7aaa6f31-9f06-44d4-b679-93850b935034",
+                            "name": "Parsed User-Agent",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "user-agent"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [
+                                        {
+                                            "disabled": false,
+                                            "description": {
+                                                "content": "",
+                                                "type": "text/plain"
+                                            },
+                                            "key": "ua",
+                                            "value": "<string>"
+                                        }
+                                    ],
+                                    "variable": []
+                                },
+                                "method": "GET",
+                                "body": {}
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "header": [],
+                            "cookie": [],
+                            "_postman_previewlanguage": "text"
+                        }
+                    ],
+                    "event": [],
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    }
+                }
+            ]
+        },
+        {
+            "name": "password",
+            "description": "",
+            "item": [
+                {
+                    "id": "713165b1-2ff9-458e-8f8b-43a95e9cf427",
+                    "name": "Generate a secure password",
+                    "request": {
+                        "name": "Generate a secure password",
+                        "description": {},
+                        "url": {
+                            "path": [
+                                "password"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [
+                                {
+                                    "disabled": false,
+                                    "description": {
+                                        "content": "",
+                                        "type": "text/plain"
+                                    },
+                                    "key": "length",
+                                    "value": "16"
+                                },
+                                {
+                                    "disabled": false,
+                                    "description": {
+                                        "content": " (This can only be one of 0,1)",
+                                        "type": "text/plain"
+                                    },
+                                    "key": "symbols",
+                                    "value": "0"
+                                },
+                                {
+                                    "disabled": false,
+                                    "description": {
+                                        "content": " (This can only be one of 0,1)",
+                                        "type": "text/plain"
+                                    },
+                                    "key": "uppercase",
+                                    "value": "0"
+                                },
+                                {
+                                    "disabled": false,
+                                    "description": {
+                                        "content": " (This can only be one of 0,1)",
+                                        "type": "text/plain"
+                                    },
+                                    "key": "numbers",
+                                    "value": "0"
+                                },
+                                {
+                                    "disabled": false,
+                                    "description": {
+                                        "content": " (This can only be one of 0,1)",
+                                        "type": "text/plain"
+                                    },
+                                    "key": "exclude_ambiguous",
+                                    "value": "0"
+                                }
+                            ],
+                            "variable": []
+                        },
+                        "method": "GET",
+                        "body": {},
+                        "auth": null
+                    },
+                    "response": [
+                        {
+                            "id": "8292b0b6-5058-4b1c-a231-60fa78d0b237",
+                            "name": "Generated password with entropy estimate",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "password"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [
+                                        {
+                                            "disabled": false,
+                                            "description": {
+                                                "content": "",
+                                                "type": "text/plain"
+                                            },
+                                            "key": "length",
+                                            "value": "16"
+                                        },
+                                        {
+                                            "disabled": false,
+                                            "description": {
+                                                "content": " (This can only be one of 0,1)",
+                                                "type": "text/plain"
+                                            },
+                                            "key": "symbols",
+                                            "value": "0"
+                                        },
+                                        {
+                                            "disabled": false,
+                                            "description": {
+                                                "content": " (This can only be one of 0,1)",
+                                                "type": "text/plain"
+                                            },
+                                            "key": "uppercase",
+                                            "value": "0"
+                                        },
+                                        {
+                                            "disabled": false,
+                                            "description": {
+                                                "content": " (This can only be one of 0,1)",
+                                                "type": "text/plain"
+                                            },
+                                            "key": "numbers",
+                                            "value": "0"
+                                        },
+                                        {
+                                            "disabled": false,
+                                            "description": {
+                                                "content": " (This can only be one of 0,1)",
+                                                "type": "text/plain"
+                                            },
+                                            "key": "exclude_ambiguous",
+                                            "value": "0"
+                                        }
+                                    ],
+                                    "variable": []
+                                },
+                                "method": "GET",
+                                "body": {}
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "header": [],
+                            "cookie": [],
+                            "_postman_previewlanguage": "text"
+                        }
+                    ],
+                    "event": [],
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    }
+                }
+            ]
+        },
+        {
+            "name": "email-validate",
+            "description": "",
+            "item": [
+                {
+                    "id": "b83b622f-8693-43de-827a-003e0205dff9",
+                    "name": "Validate an email address",
+                    "request": {
+                        "name": "Validate an email address",
+                        "description": {
+                            "content": "Checks syntax and verifies the domain has a valid MX record.",
+                            "type": "text/plain"
+                        },
+                        "url": {
+                            "path": [
+                                "email-validate"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [
+                                {
+                                    "disabled": false,
+                                    "description": {
+                                        "content": "(Required) ",
+                                        "type": "text/plain"
+                                    },
+                                    "key": "email",
+                                    "value": "<string>"
+                                }
+                            ],
+                            "variable": []
+                        },
+                        "method": "GET",
+                        "body": {},
+                        "auth": null
+                    },
+                    "response": [
+                        {
+                            "id": "98a47e38-acf1-4a28-85e1-2833df7afa25",
+                            "name": "Validation result",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "email-validate"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [
+                                        {
+                                            "disabled": false,
+                                            "description": {
+                                                "content": "(Required) ",
+                                                "type": "text/plain"
+                                            },
+                                            "key": "email",
+                                            "value": "<string>"
+                                        }
+                                    ],
+                                    "variable": []
+                                },
+                                "method": "GET",
+                                "body": {}
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "header": [],
+                            "cookie": [],
+                            "_postman_previewlanguage": "text"
+                        }
+                    ],
+                    "event": [],
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    }
+                }
+            ]
+        },
+        {
+            "name": "favicon",
+            "description": "",
+            "item": [
+                {
+                    "id": "7e98af76-cb53-4cf9-af2b-f392acc9cae3",
+                    "name": "Fetch a domain's favicon URL",
+                    "request": {
+                        "name": "Fetch a domain's favicon URL",
+                        "description": {},
+                        "url": {
+                            "path": [
+                                "favicon"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [
+                                {
+                                    "disabled": false,
+                                    "description": {
+                                        "content": "(Required) ",
+                                        "type": "text/plain"
+                                    },
+                                    "key": "domain",
+                                    "value": "<string>"
+                                }
+                            ],
+                            "variable": []
+                        },
+                        "method": "GET",
+                        "body": {},
+                        "auth": null
+                    },
+                    "response": [
+                        {
+                            "id": "b0db47ca-f97f-4a11-8afc-1692ee152109",
+                            "name": "Favicon URL",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "favicon"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [
+                                        {
+                                            "disabled": false,
+                                            "description": {
+                                                "content": "(Required) ",
+                                                "type": "text/plain"
+                                            },
+                                            "key": "domain",
+                                            "value": "<string>"
+                                        }
+                                    ],
+                                    "variable": []
+                                },
+                                "method": "GET",
+                                "body": {}
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "header": [],
+                            "cookie": [],
+                            "_postman_previewlanguage": "text"
+                        },
+                        {
+                            "id": "84c0b142-f7e2-4231-a438-03fb6b47284a",
+                            "name": "Disallowed domain",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "favicon"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [
+                                        {
+                                            "disabled": false,
+                                            "description": {
+                                                "content": "(Required) ",
+                                                "type": "text/plain"
+                                            },
+                                            "key": "domain",
+                                            "value": "<string>"
+                                        }
+                                    ],
+                                    "variable": []
+                                },
+                                "method": "GET",
+                                "body": {}
+                            },
+                            "status": "Bad Request",
+                            "code": 400,
+                            "header": [],
+                            "cookie": [],
+                            "_postman_previewlanguage": "text"
+                        }
+                    ],
+                    "event": [],
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    }
+                }
+            ]
+        },
+        {
+            "name": "csv-json",
+            "description": "",
+            "item": [
+                {
+                    "id": "429b52b3-4cd6-4b97-aa73-a71f5617e010",
+                    "name": "Convert between JSON and CSV (GET)",
+                    "request": {
+                        "name": "Convert between JSON and CSV (GET)",
+                        "description": {},
+                        "url": {
+                            "path": [
+                                "csv-json"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [
+                                {
+                                    "disabled": false,
+                                    "description": {
+                                        "content": "(Required)  (This can only be one of json-to-csv,csv-to-json)",
+                                        "type": "text/plain"
+                                    },
+                                    "key": "direction",
+                                    "value": "csv-to-json"
+                                },
+                                {
+                                    "disabled": false,
+                                    "description": {
+                                        "content": "(Required) ",
+                                        "type": "text/plain"
+                                    },
+                                    "key": "data",
+                                    "value": "<string>"
+                                }
+                            ],
+                            "variable": []
+                        },
+                        "method": "GET",
+                        "body": {},
+                        "auth": null
+                    },
+                    "response": [
+                        {
+                            "id": "1aaf7333-80ae-4204-ad9d-c0916b8039de",
+                            "name": "Converted data",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "csv-json"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [
+                                        {
+                                            "disabled": false,
+                                            "description": {
+                                                "content": "(Required)  (This can only be one of json-to-csv,csv-to-json)",
+                                                "type": "text/plain"
+                                            },
+                                            "key": "direction",
+                                            "value": "csv-to-json"
+                                        },
+                                        {
+                                            "disabled": false,
+                                            "description": {
+                                                "content": "(Required) ",
+                                                "type": "text/plain"
+                                            },
+                                            "key": "data",
+                                            "value": "<string>"
+                                        }
+                                    ],
+                                    "variable": []
+                                },
+                                "method": "GET",
+                                "body": {}
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "header": [],
+                            "cookie": [],
+                            "_postman_previewlanguage": "text"
+                        }
+                    ],
+                    "event": [],
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    }
+                },
+                {
+                    "id": "ddc7942a-846f-4ac5-b378-0ab1f5d9b997",
+                    "name": "Convert between JSON and CSV (POST)",
+                    "request": {
+                        "name": "Convert between JSON and CSV (POST)",
+                        "description": {},
+                        "url": {
+                            "path": [
+                                "csv-json"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [],
+                            "variable": []
+                        },
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "method": "POST",
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"direction\": \"json-to-csv\",\n  \"data\": \"<string>\"\n}",
+                            "options": {
+                                "raw": {
+                                    "headerFamily": "json",
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "auth": null
+                    },
+                    "response": [
+                        {
+                            "id": "d3a2afa6-a35c-4e09-95a2-ef3f28c8abc4",
+                            "name": "Converted data",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "csv-json"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "method": "POST",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"direction\": \"json-to-csv\",\n  \"data\": \"<string>\"\n}",
+                                    "options": {
+                                        "raw": {
+                                            "headerFamily": "json",
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "header": [],
+                            "cookie": [],
+                            "_postman_previewlanguage": "text"
+                        }
+                    ],
+                    "event": [],
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    }
+                }
+            ]
+        },
+        {
+            "name": "password-breach",
+            "description": "",
+            "item": [
+                {
+                    "id": "0276d750-4227-4494-90f3-9f7b3b5db986",
+                    "name": "Check if a password has been breached",
+                    "request": {
+                        "name": "Check if a password has been breached",
+                        "description": {
+                            "content": "Uses HIBP k-anonymity — only 5 hash chars are sent externally.",
+                            "type": "text/plain"
+                        },
+                        "url": {
+                            "path": [
+                                "password-breach"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [
+                                {
+                                    "disabled": false,
+                                    "description": {
+                                        "content": "(Required) ",
+                                        "type": "text/plain"
+                                    },
+                                    "key": "password",
+                                    "value": "<string>"
+                                }
+                            ],
+                            "variable": []
+                        },
+                        "method": "GET",
+                        "body": {},
+                        "auth": null
+                    },
+                    "response": [
+                        {
+                            "id": "6dac48f5-d000-4174-b2d8-8f05fd34666b",
+                            "name": "Breach status",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "password-breach"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [
+                                        {
+                                            "disabled": false,
+                                            "description": {
+                                                "content": "(Required) ",
+                                                "type": "text/plain"
+                                            },
+                                            "key": "password",
+                                            "value": "<string>"
+                                        }
+                                    ],
+                                    "variable": []
+                                },
+                                "method": "GET",
+                                "body": {}
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "header": [],
+                            "cookie": [],
+                            "_postman_previewlanguage": "text"
+                        }
+                    ],
+                    "event": [],
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    }
+                }
+            ]
+        },
+        {
+            "name": "password-check",
+            "description": "",
+            "item": [
+                {
+                    "id": "a1170910-ba25-445f-b986-d5c6cc96e37e",
+                    "name": "Combined password strength + breach check",
+                    "request": {
+                        "name": "Combined password strength + breach check",
+                        "description": {
+                            "content": "Chains entropy/strength scoring with an optional HIBP breach check in a single call. Password is sent in the JSON body, never in a URL.",
+                            "type": "text/plain"
+                        },
+                        "url": {
+                            "path": [
+                                "password-check"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [],
+                            "variable": []
+                        },
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "method": "POST",
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"password\": \"<string>\",\n  \"check_breach\": true\n}",
+                            "options": {
+                                "raw": {
+                                    "headerFamily": "json",
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "auth": null
+                    },
+                    "response": [
+                        {
+                            "id": "f406b608-5e0d-4d5c-8930-9d77050c7199",
+                            "name": "Strength analysis and optional breach result",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "password-check"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    },
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "method": "POST",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"password\": \"<string>\",\n  \"check_breach\": true\n}",
+                                    "options": {
+                                        "raw": {
+                                            "headerFamily": "json",
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n  \"length\": \"<integer>\",\n  \"entropy_bits\": \"<integer>\",\n  \"strength\": \"very_weak\",\n  \"estimated_crack_time\": \"<string>\",\n  \"checks\": {},\n  \"breach\": {}\n}",
+                            "cookie": [],
+                            "_postman_previewlanguage": "json"
+                        }
+                    ],
+                    "event": [],
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    }
+                }
+            ]
+        },
+        {
+            "name": "email-disposable",
+            "description": "",
+            "item": [
+                {
+                    "id": "2c6360ab-8774-480e-b959-158f4cb22ffa",
+                    "name": "Detect disposable email domains",
+                    "request": {
+                        "name": "Detect disposable email domains",
+                        "description": {},
+                        "url": {
+                            "path": [
+                                "email-disposable"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [
+                                {
+                                    "disabled": false,
+                                    "description": {
+                                        "content": "(Required) ",
+                                        "type": "text/plain"
+                                    },
+                                    "key": "email",
+                                    "value": "<string>"
+                                }
+                            ],
+                            "variable": []
+                        },
+                        "method": "GET",
+                        "body": {},
+                        "auth": null
+                    },
+                    "response": [
+                        {
+                            "id": "a08da64f-bf28-4ccc-8bda-c8acf1710f42",
+                            "name": "Disposable status",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "email-disposable"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [
+                                        {
+                                            "disabled": false,
+                                            "description": {
+                                                "content": "(Required) ",
+                                                "type": "text/plain"
+                                            },
+                                            "key": "email",
+                                            "value": "<string>"
+                                        }
+                                    ],
+                                    "variable": []
+                                },
+                                "method": "GET",
+                                "body": {}
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "header": [],
+                            "cookie": [],
+                            "_postman_previewlanguage": "text"
+                        }
+                    ],
+                    "event": [],
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    }
+                }
+            ]
+        },
+        {
+            "name": "email-verify",
+            "description": "",
+            "item": [
+                {
+                    "id": "d46a73c2-341e-4127-9c84-5e54fac6b5f7",
+                    "name": "Combined email verification",
+                    "request": {
+                        "name": "Combined email verification",
+                        "description": {
+                            "content": "Chains syntax check, MX lookup, disposable-domain detection, and generic/role-account detection in a single call.",
+                            "type": "text/plain"
+                        },
+                        "url": {
+                            "path": [
+                                "email-verify"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [
+                                {
+                                    "disabled": false,
+                                    "description": {
+                                        "content": "(Required) ",
+                                        "type": "text/plain"
+                                    },
+                                    "key": "email",
+                                    "value": "<string>"
+                                }
+                            ],
+                            "variable": []
+                        },
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "method": "GET",
+                        "body": {},
+                        "auth": null
+                    },
+                    "response": [
+                        {
+                            "id": "2ae72081-b422-4717-83f8-3bda3ad870f4",
+                            "name": "Combined verification result",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "email-verify"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [
+                                        {
+                                            "disabled": false,
+                                            "description": {
+                                                "content": "(Required) ",
+                                                "type": "text/plain"
+                                            },
+                                            "key": "email",
+                                            "value": "<string>"
+                                        }
+                                    ],
+                                    "variable": []
+                                },
+                                "header": [
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "method": "GET",
+                                "body": {}
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n  \"email\": \"<string>\",\n  \"syntax_valid\": \"<boolean>\",\n  \"domain\": \"<string>\",\n  \"mx_checked\": \"<boolean>\",\n  \"has_mx\": \"<boolean>\",\n  \"mx_count\": \"<integer>\",\n  \"disposable\": \"<boolean>\",\n  \"role_account\": \"<boolean>\",\n  \"valid\": \"<boolean>\",\n  \"reason\": \"<string>\"\n}",
+                            "cookie": [],
+                            "_postman_previewlanguage": "json"
+                        }
+                    ],
+                    "event": [],
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    }
+                }
+            ]
+        },
+        {
+            "name": "phone-verify",
+            "description": "",
+            "item": [
+                {
+                    "id": "527acd54-6307-4257-863c-ccb456a36154",
+                    "name": "Validate and format a phone number",
+                    "request": {
+                        "name": "Validate and format a phone number",
+                        "description": {
+                            "content": "Validates and formats via libphonenumber-js. If “country” is omitted for a number without a leading +, the caller's IP-derived country (Cloudflare edge geolocation) is used as the default.",
+                            "type": "text/plain"
+                        },
+                        "url": {
+                            "path": [
+                                "phone-verify"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [
+                                {
+                                    "disabled": false,
+                                    "description": {
+                                        "content": "(Required) ",
+                                        "type": "text/plain"
+                                    },
+                                    "key": "number",
+                                    "value": "<string>"
+                                },
+                                {
+                                    "disabled": false,
+                                    "description": {
+                                        "content": "ISO 3166-1 alpha-2 country code (e.g. US, FR), used to interpret a number with no leading +.",
+                                        "type": "text/plain"
+                                    },
+                                    "key": "country",
+                                    "value": "<string>"
+                                }
+                            ],
+                            "variable": []
+                        },
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "method": "GET",
+                        "body": {},
+                        "auth": null
+                    },
+                    "response": [
+                        {
+                            "id": "7a3e6a9c-75b5-4a6f-bfaf-0e3d1e26bd4a",
+                            "name": "Validation and formatting result",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "phone-verify"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [
+                                        {
+                                            "disabled": false,
+                                            "description": {
+                                                "content": "(Required) ",
+                                                "type": "text/plain"
+                                            },
+                                            "key": "number",
+                                            "value": "<string>"
+                                        },
+                                        {
+                                            "disabled": false,
+                                            "description": {
+                                                "content": "ISO 3166-1 alpha-2 country code (e.g. US, FR), used to interpret a number with no leading +.",
+                                                "type": "text/plain"
+                                            },
+                                            "key": "country",
+                                            "value": "<string>"
+                                        }
+                                    ],
+                                    "variable": []
+                                },
+                                "header": [
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "method": "GET",
+                                "body": {}
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n  \"number\": \"<string>\",\n  \"valid\": \"<boolean>\",\n  \"country\": \"<string>\",\n  \"country_calling_code\": \"<string>\",\n  \"type\": \"<string>\",\n  \"formats\": {\n    \"e164\": \"<string>\",\n    \"international\": \"<string>\",\n    \"national\": \"<string>\",\n    \"uri\": \"<string>\"\n  },\n  \"default_country_used\": \"<string>\",\n  \"ip_inferred_country\": \"<string>\"\n}",
+                            "cookie": [],
+                            "_postman_previewlanguage": "json"
+                        }
+                    ],
+                    "event": [],
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    }
+                }
+            ]
+        },
+        {
+            "name": "security-headers",
+            "description": "",
+            "item": [
+                {
+                    "id": "cf0bd6ed-54e9-408b-b031-b75fee3d6bf5",
+                    "name": "Audit HTTP security headers",
+                    "request": {
+                        "name": "Audit HTTP security headers",
+                        "description": {},
+                        "url": {
+                            "path": [
+                                "security-headers"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [
+                                {
+                                    "disabled": false,
+                                    "description": {
+                                        "content": "(Required) ",
+                                        "type": "text/plain"
+                                    },
+                                    "key": "url",
+                                    "value": "<string>"
+                                }
+                            ],
+                            "variable": []
+                        },
+                        "method": "GET",
+                        "body": {},
+                        "auth": null
+                    },
+                    "response": [
+                        {
+                            "id": "1f722b1e-e0cb-4f6b-828a-97498390bd84",
+                            "name": "Security grade and per-header breakdown",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "security-headers"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [
+                                        {
+                                            "disabled": false,
+                                            "description": {
+                                                "content": "(Required) ",
+                                                "type": "text/plain"
+                                            },
+                                            "key": "url",
+                                            "value": "<string>"
+                                        }
+                                    ],
+                                    "variable": []
+                                },
+                                "method": "GET",
+                                "body": {}
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "header": [],
+                            "cookie": [],
+                            "_postman_previewlanguage": "text"
+                        }
+                    ],
+                    "event": [],
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    }
+                }
+            ]
+        },
+        {
+            "name": "url-reputation",
+            "description": "",
+            "item": [
+                {
+                    "id": "3278803d-4788-4308-954d-d7484adc54e6",
+                    "name": "Check URL against malware/phishing database",
+                    "request": {
+                        "name": "Check URL against malware/phishing database",
+                        "description": {
+                            "content": "Uses URLhaus (abuse.ch).",
+                            "type": "text/plain"
+                        },
+                        "url": {
+                            "path": [
+                                "url-reputation"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [
+                                {
+                                    "disabled": false,
+                                    "description": {
+                                        "content": "(Required) ",
+                                        "type": "text/plain"
+                                    },
+                                    "key": "url",
+                                    "value": "<string>"
+                                }
+                            ],
+                            "variable": []
+                        },
+                        "method": "GET",
+                        "body": {},
+                        "auth": null
+                    },
+                    "response": [
+                        {
+                            "id": "80148df5-85e4-483b-a883-e6c8b1113bdd",
+                            "name": "Reputation result",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "url-reputation"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [
+                                        {
+                                            "disabled": false,
+                                            "description": {
+                                                "content": "(Required) ",
+                                                "type": "text/plain"
+                                            },
+                                            "key": "url",
+                                            "value": "<string>"
+                                        }
+                                    ],
+                                    "variable": []
+                                },
+                                "method": "GET",
+                                "body": {}
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "header": [],
+                            "cookie": [],
+                            "_postman_previewlanguage": "text"
+                        }
+                    ],
+                    "event": [],
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    }
+                }
+            ]
+        },
+        {
+            "name": "subdomains",
+            "description": "",
+            "item": [
+                {
+                    "id": "12a812be-2655-4c19-917d-d79504c19c70",
+                    "name": "Passive subdomain discovery",
+                    "request": {
+                        "name": "Passive subdomain discovery",
+                        "description": {
+                            "content": "Via Certificate Transparency logs (crt.sh). Depends on a third-party service with occasional downtime.",
+                            "type": "text/plain"
+                        },
+                        "url": {
+                            "path": [
+                                "subdomains"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [
+                                {
+                                    "disabled": false,
+                                    "description": {
+                                        "content": "(Required) ",
+                                        "type": "text/plain"
+                                    },
+                                    "key": "domain",
+                                    "value": "<string>"
+                                }
+                            ],
+                            "variable": []
+                        },
+                        "method": "GET",
+                        "body": {},
+                        "auth": null
+                    },
+                    "response": [
+                        {
+                            "id": "358b251c-e308-41df-8ae7-3386f9c83581",
+                            "name": "List of discovered subdomains",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "subdomains"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [
+                                        {
+                                            "disabled": false,
+                                            "description": {
+                                                "content": "(Required) ",
+                                                "type": "text/plain"
+                                            },
+                                            "key": "domain",
+                                            "value": "<string>"
+                                        }
+                                    ],
+                                    "variable": []
+                                },
+                                "method": "GET",
+                                "body": {}
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "header": [],
+                            "cookie": [],
+                            "_postman_previewlanguage": "text"
+                        }
+                    ],
+                    "event": [],
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    }
+                }
+            ]
+        },
+        {
+            "name": "merge-and-compress-pdf",
+            "description": "",
+            "item": [
+                {
+                    "id": "78d48631-a7c2-4c2e-a762-e2da46aa06bb",
+                    "name": "Merge and compress PDFs",
+                    "request": {
+                        "name": "Merge and compress PDFs",
+                        "description": {
+                            "content": "Merges 2+ PDF files into one document, then compresses the result and strips metadata (title, author, producer). Chains two operations in a single call — most free APIs require calling merge and compress separately and gluing the results together yourself.",
+                            "type": "text/plain"
+                        },
+                        "url": {
+                            "path": [
+                                "merge-and-compress-pdf"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [],
+                            "variable": []
+                        },
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "multipart/form-data"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application/pdf"
+                            }
+                        ],
+                        "method": "POST",
+                        "body": {
+                            "mode": "formdata",
+                            "formdata": [
+                                {
+                                    "description": {
+                                        "content": "2 or more PDF files, max 20 files / 30MB total.",
+                                        "type": "text/plain"
+                                    },
+                                    "key": "files",
+                                    "value": "<binary>,<binary>",
+                                    "type": "text"
+                                }
+                            ]
+                        },
+                        "auth": null
+                    },
+                    "response": [
+                        {
+                            "id": "b49699a8-85b2-4c07-b686-dcca3558c411",
+                            "name": "Merged and compressed PDF file",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "merge-and-compress-pdf"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "multipart/form-data"
+                                    },
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/pdf"
+                                    }
+                                ],
+                                "method": "POST",
+                                "body": {
+                                    "mode": "formdata",
+                                    "formdata": [
+                                        {
+                                            "description": {
+                                                "content": "2 or more PDF files, max 20 files / 30MB total.",
+                                                "type": "text/plain"
+                                            },
+                                            "key": "files",
+                                            "value": "<binary>,<binary>",
+                                            "type": "text"
+                                        }
+                                    ]
+                                }
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/pdf"
+                                }
+                            ],
+                            "body": "<binary>",
+                            "cookie": [],
+                            "_postman_previewlanguage": "text"
+                        }
+                    ],
+                    "event": [],
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    }
+                }
+            ]
+        },
+        {
+            "name": "clean-image",
+            "description": "",
+            "item": [
+                {
+                    "id": "5a1a1caf-abe4-4ec1-bda3-e308e795c777",
+                    "name": "Strip image metadata (EXIF/GPS)",
+                    "request": {
+                        "name": "Strip image metadata (EXIF/GPS)",
+                        "description": {
+                            "content": "Removes EXIF/GPS data from JPEG (APP1 segment) and text metadata from PNG (tEXt/zTXt/iTXt/eXIf/tIME chunks) via direct binary parsing. Pixel data is never re-encoded, so there is zero quality loss — unlike canvas-based approaches, which always recompress.",
+                            "type": "text/plain"
+                        },
+                        "url": {
+                            "path": [
+                                "clean-image"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [],
+                            "variable": []
+                        },
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "image/jpeg"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "image/jpeg"
+                            }
+                        ],
+                        "method": "POST",
+                        "body": {
+                            "mode": "file"
+                        },
+                        "auth": null
+                    },
+                    "response": [
+                        {
+                            "id": "f346ee51-569c-49be-8ec7-c7115e81a0a7",
+                            "name": "Cleaned image, same format as input",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "clean-image"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "image/jpeg"
+                                    },
+                                    {
+                                        "key": "Accept",
+                                        "value": "image/jpeg"
+                                    }
+                                ],
+                                "method": "POST",
+                                "body": {
+                                    "mode": "file"
+                                }
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "image/jpeg"
+                                }
+                            ],
+                            "body": "<binary>",
+                            "cookie": [],
+                            "_postman_previewlanguage": "text"
+                        }
+                    ],
+                    "event": [],
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    }
+                }
+            ]
+        }
+    ],
+    "event": [],
+    "variable": [
+        {
+            "key": "baseUrl",
+            "value": "https://presend.pages.dev/api"
+        }
+    ],
+    "info": {
+        "_postman_id": "8f7aba29-a62f-49b2-a82a-9ec82affebe6",
+        "name": "Presend API",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+        "description": {
+            "content": "Free utility API: file hashing, UUID generation, Base64 encoding, JWT decoding, URL tracking-parameter cleaning, and IP geolocation. No authentication required.",
+            "type": "text/plain"
+        }
+    }
+}
