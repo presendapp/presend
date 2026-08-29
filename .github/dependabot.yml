@@ -1,0 +1,16 @@
+version: 2
+updates:
+  # Python dependencies used by the SEO automation pipeline
+  # (daily_seo.py, submit_all.py, gsc_submit.py, discovery_engine.py, etc.)
+  - package-ecosystem: "pip"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+
+  # GitHub Actions versions used in .github/workflows/*.yml
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
