@@ -113,10 +113,19 @@
   <h3>GET /api/password-breach</h3>
   <p style="color:var(--color-muted); max-width:60ch;">Checks if a password appears in known data breaches (HIBP k-anonymity — your password is never sent or logged in full).</p>
   <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/password-breach?password=..."</pre>
+  <h3>POST /api/password-check</h3>
+  <p style="color:var(--color-muted); max-width:60ch;">Объединяет оценку надёжности/энтропии с опциональной проверкой утечки за один вызов — пароль передаётся в теле POST-запроса, никогда в URL. Та же гарантия k-анонимности, что и у password-breach.</p>
+  <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl -X POST -H "Content-Type: application/json" -d '{"password":"..."}' https://presend.pages.dev/api/password-check</pre>
 
   <h3>GET /api/email-disposable</h3>
   <p style="color:var(--color-muted); max-width:60ch;">Detects disposable/throwaway email providers from a list of 576+ known domains.</p>
   <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/email-disposable?email=foo@mailinator.com"</pre>
+  <h3>GET /api/email-verify</h3>
+  <p style="color:var(--color-muted); max-width:60ch;">Объединяет проверку синтаксиса, поиск MX-записи, обнаружение одноразовых доменов и обнаружение общих аккаунтов (info@, admin@...) в одном вызове — большинство бесплатных email-API предлагают эти проверки только по отдельности и платно.</p>
+  <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/email-verify?email=foo@example.com"</pre>
+  <h3>GET /api/phone-verify</h3>
+  <p style="color:var(--color-muted); max-width:60ch;">Проверяет и форматирует номер телефона (E.164, международный, национальный) через libphonenumber-js. Если страна не указана для номера без префикса «+», автоматически используется страна, определённая по IP-адресу вызывающего.</p>
+  <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/phone-verify?number=%2B14155552671"</pre>
 
   <h3>GET /api/security-headers</h3>
   <p style="color:var(--color-muted); max-width:60ch;">Audits HTTP security headers (CSP, HSTS, X-Frame-Options...) and gives a letter grade.</p>
@@ -129,6 +138,17 @@
   <h3>GET /api/subdomains</h3>
   <p style="color:var(--color-muted); max-width:60ch;">Passive subdomain discovery via Certificate Transparency logs (crt.sh) — for auditing your own attack surface. Note: depends on crt.sh, which has occasional downtime outside our control.</p>
   <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/subdomains?domain=example.com"</pre>
+
+  <h2>Цепочки workflow</h2>
+  <p style="color:var(--color-muted); max-width:60ch;">
+    Эти два эндпоинта объединяют несколько операций на стороне сервера в одном вызове — ни один другой известный нам бесплатный API этого не делает. Обработка не сохраняет состояние: ничего не записывается на диск, ничего не логируется, файл удаляется сразу после отправки ответа.
+  </p>
+  <h3>POST /api/merge-and-compress-pdf</h3>
+  <p style="color:var(--color-muted); max-width:60ch;">Объединяет 2 или более PDF-файлов в один документ, затем сжимает результат и удаляет метаданные (название, автор, производитель) — за один запрос вместо двух.</p>
+  <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl -X POST -F "files=@a.pdf" -F "files=@b.pdf" https://presend.pages.dev/api/merge-and-compress-pdf -o merged.pdf</pre>
+  <h3>POST /api/clean-image</h3>
+  <p style="color:var(--color-muted); max-width:60ch;">Удаляет EXIF/GPS из JPEG и текстовые метаданные из PNG путём прямого бинарного разбора — пиксели никогда не перекодируются, поэтому нет потери качества (в отличие от подходов на основе canvas, которые всегда пересжимают).</p>
+  <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl -X POST --data-binary @photo.jpg -H "Content-Type: image/jpeg" https://presend.pages.dev/api/clean-image -o clean.jpg</pre>
 
   <h2>Клиентские инструменты (встраивание)</h2>
   <p style="color:var(--color-muted); max-width:60ch;">

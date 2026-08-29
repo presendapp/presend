@@ -75,6 +75,13 @@
 <h2>データ保護の方法</h2>
 <p style="color:var(--color-muted); max-width:60ch;"><strong>当社はお客様のデータを収集、保存、送信することはございません。</strong>すべてのファイル処理は、JavaScript を使用してブラウザ内で完全に行われます。ファイルがデバイスの外側にあることはありません。</p>
 <p style="color:var(--color-muted); max-width:60ch; margin-top:1rem;">当社は、顧客を特定する可能性のある Cookie、分析トラッカー、またはサードパーティのスクリプトを使用しません。行われる唯一の外部リクエストは、同じドメインからこの Web サイト独自のアセットをロードすることです。</p>
+
+  <h2 id="extension" style="margin-top:2.5rem;">Presendブラウザ拡張機能</h2>
+  <p style="color:var(--color-muted); max-width:60ch;">Presendブラウザ拡張機能（「Clean with Presend」）を使うと、ウェブページ上の任意の画像を右クリックして、隠されたEXIF/GPSメタデータを削除し、クリーニング済みのコピーをダウンロードできます。</p>
+  <p style="color:var(--color-muted); max-width:60ch; margin-top:1rem;"><strong>この拡張機能が行うこと：</strong> 右クリックメニューから「Clean with Presend」を選択すると、拡張機能は選択した画像を取得し、ブラウザ自身のcanvasレンダリングを使ってローカルで処理します（これにより設計上すべての埋め込みメタデータが削除されます）。その後、クリーニング済みのファイルをダウンロードフォルダに保存します。</p>
+  <p style="color:var(--color-muted); max-width:60ch; margin-top:1rem;"><strong>この拡張機能が行わないこと：</strong> この拡張機能は、画像やその一部をPresendのサーバーや第三者に送信することは一切ありません。訪問したページを追跡せず、分析データを収集せず、現在のブラウザセッションを超えてデータを保存することもありません。画像がデバイスの外に出ることはありません。</p>
+  <p style="color:var(--color-muted); max-width:60ch; margin-top:1rem;"><strong>広範なサイト権限を要求する理由：</strong> ソーシャルメディア、ウェブメール、メッセージングアプリなど、クリーニングしたい写真に出会う可能性のあるあらゆる場所で右クリックオプションが機能するように、この拡張機能はあらゆるサイトの画像を読み取る権限を必要とします。この権限は、右クリックした特定の画像を取得するためだけに使用され、それ以外にページの内容を読み取ったり監視したりすることはありません。</p>
+  <p style="color:var(--color-muted); max-width:60ch; margin-top:1rem;">ソースコード： <a href="https://github.com/presendapp/presend-extension">github.com/presendapp/presend-extension</a></p>
 </main>
 <footer class="site-footer wrap">
 <p>Presend — 無料のブラウザベースのツール。<a href="/ja/about">について</a> · <a href="/ja/privacy">プライバシー</a> · <a href="/ja/api">API</a></p>

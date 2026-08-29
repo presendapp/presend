@@ -113,10 +113,19 @@
   <h3>GET /api/password-breach</h3>
   <p style="color:var(--color-muted); max-width:60ch;">Checks if a password appears in known data breaches (HIBP k-anonymity — your password is never sent or logged in full).</p>
   <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/password-breach?password=..."</pre>
+  <h3>POST /api/password-check</h3>
+  <p style="color:var(--color-muted); max-width:60ch;">एक ही कॉल में स्ट्रेंथ/एंट्रॉपी स्कोरिंग और वैकल्पिक ब्रीच जांच को जोड़ता है — पासवर्ड POST बॉडी में भेजा जाता है, कभी URL में नहीं। password-breach जैसी ही k-anonymity गारंटी।</p>
+  <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl -X POST -H "Content-Type: application/json" -d '{"password":"..."}' https://presend.pages.dev/api/password-check</pre>
 
   <h3>GET /api/email-disposable</h3>
   <p style="color:var(--color-muted); max-width:60ch;">Detects disposable/throwaway email providers from a list of 576+ known domains.</p>
   <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/email-disposable?email=foo@mailinator.com"</pre>
+  <h3>GET /api/email-verify</h3>
+  <p style="color:var(--color-muted); max-width:60ch;">सिंटैक्स जांच, MX लुकअप, डिस्पोजेबल डोमेन डिटेक्शन, और जेनेरिक/रोल अकाउंट डिटेक्शन (info@, admin@...) को एक ही कॉल में जोड़ता है — अधिकांश मुफ़्त ईमेल API इन्हें केवल अलग-अलग और भुगतान करके देते हैं।</p>
+  <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/email-verify?email=foo@example.com"</pre>
+  <h3>GET /api/phone-verify</h3>
+  <p style="color:var(--color-muted); max-width:60ch;">libphonenumber-js के माध्यम से फोन नंबर को सत्यापित और फॉर्मेट करता है (E.164, अंतरराष्ट्रीय, राष्ट्रीय)। यदि "+" प्रीफिक्स के बिना नंबर के लिए कोई देश नहीं दिया गया है, तो कॉलर के IP से अनुमानित देश स्वचालित रूप से उपयोग किया जाता है।</p>
+  <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/phone-verify?number=%2B14155552671"</pre>
 
   <h3>GET /api/security-headers</h3>
   <p style="color:var(--color-muted); max-width:60ch;">Audits HTTP security headers (CSP, HSTS, X-Frame-Options...) and gives a letter grade.</p>
@@ -129,6 +138,17 @@
   <h3>GET /api/subdomains</h3>
   <p style="color:var(--color-muted); max-width:60ch;">Passive subdomain discovery via Certificate Transparency logs (crt.sh) — for auditing your own attack surface. Note: depends on crt.sh, which has occasional downtime outside our control.</p>
   <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/subdomains?domain=example.com"</pre>
+
+  <h2>चेन किए गए वर्कफ़्लो</h2>
+  <p style="color:var(--color-muted); max-width:60ch;">
+    ये दो एंडपॉइंट एक ही कॉल में सर्वर-साइड पर कई ऑपरेशन को चेन करते हैं — हमें ज्ञात कोई अन्य मुफ़्त API ऐसा नहीं करता। प्रोसेसिंग स्टेटलेस है: डिस्क पर कुछ भी नहीं लिखा जाता, कुछ भी लॉग नहीं होता, रिस्पॉन्स भेजते ही फ़ाइल हटा दी जाती है।
+  </p>
+  <h3>POST /api/merge-and-compress-pdf</h3>
+  <p style="color:var(--color-muted); max-width:60ch;">2 या अधिक PDF फ़ाइलों को एक दस्तावेज़ में मर्ज करता है, फिर परिणाम को कंप्रेस करता है और मेटाडेटा (शीर्षक, लेखक, निर्माता) हटाता है — दो अनुरोधों के बजाय एक ही अनुरोध में।</p>
+  <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl -X POST -F "files=@a.pdf" -F "files=@b.pdf" https://presend.pages.dev/api/merge-and-compress-pdf -o merged.pdf</pre>
+  <h3>POST /api/clean-image</h3>
+  <p style="color:var(--color-muted); max-width:60ch;">सीधे बाइनरी पार्सिंग के माध्यम से JPEG से EXIF/GPS और PNG से टेक्स्ट मेटाडेटा हटाता है — पिक्सेल डेटा को कभी भी दोबारा एन्कोड नहीं किया जाता, इसलिए गुणवत्ता में कोई कमी नहीं होती (canvas-आधारित तरीकों के विपरीत, जो हमेशा दोबारा कंप्रेस करते हैं)।</p>
+  <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl -X POST --data-binary @photo.jpg -H "Content-Type: image/jpeg" https://presend.pages.dev/api/clean-image -o clean.jpg</pre>
 
   <h2>क्लाइंट-साइड टूल्स (एम्बेड)</h2>
   <p style="color:var(--color-muted); max-width:60ch;">
