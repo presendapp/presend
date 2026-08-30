@@ -1,6 +1,7 @@
 // Minimal PNG decoder for Cloudflare Workers -- no external dependency.
-// Supports: bit depth 8, color types 0 (grayscale), 2 (RGB), 3 (palette),
-// 4 (grayscale+alpha), 6 (RGBA), non-interlaced only. Uses the native
+// Supports: bit depths 1/2/4/8 for grayscale and palette (color types 0, 3);
+// bit depth 8 for RGB/grayscale+alpha/RGBA (color types 2, 4, 6, which never
+// use sub-8-bit depths per spec). Non-interlaced only. Uses the native
 // DecompressionStream('deflate') API (available in Workers and Node 18+)
 // instead of a bundled zlib implementation.
 //
@@ -54,8 +55,31 @@ function paeth(a, b, c) {
   return c;
 }
 
-function unfilter(raw, width, height, bpp) {
-  const bytesPerScanline = width * bpp;
+// Unpacks sub-8-bit samples (bit depth 1, 2, or 4) into one byte per
+// sample, scaled to the 0-255 range for grayscale (so 1-bit black/white
+// becomes 0/255) or left as a raw palette index (0-based, unscaled) for
+// color type 3. `channels` is samples per pixel (1 for grayscale/palette).
+function unpackBits(unfilteredBytes, width, height, bitDepth, channels, isPalette) {
+  const samplesPerRow = width * channels;
+  const bytesPerRow = Math.ceil((samplesPerRow * bitDepth) / 8);
+  const out = new Uint8Array(width * height * channels);
+  const maxValue = (1 << bitDepth) - 1;
+
+  for (let y = 0; y < height; y++) {
+    const rowStart = y * bytesPerRow;
+    let bitPos = 0;
+    for (let s = 0; s < samplesPerRow; s++) {
+      const byteIndex = rowStart + (bitPos >> 3);
+      const bitOffset = 8 - bitDepth - (bitPos % 8);
+      const raw = (unfilteredBytes[byteIndex] >> bitOffset) & maxValue;
+      out[y * samplesPerRow + s] = isPalette ? raw : Math.round((raw / maxValue) * 255);
+      bitPos += bitDepth;
+    }
+  }
+  return out;
+}
+
+function unfilter(raw, height, bytesPerScanline, bpp) {
   const stride = bytesPerScanline + 1;
   const out = new Uint8Array(height * bytesPerScanline);
 
@@ -133,8 +157,19 @@ export async function decodePng(bytes) {
   const colorType = d[9];
   const interlace = d[12];
 
-  if (bitDepth !== 8) throw new Error(`Only 8-bit PNGs are supported (got ${bitDepth}-bit).`);
   if (interlace !== 0) throw new Error('Interlaced (Adam7) PNGs are not supported.');
+
+  const channelsMap = { 0: 1, 2: 3, 3: 1, 4: 2, 6: 4 };
+  const channels = channelsMap[colorType];
+  if (!channels) throw new Error(`Unsupported PNG color type: ${colorType}`);
+
+  const subByteAllowedTypes = [0, 3]; // grayscale, palette
+  if (bitDepth < 8 && !subByteAllowedTypes.includes(colorType)) {
+    throw new Error(`Bit depth ${bitDepth} is not valid for color type ${colorType}.`);
+  }
+  if (![1, 2, 4, 8].includes(bitDepth)) {
+    throw new Error(`Only 1/2/4/8-bit PNGs are supported (got ${bitDepth}-bit).`);
+  }
 
   let palette = null;
   const plteChunk = chunks.find((c) => c.type === 'PLTE');
@@ -152,11 +187,18 @@ export async function decodePng(bytes) {
 
   const inflated = await inflate(idat);
 
-  const channelsMap = { 0: 1, 2: 3, 3: 1, 4: 2, 6: 4 };
-  const bpp = channelsMap[colorType];
-  if (!bpp) throw new Error(`Unsupported PNG color type: ${colorType}`);
+  // Per PNG spec 6.6: for filter reconstruction math, bpp (distance back to
+  // the "previous pixel" byte) is 1 for any bit depth below 8.
+  const filterBpp = bitDepth < 8 ? 1 : channels;
+  const bytesPerScanline = Math.ceil((width * channels * bitDepth) / 8);
 
-  const unfiltered = unfilter(inflated, width, height, bpp);
+  const unfilteredPacked = unfilter(inflated, height, bytesPerScanline, filterBpp);
+
+  const isPalette = colorType === 3;
+  const unfiltered = bitDepth < 8
+    ? unpackBits(unfilteredPacked, width, height, bitDepth, channels, isPalette)
+    : unfilteredPacked;
+
   const rgba = toRgba(unfiltered, width, height, colorType, palette, transparency);
 
   return { width, height, data: rgba };

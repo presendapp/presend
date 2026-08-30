@@ -177,6 +177,25 @@ async function testImageSimilarity() {
   check('image-similarity: different image scores low similarity', j3.similarity_percent < 70, JSON.stringify(j3));
 }
 
+// --- QR code scanning ---
+async function testQrScan() {
+  const fs = await import('fs');
+  const bufUrl = fs.readFileSync('/tmp/test-fixtures/qr_url.png');
+  const bufText = fs.readFileSync('/tmp/test-fixtures/qr_text.png');
+
+  const fd1 = new FormData();
+  fd1.append('file', new Blob([bufUrl]), 'qr_url.png');
+  const res1 = await fetch(BASE + '/api/qr-scan', { method: 'POST', body: fd1 });
+  const j1 = await res1.json();
+  check('qr-scan: decodes URL content correctly', j1.found === true && j1.is_url === true && j1.content === 'https://presend.pages.dev', JSON.stringify(j1));
+
+  const fd2 = new FormData();
+  fd2.append('file', new Blob([bufText]), 'qr_text.png');
+  const res2 = await fetch(BASE + '/api/qr-scan', { method: 'POST', body: fd2 });
+  const j2 = await res2.json();
+  check('qr-scan: decodes plain-text content, no reputation check run', j2.found === true && j2.is_url === false && j2.reputation === null, JSON.stringify(j2));
+}
+
 // --- clean-image (binary upload) ---
 async function testCleanImage() {
   const fs = await import('fs');
@@ -222,6 +241,7 @@ async function main() {
   await testCase('Endpoint security-scan', testSecurityScan);
   await testCase('Endpoint email-security', testEmailSecurity);
   await testCase('Endpoint image-similarity', testImageSimilarity);
+  await testCase('Endpoint qr-scan', testQrScan);
   await testCase('clean-image (upload binaire)', testCleanImage);
   await testCase('merge-and-compress-pdf (upload multipart)', testMergePdf);
   await testCase('Préflight OPTIONS', testOptions);

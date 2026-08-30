@@ -136,6 +136,9 @@
   <h3>GET /api/security-scan</h3>
   <p style="color:var(--color-muted); max-width:60ch;">Combines security-headers + url-reputation + subdomains into one report with an overall score and verdict — one call instead of three.</p>
   <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/security-scan?url=https://example.com"</pre>
+  <h3>POST /api/qr-scan</h3>
+  <p style="color:var(--color-muted); max-width:60ch;">Decodes a QR code from an uploaded image, and if it links to a URL, checks it against URLhaus for malware/phishing indicators — decode plus reputation check in one call. QR-code phishing ("quishing") is one of the fastest-growing phishing vectors.</p>
+  <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl -X POST -F "file=@qrcode.png" https://presend.pages.dev/api/qr-scan</pre>
   <h3>GET /api/security-headers</h3>
   <p style="color:var(--color-muted); max-width:60ch;">Audits HTTP security headers (CSP, HSTS, X-Frame-Options...) and gives a letter grade.</p>
   <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/security-headers?url=https://example.com"</pre>

@@ -831,6 +831,44 @@
         }
       }
     },
+    "/qr-scan": {
+      "post": {
+        "summary": "Decode a QR code and check its URL reputation",
+        "description": "Decodes a QR code from an uploaded JPEG/PNG image. If the content is a URL, checks it against URLhaus for malware/phishing indicators in the same call. QR-code phishing (\"quishing\") is one of the fastest-growing phishing vectors, bypassing text-based filters.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": { "type": "string", "format": "binary", "description": "JPEG or PNG image, max 10MB." }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Decoded content and, if applicable, reputation check",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "found": { "type": "boolean" },
+                    "content": { "type": "string", "nullable": true },
+                    "is_url": { "type": "boolean", "nullable": true },
+                    "reputation": { "type": "object", "nullable": true },
+                    "verdict": { "type": "string", "nullable": true }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/security-headers": {
       "get": {
         "summary": "Audit HTTP security headers",

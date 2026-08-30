@@ -8,6 +8,8 @@
 // chaining philosophy as merge-and-compress-pdf, clean-image, and
 // email-verify.
 
+import { checkReputation } from '../_shared/url-reputation-check.js';
+
 async function checkRateLimit(env, clientIP, bucket) {
   if (!env.PRESEND_ANALYTICS) return true;
   const now = Math.floor(Date.now() / 60000);
@@ -99,36 +101,6 @@ async function checkHeaders(targetUrl) {
   } catch (e) {
     clearTimeout(timeout);
     return { checked: false, error: e.name === 'AbortError' ? 'Request timed out' : e.message };
-  }
-}
-
-// --- Check 2: malware/phishing reputation (URLhaus) ---
-async function checkReputation(targetUrl, env) {
-  if (!env.URLHAUS_AUTH_KEY) return { checked: false, malicious: null, error: 'Reputation check temporarily unavailable' };
-
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 8000);
-  try {
-    const res = await fetch('https://urlhaus-api.abuse.ch/v1/url/', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'Auth-Key': env.URLHAUS_AUTH_KEY },
-      body: 'url=' + encodeURIComponent(targetUrl),
-      signal: controller.signal,
-    });
-    clearTimeout(timeout);
-    if (!res.ok) throw new Error(`URLhaus API error: HTTP ${res.status}`);
-    const data = await res.json();
-
-    if (data.query_status === 'no_results') {
-      return { checked: true, malicious: false, status: 'not_found' };
-    }
-    if (data.query_status === 'ok') {
-      return { checked: true, malicious: true, status: data.url_status, threat: data.threat, tags: data.tags || [] };
-    }
-    return { checked: true, malicious: null, status: data.query_status };
-  } catch (e) {
-    clearTimeout(timeout);
-    return { checked: false, malicious: null, error: e.name === 'AbortError' ? 'Request timed out' : e.message };
   }
 }
 
