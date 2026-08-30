@@ -173,6 +173,9 @@
   <h3>POST /api/image-similarity</h3>
   <p style="color:var(--color-muted); max-width:60ch;">Perceptual hash (dHash) for 1 or 2 JPEG/PNG images. Unlike a cryptographic hash, this survives re-compression and minor edits — send 2 images to compare them directly with a similarity score and verdict.</p>
   <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl -X POST -F "files=@a.jpg" -F "files=@b.png" https://presend.pages.dev/api/image-similarity</pre>
+  <h3>POST /api/text-similarity</h3>
+  <p style="color:var(--color-muted); max-width:60ch;">SimHash for 1 or 2 texts — the text equivalent of image-similarity. Detects paraphrased or lightly-edited near-duplicate content, unlike a cryptographic hash. Unrelated texts typically score ~50% by chance, not 0%.</p>
+  <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl -X POST -H "Content-Type: application/json" -d '{"texts":["text a","text b"]}' https://presend.pages.dev/api/text-similarity</pre>
 
   <h2>Client-side tools (embed)</h2>
   <p style="color:var(--color-muted); max-width:60ch;">

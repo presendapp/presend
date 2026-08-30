@@ -1159,6 +1159,40 @@
           }
         }
       }
+    },
+    "/text-similarity": {
+      "post": {
+        "summary": "Text similarity via SimHash (1 or 2 texts)",
+        "description": "Computes a 64-bit SimHash (over word shingles) for 1 or 2 texts. Unlike a cryptographic hash, this detects paraphrased or lightly-edited near-duplicate content. Send 2 texts to get a direct similarity comparison. Unrelated texts typically score ~50% by chance, not 0%.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["texts"],
+                "properties": {
+                  "texts": {
+                    "type": "array",
+                    "items": { "type": "string" },
+                    "description": "1 text (hash only) or 2 texts (compare). Max 200,000 characters each."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Hash (1 text) or comparison result (2 texts)",
+            "content": {
+              "application/json": {
+                "schema": { "type": "object" }
+              }
+            }
+          }
+        }
+      }
     }
   }
 }

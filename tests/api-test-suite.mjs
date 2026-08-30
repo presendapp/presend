@@ -251,6 +251,34 @@ async function testMalwareCheck() {
   );
 }
 
+// --- Text similarity (SimHash) ---
+async function testTextSimilarity() {
+  const identical = 'This is exactly the same sentence repeated for a sanity check.';
+
+  const res1 = await fetch(BASE + '/api/text-similarity', {
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ texts: [identical] }),
+  });
+  const j1 = await res1.json();
+  check('text-similarity: single-text hash returned', typeof j1.hash === 'string' && j1.hash.length === 16, JSON.stringify(j1));
+
+  const res2 = await fetch(BASE + '/api/text-similarity', {
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ texts: [identical, identical] }),
+  });
+  const j2 = await res2.json();
+  check('text-similarity: identical text scores 100%', j2.similarity_percent === 100, JSON.stringify(j2));
+
+  const textA = 'The quarterly financial report shows strong revenue growth across all business segments this year.';
+  const textB = 'Completely unrelated content about cooking pasta with tomatoes and basil in a large pot of water.';
+  const res3 = await fetch(BASE + '/api/text-similarity', {
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ texts: [textA, textB] }),
+  });
+  const j3 = await res3.json();
+  check('text-similarity: unrelated texts score well below near-identical', j3.similarity_percent < 80, JSON.stringify(j3));
+}
+
 // --- clean-image (binary upload) ---
 async function testCleanImage() {
   const fs = await import('fs');
@@ -300,6 +328,7 @@ async function main() {
   await testCase('Endpoint file-type', testFileType);
   await testCase('Endpoint jwt-verify', testJwtVerify);
   await testCase('Endpoint malware-check', testMalwareCheck);
+  await testCase('Endpoint text-similarity', testTextSimilarity);
   await testCase('clean-image (upload binaire)', testCleanImage);
   await testCase('merge-and-compress-pdf (upload multipart)', testMergePdf);
   await testCase('Préflight OPTIONS', testOptions);
