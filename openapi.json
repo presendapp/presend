@@ -114,6 +114,38 @@
         }
       }
     },
+    "/malware-check": {
+      "post": {
+        "summary": "Hash a file and check it against known malware",
+        "description": "Computes SHA-256 and checks it against MalwareBazaar (abuse.ch), a free database of confirmed malware samples. Only catches already-known samples -- a 'not found' result does not guarantee the file is safe.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/octet-stream": {
+              "schema": { "type": "string", "format": "binary" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Hash and malware check result",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "size_bytes": { "type": "integer" },
+                    "sha256": { "type": "string" },
+                    "malwarebazaar": { "type": "object" },
+                    "verdict": { "type": "string" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/url-clean": {
       "get": {
         "summary": "Clean a single URL",

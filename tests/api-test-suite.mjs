@@ -235,6 +235,22 @@ async function testJwtVerify() {
   check('jwt-verify: HMAC rejected with wrong secret', j2.valid === false, JSON.stringify(j2));
 }
 
+// --- File hash + known-malware check ---
+async function testMalwareCheck() {
+  const fs = await import('fs');
+  const crypto = await import('crypto');
+  const buf = fs.readFileSync('/tmp/test-fixtures/doc1.pdf');
+  const expectedSha256 = crypto.createHash('sha256').update(buf).digest('hex');
+
+  const res = await fetch(BASE + '/api/malware-check', { method: 'POST', body: buf });
+  const j = await res.json();
+  check(
+    'malware-check: computes correct SHA-256 and returns a structured result',
+    j.sha256 === expectedSha256 && 'checked' in j.malwarebazaar,
+    JSON.stringify(j)
+  );
+}
+
 // --- clean-image (binary upload) ---
 async function testCleanImage() {
   const fs = await import('fs');
@@ -283,6 +299,7 @@ async function main() {
   await testCase('Endpoint qr-scan', testQrScan);
   await testCase('Endpoint file-type', testFileType);
   await testCase('Endpoint jwt-verify', testJwtVerify);
+  await testCase('Endpoint malware-check', testMalwareCheck);
   await testCase('clean-image (upload binaire)', testCleanImage);
   await testCase('merge-and-compress-pdf (upload multipart)', testMergePdf);
   await testCase('Préflight OPTIONS', testOptions);
