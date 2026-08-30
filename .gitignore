@@ -60,3 +60,4 @@ venv/
 !bing_submit.py
 !gsc_submit.py
 !check_broken_links.py
+node_modules/
