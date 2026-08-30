@@ -5,7 +5,7 @@
             "description": "",
             "item": [
                 {
-                    "id": "db7f6cf0-a026-4d99-af74-090297b1de27",
+                    "id": "9b3bc486-72c0-4959-8dd6-f656a3472481",
                     "name": "Hash a file",
                     "request": {
                         "name": "Hash a file",
@@ -41,7 +41,7 @@
                     },
                     "response": [
                         {
-                            "id": "1ed56fde-8cb9-406d-8427-dc762c6e6918",
+                            "id": "caa392ea-48b1-4bc8-8273-88fad11ad933",
                             "name": "Hash results",
                             "originalRequest": {
                                 "url": {
@@ -82,7 +82,7 @@
                             "_postman_previewlanguage": "json"
                         },
                         {
-                            "id": "5df132df-2cc3-4187-bf6d-b58628059113",
+                            "id": "ccab2215-ebb2-4820-9db6-539af63c74ad",
                             "name": "File too large",
                             "originalRequest": {
                                 "url": {
@@ -113,7 +113,7 @@
                             "_postman_previewlanguage": "text"
                         },
                         {
-                            "id": "c921717d-f70c-4b0f-9c5c-78c72a683eb1",
+                            "id": "a6c71694-c562-4249-9e0d-edeaab8a2411",
                             "name": "Rate limit exceeded",
                             "originalRequest": {
                                 "url": {
@@ -152,11 +152,189 @@
             ]
         },
         {
+            "name": "file-type",
+            "description": "",
+            "item": [
+                {
+                    "id": "62e4f765-3e6f-4c45-a7b7-22f6aedd9161",
+                    "name": "Detect real file type from binary signature",
+                    "request": {
+                        "name": "Detect real file type from binary signature",
+                        "description": {
+                            "content": "Detects a file's real type from its binary signature (\"magic bytes\"), and flags a mismatch against the claimed Content-Type -- catches disguised files that slip past naive upload filters.",
+                            "type": "text/plain"
+                        },
+                        "url": {
+                            "path": [
+                                "file-type"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [],
+                            "variable": []
+                        },
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/octet-stream"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "method": "POST",
+                        "body": {
+                            "mode": "file"
+                        },
+                        "auth": null
+                    },
+                    "response": [
+                        {
+                            "id": "deb36787-4c1c-49ae-b1a0-98204cf1d6e0",
+                            "name": "Detection result",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "file-type"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/octet-stream"
+                                    },
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "method": "POST",
+                                "body": {
+                                    "mode": "file"
+                                }
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n  \"size_bytes\": \"<integer>\",\n  \"claimed_type\": \"<string>\",\n  \"detected\": {\n    \"mime\": \"<string>\",\n    \"extension\": \"<string>\",\n    \"label\": \"<string>\"\n  },\n  \"mismatch\": \"<boolean>\",\n  \"warning\": \"<string>\"\n}",
+                            "cookie": [],
+                            "_postman_previewlanguage": "json"
+                        }
+                    ],
+                    "event": [],
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    }
+                }
+            ]
+        },
+        {
+            "name": "malware-check",
+            "description": "",
+            "item": [
+                {
+                    "id": "18b675c7-b0fb-43ef-8945-628e48537915",
+                    "name": "Hash a file and check it against known malware",
+                    "request": {
+                        "name": "Hash a file and check it against known malware",
+                        "description": {
+                            "content": "Computes SHA-256 and checks it against MalwareBazaar (abuse.ch), a free database of confirmed malware samples. Only catches already-known samples -- a 'not found' result does not guarantee the file is safe.",
+                            "type": "text/plain"
+                        },
+                        "url": {
+                            "path": [
+                                "malware-check"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [],
+                            "variable": []
+                        },
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/octet-stream"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "method": "POST",
+                        "body": {
+                            "mode": "file"
+                        },
+                        "auth": null
+                    },
+                    "response": [
+                        {
+                            "id": "f776b33b-83b1-4205-a983-e35d62e90244",
+                            "name": "Hash and malware check result",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "malware-check"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/octet-stream"
+                                    },
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "method": "POST",
+                                "body": {
+                                    "mode": "file"
+                                }
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n  \"size_bytes\": \"<integer>\",\n  \"sha256\": \"<string>\",\n  \"malwarebazaar\": {},\n  \"verdict\": \"<string>\"\n}",
+                            "cookie": [],
+                            "_postman_previewlanguage": "json"
+                        }
+                    ],
+                    "event": [],
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    }
+                }
+            ]
+        },
+        {
             "name": "url-clean",
             "description": "",
             "item": [
                 {
-                    "id": "e6959af2-7959-4437-9f7e-9e6ff816f852",
+                    "id": "775324d8-9028-4400-afd6-3928449dc689",
                     "name": "Clean a single URL",
                     "request": {
                         "name": "Clean a single URL",
@@ -196,7 +374,7 @@
                     },
                     "response": [
                         {
-                            "id": "dd8c4468-b0c8-4186-886d-9d5ac751f04c",
+                            "id": "8bf1f731-b55f-4ab4-85b6-945d19dddb18",
                             "name": "Cleaned URL",
                             "originalRequest": {
                                 "url": {
@@ -241,7 +419,7 @@
                             "_postman_previewlanguage": "json"
                         },
                         {
-                            "id": "bc75a871-4187-4a98-91f0-c4649a59c2c5",
+                            "id": "c152f9b6-f92a-458b-bfaf-8506cc74c754",
                             "name": "Rate limit exceeded",
                             "originalRequest": {
                                 "url": {
@@ -280,7 +458,7 @@
                     }
                 },
                 {
-                    "id": "b4ff10ab-9e3e-4145-9742-d38607abb3e4",
+                    "id": "0826f12d-2710-4dc2-9be5-baa02667be37",
                     "name": "Clean a batch of URLs",
                     "request": {
                         "name": "Clean a batch of URLs",
@@ -319,7 +497,7 @@
                     },
                     "response": [
                         {
-                            "id": "dd0d6c11-7e4d-4fab-bd61-17062cbce879",
+                            "id": "a03de0c5-635a-4cdb-8ee5-b38eec6f12f3",
                             "name": "Cleaned URLs batch",
                             "originalRequest": {
                                 "url": {
@@ -357,7 +535,7 @@
                             "_postman_previewlanguage": "text"
                         },
                         {
-                            "id": "6235961f-03f6-4872-985b-0782118b41a8",
+                            "id": "6d27069f-1768-4507-a6db-9f7b37eba5d1",
                             "name": "Rate limit exceeded",
                             "originalRequest": {
                                 "url": {
@@ -407,7 +585,7 @@
             "description": "",
             "item": [
                 {
-                    "id": "5ca153d9-52c7-406c-a539-253863b63088",
+                    "id": "96bd9010-3d9c-4e9f-9ec3-499f61bf70cf",
                     "name": "Generate UUIDs",
                     "request": {
                         "name": "Generate UUIDs",
@@ -447,7 +625,7 @@
                     },
                     "response": [
                         {
-                            "id": "fb6e7bd2-a1cb-4cd7-ba26-7a172765b5c7",
+                            "id": "01740b1e-9d89-4317-82e5-17159140a5d5",
                             "name": "Generated UUIDs",
                             "originalRequest": {
                                 "url": {
@@ -492,7 +670,7 @@
                             "_postman_previewlanguage": "json"
                         },
                         {
-                            "id": "cf8cc936-c39b-42c5-b4f7-1639eb415253",
+                            "id": "7f353ab7-d6d3-409b-ab8c-e4b044101607",
                             "name": "Rate limit exceeded",
                             "originalRequest": {
                                 "url": {
@@ -537,7 +715,7 @@
             "description": "",
             "item": [
                 {
-                    "id": "2c09de79-6ea8-4b50-a6ad-fe0627ec623f",
+                    "id": "ae417185-7113-40ca-abe8-dcf2b0ec22dc",
                     "name": "Encode or decode Base64",
                     "request": {
                         "name": "Encode or decode Base64",
@@ -577,7 +755,7 @@
                     },
                     "response": [
                         {
-                            "id": "7d2fc951-2d0b-46ca-8276-cfa973076d20",
+                            "id": "09ea51e5-a7d2-4bbd-8433-349e3fbdf346",
                             "name": "Encoded/decoded result",
                             "originalRequest": {
                                 "url": {
@@ -619,7 +797,7 @@
                             "_postman_previewlanguage": "text"
                         },
                         {
-                            "id": "d88564ee-dbe8-4cc1-86f6-664fd7471234",
+                            "id": "a31b4452-89af-46db-99dc-d295aef997b2",
                             "name": "Invalid input",
                             "originalRequest": {
                                 "url": {
@@ -661,7 +839,7 @@
                             "_postman_previewlanguage": "text"
                         },
                         {
-                            "id": "6bfe5eaf-7071-4f63-a6ab-f6c4afcb4680",
+                            "id": "fded822b-a570-42e6-829f-0f9fbd80bf63",
                             "name": "Rate limit exceeded",
                             "originalRequest": {
                                 "url": {
@@ -715,7 +893,7 @@
             "description": "",
             "item": [
                 {
-                    "id": "bb91e9b3-8e4e-4f3b-a7c8-e3fa6c44029f",
+                    "id": "c632fda0-5b87-439b-92d6-74b52b44fdaa",
                     "name": "Decode a JWT",
                     "request": {
                         "name": "Decode a JWT",
@@ -755,7 +933,7 @@
                     },
                     "response": [
                         {
-                            "id": "b941eda2-1d8e-446a-adae-c13757220d30",
+                            "id": "eeb61bc5-8014-4838-a1d8-e44f343eda6d",
                             "name": "Decoded JWT",
                             "originalRequest": {
                                 "url": {
@@ -800,7 +978,7 @@
                             "_postman_previewlanguage": "json"
                         },
                         {
-                            "id": "14ccc252-8d43-456c-9920-86b66f554c6e",
+                            "id": "aa95833b-96c4-4063-9e1a-ec0371d038be",
                             "name": "Invalid JWT",
                             "originalRequest": {
                                 "url": {
@@ -833,7 +1011,7 @@
                             "_postman_previewlanguage": "text"
                         },
                         {
-                            "id": "0afd83f4-315c-40e7-b3c2-264fd806b1b1",
+                            "id": "7eea4f49-ab17-46a8-91ac-8279c8986c83",
                             "name": "Rate limit exceeded",
                             "originalRequest": {
                                 "url": {
@@ -874,11 +1052,114 @@
             ]
         },
         {
+            "name": "jwt-verify",
+            "description": "",
+            "item": [
+                {
+                    "id": "549cfaf6-4048-426a-945f-a000e72a10a9",
+                    "name": "Verify a JWT's cryptographic signature",
+                    "request": {
+                        "name": "Verify a JWT's cryptographic signature",
+                        "description": {
+                            "content": "Actually verifies the signature (HS256/384/512, RS/PS256/384/512, ES256/384/512) via the Workers-native Web Crypto API, plus exp/nbf claim checks. Unlike /jwt-decode, this performs real cryptographic verification.",
+                            "type": "text/plain"
+                        },
+                        "url": {
+                            "path": [
+                                "jwt-verify"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [],
+                            "variable": []
+                        },
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "method": "POST",
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"token\": \"<string>\",\n  \"secret\": \"<string>\",\n  \"jwk\": {},\n  \"jwks_url\": \"<string>\"\n}",
+                            "options": {
+                                "raw": {
+                                    "headerFamily": "json",
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "auth": null
+                    },
+                    "response": [
+                        {
+                            "id": "e44f4e43-e43b-4085-afcd-a2e9f9948024",
+                            "name": "Verification result",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "jwt-verify"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    },
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "method": "POST",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"token\": \"<string>\",\n  \"secret\": \"<string>\",\n  \"jwk\": {},\n  \"jwks_url\": \"<string>\"\n}",
+                                    "options": {
+                                        "raw": {
+                                            "headerFamily": "json",
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n  \"header\": {},\n  \"payload\": {},\n  \"algorithm\": \"<string>\",\n  \"valid\": \"<boolean>\",\n  \"time_issues\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                            "cookie": [],
+                            "_postman_previewlanguage": "json"
+                        }
+                    ],
+                    "event": [],
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    }
+                }
+            ]
+        },
+        {
             "name": "ip",
             "description": "",
             "item": [
                 {
-                    "id": "60e71e74-5793-4e5b-8d73-6db6b5d828d3",
+                    "id": "cecccd75-73d2-4fd1-b809-b97e54ad69d9",
                     "name": "Get caller IP geolocation",
                     "request": {
                         "name": "Get caller IP geolocation",
@@ -908,7 +1189,7 @@
                     },
                     "response": [
                         {
-                            "id": "ff2546e6-a6f3-43d9-91ce-5319cc0476dd",
+                            "id": "ef083209-6d1b-4132-a788-26fb0bd5a666",
                             "name": "IP geolocation data",
                             "originalRequest": {
                                 "url": {
@@ -955,7 +1236,7 @@
             "description": "",
             "item": [
                 {
-                    "id": "ae719efa-4c8b-42f7-b663-c30d6fd4e1e4",
+                    "id": "30a34cbf-c64a-4699-ad02-399228ff981a",
                     "name": "Convert timestamps",
                     "request": {
                         "name": "Convert timestamps",
@@ -998,7 +1279,7 @@
                     },
                     "response": [
                         {
-                            "id": "79c50d53-c595-4721-96c9-7795cade3f86",
+                            "id": "e70c9390-6fc7-4445-89d1-c860356b2fe7",
                             "name": "Converted timestamp",
                             "originalRequest": {
                                 "url": {
@@ -1052,7 +1333,7 @@
             "description": "",
             "item": [
                 {
-                    "id": "3667894f-3eff-4d13-a182-bf1fd8c9efea",
+                    "id": "1d069b6b-c60b-4aa9-9e40-9c40c8398a4c",
                     "name": "Convert color formats",
                     "request": {
                         "name": "Convert color formats",
@@ -1104,7 +1385,7 @@
                     },
                     "response": [
                         {
-                            "id": "a0c67b61-4672-4b7f-8d01-ed4db3348293",
+                            "id": "a4a602b7-9845-4edd-bb61-89f037986fb6",
                             "name": "Converted color",
                             "originalRequest": {
                                 "url": {
@@ -1167,7 +1448,7 @@
             "description": "",
             "item": [
                 {
-                    "id": "8b1be518-9a58-4887-abe5-82226c2849e6",
+                    "id": "5678c0a5-bf65-491d-ab69-13f956765495",
                     "name": "Parse a User-Agent string",
                     "request": {
                         "name": "Parse a User-Agent string",
@@ -1198,7 +1479,7 @@
                     },
                     "response": [
                         {
-                            "id": "7aaa6f31-9f06-44d4-b679-93850b935034",
+                            "id": "d4023b8c-c16f-44a3-a6ee-7fa5ca20300b",
                             "name": "Parsed User-Agent",
                             "originalRequest": {
                                 "url": {
@@ -1243,7 +1524,7 @@
             "description": "",
             "item": [
                 {
-                    "id": "713165b1-2ff9-458e-8f8b-43a95e9cf427",
+                    "id": "c58b0e98-3b75-4096-8283-1cb7a35b5ea9",
                     "name": "Generate a secure password",
                     "request": {
                         "name": "Generate a secure password",
@@ -1272,7 +1553,7 @@
                                         "type": "text/plain"
                                     },
                                     "key": "symbols",
-                                    "value": "0"
+                                    "value": "1"
                                 },
                                 {
                                     "disabled": false,
@@ -1281,7 +1562,7 @@
                                         "type": "text/plain"
                                     },
                                     "key": "uppercase",
-                                    "value": "0"
+                                    "value": "1"
                                 },
                                 {
                                     "disabled": false,
@@ -1290,7 +1571,7 @@
                                         "type": "text/plain"
                                     },
                                     "key": "numbers",
-                                    "value": "0"
+                                    "value": "1"
                                 },
                                 {
                                     "disabled": false,
@@ -1299,7 +1580,7 @@
                                         "type": "text/plain"
                                     },
                                     "key": "exclude_ambiguous",
-                                    "value": "0"
+                                    "value": "1"
                                 }
                             ],
                             "variable": []
@@ -1310,7 +1591,7 @@
                     },
                     "response": [
                         {
-                            "id": "8292b0b6-5058-4b1c-a231-60fa78d0b237",
+                            "id": "85ad5f1c-5327-4b04-bf18-f5c8eef9a564",
                             "name": "Generated password with entropy estimate",
                             "originalRequest": {
                                 "url": {
@@ -1337,7 +1618,7 @@
                                                 "type": "text/plain"
                                             },
                                             "key": "symbols",
-                                            "value": "0"
+                                            "value": "1"
                                         },
                                         {
                                             "disabled": false,
@@ -1346,7 +1627,7 @@
                                                 "type": "text/plain"
                                             },
                                             "key": "uppercase",
-                                            "value": "0"
+                                            "value": "1"
                                         },
                                         {
                                             "disabled": false,
@@ -1355,7 +1636,7 @@
                                                 "type": "text/plain"
                                             },
                                             "key": "numbers",
-                                            "value": "0"
+                                            "value": "1"
                                         },
                                         {
                                             "disabled": false,
@@ -1364,7 +1645,7 @@
                                                 "type": "text/plain"
                                             },
                                             "key": "exclude_ambiguous",
-                                            "value": "0"
+                                            "value": "1"
                                         }
                                     ],
                                     "variable": []
@@ -1391,7 +1672,7 @@
             "description": "",
             "item": [
                 {
-                    "id": "b83b622f-8693-43de-827a-003e0205dff9",
+                    "id": "1fcae480-acc7-4655-939a-206cbf5a8aef",
                     "name": "Validate an email address",
                     "request": {
                         "name": "Validate an email address",
@@ -1425,7 +1706,7 @@
                     },
                     "response": [
                         {
-                            "id": "98a47e38-acf1-4a28-85e1-2833df7afa25",
+                            "id": "9ecb2389-bf98-4285-8692-493cdf15141d",
                             "name": "Validation result",
                             "originalRequest": {
                                 "url": {
@@ -1470,7 +1751,7 @@
             "description": "",
             "item": [
                 {
-                    "id": "7e98af76-cb53-4cf9-af2b-f392acc9cae3",
+                    "id": "40076922-6408-4233-817b-51e90a42ec57",
                     "name": "Fetch a domain's favicon URL",
                     "request": {
                         "name": "Fetch a domain's favicon URL",
@@ -1501,7 +1782,7 @@
                     },
                     "response": [
                         {
-                            "id": "b0db47ca-f97f-4a11-8afc-1692ee152109",
+                            "id": "f8eb9896-0c06-4c96-9b9b-d733c1f25f68",
                             "name": "Favicon URL",
                             "originalRequest": {
                                 "url": {
@@ -1534,7 +1815,7 @@
                             "_postman_previewlanguage": "text"
                         },
                         {
-                            "id": "84c0b142-f7e2-4231-a438-03fb6b47284a",
+                            "id": "01eb76bf-710d-42bf-8c32-adf0ca107aa0",
                             "name": "Disallowed domain",
                             "originalRequest": {
                                 "url": {
@@ -1579,7 +1860,7 @@
             "description": "",
             "item": [
                 {
-                    "id": "429b52b3-4cd6-4b97-aa73-a71f5617e010",
+                    "id": "67e573f5-1641-4e25-8a77-24fe096560e8",
                     "name": "Convert between JSON and CSV (GET)",
                     "request": {
                         "name": "Convert between JSON and CSV (GET)",
@@ -1619,7 +1900,7 @@
                     },
                     "response": [
                         {
-                            "id": "1aaf7333-80ae-4204-ad9d-c0916b8039de",
+                            "id": "58666b4a-b846-4bf3-895b-93903a8f9051",
                             "name": "Converted data",
                             "originalRequest": {
                                 "url": {
@@ -1667,7 +1948,7 @@
                     }
                 },
                 {
-                    "id": "ddc7942a-846f-4ac5-b378-0ab1f5d9b997",
+                    "id": "7d77ba66-378d-4f8e-99d2-cb731e8a8e6d",
                     "name": "Convert between JSON and CSV (POST)",
                     "request": {
                         "name": "Convert between JSON and CSV (POST)",
@@ -1703,7 +1984,7 @@
                     },
                     "response": [
                         {
-                            "id": "d3a2afa6-a35c-4e09-95a2-ef3f28c8abc4",
+                            "id": "2ccfc424-438c-4d2c-9413-92fd96195734",
                             "name": "Converted data",
                             "originalRequest": {
                                 "url": {
@@ -1753,7 +2034,7 @@
             "description": "",
             "item": [
                 {
-                    "id": "0276d750-4227-4494-90f3-9f7b3b5db986",
+                    "id": "88bb1cc5-74d9-4ea3-aaf6-2d2cb9100195",
                     "name": "Check if a password has been breached",
                     "request": {
                         "name": "Check if a password has been breached",
@@ -1787,7 +2068,7 @@
                     },
                     "response": [
                         {
-                            "id": "6dac48f5-d000-4174-b2d8-8f05fd34666b",
+                            "id": "69c4fbe1-a9d2-4796-a46b-517da3be92ed",
                             "name": "Breach status",
                             "originalRequest": {
                                 "url": {
@@ -1832,7 +2113,7 @@
             "description": "",
             "item": [
                 {
-                    "id": "a1170910-ba25-445f-b986-d5c6cc96e37e",
+                    "id": "9eb96dca-f4cb-459e-a99e-cd3fd58b3a55",
                     "name": "Combined password strength + breach check",
                     "request": {
                         "name": "Combined password strength + breach check",
@@ -1875,7 +2156,7 @@
                     },
                     "response": [
                         {
-                            "id": "f406b608-5e0d-4d5c-8930-9d77050c7199",
+                            "id": "dfa4f096-4a18-4072-8cd0-14618832f3a3",
                             "name": "Strength analysis and optional breach result",
                             "originalRequest": {
                                 "url": {
@@ -1935,7 +2216,7 @@
             "description": "",
             "item": [
                 {
-                    "id": "2c6360ab-8774-480e-b959-158f4cb22ffa",
+                    "id": "4eda3b3d-642f-4398-94fe-875622bd75d6",
                     "name": "Detect disposable email domains",
                     "request": {
                         "name": "Detect disposable email domains",
@@ -1966,7 +2247,7 @@
                     },
                     "response": [
                         {
-                            "id": "a08da64f-bf28-4ccc-8bda-c8acf1710f42",
+                            "id": "f68571eb-b30d-4879-8fef-25f4068ef141",
                             "name": "Disposable status",
                             "originalRequest": {
                                 "url": {
@@ -2011,7 +2292,7 @@
             "description": "",
             "item": [
                 {
-                    "id": "d46a73c2-341e-4127-9c84-5e54fac6b5f7",
+                    "id": "e9a78acd-7904-4a0c-8e99-d786503503a1",
                     "name": "Combined email verification",
                     "request": {
                         "name": "Combined email verification",
@@ -2051,7 +2332,7 @@
                     },
                     "response": [
                         {
-                            "id": "2ae72081-b422-4717-83f8-3bda3ad870f4",
+                            "id": "fd570a88-aa6b-467a-b1bd-29e74e5d76cc",
                             "name": "Combined verification result",
                             "originalRequest": {
                                 "url": {
@@ -2108,7 +2389,7 @@
             "description": "",
             "item": [
                 {
-                    "id": "527acd54-6307-4257-863c-ccb456a36154",
+                    "id": "b04765a1-d4f5-46b1-b50b-16db89e2e8da",
                     "name": "Validate and format a phone number",
                     "request": {
                         "name": "Validate and format a phone number",
@@ -2157,7 +2438,7 @@
                     },
                     "response": [
                         {
-                            "id": "7a3e6a9c-75b5-4a6f-bfaf-0e3d1e26bd4a",
+                            "id": "252482a7-3925-444b-914b-bbb24eb9168c",
                             "name": "Validation and formatting result",
                             "originalRequest": {
                                 "url": {
@@ -2219,11 +2500,314 @@
             ]
         },
         {
+            "name": "email-security",
+            "description": "",
+            "item": [
+                {
+                    "id": "e255edf1-9cf7-4e0f-9419-5d147357854b",
+                    "name": "Domain email anti-spoofing check (SPF/DMARC/DKIM)",
+                    "request": {
+                        "name": "Domain email anti-spoofing check (SPF/DMARC/DKIM)",
+                        "description": {
+                            "content": "Checks SPF strength, DMARC policy, and a best-effort DKIM lookup against common selectors. DKIM has no fixed DNS location, so absence of a match does not prove DKIM is unconfigured.",
+                            "type": "text/plain"
+                        },
+                        "url": {
+                            "path": [
+                                "email-security"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [
+                                {
+                                    "disabled": false,
+                                    "description": {
+                                        "content": "(Required) ",
+                                        "type": "text/plain"
+                                    },
+                                    "key": "domain",
+                                    "value": "<string>"
+                                }
+                            ],
+                            "variable": []
+                        },
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "method": "GET",
+                        "body": {},
+                        "auth": null
+                    },
+                    "response": [
+                        {
+                            "id": "05e88bcf-e2f9-4bcd-9dd0-851d7ef1b4d6",
+                            "name": "Anti-spoofing configuration report",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "email-security"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [
+                                        {
+                                            "disabled": false,
+                                            "description": {
+                                                "content": "(Required) ",
+                                                "type": "text/plain"
+                                            },
+                                            "key": "domain",
+                                            "value": "<string>"
+                                        }
+                                    ],
+                                    "variable": []
+                                },
+                                "header": [
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "method": "GET",
+                                "body": {}
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n  \"domain\": \"<string>\",\n  \"score\": \"<integer>\",\n  \"verdict\": \"<string>\",\n  \"spf\": {},\n  \"dmarc\": {},\n  \"dkim\": {}\n}",
+                            "cookie": [],
+                            "_postman_previewlanguage": "json"
+                        }
+                    ],
+                    "event": [],
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    }
+                }
+            ]
+        },
+        {
+            "name": "security-scan",
+            "description": "",
+            "item": [
+                {
+                    "id": "5cff71a8-e116-4fe3-9ae9-70d483a2c182",
+                    "name": "Combined security posture report",
+                    "request": {
+                        "name": "Combined security posture report",
+                        "description": {
+                            "content": "Combines security-headers, url-reputation, and subdomains into a single overall score and verdict, run in parallel.",
+                            "type": "text/plain"
+                        },
+                        "url": {
+                            "path": [
+                                "security-scan"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [
+                                {
+                                    "disabled": false,
+                                    "description": {
+                                        "content": "(Required) ",
+                                        "type": "text/plain"
+                                    },
+                                    "key": "url",
+                                    "value": "<string>"
+                                }
+                            ],
+                            "variable": []
+                        },
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "method": "GET",
+                        "body": {},
+                        "auth": null
+                    },
+                    "response": [
+                        {
+                            "id": "cf04151b-407c-4e3c-964d-974278305646",
+                            "name": "Combined security report",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "security-scan"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [
+                                        {
+                                            "disabled": false,
+                                            "description": {
+                                                "content": "(Required) ",
+                                                "type": "text/plain"
+                                            },
+                                            "key": "url",
+                                            "value": "<string>"
+                                        }
+                                    ],
+                                    "variable": []
+                                },
+                                "header": [
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "method": "GET",
+                                "body": {}
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n  \"url\": \"<string>\",\n  \"domain\": \"<string>\",\n  \"overall_score\": \"<integer>\",\n  \"overall_grade\": \"<string>\",\n  \"verdict\": \"<string>\",\n  \"security_headers\": {},\n  \"reputation\": {},\n  \"attack_surface\": {}\n}",
+                            "cookie": [],
+                            "_postman_previewlanguage": "json"
+                        }
+                    ],
+                    "event": [],
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    }
+                }
+            ]
+        },
+        {
+            "name": "qr-scan",
+            "description": "",
+            "item": [
+                {
+                    "id": "e0612b72-2211-415c-aa84-1d840f041403",
+                    "name": "Decode a QR code and check its URL reputation",
+                    "request": {
+                        "name": "Decode a QR code and check its URL reputation",
+                        "description": {
+                            "content": "Decodes a QR code from an uploaded JPEG/PNG image. If the content is a URL, checks it against URLhaus for malware/phishing indicators in the same call. QR-code phishing (\"quishing\") is one of the fastest-growing phishing vectors, bypassing text-based filters.",
+                            "type": "text/plain"
+                        },
+                        "url": {
+                            "path": [
+                                "qr-scan"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [],
+                            "variable": []
+                        },
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "multipart/form-data"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "method": "POST",
+                        "body": {
+                            "mode": "formdata",
+                            "formdata": [
+                                {
+                                    "description": {
+                                        "content": "JPEG or PNG image, max 10MB.",
+                                        "type": "text/plain"
+                                    },
+                                    "key": "file",
+                                    "type": "file"
+                                }
+                            ]
+                        },
+                        "auth": null
+                    },
+                    "response": [
+                        {
+                            "id": "b62d559a-1fef-425a-a29f-95bc61578936",
+                            "name": "Decoded content and, if applicable, reputation check",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "qr-scan"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "multipart/form-data"
+                                    },
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "method": "POST",
+                                "body": {
+                                    "mode": "formdata",
+                                    "formdata": [
+                                        {
+                                            "description": {
+                                                "content": "JPEG or PNG image, max 10MB.",
+                                                "type": "text/plain"
+                                            },
+                                            "key": "file",
+                                            "type": "file"
+                                        }
+                                    ]
+                                }
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n  \"found\": \"<boolean>\",\n  \"content\": \"<string>\",\n  \"is_url\": \"<boolean>\",\n  \"reputation\": {},\n  \"verdict\": \"<string>\"\n}",
+                            "cookie": [],
+                            "_postman_previewlanguage": "json"
+                        }
+                    ],
+                    "event": [],
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    }
+                }
+            ]
+        },
+        {
             "name": "security-headers",
             "description": "",
             "item": [
                 {
-                    "id": "cf0bd6ed-54e9-408b-b031-b75fee3d6bf5",
+                    "id": "a7ef840f-dfa3-474c-b5ad-37ea9fead46a",
                     "name": "Audit HTTP security headers",
                     "request": {
                         "name": "Audit HTTP security headers",
@@ -2254,7 +2838,7 @@
                     },
                     "response": [
                         {
-                            "id": "1f722b1e-e0cb-4f6b-828a-97498390bd84",
+                            "id": "a65ac953-4d1a-4a45-8aa5-17fc1ac83743",
                             "name": "Security grade and per-header breakdown",
                             "originalRequest": {
                                 "url": {
@@ -2299,7 +2883,7 @@
             "description": "",
             "item": [
                 {
-                    "id": "3278803d-4788-4308-954d-d7484adc54e6",
+                    "id": "38e72b41-86a9-4133-9b5b-f52f1fe9fb52",
                     "name": "Check URL against malware/phishing database",
                     "request": {
                         "name": "Check URL against malware/phishing database",
@@ -2333,7 +2917,7 @@
                     },
                     "response": [
                         {
-                            "id": "80148df5-85e4-483b-a883-e6c8b1113bdd",
+                            "id": "fe6c1727-81dd-495c-9698-ab4ac29ff1e3",
                             "name": "Reputation result",
                             "originalRequest": {
                                 "url": {
@@ -2378,7 +2962,7 @@
             "description": "",
             "item": [
                 {
-                    "id": "12a812be-2655-4c19-917d-d79504c19c70",
+                    "id": "2827f6d4-0c4b-4859-bf55-990ab7130dee",
                     "name": "Passive subdomain discovery",
                     "request": {
                         "name": "Passive subdomain discovery",
@@ -2412,7 +2996,7 @@
                     },
                     "response": [
                         {
-                            "id": "358b251c-e308-41df-8ae7-3386f9c83581",
+                            "id": "0484a739-64b1-4461-8de4-f5b7fa9a95b0",
                             "name": "List of discovered subdomains",
                             "originalRequest": {
                                 "url": {
@@ -2453,11 +3037,108 @@
             ]
         },
         {
+            "name": "ai-crawler-check",
+            "description": "",
+            "item": [
+                {
+                    "id": "7e2514eb-9844-4343-bcdd-d7dcb4a498cb",
+                    "name": "Check which AI crawlers are allowed by robots.txt",
+                    "request": {
+                        "name": "Check which AI crawlers are allowed by robots.txt",
+                        "description": {
+                            "content": "Fetches robots.txt and reports which known AI crawlers (GPTBot, ClaudeBot, PerplexityBot, Google-Extended, CCBot, etc.) are allowed or blocked. Free, no signup required.",
+                            "type": "text/plain"
+                        },
+                        "url": {
+                            "path": [
+                                "ai-crawler-check"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [
+                                {
+                                    "disabled": false,
+                                    "description": {
+                                        "content": "(Required) ",
+                                        "type": "text/plain"
+                                    },
+                                    "key": "domain",
+                                    "value": "<string>"
+                                }
+                            ],
+                            "variable": []
+                        },
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "method": "GET",
+                        "body": {},
+                        "auth": null
+                    },
+                    "response": [
+                        {
+                            "id": "17ebfe7a-63e7-45b5-85e1-d6d79ce6e025",
+                            "name": "Per-bot allow/block report",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "ai-crawler-check"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [
+                                        {
+                                            "disabled": false,
+                                            "description": {
+                                                "content": "(Required) ",
+                                                "type": "text/plain"
+                                            },
+                                            "key": "domain",
+                                            "value": "<string>"
+                                        }
+                                    ],
+                                    "variable": []
+                                },
+                                "header": [
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "method": "GET",
+                                "body": {}
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n  \"domain\": \"<string>\",\n  \"robots_txt_found\": \"<boolean>\",\n  \"summary\": {},\n  \"wildcard_rules\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                            "cookie": [],
+                            "_postman_previewlanguage": "json"
+                        }
+                    ],
+                    "event": [],
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    }
+                }
+            ]
+        },
+        {
             "name": "merge-and-compress-pdf",
             "description": "",
             "item": [
                 {
-                    "id": "78d48631-a7c2-4c2e-a762-e2da46aa06bb",
+                    "id": "47449113-c9b2-4c8f-8c97-e53cf4bb311b",
                     "name": "Merge and compress PDFs",
                     "request": {
                         "name": "Merge and compress PDFs",
@@ -2504,7 +3185,7 @@
                     },
                     "response": [
                         {
-                            "id": "b49699a8-85b2-4c07-b686-dcca3558c411",
+                            "id": "b859fdfc-9f46-4ab6-bee6-e01d82cb81dd",
                             "name": "Merged and compressed PDF file",
                             "originalRequest": {
                                 "url": {
@@ -2568,7 +3249,7 @@
             "description": "",
             "item": [
                 {
-                    "id": "5a1a1caf-abe4-4ec1-bda3-e308e795c777",
+                    "id": "5603ad4c-0859-451a-8a9f-ff2417b89002",
                     "name": "Strip image metadata (EXIF/GPS)",
                     "request": {
                         "name": "Strip image metadata (EXIF/GPS)",
@@ -2604,7 +3285,7 @@
                     },
                     "response": [
                         {
-                            "id": "f346ee51-569c-49be-8ec7-c7115e81a0a7",
+                            "id": "653e0f6d-1508-4fde-b441-76ab8ea218f4",
                             "name": "Cleaned image, same format as input",
                             "originalRequest": {
                                 "url": {
@@ -2651,6 +3332,220 @@
                     }
                 }
             ]
+        },
+        {
+            "name": "image-similarity",
+            "description": "",
+            "item": [
+                {
+                    "id": "ddc20f1e-2cec-4710-bb59-a8ef5421101e",
+                    "name": "Perceptual image hash / similarity comparison",
+                    "request": {
+                        "name": "Perceptual image hash / similarity comparison",
+                        "description": {
+                            "content": "Computes a perceptual hash (dHash, 64-bit) for 1 or 2 JPEG/PNG images. Unlike a cryptographic hash, this survives re-compression, minor resizing, and small edits. Send 2 images to get a direct similarity comparison.",
+                            "type": "text/plain"
+                        },
+                        "url": {
+                            "path": [
+                                "image-similarity"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [],
+                            "variable": []
+                        },
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "multipart/form-data"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "method": "POST",
+                        "body": {
+                            "mode": "formdata",
+                            "formdata": [
+                                {
+                                    "description": {
+                                        "content": "1 file (hash only) or 2 files (compare). JPEG/PNG, max 10MB each.",
+                                        "type": "text/plain"
+                                    },
+                                    "key": "files",
+                                    "value": "<binary>,<binary>",
+                                    "type": "text"
+                                }
+                            ]
+                        },
+                        "auth": null
+                    },
+                    "response": [
+                        {
+                            "id": "ed2fe885-a27d-47a2-90b0-1e23c3212cd0",
+                            "name": "Hash (1 file) or comparison result (2 files)",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "image-similarity"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "multipart/form-data"
+                                    },
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "method": "POST",
+                                "body": {
+                                    "mode": "formdata",
+                                    "formdata": [
+                                        {
+                                            "description": {
+                                                "content": "1 file (hash only) or 2 files (compare). JPEG/PNG, max 10MB each.",
+                                                "type": "text/plain"
+                                            },
+                                            "key": "files",
+                                            "value": "<binary>,<binary>",
+                                            "type": "text"
+                                        }
+                                    ]
+                                }
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{}",
+                            "cookie": [],
+                            "_postman_previewlanguage": "json"
+                        }
+                    ],
+                    "event": [],
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    }
+                }
+            ]
+        },
+        {
+            "name": "text-similarity",
+            "description": "",
+            "item": [
+                {
+                    "id": "4072a135-153b-4ee5-b405-29dd428835f1",
+                    "name": "Text similarity via SimHash (1 or 2 texts)",
+                    "request": {
+                        "name": "Text similarity via SimHash (1 or 2 texts)",
+                        "description": {
+                            "content": "Computes a 64-bit SimHash (over word shingles) for 1 or 2 texts. Unlike a cryptographic hash, this detects paraphrased or lightly-edited near-duplicate content. Send 2 texts to get a direct similarity comparison. Unrelated texts typically score ~50% by chance, not 0%.",
+                            "type": "text/plain"
+                        },
+                        "url": {
+                            "path": [
+                                "text-similarity"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [],
+                            "variable": []
+                        },
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "method": "POST",
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"texts\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                            "options": {
+                                "raw": {
+                                    "headerFamily": "json",
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "auth": null
+                    },
+                    "response": [
+                        {
+                            "id": "76151431-f9a2-4e30-b26e-c795be218a5a",
+                            "name": "Hash (1 text) or comparison result (2 texts)",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "text-similarity"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    },
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "method": "POST",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"texts\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                                    "options": {
+                                        "raw": {
+                                            "headerFamily": "json",
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{}",
+                            "cookie": [],
+                            "_postman_previewlanguage": "json"
+                        }
+                    ],
+                    "event": [],
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    }
+                }
+            ]
         }
     ],
     "event": [],
@@ -2661,7 +3556,7 @@
         }
     ],
     "info": {
-        "_postman_id": "8f7aba29-a62f-49b2-a82a-9ec82affebe6",
+        "_postman_id": "e9ce4a01-e5c6-4cc6-ba1f-9ef1763126a4",
         "name": "Presend API",
         "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
         "description": {
