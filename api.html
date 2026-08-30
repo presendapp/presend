@@ -156,8 +156,11 @@
   <p style="color:var(--color-muted); max-width:60ch;">Merges 2+ PDF files into one document, then compresses the result and strips metadata (title, author, producer) — in one request instead of two.</p>
   <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl -X POST -F "files=@a.pdf" -F "files=@b.pdf" https://presend.pages.dev/api/merge-and-compress-pdf -o merged.pdf</pre>
   <h3>POST /api/clean-image</h3>
-  <p style="color:var(--color-muted); max-width:60ch;">Strips EXIF/GPS from JPEG and text metadata from PNG via direct binary parsing — pixel data is never re-encoded, so there\'s zero quality loss (unlike canvas-based approaches, which always recompress).</p>
+  <p style="color:var(--color-muted); max-width:60ch;">Strips EXIF/GPS from JPEG and text metadata from PNG via direct binary parsing — pixel data is never re-encoded, so there's zero quality loss (unlike canvas-based approaches, which always recompress).</p>
   <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl -X POST --data-binary @photo.jpg -H "Content-Type: image/jpeg" https://presend.pages.dev/api/clean-image -o clean.jpg</pre>
+  <h3>POST /api/image-similarity</h3>
+  <p style="color:var(--color-muted); max-width:60ch;">Perceptual hash (dHash) for 1 or 2 JPEG/PNG images. Unlike a cryptographic hash, this survives re-compression and minor edits — send 2 images to compare them directly with a similarity score and verdict.</p>
+  <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl -X POST -F "files=@a.jpg" -F "files=@b.png" https://presend.pages.dev/api/image-similarity</pre>
 
   <h2>Client-side tools (embed)</h2>
   <p style="color:var(--color-muted); max-width:60ch;">

@@ -149,6 +149,34 @@ async function testEmailSecurity() {
   check('email-security: invalid domain rejected', res2.status === 400 && !!j2.error, JSON.stringify(j2));
 }
 
+// --- Perceptual image hash / similarity ---
+async function testImageSimilarity() {
+  const fs = await import('fs');
+  const bufA = fs.readFileSync('/tmp/test-fixtures/similar_a.png');
+  const bufA2 = fs.readFileSync('/tmp/test-fixtures/similar_a2.jpg');
+  const bufB = fs.readFileSync('/tmp/test-fixtures/different_b.png');
+
+  const fd1 = new FormData();
+  fd1.append('files', new Blob([bufA]), 'a.png');
+  const res1 = await fetch(BASE + '/api/image-similarity', { method: 'POST', body: fd1 });
+  const j1 = await res1.json();
+  check('image-similarity: single-file hash returned', typeof j1.hash === 'string' && j1.hash.length === 16, JSON.stringify(j1));
+
+  const fd2 = new FormData();
+  fd2.append('files', new Blob([bufA]), 'a.png');
+  fd2.append('files', new Blob([bufA2]), 'a2.jpg');
+  const res2 = await fetch(BASE + '/api/image-similarity', { method: 'POST', body: fd2 });
+  const j2 = await res2.json();
+  check('image-similarity: recompressed image scores near-identical', j2.similarity_percent >= 95, JSON.stringify(j2));
+
+  const fd3 = new FormData();
+  fd3.append('files', new Blob([bufA]), 'a.png');
+  fd3.append('files', new Blob([bufB]), 'b.png');
+  const res3 = await fetch(BASE + '/api/image-similarity', { method: 'POST', body: fd3 });
+  const j3 = await res3.json();
+  check('image-similarity: different image scores low similarity', j3.similarity_percent < 70, JSON.stringify(j3));
+}
+
 // --- clean-image (binary upload) ---
 async function testCleanImage() {
   const fs = await import('fs');
@@ -193,6 +221,7 @@ async function main() {
   await testCase('Endpoint IP', testIp);
   await testCase('Endpoint security-scan', testSecurityScan);
   await testCase('Endpoint email-security', testEmailSecurity);
+  await testCase('Endpoint image-similarity', testImageSimilarity);
   await testCase('clean-image (upload binaire)', testCleanImage);
   await testCase('merge-and-compress-pdf (upload multipart)', testMergePdf);
   await testCase('Préflight OPTIONS', testOptions);

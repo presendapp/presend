@@ -34,6 +34,19 @@ jobs:
               c.drawString(100, 750, f'Test doc {i}')
               c.showPage()
               c.save()
+          img_a = Image.new('RGB', (200, 200))
+          pixels = img_a.load()
+          for x in range(200):
+              for y in range(200):
+                  pixels[x, y] = (x, y, (x + y) % 256)
+          img_a.save('/tmp/test-fixtures/similar_a.png')
+          img_a.save('/tmp/test-fixtures/similar_a2.jpg', quality=60)
+          img_b = Image.new('RGB', (200, 200))
+          pixels_b = img_b.load()
+          for x in range(200):
+              for y in range(200):
+                  pixels_b[x, y] = (255, 255, 255) if (x // 20 + y // 20) % 2 == 0 else (0, 0, 0)
+          img_b.save('/tmp/test-fixtures/different_b.png')
           "
       - name: Run API test suite
         id: run_tests

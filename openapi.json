@@ -973,6 +973,39 @@
           }
         }
       }
+    },
+    "/image-similarity": {
+      "post": {
+        "summary": "Perceptual image hash / similarity comparison",
+        "description": "Computes a perceptual hash (dHash, 64-bit) for 1 or 2 JPEG/PNG images. Unlike a cryptographic hash, this survives re-compression, minor resizing, and small edits. Send 2 images to get a direct similarity comparison.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "files": {
+                    "type": "array",
+                    "items": { "type": "string", "format": "binary" },
+                    "description": "1 file (hash only) or 2 files (compare). JPEG/PNG, max 10MB each."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Hash (1 file) or comparison result (2 files)",
+            "content": {
+              "application/json": {
+                "schema": { "type": "object" }
+              }
+            }
+          }
+        }
+      }
     }
   }
 }
