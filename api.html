@@ -51,6 +51,9 @@
   https://presend.pages.dev/api/hash
 
 # {"size_bytes":17,"hashes":{"sha256":"...","sha1":"...","sha512":"..."}}</pre>
+  <h3>POST /api/file-type</h3>
+  <p style="color:var(--color-muted); max-width:60ch;">Detects a file's real type from its binary signature, and flags a mismatch against the claimed Content-Type — catches disguised files (e.g. an executable renamed as a photo) that slip past naive upload filters.</p>
+  <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl -X POST --data-binary @suspicious.jpg -H "Content-Type: image/jpeg" https://presend.pages.dev/api/file-type</pre>
 
   <h3>GET /api/url-clean</h3>
   <p style="color:var(--color-muted); max-width:60ch;">Strips 60+ tracking parameters (utm_*, fbclid, gclid...) from a URL.</p>

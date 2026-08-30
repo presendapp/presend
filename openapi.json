@@ -73,6 +73,47 @@
         }
       }
     },
+    "/file-type": {
+      "post": {
+        "summary": "Detect real file type from binary signature",
+        "description": "Detects a file's real type from its binary signature (\"magic bytes\"), and flags a mismatch against the claimed Content-Type -- catches disguised files that slip past naive upload filters.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/octet-stream": {
+              "schema": { "type": "string", "format": "binary" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Detection result",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "size_bytes": { "type": "integer" },
+                    "claimed_type": { "type": "string", "nullable": true },
+                    "detected": {
+                      "type": "object",
+                      "nullable": true,
+                      "properties": {
+                        "mime": { "type": "string" },
+                        "extension": { "type": "string" },
+                        "label": { "type": "string", "nullable": true }
+                      }
+                    },
+                    "mismatch": { "type": "boolean" },
+                    "warning": { "type": "string", "nullable": true }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/url-clean": {
       "get": {
         "summary": "Clean a single URL",

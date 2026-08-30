@@ -196,6 +196,25 @@ async function testQrScan() {
   check('qr-scan: decodes plain-text content, no reputation check run', j2.found === true && j2.is_url === false && j2.reputation === null, JSON.stringify(j2));
 }
 
+// --- Real file type detection (magic bytes) ---
+async function testFileType() {
+  const fs = await import('fs');
+  const bufJpeg = fs.readFileSync('/tmp/test-fixtures/photo.jpg');
+  const bufPng = fs.readFileSync('/tmp/test-fixtures/photo.png');
+
+  const res1 = await fetch(BASE + '/api/file-type', {
+    method: 'POST', body: bufJpeg, headers: { 'Content-Type': 'image/jpeg' },
+  });
+  const j1 = await res1.json();
+  check('file-type: correct claim -> no mismatch', j1.detected.mime === 'image/jpeg' && j1.mismatch === false, JSON.stringify(j1));
+
+  const res2 = await fetch(BASE + '/api/file-type', {
+    method: 'POST', body: bufPng, headers: { 'Content-Type': 'image/jpeg' },
+  });
+  const j2 = await res2.json();
+  check('file-type: mislabeled file -> mismatch detected', j2.detected.mime === 'image/png' && j2.mismatch === true, JSON.stringify(j2));
+}
+
 // --- clean-image (binary upload) ---
 async function testCleanImage() {
   const fs = await import('fs');
@@ -242,6 +261,7 @@ async function main() {
   await testCase('Endpoint email-security', testEmailSecurity);
   await testCase('Endpoint image-similarity', testImageSimilarity);
   await testCase('Endpoint qr-scan', testQrScan);
+  await testCase('Endpoint file-type', testFileType);
   await testCase('clean-image (upload binaire)', testCleanImage);
   await testCase('merge-and-compress-pdf (upload multipart)', testMergePdf);
   await testCase('Préflight OPTIONS', testOptions);
