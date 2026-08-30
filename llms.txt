@@ -1,6 +1,6 @@
 # Presend
 
-> Free, privacy-first browser-based tools to clean, compress, convert and check files before sharing them. All 22 tools run entirely client-side — no upload, no server, no account, no tracking.
+> Free, privacy-first browser-based tools to clean, compress, convert and check files before sharing them. 38 of the 40 tools run entirely client-side — no upload, no server, no account, no tracking. The other 2 (IP Geolocation, Link Preview) necessarily make a lightweight server-side lookup to do their job, clearly labeled as such.
 
 Presend is a collection of single-purpose utilities for common file tasks: removing hidden metadata, compressing images and PDFs, converting formats, checking file integrity, and generating passwords or QR codes. Every tool processes files locally in the browser using Web APIs (Canvas, Web Crypto, FileReader) — files never leave the user's device.
 
@@ -20,6 +20,7 @@ Unlike most online file converters and editors, Presend never uploads your files
 - [Office Metadata Remover](https://presend.pages.dev/tools/office-metadata-remover): Clean hidden author, company, and edit history from Word/Excel/PowerPoint files
 - [Video Metadata Remover](https://presend.pages.dev/tools/video-metadata-remover): Remove GPS and device data from MP4/MOV videos without uploading
 - [URL Cleaner](https://presend.pages.dev/tools/url-cleaner): Remove tracking parameters (UTM, fbclid, gclid) from links before sharing
+- [Audio Metadata Remover](https://presend.pages.dev/tools/audio-metadata-remover): Strip ID3 tags, artist, album art from MP3/M4A files
 
 ### Convert & Compress (File Processing)
 - [Image Compressor](https://presend.pages.dev/tools/image-compressor): Shrink JPG/PNG/WebP file size with live quality preview, no upload
@@ -29,11 +30,23 @@ Unlike most online file converters and editors, Presend never uploads your files
 - [HEIC to JPG Converter](https://presend.pages.dev/tools/heic-converter): Convert iPhone HEIC photos to universal JPG format locally
 - [JSON to CSV Converter](https://presend.pages.dev/tools/json-csv-converter): Convert between JSON and CSV formats instantly in browser
 - [Image to Base64](https://presend.pages.dev/tools/image-to-base64): Encode images as Base64 data URIs for embedding in HTML/CSS
+- [Background Remover](https://presend.pages.dev/tools/background-remover): Remove photo backgrounds instantly using in-browser AI
+- [HTML to PDF Converter](https://presend.pages.dev/tools/html-to-pdf): Paste HTML/CSS and convert it to a PDF (invoices, reports, resumes)
+- [Document Preview Generator](https://presend.pages.dev/tools/document-preview): Generate a thumbnail preview for PDF/Word/Excel/PowerPoint files
+- [Text Extractor / OCR](https://presend.pages.dev/tools/screenshot-to-text): Extract text from screenshots and scanned images using Tesseract.js
+- [Video Compressor](https://presend.pages.dev/tools/video-compressor): Shrink MP4/MOV file size using FFmpeg.wasm, adjustable quality
 
 ### Check & Verify (Security Tools)
 - [File Hash Checker](https://presend.pages.dev/tools/file-hash-checker): Calculate SHA-256, SHA-1, SHA-512 checksums to verify file integrity
 - [Password Strength Checker](https://presend.pages.dev/tools/password-strength): Analyze password entropy and estimated crack time without sending data
 - [Color Contrast Checker](https://presend.pages.dev/tools/color-contrast): Check WCAG 2.1 accessibility contrast ratios for web design
+- [Disposable Email Checker](https://presend.pages.dev/tools/disposable-email-checker): Detect throwaway/temporary email domains (Yopmail, Mailinator, etc.)
+- [Password Breach Checker](https://presend.pages.dev/tools/password-breach-checker): Check if a password appeared in a known breach via k-anonymity (only a partial hash is sent)
+- [Phone Number Validator](https://presend.pages.dev/tools/phone-validator): Validate and format a phone number as E.164, international, or national
+- [QR Code Scanner](https://presend.pages.dev/tools/qr-code-scanner): Decode a QR code from an image or camera, entirely client-side
+- [Text Moderator](https://presend.pages.dev/tools/text-moderator): Detect spam, toxic language, and suspicious links in text
+- [IP Geolocation Lookup](https://presend.pages.dev/tools/ip-geolocation): Find your public IP, city, country, timezone, and ISP (server-side lookup)
+- [Link Preview / OG Scraper](https://presend.pages.dev/tools/link-preview): Extract Open Graph metadata from a URL -- title, description, image (server-side proxy)
 
 ### Generate & Format (Productivity Tools)
 - [Password Generator](https://presend.pages.dev/tools/password-generator): Generate cryptographically secure random passwords locally
@@ -43,6 +56,8 @@ Unlike most online file converters and editors, Presend never uploads your files
 - [Social Media Text Formatter](https://presend.pages.dev/tools/text-formatter): Convert text to bold/italic Unicode styles for bios and posts
 - [Thread Splitter](https://presend.pages.dev/tools/thread-splitter): Split long text into Twitter/X or LinkedIn thread format
 - [Word Counter](https://presend.pages.dev/tools/word-counter): Count words, characters, sentences and estimate reading time
+- [Speech to Text](https://presend.pages.dev/tools/speech-to-text): Transcribe voice to text in real-time using the browser's native speech engine
+- [Text to Speech](https://presend.pages.dev/tools/text-to-speech): Type or paste text and hear it spoken using the browser's native voice synthesis
 
 ## Workflows (Chained Tools)
 Client-side tools that chain two operations into one pass — no competitor we're aware of offers this for free browser-based tools.
