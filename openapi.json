@@ -1046,6 +1046,39 @@
         }
       }
     },
+    "/ai-crawler-check": {
+      "get": {
+        "summary": "Check which AI crawlers are allowed by robots.txt",
+        "description": "Fetches robots.txt and reports which known AI crawlers (GPTBot, ClaudeBot, PerplexityBot, Google-Extended, CCBot, etc.) are allowed or blocked. Free, no signup required.",
+        "parameters": [
+          {
+            "name": "domain",
+            "in": "query",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Per-bot allow/block report",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "domain": { "type": "string" },
+                    "robots_txt_found": { "type": "boolean" },
+                    "summary": { "type": "object" },
+                    "wildcard_rules": { "type": "array", "items": { "type": "string" }, "nullable": true },
+                    "bots": { "type": "array", "items": { "type": "object" } }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/merge-and-compress-pdf": {
       "post": {
         "summary": "Merge and compress PDFs",

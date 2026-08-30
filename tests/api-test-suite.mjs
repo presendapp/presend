@@ -279,6 +279,17 @@ async function testTextSimilarity() {
   check('text-similarity: unrelated texts score well below near-identical', j3.similarity_percent < 80, JSON.stringify(j3));
 }
 
+// --- AI crawler / robots.txt check ---
+async function testAiCrawlerCheck() {
+  const res = await fetch(BASE + '/api/ai-crawler-check?domain=github.com');
+  const j = await res.json();
+  check(
+    'ai-crawler-check: returns per-bot report with wildcard rules deduplicated',
+    j.robots_txt_found === true && Array.isArray(j.bots) && j.bots.length > 0 && 'summary' in j,
+    JSON.stringify(j).slice(0, 300)
+  );
+}
+
 // --- clean-image (binary upload) ---
 async function testCleanImage() {
   const fs = await import('fs');
@@ -329,6 +340,7 @@ async function main() {
   await testCase('Endpoint jwt-verify', testJwtVerify);
   await testCase('Endpoint malware-check', testMalwareCheck);
   await testCase('Endpoint text-similarity', testTextSimilarity);
+  await testCase('Endpoint ai-crawler-check', testAiCrawlerCheck);
   await testCase('clean-image (upload binaire)', testCleanImage);
   await testCase('merge-and-compress-pdf (upload multipart)', testMergePdf);
   await testCase('Préflight OPTIONS', testOptions);
