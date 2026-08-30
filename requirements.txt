@@ -1,5 +1,5 @@
 google-auth==2.57.0
-google-auth-oauthlib==1.4.0
+google-auth-oauthlib==1.4.1
 beautifulsoup4==4.15.0
 lxml==6.1.2
 requests==2.34.2
