@@ -215,6 +215,26 @@ async function testFileType() {
   check('file-type: mislabeled file -> mismatch detected', j2.detected.mime === 'image/png' && j2.mismatch === true, JSON.stringify(j2));
 }
 
+// --- JWT signature verification (real crypto, not just decode) ---
+async function testJwtVerify() {
+  // Signed independently with Python's hmac/hashlib, secret: 'mon-secret-de-test-tres-solide'
+  const hmacToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IlRlc3QgVXNlciIsImV4cCI6OTk5OTk5OTk5OX0.1yfGmVGJPGCw0Y4cxJg2kb8qBfeHst1CnxNFAeMVG_E';
+
+  const res1 = await fetch(BASE + '/api/jwt-verify', {
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ token: hmacToken, secret: 'mon-secret-de-test-tres-solide' }),
+  });
+  const j1 = await res1.json();
+  check('jwt-verify: HMAC signature verified with correct secret', j1.valid === true, JSON.stringify(j1));
+
+  const res2 = await fetch(BASE + '/api/jwt-verify', {
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ token: hmacToken, secret: 'wrong-secret' }),
+  });
+  const j2 = await res2.json();
+  check('jwt-verify: HMAC rejected with wrong secret', j2.valid === false, JSON.stringify(j2));
+}
+
 // --- clean-image (binary upload) ---
 async function testCleanImage() {
   const fs = await import('fs');
@@ -262,6 +282,7 @@ async function main() {
   await testCase('Endpoint image-similarity', testImageSimilarity);
   await testCase('Endpoint qr-scan', testQrScan);
   await testCase('Endpoint file-type', testFileType);
+  await testCase('Endpoint jwt-verify', testJwtVerify);
   await testCase('clean-image (upload binaire)', testCleanImage);
   await testCase('merge-and-compress-pdf (upload multipart)', testMergePdf);
   await testCase('Préflight OPTIONS', testOptions);

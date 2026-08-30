@@ -82,6 +82,9 @@
   <h3>GET /api/jwt-decode</h3>
   <p style="color:var(--color-muted); max-width:60ch;">Decodes a JWT's header and payload (does not verify the signature).</p>
   <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/jwt-decode?token=eyJhbGci..."</pre>
+  <h3>POST /api/jwt-verify</h3>
+  <p style="color:var(--color-muted); max-width:60ch;">Actually verifies a JWT's cryptographic signature (HS256/384/512, RS/PS256/384/512, ES256/384/512) via the Workers-native Web Crypto API — plus exp/nbf claim checks. Provide a "secret" for HMAC, or a "jwk"/"jwks_url" for asymmetric algorithms.</p>
+  <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl -X POST -H "Content-Type: application/json" -d '{"token":"...","secret":"..."}' https://presend.pages.dev/api/jwt-verify</pre>
 
   <h3>GET /api/timestamp</h3>
   <p style="color:var(--color-muted); max-width:60ch;">Current time, or convert between Unix timestamp and ISO date.</p>

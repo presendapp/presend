@@ -321,6 +321,48 @@
         }
       }
     },
+    "/jwt-verify": {
+      "post": {
+        "summary": "Verify a JWT's cryptographic signature",
+        "description": "Actually verifies the signature (HS256/384/512, RS/PS256/384/512, ES256/384/512) via the Workers-native Web Crypto API, plus exp/nbf claim checks. Unlike /jwt-decode, this performs real cryptographic verification.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["token"],
+                "properties": {
+                  "token": { "type": "string" },
+                  "secret": { "type": "string", "description": "Required for HS256/384/512." },
+                  "jwk": { "type": "object", "description": "Public key in JWK format, for RS/PS/ES algorithms." },
+                  "jwks_url": { "type": "string", "description": "URL to a JWKS document; the key is matched by the token's \"kid\" header." }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Verification result",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "header": { "type": "object" },
+                    "payload": { "type": "object" },
+                    "algorithm": { "type": "string" },
+                    "valid": { "type": "boolean" },
+                    "time_issues": { "type": "array", "items": { "type": "string" }, "nullable": true }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/ip": {
       "get": {
         "summary": "Get caller IP geolocation",
