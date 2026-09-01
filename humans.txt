@@ -12,6 +12,6 @@
   IDE: VS Code
 
 /* TOOLS */
-  22 free privacy tools
+  40 free privacy tools
   41 SEO landing pages
   100% browser-based — no upload, no server, no tracking

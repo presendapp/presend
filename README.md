@@ -6,7 +6,7 @@
 [![PWA](https://img.shields.io/badge/PWA-Enabled-orange?style=flat-square)](https://presend.pages.dev)
 [![Privacy](https://img.shields.io/badge/Privacy-First-ff6b6b?style=flat-square)](https://presend.pages.dev/privacy)
 
-**22 free browser-based tools to clean, compress, convert and check your files before you share them. Nothing is ever uploaded.**
+**40 free browser-based tools to clean, compress, convert and check your files before you share them. Nothing is ever uploaded.**
 
 [Open Presend](https://presend.pages.dev)
 
@@ -52,7 +52,7 @@ Unlike most online tools, **Presend processes everything locally in your browser
 Presend is built for search engines and AI assistants:
 
 - **Schema.org**: HowTo, FAQPage, SoftwareApplication, BreadcrumbList, Organization on every page
-- **Dynamic Sitemap**: 68 URLs auto-updated (22 tools + 41 landing pages + 5 static pages)
+- **Dynamic Sitemap**: 842 URLs auto-updated (40 tools + blog/guide pages, across 8 languages)
 - **Dynamic OG Images**: API generates social preview images per tool
 - **Core Web Vitals**: Preconnect, DNS-prefetch, CSS preload, zero render-blocking JS
 - **PWA**: Service worker + manifest for offline use and installability
