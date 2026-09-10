@@ -2749,6 +2749,176 @@
           }
         }
       }
+    },
+    "/dns-lookup": {
+      "get": {
+        "summary": "DNS record lookup (A, AAAA, CNAME, MX, TXT, NS)",
+        "description": "Via Cloudflare's DNS-over-HTTPS resolver. Returns all 6 common record types in one call by default, or a single type with &type=.",
+        "parameters": [
+          {
+            "name": "domain",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "A",
+                "AAAA",
+                "CNAME",
+                "MX",
+                "TXT",
+                "NS"
+              ]
+            },
+            "description": "Narrow to a single record type. Omit to get all 6 at once."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "DNS records for the domain",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "domain": {
+                      "type": "string"
+                    },
+                    "records": {
+                      "type": "object",
+                      "properties": {
+                        "A": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        },
+                        "AAAA": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        },
+                        "CNAME": {
+                          "type": "array",
+                          "items": {}
+                        },
+                        "MX": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "priority": {
+                                "type": "integer"
+                              },
+                              "exchange": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        },
+                        "TXT": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        },
+                        "NS": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    },
+                    "source": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "domain": "cloudflare.com",
+                  "records": {
+                    "A": [
+                      "104.16.133.229",
+                      "104.16.132.229"
+                    ],
+                    "AAAA": [
+                      "2606:4700::6810:85e5",
+                      "2606:4700::6810:84e5"
+                    ],
+                    "CNAME": [],
+                    "MX": [
+                      {
+                        "priority": 5,
+                        "exchange": "mxa-canary.global.inbound.cf-emailsecurity.net"
+                      },
+                      {
+                        "priority": 5,
+                        "exchange": "mxb-canary.global.inbound.cf-emailsecurity.net"
+                      },
+                      {
+                        "priority": 10,
+                        "exchange": "mxa.global.inbound.cf-emailsecurity.net"
+                      },
+                      {
+                        "priority": 10,
+                        "exchange": "mxb.global.inbound.cf-emailsecurity.net"
+                      }
+                    ],
+                    "TXT": [
+                      "MS=ms70274184",
+                      "_neqmkgaq1lq9it5s8qmetrhbnu121wb",
+                      "_wkjc0fot0d7qrvrdt78bxkj2e2o67d2",
+                      "ZOOM_verify_7LFBvOO9SIigypFG2xRlMA",
+                      "asv=894f6d1f9f83bcf44e4b1bc40bc1c4aa",
+                      "apple-domain-verification=DNnWJoArJobFJKhJ",
+                      "status-page-domain-verification=r14frwljwbxs",
+                      "canva-site-verification=oOyaVnHC-OiFoR1BPvetNA",
+                      "docker-verification=c578e21c-34fb-4474-9b90-d55ee4cba10c",
+                      "miro-verification=bdd7dfa0a49adfb43ad6ddfaf797633246c07356",
+                      "facebook-domain-verification=h9mm6zopj6p2po54woa16m5bskm6oo",
+                      "databank-domain-verification-hkehd2=fzgu4kmbZwMoW99zENgO4u8NL",
+                      "onetrust-domain-verification=bd5cd08a1e9644799fdb98ed7d60c9cb",
+                      "uber-domain-verification=58086039-150a-42a4-a4be-b4032921aa0f",
+                      "logmein-verification-code=b3433c86-3823-4808-8a7e-58042469f654",
+                      "creatopy-domain-verification=97d2ca50-9b6f-4a21-9bdb-fbb630e4cec7",
+                      "google-site-verification=C7thfNeXVahkVhniiqTI1iSVnElKR_kBBtnEHkeGDlo",
+                      "google-site-verification=ZdlQZLBBAPkxeFTCM1rpiB_ibtGff_JF5KllNKwDR9I",
+                      "liveramp-site-verification=EhH1MqgwbndTWl1AN64hOTKz7hc1s80yUpchLbgpfY0",
+                      "stripe-verification=5096d01ff2cf194285dd51cae18f24fa9c26dc928cebac3636d462b4c6925623",
+                      "stripe-verification=bf1a94e6b16ace2502a4a7fff574a25c8a45291054960c883c59be39d1788db9",
+                      "drift-domain-verification=f037808a26ae8b25bc13b1f1f2b4c3e0f78c03e67f24cefdd4ec520efa8e719f",
+                      "cisco-ci-domain-verification=27e926884619804ef987ae4aa1c4168f6b152ada84f4c8bfc74eb2bd2912ad72",
+                      "atlassian-domain-verification=WxxKyN9aLnjEsoOjUYI6T0bb5vcqmKzaIkC9Rx2QkNb751G3LL/cus8/ZDOgh8xB",
+                      "_saml-domain-challenge.2dc00405-79cd-457b-b288-a119c6f0c7b7.71996d53-d178-4ba9-bef4-7f7e46edab74.cloudflare.com=1c8736fd-84b2-4197-985f-3fb2852f2457",
+                      "DirectFedAuthUrl=https://cloudflare-security.cloudflareaccess.com/cdn-cgi/access/sso/saml/dba6756ad312fc13c45f705cf7f5e87f4d658be016c41f950329aa4085b3abc1",
+                      "DirectFedAuthUrl=https://cloudflare-security.cloudflareaccess.com/cdn-cgi/access/sso/saml/ebec933773c69c93420d13e6776adb8c4a190f6281f9d132bcebd7dcb0967bdd",
+                      "v=spf1 ip4:199.15.212.0/22 ip4:173.245.48.0/20 include:_spf.google.com include:spf1.mcsv.net include:spf.mandrillapp.com include:mail.zendesk.com include:stspg-customer.com include:_spf.salesforce.com -all"
+                    ],
+                    "NS": [
+                      "ns3.cloudflare.com",
+                      "ns4.cloudflare.com",
+                      "ns5.cloudflare.com",
+                      "ns6.cloudflare.com",
+                      "ns7.cloudflare.com"
+                    ]
+                  },
+                  "source": "Cloudflare DNS-over-HTTPS resolver — public DNS, no data from your own network is queried."
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 }
