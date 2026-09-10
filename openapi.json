@@ -60,6 +60,14 @@
                       }
                     }
                   }
+                },
+                "example": {
+                  "size_bytes": 779,
+                  "hashes": {
+                    "sha256": "9fcf8cc7f3c462e27b2e11748cc18a65b15efb8608820e74364fd963510c07e1",
+                    "sha1": "ac83a80b823c45ccc9d37bad0f96e85abde0a826",
+                    "sha512": "d1ed56bf6fbfa25d1ca78c1bb2bcec0da61d3d812201104e5fda375165c8b33f339160d64c4ea64f78436a70692e5f99b95ba1396fe9d6364d0ece8e5678feeb"
+                  }
                 }
               }
             }
@@ -81,7 +89,10 @@
           "required": true,
           "content": {
             "application/octet-stream": {
-              "schema": { "type": "string", "format": "binary" }
+              "schema": {
+                "type": "string",
+                "format": "binary"
+              }
             }
           }
         },
@@ -93,20 +104,48 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "size_bytes": { "type": "integer" },
-                    "claimed_type": { "type": "string", "nullable": true },
+                    "size_bytes": {
+                      "type": "integer"
+                    },
+                    "claimed_type": {
+                      "type": "string",
+                      "nullable": true
+                    },
                     "detected": {
                       "type": "object",
                       "nullable": true,
                       "properties": {
-                        "mime": { "type": "string" },
-                        "extension": { "type": "string" },
-                        "label": { "type": "string", "nullable": true }
+                        "mime": {
+                          "type": "string"
+                        },
+                        "extension": {
+                          "type": "string"
+                        },
+                        "label": {
+                          "type": "string",
+                          "nullable": true
+                        }
                       }
                     },
-                    "mismatch": { "type": "boolean" },
-                    "warning": { "type": "string", "nullable": true }
+                    "mismatch": {
+                      "type": "boolean"
+                    },
+                    "warning": {
+                      "type": "string",
+                      "nullable": true
+                    }
                   }
+                },
+                "example": {
+                  "size_bytes": 563,
+                  "claimed_type": "image/jpeg",
+                  "detected": {
+                    "mime": "image/png",
+                    "extension": "png",
+                    "label": null
+                  },
+                  "mismatch": true,
+                  "warning": "Claimed type \"image/jpeg\" does not match the file's actual signature (detected: \"image/png\"). This can indicate a disguised or mislabeled file."
                 }
               }
             }
@@ -122,7 +161,10 @@
           "required": true,
           "content": {
             "application/octet-stream": {
-              "schema": { "type": "string", "format": "binary" }
+              "schema": {
+                "type": "string",
+                "format": "binary"
+              }
             }
           }
         },
@@ -134,11 +176,28 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "size_bytes": { "type": "integer" },
-                    "sha256": { "type": "string" },
-                    "malwarebazaar": { "type": "object" },
-                    "verdict": { "type": "string" }
+                    "size_bytes": {
+                      "type": "integer"
+                    },
+                    "sha256": {
+                      "type": "string"
+                    },
+                    "malwarebazaar": {
+                      "type": "object"
+                    },
+                    "verdict": {
+                      "type": "string"
+                    }
                   }
+                },
+                "example": {
+                  "size_bytes": 1413,
+                  "sha256": "9d4bf7140f85022b1702e6a2471e5d73a8256cb32c635b2de01714ab2a842917",
+                  "malwarebazaar": {
+                    "checked": true,
+                    "known_malware": false
+                  },
+                  "verdict": "Not found in MalwareBazaar. This does not guarantee the file is safe — only that this exact file is not currently known to this database."
                 }
               }
             }
@@ -181,6 +240,12 @@
                       "type": "boolean"
                     }
                   }
+                },
+                "example": {
+                  "original": "https://example.com/?utm_source=test",
+                  "clean": "https://example.com/",
+                  "removed": 1,
+                  "valid": true
                 }
               }
             }
@@ -217,7 +282,54 @@
         },
         "responses": {
           "200": {
-            "description": "Cleaned URLs batch"
+            "description": "Cleaned URLs batch",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "count": {
+                      "type": "integer"
+                    },
+                    "total_tracking_params_removed": {
+                      "type": "integer"
+                    },
+                    "results": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "original": {
+                            "type": "string"
+                          },
+                          "clean": {
+                            "type": "string"
+                          },
+                          "removed": {
+                            "type": "integer"
+                          },
+                          "valid": {
+                            "type": "boolean"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "count": 1,
+                  "total_tracking_params_removed": 2,
+                  "results": [
+                    {
+                      "original": "https://example.com/?utm_source=test&fbclid=abc",
+                      "clean": "https://example.com/",
+                      "removed": 2,
+                      "valid": true
+                    }
+                  ]
+                }
+              }
+            }
           },
           "429": {
             "description": "Rate limit exceeded"
@@ -259,6 +371,13 @@
                       }
                     }
                   }
+                },
+                "example": {
+                  "count": 2,
+                  "uuids": [
+                    "a87ef3ba-c3d9-45e9-8e39-d16bc9d30565",
+                    "97194a22-f868-421d-b716-fd34d04db07a"
+                  ]
                 }
               }
             }
@@ -297,7 +416,30 @@
         ],
         "responses": {
           "200": {
-            "description": "Encoded/decoded result"
+            "description": "Encoded/decoded result",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "action": {
+                      "type": "string"
+                    },
+                    "input": {
+                      "type": "string"
+                    },
+                    "result": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "action": "encode",
+                  "input": "Hello",
+                  "result": "SGVsbG8="
+                }
+              }
+            }
           },
           "400": {
             "description": "Invalid input"
@@ -340,6 +482,19 @@
                       "type": "boolean"
                     }
                   }
+                },
+                "example": {
+                  "header": {
+                    "alg": "HS256",
+                    "typ": "JWT"
+                  },
+                  "payload": {
+                    "sub": "1234567890",
+                    "name": "Test User",
+                    "exp": 9999999999
+                  },
+                  "signature_verified": false,
+                  "note": "Signature not verified — decode only."
                 }
               }
             }
@@ -363,12 +518,25 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "required": ["token"],
+                "required": [
+                  "token"
+                ],
                 "properties": {
-                  "token": { "type": "string" },
-                  "secret": { "type": "string", "description": "Required for HS256/384/512." },
-                  "jwk": { "type": "object", "description": "Public key in JWK format, for RS/PS/ES algorithms." },
-                  "jwks_url": { "type": "string", "description": "URL to a JWKS document; the key is matched by the token's \"kid\" header." }
+                  "token": {
+                    "type": "string"
+                  },
+                  "secret": {
+                    "type": "string",
+                    "description": "Required for HS256/384/512."
+                  },
+                  "jwk": {
+                    "type": "object",
+                    "description": "Public key in JWK format, for RS/PS/ES algorithms."
+                  },
+                  "jwks_url": {
+                    "type": "string",
+                    "description": "URL to a JWKS document; the key is matched by the token's \"kid\" header."
+                  }
                 }
               }
             }
@@ -382,12 +550,40 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "header": { "type": "object" },
-                    "payload": { "type": "object" },
-                    "algorithm": { "type": "string" },
-                    "valid": { "type": "boolean" },
-                    "time_issues": { "type": "array", "items": { "type": "string" }, "nullable": true }
+                    "header": {
+                      "type": "object"
+                    },
+                    "payload": {
+                      "type": "object"
+                    },
+                    "algorithm": {
+                      "type": "string"
+                    },
+                    "valid": {
+                      "type": "boolean"
+                    },
+                    "time_issues": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "nullable": true
+                    }
                   }
+                },
+                "example": {
+                  "header": {
+                    "alg": "HS256",
+                    "typ": "JWT"
+                  },
+                  "payload": {
+                    "sub": "1234567890",
+                    "name": "Test User",
+                    "exp": 9999999999
+                  },
+                  "algorithm": "HS256",
+                  "valid": true,
+                  "time_issues": null
                 }
               }
             }
@@ -398,7 +594,7 @@
     "/ip": {
       "get": {
         "summary": "Get caller IP geolocation",
-        "description": "Returns the caller's IP with city, country, currency, language, EU flag, and Tor exit-node detection (official Tor Project public list). Geolocation is read directly from Cloudflare's edge \u2014 no third-party API call.",
+        "description": "Returns the caller's IP with city, country, currency, language, EU flag, and Tor exit-node detection (official Tor Project public list). Geolocation is read directly from Cloudflare's edge — no third-party API call.",
         "responses": {
           "200": {
             "description": "IP geolocation data",
@@ -407,27 +603,93 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "ip": { "type": "string" },
-                    "city": { "type": "string", "nullable": true },
-                    "region": { "type": "string", "nullable": true },
-                    "country": { "type": "string", "nullable": true },
-                    "continent": { "type": "string", "nullable": true },
-                    "latitude": { "type": "string", "nullable": true },
-                    "longitude": { "type": "string", "nullable": true },
-                    "postal": { "type": "string", "nullable": true },
-                    "timezone": { "type": "string", "nullable": true },
-                    "asn": { "type": "integer", "nullable": true },
-                    "org": { "type": "string", "nullable": true },
-                    "currency": { "type": "string", "nullable": true },
-                    "language": { "type": "string", "nullable": true },
-                    "is_eu": { "type": "boolean", "nullable": true },
+                    "ip": {
+                      "type": "string"
+                    },
+                    "city": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "region": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "country": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "continent": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "latitude": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "longitude": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "postal": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "timezone": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "asn": {
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "org": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "currency": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "language": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "is_eu": {
+                      "type": "boolean",
+                      "nullable": true
+                    },
                     "tor": {
                       "type": "object",
                       "properties": {
-                        "checked": { "type": "boolean" },
-                        "is_tor": { "type": "boolean", "nullable": true }
+                        "checked": {
+                          "type": "boolean"
+                        },
+                        "is_tor": {
+                          "type": "boolean",
+                          "nullable": true
+                        }
                       }
                     }
+                  }
+                },
+                "example": {
+                  "ip": "31.165.126.104",
+                  "city": "Fribourg",
+                  "region": "Fribourg",
+                  "country": "CH",
+                  "continent": "EU",
+                  "latitude": "46.80237",
+                  "longitude": "7.15128",
+                  "postal": "1701",
+                  "timezone": "Europe/Zurich",
+                  "asn": 6730,
+                  "org": "sunrise Communications AG",
+                  "currency": "CHF",
+                  "language": "de",
+                  "is_eu": false,
+                  "tor": {
+                    "checked": true,
+                    "is_tor": false
                   }
                 }
               }
@@ -460,7 +722,38 @@
         ],
         "responses": {
           "200": {
-            "description": "Converted timestamp"
+            "description": "Converted timestamp",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "unix_seconds": {
+                      "type": "integer"
+                    },
+                    "unix_milliseconds": {
+                      "type": "integer"
+                    },
+                    "iso_8601": {
+                      "type": "string"
+                    },
+                    "utc_string": {
+                      "type": "string"
+                    },
+                    "day_of_week": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "unix_seconds": 1735689600,
+                  "unix_milliseconds": 1735689600000,
+                  "iso_8601": "2025-01-01T00:00:00.000Z",
+                  "utc_string": "Wed, 01 Jan 2025 00:00:00 GMT",
+                  "day_of_week": "Wednesday"
+                }
+              }
+            }
           }
         }
       }
@@ -497,7 +790,68 @@
         ],
         "responses": {
           "200": {
-            "description": "Converted color"
+            "description": "Converted color",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "hex": {
+                      "type": "string"
+                    },
+                    "rgb": {
+                      "type": "string"
+                    },
+                    "rgb_values": {
+                      "type": "object",
+                      "properties": {
+                        "r": {
+                          "type": "integer"
+                        },
+                        "g": {
+                          "type": "integer"
+                        },
+                        "b": {
+                          "type": "integer"
+                        }
+                      }
+                    },
+                    "hsl": {
+                      "type": "string"
+                    },
+                    "hsl_values": {
+                      "type": "object",
+                      "properties": {
+                        "h": {
+                          "type": "integer"
+                        },
+                        "s": {
+                          "type": "integer"
+                        },
+                        "l": {
+                          "type": "integer"
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "hex": "#1f3a5f",
+                  "rgb": "rgb(31, 58, 95)",
+                  "rgb_values": {
+                    "r": 31,
+                    "g": 58,
+                    "b": 95
+                  },
+                  "hsl": "hsl(215, 51%, 25%)",
+                  "hsl_values": {
+                    "h": 215,
+                    "s": 51,
+                    "l": 25
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -517,7 +871,53 @@
         ],
         "responses": {
           "200": {
-            "description": "Parsed User-Agent"
+            "description": "Parsed User-Agent",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "user_agent": {
+                      "type": "string"
+                    },
+                    "parsed": {
+                      "type": "object",
+                      "properties": {
+                        "browser": {
+                          "type": "string"
+                        },
+                        "browser_version": {
+                          "type": "string"
+                        },
+                        "os": {
+                          "type": "string"
+                        },
+                        "os_version": {
+                          "type": "string"
+                        },
+                        "device_type": {
+                          "type": "string"
+                        },
+                        "is_bot": {
+                          "type": "boolean"
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "user_agent": "Mozilla/5.0 (Windows NT 10.0) Chrome/120.0",
+                  "parsed": {
+                    "browser": "Chrome",
+                    "browser_version": "120.0",
+                    "os": "Windows",
+                    "os_version": "10.0",
+                    "device_type": "desktop",
+                    "is_bot": false
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -587,7 +987,30 @@
         ],
         "responses": {
           "200": {
-            "description": "Generated password with entropy estimate"
+            "description": "Generated password with entropy estimate",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "password": {
+                      "type": "string"
+                    },
+                    "length": {
+                      "type": "integer"
+                    },
+                    "entropy_bits": {
+                      "type": "integer"
+                    }
+                  }
+                },
+                "example": {
+                  "password": "P36rTrCxder059JU",
+                  "length": 16,
+                  "entropy_bits": 95
+                }
+              }
+            }
           }
         }
       }
@@ -608,7 +1031,46 @@
         ],
         "responses": {
           "200": {
-            "description": "Validation result"
+            "description": "Validation result",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "email": {
+                      "type": "string"
+                    },
+                    "syntax_valid": {
+                      "type": "boolean"
+                    },
+                    "domain": {
+                      "type": "string"
+                    },
+                    "mx_checked": {
+                      "type": "boolean"
+                    },
+                    "has_mx": {
+                      "type": "boolean"
+                    },
+                    "mx_count": {
+                      "type": "integer"
+                    },
+                    "valid": {
+                      "type": "boolean"
+                    }
+                  }
+                },
+                "example": {
+                  "email": "test@gmail.com",
+                  "syntax_valid": true,
+                  "domain": "gmail.com",
+                  "mx_checked": true,
+                  "has_mx": true,
+                  "mx_count": 5,
+                  "valid": true
+                }
+              }
+            }
           }
         }
       }
@@ -628,7 +1090,26 @@
         ],
         "responses": {
           "200": {
-            "description": "Favicon URL"
+            "description": "Favicon URL",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "domain": {
+                      "type": "string"
+                    },
+                    "favicon": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "domain": "github.com",
+                  "favicon": "https://github.githubassets.com/favicons/favicon.svg"
+                }
+              }
+            }
           },
           "400": {
             "description": "Disallowed domain"
@@ -663,7 +1144,22 @@
         ],
         "responses": {
           "200": {
-            "description": "Converted data"
+            "description": "Converted data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "usage": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "usage": "GET /api/csv-json?direction=json-to-csv|csv-to-json&data=<url-encoded text>  —  or POST { \"direction\": \"...\", \"data\": \"...\" }"
+                }
+              }
+            }
           }
         }
       },
@@ -697,7 +1193,30 @@
         },
         "responses": {
           "200": {
-            "description": "Converted data"
+            "description": "Converted data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "string"
+                    },
+                    "rows": {
+                      "type": "integer"
+                    },
+                    "cols": {
+                      "type": "integer"
+                    }
+                  }
+                },
+                "example": {
+                  "result": "[\n  {\n    \"name\": \"Alice\",\n    \"age\": \"30\"\n  }\n]",
+                  "rows": 1,
+                  "cols": 2
+                }
+              }
+            }
           }
         }
       }
@@ -705,7 +1224,7 @@
     "/password-breach": {
       "get": {
         "summary": "Check if a password has been breached",
-        "description": "Uses HIBP k-anonymity \u2014 only 5 hash chars are sent externally.",
+        "description": "Uses HIBP k-anonymity — only 5 hash chars are sent externally.",
         "parameters": [
           {
             "name": "password",
@@ -718,7 +1237,26 @@
         ],
         "responses": {
           "200": {
-            "description": "Breach status"
+            "description": "Breach status",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "breached": {
+                      "type": "boolean"
+                    },
+                    "breach_count": {
+                      "type": "integer"
+                    }
+                  }
+                },
+                "example": {
+                  "breached": true,
+                  "breach_count": 2266543
+                }
+              }
+            }
           }
         }
       }
@@ -733,10 +1271,17 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "required": ["password"],
+                "required": [
+                  "password"
+                ],
                 "properties": {
-                  "password": { "type": "string" },
-                  "check_breach": { "type": "boolean", "default": true }
+                  "password": {
+                    "type": "string"
+                  },
+                  "check_breach": {
+                    "type": "boolean",
+                    "default": true
+                  }
                 }
               }
             }
@@ -750,12 +1295,51 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "length": { "type": "integer" },
-                    "entropy_bits": { "type": "integer" },
-                    "strength": { "type": "string", "enum": ["very_weak", "weak", "fair", "good", "strong"] },
-                    "estimated_crack_time": { "type": "string" },
-                    "checks": { "type": "object" },
-                    "breach": { "type": "object", "nullable": true }
+                    "length": {
+                      "type": "integer"
+                    },
+                    "entropy_bits": {
+                      "type": "integer"
+                    },
+                    "strength": {
+                      "type": "string",
+                      "enum": [
+                        "very_weak",
+                        "weak",
+                        "fair",
+                        "good",
+                        "strong"
+                      ]
+                    },
+                    "estimated_crack_time": {
+                      "type": "string"
+                    },
+                    "checks": {
+                      "type": "object"
+                    },
+                    "breach": {
+                      "type": "object",
+                      "nullable": true
+                    }
+                  }
+                },
+                "example": {
+                  "length": 11,
+                  "entropy_bits": 57,
+                  "strength": "fair",
+                  "estimated_crack_time": "2 days",
+                  "checks": {
+                    "length_ok": false,
+                    "has_lowercase": true,
+                    "has_uppercase": false,
+                    "has_number": true,
+                    "has_symbol": false,
+                    "no_repeated_pattern": true
+                  },
+                  "breach": {
+                    "checked": true,
+                    "breached": true,
+                    "breach_count": 2266543
                   }
                 }
               }
@@ -779,7 +1363,30 @@
         ],
         "responses": {
           "200": {
-            "description": "Disposable status"
+            "description": "Disposable status",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "email": {
+                      "type": "string"
+                    },
+                    "domain": {
+                      "type": "string"
+                    },
+                    "disposable": {
+                      "type": "boolean"
+                    }
+                  }
+                },
+                "example": {
+                  "email": "test@mailinator.com",
+                  "domain": "mailinator.com",
+                  "disposable": true
+                }
+              }
+            }
           }
         }
       }
@@ -806,17 +1413,53 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "email": { "type": "string" },
-                    "syntax_valid": { "type": "boolean" },
-                    "domain": { "type": "string" },
-                    "mx_checked": { "type": "boolean" },
-                    "has_mx": { "type": "boolean", "nullable": true },
-                    "mx_count": { "type": "integer" },
-                    "disposable": { "type": "boolean", "nullable": true },
-                    "role_account": { "type": "boolean", "nullable": true },
-                    "valid": { "type": "boolean" },
-                    "reason": { "type": "string", "nullable": true }
+                    "email": {
+                      "type": "string"
+                    },
+                    "syntax_valid": {
+                      "type": "boolean"
+                    },
+                    "domain": {
+                      "type": "string"
+                    },
+                    "mx_checked": {
+                      "type": "boolean"
+                    },
+                    "has_mx": {
+                      "type": "boolean",
+                      "nullable": true
+                    },
+                    "mx_count": {
+                      "type": "integer"
+                    },
+                    "disposable": {
+                      "type": "boolean",
+                      "nullable": true
+                    },
+                    "role_account": {
+                      "type": "boolean",
+                      "nullable": true
+                    },
+                    "valid": {
+                      "type": "boolean"
+                    },
+                    "reason": {
+                      "type": "string",
+                      "nullable": true
+                    }
                   }
+                },
+                "example": {
+                  "email": "test@gmail.com",
+                  "syntax_valid": true,
+                  "domain": "gmail.com",
+                  "mx_checked": true,
+                  "has_mx": true,
+                  "mx_count": 5,
+                  "disposable": false,
+                  "role_account": false,
+                  "valid": true,
+                  "reason": null
                 }
               }
             }
@@ -827,20 +1470,24 @@
     "/phone-verify": {
       "get": {
         "summary": "Validate and format a phone number",
-        "description": "Validates and formats via libphonenumber-js. If \u201ccountry\u201d is omitted for a number without a leading +, the caller's IP-derived country (Cloudflare edge geolocation) is used as the default.",
+        "description": "Validates and formats via libphonenumber-js. If “country” is omitted for a number without a leading +, the caller's IP-derived country (Cloudflare edge geolocation) is used as the default.",
         "parameters": [
           {
             "name": "number",
             "in": "query",
             "required": true,
-            "schema": { "type": "string" }
+            "schema": {
+              "type": "string"
+            }
           },
           {
             "name": "country",
             "in": "query",
             "required": false,
             "description": "ISO 3166-1 alpha-2 country code (e.g. US, FR), used to interpret a number with no leading +.",
-            "schema": { "type": "string" }
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -851,24 +1498,66 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "number": { "type": "string" },
-                    "valid": { "type": "boolean" },
-                    "country": { "type": "string", "nullable": true },
-                    "country_calling_code": { "type": "string", "nullable": true },
-                    "type": { "type": "string", "nullable": true },
+                    "number": {
+                      "type": "string"
+                    },
+                    "valid": {
+                      "type": "boolean"
+                    },
+                    "country": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "country_calling_code": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "type": {
+                      "type": "string",
+                      "nullable": true
+                    },
                     "formats": {
                       "type": "object",
                       "nullable": true,
                       "properties": {
-                        "e164": { "type": "string" },
-                        "international": { "type": "string" },
-                        "national": { "type": "string" },
-                        "uri": { "type": "string" }
+                        "e164": {
+                          "type": "string"
+                        },
+                        "international": {
+                          "type": "string"
+                        },
+                        "national": {
+                          "type": "string"
+                        },
+                        "uri": {
+                          "type": "string"
+                        }
                       }
                     },
-                    "default_country_used": { "type": "string", "nullable": true },
-                    "ip_inferred_country": { "type": "string", "nullable": true }
+                    "default_country_used": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "ip_inferred_country": {
+                      "type": "string",
+                      "nullable": true
+                    }
                   }
+                },
+                "example": {
+                  "number": "4155552671",
+                  "valid": true,
+                  "country": "US",
+                  "country_calling_code": "1",
+                  "type": "Fixed or mobile",
+                  "formats": {
+                    "e164": "+14155552671",
+                    "international": "+1 415 555 2671",
+                    "national": "(415) 555-2671",
+                    "uri": "tel:+14155552671"
+                  },
+                  "default_country_used": "US",
+                  "ip_inferred_country": null
                 }
               }
             }
@@ -885,7 +1574,9 @@
             "name": "domain",
             "in": "query",
             "required": true,
-            "schema": { "type": "string" }
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -896,12 +1587,45 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "domain": { "type": "string" },
-                    "score": { "type": "integer" },
-                    "verdict": { "type": "string" },
-                    "spf": { "type": "object" },
-                    "dmarc": { "type": "object" },
-                    "dkim": { "type": "object" }
+                    "domain": {
+                      "type": "string"
+                    },
+                    "score": {
+                      "type": "integer"
+                    },
+                    "verdict": {
+                      "type": "string"
+                    },
+                    "spf": {
+                      "type": "object"
+                    },
+                    "dmarc": {
+                      "type": "object"
+                    },
+                    "dkim": {
+                      "type": "object"
+                    }
+                  }
+                },
+                "example": {
+                  "domain": "google.com",
+                  "score": 65,
+                  "verdict": "Partially protected — see recommendations.",
+                  "spf": {
+                    "configured": true,
+                    "record": "v=spf1 include:_spf.google.com ~all",
+                    "strength": "moderate"
+                  },
+                  "dmarc": {
+                    "configured": true,
+                    "record": "v=DMARC1; p=reject; rua=mailto:mailauth-reports@google.com",
+                    "policy": "reject",
+                    "enforced": true
+                  },
+                  "dkim": {
+                    "checked_selectors": 13,
+                    "found_selectors": [],
+                    "note": "Best-effort: only common selectors are tested. A domain can have valid DKIM under a custom selector not listed here — absence of a match does not prove DKIM is unconfigured."
                   }
                 }
               }
@@ -919,7 +1643,9 @@
             "name": "url",
             "in": "query",
             "required": true,
-            "schema": { "type": "string" }
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -930,14 +1656,219 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "url": { "type": "string" },
-                    "domain": { "type": "string" },
-                    "overall_score": { "type": "integer" },
-                    "overall_grade": { "type": "string" },
-                    "verdict": { "type": "string" },
-                    "security_headers": { "type": "object" },
-                    "reputation": { "type": "object" },
-                    "attack_surface": { "type": "object" }
+                    "url": {
+                      "type": "string"
+                    },
+                    "domain": {
+                      "type": "string"
+                    },
+                    "overall_score": {
+                      "type": "integer"
+                    },
+                    "overall_grade": {
+                      "type": "string"
+                    },
+                    "verdict": {
+                      "type": "string"
+                    },
+                    "security_headers": {
+                      "type": "object"
+                    },
+                    "reputation": {
+                      "type": "object"
+                    },
+                    "attack_surface": {
+                      "type": "object"
+                    }
+                  }
+                },
+                "example": {
+                  "url": "https://github.com",
+                  "domain": "github.com",
+                  "overall_score": 85,
+                  "overall_grade": "A",
+                  "verdict": "No major issues found.",
+                  "security_headers": {
+                    "checked": true,
+                    "score": 85,
+                    "grade": "A",
+                    "checks": [
+                      {
+                        "header": "HSTS",
+                        "present": true,
+                        "value": "max-age=31536000; includeSubdomains; preload",
+                        "points": 20,
+                        "max_points": 20,
+                        "advice": null
+                      },
+                      {
+                        "header": "Content-Security-Policy",
+                        "present": true,
+                        "value": "default-src 'none'; base-uri 'self'; child-src github.githubassets.com github.com/assets-cdn/worker/ github.com/assets/ gist.github.com/assets-cdn/worker/; connect-src 'self' uploads.github.com www.githubstatus.com collector.github.com raw.githubusercontent.com api.github.com github-cloud.s3.amazonaws.com github-production-repository-file-5c1aeb.s3.amazonaws.com github-production-upload-manifest-file-7fdce7.s3.amazonaws.com github-production-user-asset-6210df.s3.amazonaws.com *.rel.tunnels.api.visualstudio.com wss://*.rel.tunnels.api.visualstudio.com github.githubassets.com objects-origin.githubusercontent.com copilot-proxy.githubusercontent.com proxy.individual.githubcopilot.com proxy.business.githubcopilot.com proxy.enterprise.githubcopilot.com *.actions.githubusercontent.com wss://*.actions.githubusercontent.com productionresultssa0.blob.core.windows.net productionresultssa1.blob.core.windows.net productionresultssa2.blob.core.windows.net productionresultssa3.blob.core.windows.net productionresultssa4.blob.core.windows.net productionresultssa5.blob.core.windows.net productionresultssa6.blob.core.windows.net productionresultssa7.blob.core.windows.net productionresultssa8.blob.core.windows.net productionresultssa9.blob.core.windows.net productionresultssa10.blob.core.windows.net productionresultssa11.blob.core.windows.net productionresultssa12.blob.core.windows.net productionresultssa13.blob.core.windows.net productionresultssa14.blob.core.windows.net productionresultssa15.blob.core.windows.net productionresultssa16.blob.core.windows.net productionresultssa17.blob.core.windows.net productionresultssa18.blob.core.windows.net productionresultssa19.blob.core.windows.net github-production-repository-image-32fea6.s3.amazonaws.com github-production-release-asset-2e65be.s3.amazonaws.com insights.github.com wss://alive.github.com wss://alive-staging.github.com api.githubcopilot.com api.individual.githubcopilot.com api.business.githubcopilot.com api.enterprise.githubcopilot.com wss://production-copilot-host.webpubsub.azure.com edge.fullstory.com rs.fullstory.com; font-src github.githubassets.com; form-action 'self' github.com gist.github.com copilot-workspace.githubnext.com objects-origin.githubusercontent.com; frame-ancestors 'none'; frame-src viewscreen.githubusercontent.com notebooks.githubusercontent.com www.youtube-nocookie.com; img-src 'self' data: blob: github.githubassets.com media.githubusercontent.com camo.githubusercontent.com identicons.github.com avatars.githubusercontent.com private-avatars.githubusercontent.com github-cloud.s3.amazonaws.com objects.githubusercontent.com release-assets.githubusercontent.com secured-user-images.githubusercontent.com user-images.githubusercontent.com private-user-images.githubusercontent.com opengraph.githubassets.com repository-images.githubusercontent.com marketplace-screenshots.githubusercontent.com copilotprodattachments.blob.core.windows.net/github-production-copilot-attachments/ github-production-user-asset-6210df.s3.amazonaws.com customer-stories-feed.github.com spotlights-feed.github.com explore-feed.github.com objects-origin.githubusercontent.com *.githubusercontent.com images.ctfassets.net/8aevphvgewt8/; manifest-src 'self'; media-src github.com user-images.githubusercontent.com secured-user-images.githubusercontent.com private-user-images.githubusercontent.com github-production-user-asset-6210df.s3.amazonaws.com gist.github.com github.githubassets.com assets.ctfassets.net/8aevphvgewt8/ videos.ctfassets.net/8aevphvgewt8/; script-src github.githubassets.com; style-src 'unsafe-inline' github.githubassets.com; upgrade-insecure-requests; worker-src github.githubassets.com github.com/assets-cdn/worker/ github.com/assets/ gist.github.com/assets-cdn/worker/",
+                        "points": 25,
+                        "max_points": 25,
+                        "advice": null
+                      },
+                      {
+                        "header": "X-Content-Type-Options",
+                        "present": true,
+                        "value": "nosniff",
+                        "points": 10,
+                        "max_points": 10,
+                        "advice": null
+                      },
+                      {
+                        "header": "X-Frame-Options",
+                        "present": true,
+                        "value": "deny",
+                        "points": 15,
+                        "max_points": 15,
+                        "advice": null
+                      },
+                      {
+                        "header": "Referrer-Policy",
+                        "present": true,
+                        "value": "origin-when-cross-origin, strict-origin-when-cross-origin",
+                        "points": 10,
+                        "max_points": 10,
+                        "advice": null
+                      },
+                      {
+                        "header": "Permissions-Policy",
+                        "present": false,
+                        "value": null,
+                        "points": 0,
+                        "max_points": 10,
+                        "advice": "Add a Permissions-Policy to restrict access to browser features (camera, geolocation, etc.)."
+                      },
+                      {
+                        "header": "X-XSS-Protection",
+                        "present": true,
+                        "value": "0",
+                        "points": 5,
+                        "max_points": 5,
+                        "advice": null
+                      },
+                      {
+                        "header": "Cross-Origin-Opener-Policy",
+                        "present": false,
+                        "value": null,
+                        "points": 0,
+                        "max_points": 5,
+                        "advice": "Add Cross-Origin-Opener-Policy to isolate your browsing context from cross-origin windows."
+                      }
+                    ]
+                  },
+                  "reputation": {
+                    "checked": true,
+                    "malicious": false,
+                    "status": "not_found"
+                  },
+                  "attack_surface": {
+                    "checked": true,
+                    "count": 117,
+                    "subdomains": [
+                      "api.mcp.github.com",
+                      "api.security.github.com",
+                      "api.stars.github.com",
+                      "asset-generator.github.com",
+                      "atom-installer.github.com",
+                      "awesome-copilot.github.com",
+                      "branch.github.com",
+                      "brandguide.github.com",
+                      "bug-bash.github.com",
+                      "camo.github.com",
+                      "central.github.com",
+                      "cla.github.com",
+                      "classroom.github.com",
+                      "cloud.github.com",
+                      "codespaces-dev.github.com",
+                      "codespaces-ppe.github.com",
+                      "codespaces.github.com",
+                      "communication.github.com",
+                      "community.github.com",
+                      "copilot-billing-preview.github.com",
+                      "copilot-reports.github.com",
+                      "design-camp.github.com",
+                      "dev-days.github.com",
+                      "dev.gtm.github.com",
+                      "docs-front-door.github.com",
+                      "docs.github.com",
+                      "dodgeball.github.com",
+                      "ducky.github.com",
+                      "edu.github.com",
+                      "education.github.com",
+                      "emails.github.com",
+                      "enterprise.github.com",
+                      "examadmin-uat.github.com",
+                      "examadmin.github.com",
+                      "examregistration-api.github.com",
+                      "examregistration-uat-api.github.com",
+                      "examregistration-uat.github.com",
+                      "examregistration.github.com",
+                      "f.cloud.github.com",
+                      "fast.github.com",
+                      "gameoff.github.com",
+                      "garage.github.com",
+                      "ghicons.github.com",
+                      "gist.github.com",
+                      "github.com",
+                      "graphql-stage.github.com",
+                      "graphql.github.com",
+                      "gsnlink.github.com",
+                      "help.github.com",
+                      "helpnext.github.com",
+                      "hq.github.com",
+                      "id.github.com",
+                      "import.github.com",
+                      "import2.github.com",
+                      "importer2.github.com",
+                      "jira.github.com",
+                      "jobs.github.com",
+                      "lab-sandbox.github.com",
+                      "lab.github.com",
+                      "learn.github.com",
+                      "livesend.github.com",
+                      "m.communication.github.com",
+                      "mac-installer.github.com",
+                      "mailing.github.com",
+                      "maintainers.github.com",
+                      "model-launchkit.github.com",
+                      "mona-arcade.github.com",
+                      "octocaptcha.review-lab.github.com",
+                      "octostatus-production.github.com",
+                      "offer.github.com",
+                      "partnerportal.github.com",
+                      "pkg.github.com",
+                      "porter.github.com",
+                      "porter2.github.com",
+                      "proxima-review-lab.github.com",
+                      "raw.github.com",
+                      "registry.github.com",
+                      "render-lab.github.com",
+                      "render.github.com",
+                      "res.communication.github.com",
+                      "review-lab.github.com",
+                      "rs.github.com",
+                      "schrauger.github.com",
+                      "skyline.github.com",
+                      "slack.github.com",
+                      "smtp.github.com",
+                      "spotlights-feed.github.com",
+                      "staging-lab.github.com",
+                      "status.github.com",
+                      "stg.github.com",
+                      "styleguide.github.com",
+                      "support.enterprise.github.com",
+                      "t.communication.github.com",
+                      "talks.github.com",
+                      "visualstudio.github.com",
+                      "vpn-ca.iad.github.com",
+                      "vscode-auth.github.com",
+                      "workspaces-dev.github.com",
+                      "workspaces-ppe.github.com",
+                      "workspaces.github.com"
+                    ]
                   }
                 }
               }
@@ -957,7 +1888,11 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "file": { "type": "string", "format": "binary", "description": "JPEG or PNG image, max 10MB." }
+                  "file": {
+                    "type": "string",
+                    "format": "binary",
+                    "description": "JPEG or PNG image, max 10MB."
+                  }
                 }
               }
             }
@@ -971,12 +1906,37 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "found": { "type": "boolean" },
-                    "content": { "type": "string", "nullable": true },
-                    "is_url": { "type": "boolean", "nullable": true },
-                    "reputation": { "type": "object", "nullable": true },
-                    "verdict": { "type": "string", "nullable": true }
+                    "found": {
+                      "type": "boolean"
+                    },
+                    "content": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "is_url": {
+                      "type": "boolean",
+                      "nullable": true
+                    },
+                    "reputation": {
+                      "type": "object",
+                      "nullable": true
+                    },
+                    "verdict": {
+                      "type": "string",
+                      "nullable": true
+                    }
                   }
+                },
+                "example": {
+                  "found": true,
+                  "content": "https://presend.pages.dev",
+                  "is_url": true,
+                  "reputation": {
+                    "checked": true,
+                    "malicious": false,
+                    "status": "not_found"
+                  },
+                  "verdict": "QR code links to a URL not currently flagged by URLhaus. This does not guarantee safety — only that it is not currently listed."
                 }
               }
             }
@@ -999,7 +1959,123 @@
         ],
         "responses": {
           "200": {
-            "description": "Security grade and per-header breakdown"
+            "description": "Security grade and per-header breakdown",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "url": {
+                      "type": "string"
+                    },
+                    "grade": {
+                      "type": "string"
+                    },
+                    "score": {
+                      "type": "integer"
+                    },
+                    "checks": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "header": {
+                            "type": "string"
+                          },
+                          "present": {
+                            "type": "boolean"
+                          },
+                          "value": {
+                            "type": "string"
+                          },
+                          "points": {
+                            "type": "integer"
+                          },
+                          "max_points": {
+                            "type": "integer"
+                          },
+                          "advice": {
+                            "type": "string",
+                            "nullable": true
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "url": "https://github.com",
+                  "grade": "A",
+                  "score": 85,
+                  "checks": [
+                    {
+                      "header": "HSTS",
+                      "present": true,
+                      "value": "max-age=31536000; includeSubdomains; preload",
+                      "points": 20,
+                      "max_points": 20,
+                      "advice": null
+                    },
+                    {
+                      "header": "Content-Security-Policy",
+                      "present": true,
+                      "value": "default-src 'none'; base-uri 'self'; child-src github.githubassets.com github.com/assets-cdn/worker/ github.com/assets/ gist.github.com/assets-cdn/worker/; connect-src 'self' uploads.github.com www.githubstatus.com collector.github.com raw.githubusercontent.com api.github.com github-cloud.s3.amazonaws.com github-production-repository-file-5c1aeb.s3.amazonaws.com github-production-upload-manifest-file-7fdce7.s3.amazonaws.com github-production-user-asset-6210df.s3.amazonaws.com *.rel.tunnels.api.visualstudio.com wss://*.rel.tunnels.api.visualstudio.com github.githubassets.com objects-origin.githubusercontent.com copilot-proxy.githubusercontent.com proxy.individual.githubcopilot.com proxy.business.githubcopilot.com proxy.enterprise.githubcopilot.com *.actions.githubusercontent.com wss://*.actions.githubusercontent.com productionresultssa0.blob.core.windows.net productionresultssa1.blob.core.windows.net productionresultssa2.blob.core.windows.net productionresultssa3.blob.core.windows.net productionresultssa4.blob.core.windows.net productionresultssa5.blob.core.windows.net productionresultssa6.blob.core.windows.net productionresultssa7.blob.core.windows.net productionresultssa8.blob.core.windows.net productionresultssa9.blob.core.windows.net productionresultssa10.blob.core.windows.net productionresultssa11.blob.core.windows.net productionresultssa12.blob.core.windows.net productionresultssa13.blob.core.windows.net productionresultssa14.blob.core.windows.net productionresultssa15.blob.core.windows.net productionresultssa16.blob.core.windows.net productionresultssa17.blob.core.windows.net productionresultssa18.blob.core.windows.net productionresultssa19.blob.core.windows.net github-production-repository-image-32fea6.s3.amazonaws.com github-production-release-asset-2e65be.s3.amazonaws.com insights.github.com wss://alive.github.com wss://alive-staging.github.com api.githubcopilot.com api.individual.githubcopilot.com api.business.githubcopilot.com api.enterprise.githubcopilot.com wss://production-copilot-host.webpubsub.azure.com edge.fullstory.com rs.fullstory.com; font-src github.githubassets.com; form-action 'self' github.com gist.github.com copilot-workspace.githubnext.com objects-origin.githubusercontent.com; frame-ancestors 'none'; frame-src viewscreen.githubusercontent.com notebooks.githubusercontent.com www.youtube-nocookie.com; img-src 'self' data: blob: github.githubassets.com media.githubusercontent.com camo.githubusercontent.com identicons.github.com avatars.githubusercontent.com private-avatars.githubusercontent.com github-cloud.s3.amazonaws.com objects.githubusercontent.com release-assets.githubusercontent.com secured-user-images.githubusercontent.com user-images.githubusercontent.com private-user-images.githubusercontent.com opengraph.githubassets.com repository-images.githubusercontent.com marketplace-screenshots.githubusercontent.com copilotprodattachments.blob.core.windows.net/github-production-copilot-attachments/ github-production-user-asset-6210df.s3.amazonaws.com customer-stories-feed.github.com spotlights-feed.github.com explore-feed.github.com objects-origin.githubusercontent.com *.githubusercontent.com images.ctfassets.net/8aevphvgewt8/; manifest-src 'self'; media-src github.com user-images.githubusercontent.com secured-user-images.githubusercontent.com private-user-images.githubusercontent.com github-production-user-asset-6210df.s3.amazonaws.com gist.github.com github.githubassets.com assets.ctfassets.net/8aevphvgewt8/ videos.ctfassets.net/8aevphvgewt8/; script-src github.githubassets.com; style-src 'unsafe-inline' github.githubassets.com; upgrade-insecure-requests; worker-src github.githubassets.com github.com/assets-cdn/worker/ github.com/assets/ gist.github.com/assets-cdn/worker/",
+                      "points": 25,
+                      "max_points": 25,
+                      "advice": null
+                    },
+                    {
+                      "header": "X-Content-Type-Options",
+                      "present": true,
+                      "value": "nosniff",
+                      "points": 10,
+                      "max_points": 10,
+                      "advice": null
+                    },
+                    {
+                      "header": "X-Frame-Options",
+                      "present": true,
+                      "value": "deny",
+                      "points": 15,
+                      "max_points": 15,
+                      "advice": null
+                    },
+                    {
+                      "header": "Referrer-Policy",
+                      "present": true,
+                      "value": "origin-when-cross-origin, strict-origin-when-cross-origin",
+                      "points": 10,
+                      "max_points": 10,
+                      "advice": null
+                    },
+                    {
+                      "header": "Permissions-Policy",
+                      "present": false,
+                      "value": null,
+                      "points": 0,
+                      "max_points": 10,
+                      "advice": "Add a Permissions-Policy to restrict access to browser features (camera, geolocation, etc.)."
+                    },
+                    {
+                      "header": "X-XSS-Protection",
+                      "present": true,
+                      "value": "0",
+                      "points": 5,
+                      "max_points": 5,
+                      "advice": null
+                    },
+                    {
+                      "header": "Cross-Origin-Opener-Policy",
+                      "present": false,
+                      "value": null,
+                      "points": 0,
+                      "max_points": 5,
+                      "advice": "Add Cross-Origin-Opener-Policy to isolate your browsing context from cross-origin windows."
+                    }
+                  ]
+                }
+              }
+            }
           }
         }
       }
@@ -1020,7 +2096,34 @@
         ],
         "responses": {
           "200": {
-            "description": "Reputation result"
+            "description": "Reputation result",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "url": {
+                      "type": "string"
+                    },
+                    "malicious": {
+                      "type": "boolean"
+                    },
+                    "status": {
+                      "type": "string"
+                    },
+                    "note": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "url": "https://example.com",
+                  "malicious": false,
+                  "status": "not_found",
+                  "note": "Not found in URLhaus. This does not guarantee the URL is safe — only that it is not currently listed."
+                }
+              }
+            }
           }
         }
       }
@@ -1041,7 +2144,155 @@
         ],
         "responses": {
           "200": {
-            "description": "List of discovered subdomains"
+            "description": "List of discovered subdomains",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "domain": {
+                      "type": "string"
+                    },
+                    "count": {
+                      "type": "integer"
+                    },
+                    "subdomains": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "source": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "domain": "github.com",
+                  "count": 117,
+                  "subdomains": [
+                    "api.mcp.github.com",
+                    "api.security.github.com",
+                    "api.stars.github.com",
+                    "asset-generator.github.com",
+                    "atom-installer.github.com",
+                    "awesome-copilot.github.com",
+                    "branch.github.com",
+                    "brandguide.github.com",
+                    "bug-bash.github.com",
+                    "camo.github.com",
+                    "central.github.com",
+                    "cla.github.com",
+                    "classroom.github.com",
+                    "cloud.github.com",
+                    "codespaces-dev.github.com",
+                    "codespaces-ppe.github.com",
+                    "codespaces.github.com",
+                    "communication.github.com",
+                    "community.github.com",
+                    "copilot-billing-preview.github.com",
+                    "copilot-reports.github.com",
+                    "design-camp.github.com",
+                    "dev-days.github.com",
+                    "dev.gtm.github.com",
+                    "docs-front-door.github.com",
+                    "docs.github.com",
+                    "dodgeball.github.com",
+                    "ducky.github.com",
+                    "edu.github.com",
+                    "education.github.com",
+                    "emails.github.com",
+                    "enterprise.github.com",
+                    "examadmin-uat.github.com",
+                    "examadmin.github.com",
+                    "examregistration-api.github.com",
+                    "examregistration-uat-api.github.com",
+                    "examregistration-uat.github.com",
+                    "examregistration.github.com",
+                    "f.cloud.github.com",
+                    "fast.github.com",
+                    "gameoff.github.com",
+                    "garage.github.com",
+                    "ghicons.github.com",
+                    "gist.github.com",
+                    "github.com",
+                    "graphql-stage.github.com",
+                    "graphql.github.com",
+                    "gsnlink.github.com",
+                    "help.github.com",
+                    "helpnext.github.com",
+                    "hq.github.com",
+                    "id.github.com",
+                    "import.github.com",
+                    "import2.github.com",
+                    "importer2.github.com",
+                    "jira.github.com",
+                    "jobs.github.com",
+                    "lab-sandbox.github.com",
+                    "lab.github.com",
+                    "learn.github.com",
+                    "livesend.github.com",
+                    "m.communication.github.com",
+                    "mac-installer.github.com",
+                    "mailing.github.com",
+                    "maintainers.github.com",
+                    "model-launchkit.github.com",
+                    "mona-arcade.github.com",
+                    "octocaptcha.review-lab.github.com",
+                    "octostatus-production.github.com",
+                    "offer.github.com",
+                    "partnerportal.github.com",
+                    "pkg.github.com",
+                    "porter.github.com",
+                    "porter2.github.com",
+                    "proxima-review-lab.github.com",
+                    "raw.github.com",
+                    "registry.github.com",
+                    "render-lab.github.com",
+                    "render.github.com",
+                    "res.communication.github.com",
+                    "review-lab.github.com",
+                    "rs.github.com",
+                    "schrauger.github.com",
+                    "skyline.github.com",
+                    "slack.github.com",
+                    "smtp.github.com",
+                    "spotlights-feed.github.com",
+                    "staging-lab.github.com",
+                    "status.github.com",
+                    "stg.github.com",
+                    "styleguide.github.com",
+                    "support.enterprise.github.com",
+                    "t.communication.github.com",
+                    "talks.github.com",
+                    "visualstudio.github.com",
+                    "vpn-ca.iad.github.com",
+                    "vscode-auth.github.com",
+                    "workspaces-dev.github.com",
+                    "workspaces-ppe.github.com",
+                    "workspaces.github.com",
+                    "ws.help.github.com",
+                    "ws.support.github.com",
+                    "www.api.security.github.com",
+                    "www.api.stars.github.com",
+                    "www.communication.github.com",
+                    "www.github.com",
+                    "www.graphql-stage.github.com",
+                    "www.graphql.github.com",
+                    "www.jira.github.com",
+                    "www.maintainers.github.com",
+                    "www.partnerportal.github.com",
+                    "www.render-lab.github.com",
+                    "www.skyline.github.com",
+                    "www.smtp.github.com",
+                    "www.support.enterprise.github.com",
+                    "www.visualstudio.github.com",
+                    "www.ws.support.github.com"
+                  ],
+                  "source": "Certificate Transparency logs (crt.sh) — passive, publicly available data."
+                }
+              }
+            }
           }
         }
       }
@@ -1055,7 +2306,9 @@
             "name": "domain",
             "in": "query",
             "required": true,
-            "schema": { "type": "string" }
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -1066,12 +2319,237 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "domain": { "type": "string" },
-                    "robots_txt_found": { "type": "boolean" },
-                    "summary": { "type": "object" },
-                    "wildcard_rules": { "type": "array", "items": { "type": "string" }, "nullable": true },
-                    "bots": { "type": "array", "items": { "type": "object" } }
+                    "domain": {
+                      "type": "string"
+                    },
+                    "robots_txt_found": {
+                      "type": "boolean"
+                    },
+                    "summary": {
+                      "type": "object"
+                    },
+                    "wildcard_rules": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "nullable": true
+                    },
+                    "bots": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    }
                   }
+                },
+                "example": {
+                  "domain": "github.com",
+                  "robots_txt_found": true,
+                  "summary": {
+                    "blocked": 0,
+                    "partial": 15,
+                    "allowed": 0
+                  },
+                  "wildcard_rules": [
+                    "Disallow: /*/*/pulse",
+                    "Disallow: /*/*/projects",
+                    "Disallow: /*/*/forks",
+                    "Disallow: /*/*/issues/new",
+                    "Disallow: /*/*/milestones/new",
+                    "Disallow: /*/*/issues/search",
+                    "Disallow: /*/*/commits/",
+                    "Disallow: /*/*/branches",
+                    "Disallow: /*/*/contributors",
+                    "Disallow: /*/*/tags",
+                    "Disallow: /*/*/stargazers",
+                    "Disallow: /*/*/watchers",
+                    "Disallow: /*/*/network",
+                    "Disallow: /*/*/graphs",
+                    "Disallow: /*/*/compare",
+                    "Disallow: /*/tree/",
+                    "Disallow: /gist/",
+                    "Disallow: /*/download",
+                    "Disallow: /*/revisions",
+                    "Disallow: /*/commits/*?author",
+                    "Disallow: /*/commits/*?path",
+                    "Disallow: /*/comments",
+                    "Disallow: /*/archive/",
+                    "Disallow: /*/blame/",
+                    "Disallow: /*/raw/",
+                    "Disallow: /*/cache/",
+                    "Disallow: /.git/",
+                    "Disallow: */.git/",
+                    "Disallow: /*.git$",
+                    "Disallow: /search/advanced",
+                    "Disallow: /search$",
+                    "Disallow: /*q=",
+                    "Disallow: /*.atom$",
+                    "Disallow: /ekansa/Open-Context-Data",
+                    "Disallow: /ekansa/opencontext-*",
+                    "Disallow: */tarball/",
+                    "Disallow: */zipball/",
+                    "Disallow: /*source=*",
+                    "Disallow: /*ref_cta=*",
+                    "Disallow: /*plan=*",
+                    "Disallow: /*return_to=*",
+                    "Disallow: /*ref_loc=*",
+                    "Disallow: /*setup_organization=*",
+                    "Disallow: /*source_repo=*",
+                    "Disallow: /*ref_page=*",
+                    "Disallow: /*source=*",
+                    "Disallow: /*referrer=*",
+                    "Disallow: /*report=*",
+                    "Disallow: /*author=*",
+                    "Disallow: /*since=*",
+                    "Disallow: /*until=*",
+                    "Disallow: /*commits?author=*",
+                    "Disallow: /*report-abuse?report=*",
+                    "Disallow: /*tab=*",
+                    "Allow: /*?tab=achievements&achievement=*",
+                    "Disallow: /account-login",
+                    "Disallow: /Explodingstuff/",
+                    "Disallow: /copilot/",
+                    "Disallow: /copilot/c/"
+                  ],
+                  "wildcard_rules_note": "Shown once here; any bot below with matched_by=\"wildcard\" is governed by these rules (no bot-specific override).",
+                  "bots": [
+                    {
+                      "token": "GPTBot",
+                      "company": "OpenAI",
+                      "category": "ai-training",
+                      "respects_robots_txt": true,
+                      "allowed": "partial",
+                      "matched_by": "wildcard",
+                      "matched_rules": null
+                    },
+                    {
+                      "token": "ChatGPT-User",
+                      "company": "OpenAI",
+                      "category": "ai-assistant",
+                      "respects_robots_txt": false,
+                      "allowed": "partial",
+                      "matched_by": "wildcard",
+                      "matched_rules": null
+                    },
+                    {
+                      "token": "OAI-SearchBot",
+                      "company": "OpenAI",
+                      "category": "ai-search",
+                      "respects_robots_txt": true,
+                      "allowed": "partial",
+                      "matched_by": "wildcard",
+                      "matched_rules": null
+                    },
+                    {
+                      "token": "ClaudeBot",
+                      "company": "Anthropic",
+                      "category": "ai-training",
+                      "respects_robots_txt": true,
+                      "allowed": "partial",
+                      "matched_by": "wildcard",
+                      "matched_rules": null
+                    },
+                    {
+                      "token": "Claude-User",
+                      "company": "Anthropic",
+                      "category": "ai-assistant",
+                      "respects_robots_txt": true,
+                      "allowed": "partial",
+                      "matched_by": "wildcard",
+                      "matched_rules": null
+                    },
+                    {
+                      "token": "Claude-SearchBot",
+                      "company": "Anthropic",
+                      "category": "ai-search",
+                      "respects_robots_txt": true,
+                      "allowed": "partial",
+                      "matched_by": "wildcard",
+                      "matched_rules": null
+                    },
+                    {
+                      "token": "Google-Extended",
+                      "company": "Google",
+                      "category": "ai-training",
+                      "respects_robots_txt": true,
+                      "allowed": "partial",
+                      "matched_by": "wildcard",
+                      "matched_rules": null
+                    },
+                    {
+                      "token": "PerplexityBot",
+                      "company": "Perplexity",
+                      "category": "ai-search",
+                      "respects_robots_txt": true,
+                      "allowed": "partial",
+                      "matched_by": "wildcard",
+                      "matched_rules": null
+                    },
+                    {
+                      "token": "Perplexity-User",
+                      "company": "Perplexity",
+                      "category": "ai-assistant",
+                      "respects_robots_txt": false,
+                      "allowed": "partial",
+                      "matched_by": "wildcard",
+                      "matched_rules": null
+                    },
+                    {
+                      "token": "CCBot",
+                      "company": "Common Crawl",
+                      "category": "ai-training",
+                      "respects_robots_txt": true,
+                      "allowed": "partial",
+                      "matched_by": "wildcard",
+                      "matched_rules": null
+                    },
+                    {
+                      "token": "Bytespider",
+                      "company": "ByteDance",
+                      "category": "ai-training",
+                      "respects_robots_txt": false,
+                      "allowed": "partial",
+                      "matched_by": "wildcard",
+                      "matched_rules": null
+                    },
+                    {
+                      "token": "Meta-ExternalAgent",
+                      "company": "Meta",
+                      "category": "ai-training",
+                      "respects_robots_txt": true,
+                      "allowed": "partial",
+                      "matched_by": "wildcard",
+                      "matched_rules": null
+                    },
+                    {
+                      "token": "Applebot-Extended",
+                      "company": "Apple",
+                      "category": "ai-training",
+                      "respects_robots_txt": true,
+                      "allowed": "partial",
+                      "matched_by": "wildcard",
+                      "matched_rules": null
+                    },
+                    {
+                      "token": "Amazonbot",
+                      "company": "Amazon",
+                      "category": "ai-training",
+                      "respects_robots_txt": true,
+                      "allowed": "partial",
+                      "matched_by": "wildcard",
+                      "matched_rules": null
+                    },
+                    {
+                      "token": "Diffbot",
+                      "company": "Diffbot",
+                      "category": "ai-training",
+                      "respects_robots_txt": false,
+                      "allowed": "partial",
+                      "matched_by": "wildcard",
+                      "matched_rules": null
+                    }
+                  ]
                 }
               }
             }
@@ -1173,7 +2651,10 @@
                 "properties": {
                   "files": {
                     "type": "array",
-                    "items": { "type": "string", "format": "binary" },
+                    "items": {
+                      "type": "string",
+                      "format": "binary"
+                    },
                     "description": "1 file (hash only) or 2 files (compare). JPEG/PNG, max 10MB each."
                   }
                 }
@@ -1186,7 +2667,28 @@
             "description": "Hash (1 file) or comparison result (2 files)",
             "content": {
               "application/json": {
-                "schema": { "type": "object" }
+                "schema": {
+                  "type": "object"
+                },
+                "example": {
+                  "files": [
+                    {
+                      "filename": "similar_a.png",
+                      "width": 200,
+                      "height": 200,
+                      "hash": "00000003060c1020"
+                    },
+                    {
+                      "filename": "similar_a2.jpg",
+                      "width": 200,
+                      "height": 200,
+                      "hash": "00000003060c1020"
+                    }
+                  ],
+                  "hamming_distance": 0,
+                  "similarity_percent": 100,
+                  "verdict": "Near-identical (likely the same image, possibly re-compressed or lightly edited)."
+                }
               }
             }
           }
@@ -1203,11 +2705,15 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "required": ["texts"],
+                "required": [
+                  "texts"
+                ],
                 "properties": {
                   "texts": {
                     "type": "array",
-                    "items": { "type": "string" },
+                    "items": {
+                      "type": "string"
+                    },
                     "description": "1 text (hash only) or 2 texts (compare). Max 200,000 characters each."
                   }
                 }
@@ -1220,7 +2726,24 @@
             "description": "Hash (1 text) or comparison result (2 texts)",
             "content": {
               "application/json": {
-                "schema": { "type": "object" }
+                "schema": {
+                  "type": "object"
+                },
+                "example": {
+                  "texts": [
+                    {
+                      "length": 62,
+                      "hash": "11cead9a82394f07"
+                    },
+                    {
+                      "length": 62,
+                      "hash": "11cead9a82394f07"
+                    }
+                  ],
+                  "hamming_distance": 0,
+                  "similarity_percent": 100,
+                  "verdict": "Near-identical (likely the same text, possibly with trivial edits)."
+                }
               }
             }
           }
