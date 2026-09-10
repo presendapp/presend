@@ -61,3 +61,7 @@ venv/
 !gsc_submit.py
 !check_broken_links.py
 node_modules/
+
+# Cache Python compilé -- ne doit jamais être versionné
+__pycache__/
+*.pyc
