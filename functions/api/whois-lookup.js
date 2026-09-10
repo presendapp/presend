@@ -78,7 +78,10 @@ export async function onRequestGet(context) {
   try {
     const res = await fetch(`https://rdap.org/domain/${encodeURIComponent(domain)}`, {
       signal: controller.signal,
-      headers: { Accept: 'application/rdap+json' },
+      headers: {
+        Accept: 'application/rdap+json',
+        'User-Agent': 'Mozilla/5.0 (compatible; PresendBot/1.0; +https://presend.pages.dev)',
+      },
     });
     clearTimeout(timeout);
 
