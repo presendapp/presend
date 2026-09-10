@@ -5,6 +5,7 @@ Génération automatique du sitemap.xml à partir des fichiers HTML présents.
 """
 import os
 import re
+import subprocess
 from datetime import datetime
 
 HOST = "https://presend.pages.dev"
@@ -77,10 +78,24 @@ def get_changefreq(path):
     return 'monthly'
 
 def get_lastmod(filepath):
+    # Le mtime du système de fichiers ne vaut rien en CI : git checkout
+    # remet tous les fichiers à l'heure du clone, pas à leur vraie date
+    # de dernière modification. L'historique git est la seule source fiable.
+    try:
+        result = subprocess.run(
+            ['git', 'log', '-1', '--format=%cd', '--date=short', '--', filepath],
+            capture_output=True, text=True, timeout=5,
+        )
+        date = result.stdout.strip()
+        if date:
+            return date
+    except Exception:
+        pass
+    # Repli : fichier non suivi par git (nouveau, pas encore commité)
     try:
         mtime = os.path.getmtime(filepath)
         return datetime.fromtimestamp(mtime).strftime('%Y-%m-%d')
-    except:
+    except Exception:
         return datetime.now().strftime('%Y-%m-%d')
 
 def path_to_url(relpath):
