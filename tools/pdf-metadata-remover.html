@@ -196,6 +196,32 @@
 </section>
 
 <section class="wrap" style="margin-top:3rem;">
+  <h2 style="font-family:var(--font-display);font-size:1.1rem;">Frequently asked questions</h2>
+  <div style="margin-top:1rem;">
+    <details style="margin-bottom:0.75rem;">
+      <summary style="cursor:pointer;font-weight:600;">What metadata is hidden in PDFs?</summary>
+      <p style="color:var(--color-muted);margin-top:0.5rem;line-height:1.6;">PDFs can store the author&#x27;s name, title, subject, keywords, creator software, producer software, creation date, and modification date. Some also contain XMP metadata.</p>
+    </details>
+    <details style="margin-bottom:0.75rem;">
+      <summary style="cursor:pointer;font-weight:600;">Is it safe to use?</summary>
+      <p style="color:var(--color-muted);margin-top:0.5rem;line-height:1.6;">Yes. The PDF is processed entirely in your browser using the pdf-lib library. Your file never leaves your device.</p>
+    </details>
+    <details style="margin-bottom:0.75rem;">
+      <summary style="cursor:pointer;font-weight:600;">Does it work on encrypted or password-protected PDFs?</summary>
+      <p style="color:var(--color-muted);margin-top:0.5rem;line-height:1.6;">No. If a PDF is encrypted, the tool cannot open it. You would need to decrypt it first using the original password.</p>
+    </details>
+    <details style="margin-bottom:0.75rem;">
+      <summary style="cursor:pointer;font-weight:600;">Will the PDF look different after cleaning?</summary>
+      <p style="color:var(--color-muted);margin-top:0.5rem;line-height:1.6;">No. Only the document information dictionary is modified. The visual content, fonts, images, and layout remain exactly the same.</p>
+    </details>
+    <details style="margin-bottom:0.75rem;">
+      <summary style="cursor:pointer;font-weight:600;">What about XMP metadata?</summary>
+      <p style="color:var(--color-muted);margin-top:0.5rem;line-height:1.6;">This tool clears the standard document info dictionary. Some PDFs also contain an XMP metadata stream; while the tool attempts to minimize it, complete XMP removal is not guaranteed in every case.</p>
+    </details>
+  </div>
+</section>
+
+<section class="wrap" style="margin-top:3rem;">
   <h2 style="font-family:var(--font-display);font-size:1.1rem;">Related tools</h2>
   <div class="tool-grid" style="margin-top:1rem;">
       <a class='tool-card' href='/tools/pdf-compress'>
