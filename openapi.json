@@ -2919,6 +2919,97 @@
           }
         }
       }
+    },
+    "/whois-lookup": {
+      "get": {
+        "summary": "Domain registration lookup (WHOIS via RDAP)",
+        "description": "Registrar, creation/expiration dates, domain age, nameservers via RDAP -- the modern HTTPS-based successor to legacy WHOIS.",
+        "parameters": [
+          {
+            "name": "domain",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Domain registration data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "domain": {
+                      "type": "string"
+                    },
+                    "registered": {
+                      "type": "boolean"
+                    },
+                    "registrar": {
+                      "type": "string"
+                    },
+                    "created": {
+                      "type": "string"
+                    },
+                    "expires": {
+                      "type": "string"
+                    },
+                    "last_changed": {
+                      "type": "string"
+                    },
+                    "age_days": {
+                      "type": "integer"
+                    },
+                    "nameservers": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "status": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "source": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "domain": "cloudflare.com",
+                  "registered": true,
+                  "registrar": "Cloudflare, Inc.",
+                  "created": "2009-02-17T22:07:54Z",
+                  "expires": "2033-02-17T22:07:54Z",
+                  "last_changed": "2024-01-09T16:45:28Z",
+                  "age_days": 6413,
+                  "nameservers": [
+                    "ns3.cloudflare.com",
+                    "ns4.cloudflare.com",
+                    "ns5.cloudflare.com",
+                    "ns6.cloudflare.com",
+                    "ns7.cloudflare.com"
+                  ],
+                  "status": [
+                    "client delete prohibited",
+                    "client transfer prohibited",
+                    "client update prohibited",
+                    "server delete prohibited",
+                    "server transfer prohibited",
+                    "server update prohibited"
+                  ],
+                  "source": "RDAP (rdap.org) -- the ICANN-mandated successor to legacy WHOIS."
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 }
