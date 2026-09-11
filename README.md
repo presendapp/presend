@@ -2,14 +2,14 @@
 
 [![Live Site](https://img.shields.io/badge/Live-presend.pages.dev-0066cc?style=flat-square)](https://presend.pages.dev)
 [![API Tests](https://github.com/presendapp/presend/actions/workflows/api-tests.yml/badge.svg)](https://github.com/presendapp/presend/actions/workflows/api-tests.yml)
-[![Tools](https://img.shields.io/badge/Tools-41-1F3A5F?style=flat-square)](https://presend.pages.dev)
+[![Tools](https://img.shields.io/badge/Tools-48-1F3A5F?style=flat-square)](https://presend.pages.dev)
 [![API](https://img.shields.io/badge/API-39_endpoints-1F3A5F?style=flat-square)](https://presend.pages.dev/api)
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://god.gw.postman.com/run-collection/57808683-783f3f64-0f9f-433e-95f6-518520d14ccf?action=collection%2Ffork&collection-url=entityId%3D57808683-783f3f64-0f9f-433e-95f6-518520d14ccf%26entityType%3Dcollection%26workspaceId%3D8ffb507b-4140-4e42-8a44-fd6926d0b25b)
 [![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)](LICENSE)
 [![PWA](https://img.shields.io/badge/PWA-Enabled-orange?style=flat-square)](https://presend.pages.dev)
 [![Privacy](https://img.shields.io/badge/Privacy-First-ff6b6b?style=flat-square)](https://presend.pages.dev/privacy)
 
-**41 free browser-based tools to clean, compress, convert and check your files before you share them. Nothing is ever uploaded.**
+**48 free browser-based tools to clean, compress, convert and check your files before you share them. Nothing is ever uploaded.**
 
 [Open Presend](https://presend.pages.dev)
 

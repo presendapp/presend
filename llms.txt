@@ -1,6 +1,6 @@
 # Presend
 
-> Free, privacy-first browser-based tools to clean, compress, convert and check files before sharing them. 39 of the 41 tools run entirely client-side — no upload, no server, no account, no tracking. The other 2 (IP Geolocation, Link Preview) necessarily make a lightweight server-side lookup to do their job, clearly labeled as such.
+> Free, privacy-first browser-based tools to clean, compress, convert and check files before sharing them. 39 of the 48 tools run entirely client-side — no upload, no server, no account, no tracking. The other 9 (IP Geolocation, Link Preview, and 7 tools that call Presend's own free API for domain/package/repo checks) make a lightweight server-side lookup to do their job, clearly labeled as such.
 
 Presend is a collection of single-purpose utilities for common file tasks: removing hidden metadata, compressing images and PDFs, converting formats, checking file integrity, and generating passwords or QR codes. Every tool processes files locally in the browser using Web APIs (Canvas, Web Crypto, FileReader) — files never leave the user's device.
 
@@ -47,6 +47,13 @@ Unlike most online file converters and editors, Presend never uploads your files
 - [Text Moderator](https://presend.pages.dev/tools/text-moderator): Detect spam, toxic language, and suspicious links in text
 - [IP Geolocation Lookup](https://presend.pages.dev/tools/ip-geolocation): Find your public IP, city, country, timezone, and ISP (server-side lookup)
 - [Link Preview / OG Scraper](https://presend.pages.dev/tools/link-preview): Extract Open Graph metadata from a URL -- title, description, image (server-side proxy)
+- [WHOIS / Domain Age Lookup](https://presend.pages.dev/tools/whois-lookup): Registrar, registration date, age, and expiration via RDAP (server-side lookup)
+- [DNS Lookup](https://presend.pages.dev/tools/dns-lookup): A, AAAA, CNAME, MX, TXT, NS records for a domain in one call (server-side lookup)
+- [Package Vulnerability Checker](https://presend.pages.dev/tools/vulnerability-check): Check a package/version against OSV.dev for known CVEs -- npm, PyPI, Go, and more (server-side lookup)
+- [Package Typosquat Checker](https://presend.pages.dev/tools/typosquat-check): Flags package names that look like a typo of a well-known npm/PyPI package (server-side lookup)
+- [IP Reputation Check](https://presend.pages.dev/tools/ip-reputation): Check an IPv4 against Spamhaus DROP, known spam/hijacker-controlled netblocks (server-side lookup)
+- [Redirect Chain Tracer](https://presend.pages.dev/tools/redirect-trace): Follow a URL's full redirect chain, flagging cross-domain jumps (server-side lookup)
+- [GitHub Repo Health Check](https://presend.pages.dev/tools/repo-health-check): Stars, forks, license, and archived status for a GitHub repo (server-side lookup)
 
 ### Generate & Format (Productivity Tools)
 - [Password Generator](https://presend.pages.dev/tools/password-generator): Generate cryptographically secure random passwords locally
