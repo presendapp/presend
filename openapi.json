@@ -3318,6 +3318,101 @@
           }
         }
       }
+    },
+    "/redirect-trace": {
+      "get": {
+        "summary": "Full redirect chain trace",
+        "description": "Follows a URL's complete redirect chain (up to 15 hops), recording each hop's status and destination -- not just the final URL.",
+        "parameters": [
+          {
+            "name": "url",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The full redirect chain",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "requested_url": {
+                      "type": "string"
+                    },
+                    "hop_count": {
+                      "type": "integer"
+                    },
+                    "hops": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "url": {
+                            "type": "string"
+                          },
+                          "status": {
+                            "type": "integer"
+                          },
+                          "hostname": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    },
+                    "final_url": {
+                      "type": "string"
+                    },
+                    "final_status": {
+                      "type": "integer"
+                    },
+                    "crossed_domains": {
+                      "type": "boolean"
+                    },
+                    "unique_hostnames": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "requested_url": "https://httpbin.org/redirect/2",
+                  "hop_count": 3,
+                  "hops": [
+                    {
+                      "url": "https://httpbin.org/redirect/2",
+                      "status": 302,
+                      "hostname": "httpbin.org"
+                    },
+                    {
+                      "url": "https://httpbin.org/relative-redirect/1",
+                      "status": 302,
+                      "hostname": "httpbin.org"
+                    },
+                    {
+                      "url": "https://httpbin.org/get",
+                      "status": 200,
+                      "hostname": "httpbin.org"
+                    }
+                  ],
+                  "final_url": "https://httpbin.org/get",
+                  "final_status": 200,
+                  "crossed_domains": false,
+                  "unique_hostnames": [
+                    "httpbin.org"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 }
