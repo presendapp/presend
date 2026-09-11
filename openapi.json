@@ -3010,6 +3010,165 @@
           }
         }
       }
+    },
+    "/vulnerability-check": {
+      "get": {
+        "summary": "Package vulnerability check (OSV.dev)",
+        "description": "Checks a package/version against OSV.dev (Google's Open Source Vulnerabilities database) -- npm, PyPI, Go, crates.io, Maven, RubyGems, Packagist, NuGet.",
+        "parameters": [
+          {
+            "name": "ecosystem",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "npm"
+            }
+          },
+          {
+            "name": "package",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "version",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Omit to check all versions of the package."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Vulnerability report for the package/version",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "package": {
+                      "type": "string"
+                    },
+                    "ecosystem": {
+                      "type": "string"
+                    },
+                    "version": {
+                      "type": "string"
+                    },
+                    "vulnerable": {
+                      "type": "boolean"
+                    },
+                    "count": {
+                      "type": "integer"
+                    },
+                    "vulnerabilities": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "cve": {
+                            "type": "string"
+                          },
+                          "summary": {
+                            "type": "string"
+                          },
+                          "severity": {
+                            "type": "string"
+                          },
+                          "fixed_in": {
+                            "type": "string"
+                          },
+                          "published": {
+                            "type": "string"
+                          },
+                          "url": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    },
+                    "source": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "package": "lodash",
+                  "ecosystem": "npm",
+                  "version": "4.17.15",
+                  "vulnerable": true,
+                  "count": 6,
+                  "vulnerabilities": [
+                    {
+                      "id": "GHSA-29mw-wpgm-hmr9",
+                      "cve": "CVE-2020-28500",
+                      "summary": "Regular Expression Denial of Service (ReDoS) in lodash",
+                      "severity": "MODERATE",
+                      "fixed_in": "4.17.21",
+                      "published": "2022-01-06T20:30:46Z",
+                      "url": "https://osv.dev/vulnerability/GHSA-29mw-wpgm-hmr9"
+                    },
+                    {
+                      "id": "GHSA-35jh-r3h4-6jhm",
+                      "cve": "CVE-2021-23337",
+                      "summary": "Command Injection in lodash",
+                      "severity": "HIGH",
+                      "fixed_in": "4.17.21",
+                      "published": "2021-05-06T16:05:51Z",
+                      "url": "https://osv.dev/vulnerability/GHSA-35jh-r3h4-6jhm"
+                    },
+                    {
+                      "id": "GHSA-f23m-r3pf-42rh",
+                      "cve": "CVE-2025-13465",
+                      "summary": "lodash vulnerable to Prototype Pollution via array path bypass in `_.unset` and `_.omit`",
+                      "severity": "MODERATE",
+                      "fixed_in": "4.18.0",
+                      "published": "2026-04-01T23:50:27Z",
+                      "url": "https://osv.dev/vulnerability/GHSA-f23m-r3pf-42rh"
+                    },
+                    {
+                      "id": "GHSA-p6mc-m468-83gw",
+                      "cve": "CVE-2020-8203",
+                      "summary": "Prototype Pollution in lodash",
+                      "severity": "HIGH",
+                      "fixed_in": "4.17.19",
+                      "published": "2020-07-15T19:15:48Z",
+                      "url": "https://osv.dev/vulnerability/GHSA-p6mc-m468-83gw"
+                    },
+                    {
+                      "id": "GHSA-r5fr-rjxr-66jc",
+                      "cve": "CVE-2021-23337",
+                      "summary": "lodash vulnerable to Code Injection via `_.template` imports key names",
+                      "severity": "HIGH",
+                      "fixed_in": "4.18.0",
+                      "published": "2026-04-01T23:51:12Z",
+                      "url": "https://osv.dev/vulnerability/GHSA-r5fr-rjxr-66jc"
+                    },
+                    {
+                      "id": "GHSA-xxjr-mmjv-4gpg",
+                      "cve": "CVE-2025-13465",
+                      "summary": "Lodash has Prototype Pollution Vulnerability in `_.unset` and `_.omit` functions",
+                      "severity": "MODERATE",
+                      "fixed_in": "4.17.23",
+                      "published": "2026-01-21T23:01:22Z",
+                      "url": "https://osv.dev/vulnerability/GHSA-xxjr-mmjv-4gpg"
+                    }
+                  ],
+                  "source": "OSV.dev (Google) -- aggregates the GitHub Advisory Database plus ecosystem-native advisories."
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 }
