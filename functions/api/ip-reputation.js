@@ -52,7 +52,7 @@ function parseDropList(text) {
   for (const line of text.split('\n')) {
     const trimmed = line.trim();
     if (!trimmed || trimmed.startsWith(';')) continue;
-    const [cidr, , sbl] = trimmed.split(/\s*;\s*/);
+    const [cidr, sbl] = trimmed.split(/\s*;\s*/);
     if (!cidr || !cidr.includes('/')) continue;
     const [range, bitsStr] = cidr.split('/');
     const rangeInt = ipToInt(range);
