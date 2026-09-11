@@ -1,0 +1,16 @@
+name: Announce new tools/endpoints on Mastodon
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  announce:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Post matching commits to Mastodon
+        env:
+          COMMITS_JSON: ${{ toJSON(github.event.commits) }}
+          MASTODON_TOKEN: ${{ secrets.MASTODON_TOKEN }}
+          MASTODON_INSTANCE: https://mastodon.social
+        run: node .github/scripts/post-mastodon.js
