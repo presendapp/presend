@@ -69,12 +69,19 @@ export async function onRequestGet(context) {
   const timeout = setTimeout(() => controller.abort(), 8000);
 
   try {
+    const headers = {
+      'User-Agent': 'Mozilla/5.0 (compatible; PresendBot/1.0; +https://presend.pages.dev)',
+      Accept: 'application/vnd.github+json',
+    };
+    // Jeton optionnel côté serveur : fait passer la limite de 60/h (partagée
+    // par tout le trafic Presend) à 5000/h. Jamais exposé, aucune inscription
+    // requise côté utilisateur -- ne change rien à la philosophie "zéro friction".
+    if (env.GITHUB_TOKEN) {
+      headers['Authorization'] = `Bearer ${env.GITHUB_TOKEN}`;
+    }
     const res = await fetch(`https://api.github.com/repos/${repo}`, {
       signal: controller.signal,
-      headers: {
-        'User-Agent': 'Mozilla/5.0 (compatible; PresendBot/1.0; +https://presend.pages.dev)',
-        Accept: 'application/vnd.github+json',
-      },
+      headers,
     });
     clearTimeout(timeout);
 
