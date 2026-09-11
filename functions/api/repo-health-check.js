@@ -105,6 +105,9 @@ export async function onRequestGet(context) {
     return new Response(JSON.stringify({
       repo,
       found: true,
+      ...(d.full_name && d.full_name.toLowerCase() !== repo.toLowerCase()
+        ? { moved_to: d.full_name, note_rename: `${repo} was renamed/moved -- data below is for its current location, ${d.full_name}.` }
+        : {}),
       description: d.description || null,
       stars: d.stargazers_count,
       forks: d.forks_count,
