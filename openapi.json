@@ -3169,6 +3169,94 @@
           }
         }
       }
+    },
+    "/typosquat-check": {
+      "get": {
+        "summary": "Package name typosquatting check",
+        "description": "Flags package names within Damerau-Levenshtein edit distance 1-2 of a curated list of well-known npm/PyPI packages -- the classic typosquatting pattern.",
+        "parameters": [
+          {
+            "name": "ecosystem",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "npm",
+                "PyPI"
+              ]
+            }
+          },
+          {
+            "name": "package",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Typosquatting analysis for the package name",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "package": {
+                      "type": "string"
+                    },
+                    "ecosystem": {
+                      "type": "string"
+                    },
+                    "is_known_popular_package": {
+                      "type": "boolean"
+                    },
+                    "suspicious": {
+                      "type": "boolean"
+                    },
+                    "similar_to": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "name": {
+                            "type": "string"
+                          },
+                          "distance": {
+                            "type": "integer"
+                          }
+                        }
+                      }
+                    },
+                    "note": {
+                      "type": "string"
+                    },
+                    "source": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "package": "lodas",
+                  "ecosystem": "npm",
+                  "is_known_popular_package": false,
+                  "suspicious": true,
+                  "similar_to": [
+                    {
+                      "name": "lodash",
+                      "distance": 1
+                    }
+                  ],
+                  "note": "Name is within edit-distance 2 of a well-known package. Verify this is the package you meant to install, not a look-alike.",
+                  "source": "Curated list of ~149 well-known npm packages, checked via Damerau-Levenshtein edit distance (transpositions, omissions, insertions, substitutions). Not an exhaustive top-N-by-downloads feed."
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 }
