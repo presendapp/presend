@@ -3257,6 +3257,67 @@
           }
         }
       }
+    },
+    "/ip-reputation": {
+      "get": {
+        "summary": "IP reputation check (Spamhaus DROP)",
+        "description": "Checks an IPv4 address against Spamhaus DROP -- netblocks known to be entirely spam/hijacker-controlled. Free, no signup, unlike every dedicated IP reputation service we could find.",
+        "parameters": [
+          {
+            "name": "ip",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "1.2.3.4"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Reputation check result",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ip": {
+                      "type": "string"
+                    },
+                    "listed": {
+                      "type": "boolean"
+                    },
+                    "matched_range": {
+                      "type": "string"
+                    },
+                    "reference": {
+                      "type": "string"
+                    },
+                    "list_size": {
+                      "type": "integer"
+                    },
+                    "source": {
+                      "type": "string"
+                    },
+                    "note": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "ip": "1.19.100.100",
+                  "listed": true,
+                  "matched_range": "1.19.0.0/16",
+                  "reference": "SBL434604",
+                  "list_size": 1711,
+                  "source": "Spamhaus DROP (Don't Route Or Peer) -- netblocks known to be entirely spam/hijacker-controlled. IPv4 only, updated roughly hourly.",
+                  "note": "This IP falls within a netblock Spamhaus lists as entirely controlled by spammers or hijackers."
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 }
