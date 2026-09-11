@@ -119,9 +119,7 @@ export async function onRequestGet(context) {
       default_branch: d.default_branch,
       topics: d.topics || [],
       url: d.html_url,
-      source: 'GitHub REST API (unauthenticated).',
-      _debug_ratelimit_limit: res.headers.get('x-ratelimit-limit'),
-      _debug_ratelimit_remaining: res.headers.get('x-ratelimit-remaining'),
+      source: 'GitHub REST API.',
     }), { headers: { 'Content-Type': 'application/json', 'Cache-Control': 'public, max-age=1800', ...corsHeaders() } });
   } catch (e) {
     clearTimeout(timeout);
