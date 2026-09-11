@@ -7,12 +7,17 @@ const PDFDocument = PDFLibNS.PDFDocument || (PDFLibNS.default && PDFLibNS.defaul
 
 async function checkRateLimit(env, clientIP, bucket, isTest = false) {
   if (!env.PRESEND_ANALYTICS) return true;
-  const now = Math.floor(Date.now() / 60000);
-  const rateKey = `rate:${bucket}:${clientIP}:${now}`;
-  let count = await env.PRESEND_ANALYTICS.get(rateKey);
-  count = count ? parseInt(count) : 0;
-  if (count >= 10) return false; // plus coûteux en CPU que hash.js, quota plus bas
-  await env.PRESEND_ANALYTICS.put(rateKey, (count + 1).toString(), { expirationTtl: 120 });
+  try {
+    const now = Math.floor(Date.now() / 60000);
+    const rateKey = `rate:${bucket}:${clientIP}:${now}`;
+    let count = await env.PRESEND_ANALYTICS.get(rateKey);
+    count = count ? parseInt(count) : 0;
+    if (count >= 10) return false; // plus coûteux en CPU que hash.js, quota plus bas
+    await env.PRESEND_ANALYTICS.put(rateKey, (count + 1).toString(), { expirationTtl: 120 });
+  } catch (e) {
+    // KV en panne ou quota dépassé -- ne doit jamais faire planter la requête.
+    return true;
+  }
 
   try {
     if (!isTest && Math.random() < 0.1) {
