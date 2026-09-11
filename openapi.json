@@ -3413,6 +3413,115 @@
           }
         }
       }
+    },
+    "/repo-health-check": {
+      "get": {
+        "summary": "GitHub repository health signals",
+        "description": "Stars, forks, open issues, license, archived status, and days since last push for a GitHub repo, via the GitHub REST API.",
+        "parameters": [
+          {
+            "name": "repo",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "lodash/lodash"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Repository health signals",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "repo": {
+                      "type": "string"
+                    },
+                    "found": {
+                      "type": "boolean"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "stars": {
+                      "type": "integer"
+                    },
+                    "forks": {
+                      "type": "integer"
+                    },
+                    "open_issues": {
+                      "type": "integer"
+                    },
+                    "created": {
+                      "type": "string"
+                    },
+                    "age_days": {
+                      "type": "integer"
+                    },
+                    "last_push": {
+                      "type": "string"
+                    },
+                    "days_since_last_push": {
+                      "type": "integer"
+                    },
+                    "archived": {
+                      "type": "boolean"
+                    },
+                    "is_fork": {
+                      "type": "boolean"
+                    },
+                    "license": {
+                      "type": "string"
+                    },
+                    "default_branch": {
+                      "type": "string"
+                    },
+                    "topics": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "url": {
+                      "type": "string"
+                    },
+                    "source": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "repo": "lodash/lodash",
+                  "found": true,
+                  "description": "A modern JavaScript utility library delivering modularity, performance, & extras.",
+                  "stars": 61280,
+                  "forks": 7188,
+                  "open_issues": 105,
+                  "created": "2012-04-07T04:11:46Z",
+                  "age_days": 5270,
+                  "last_push": "2026-09-09T16:29:09Z",
+                  "days_since_last_push": 1,
+                  "archived": false,
+                  "is_fork": false,
+                  "license": "NOASSERTION",
+                  "default_branch": "main",
+                  "topics": [
+                    "javascript",
+                    "lodash",
+                    "modules",
+                    "utilities"
+                  ],
+                  "url": "https://github.com/lodash/lodash",
+                  "source": "GitHub REST API."
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 }
