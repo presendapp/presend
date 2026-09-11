@@ -20,7 +20,11 @@ async function checkRateLimit(env, clientIP, bucket, isTest = false) {
     let count = await env.PRESEND_ANALYTICS.get(rateKey);
     count = count ? parseInt(count) : 0;
     if (count >= 30) return false;
-    await env.PRESEND_ANALYTICS.put(rateKey, (count + 1).toString(), { expirationTtl: 120 });
+    // Écriture échantillonnée (1 sur 3) pour économiser le quota KV --
+    // légèrement moins précis en rafale, mais protège toujours contre un abus soutenu.
+    if (Math.random() < 1 / 3) {
+      await env.PRESEND_ANALYTICS.put(rateKey, (count + 3).toString(), { expirationTtl: 120 });
+    }
   } catch (e) {
     // KV en panne ou quota dépassé -- ne doit jamais faire planter la requête.
     return true;
