@@ -215,7 +215,8 @@
             "in": "query",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "https://example.com/page?utm_source=newsletter"
             },
             "description": "URL to strip tracking parameters from (utm_*, fbclid, gclid, and similar)."
           }
@@ -351,7 +352,8 @@
             "schema": {
               "type": "integer",
               "default": 1,
-              "maximum": 100
+              "maximum": 100,
+              "example": "3"
             },
             "description": "Number of UUIDs (v4) to generate. Defaults to 1 if omitted."
           }
@@ -404,7 +406,8 @@
               "enum": [
                 "encode",
                 "decode"
-              ]
+              ],
+              "example": "encode"
             },
             "description": "Either \"encode\" or \"decode\"."
           },
@@ -414,7 +417,8 @@
             "required": true,
             "schema": {
               "type": "string",
-              "maxLength": 10000
+              "maxLength": 10000,
+              "example": "Hello, world!"
             },
             "description": "Text to encode, or Base64 string to decode."
           }
@@ -465,7 +469,8 @@
             "in": "query",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjM0NTY3ODkwIn0.dozjgNryP4J3jVmNHl0w5N_XgL0n3I9PlFUP0THsR8U"
             },
             "description": "The JWT to decode. Decodes header and payload only -- does not verify the signature (use /jwt-verify for that)."
           }
@@ -715,7 +720,8 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "integer"
+              "type": "integer",
+              "example": "1700000000"
             },
             "description": "Unix timestamp (seconds since epoch) to convert to a human-readable date. Provide either unix or date, not both."
           },
@@ -724,7 +730,8 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "2023-11-14T22:13:20Z"
             },
             "description": "Date/time string to convert to a Unix timestamp. Provide either unix or date, not both."
           }
@@ -777,7 +784,8 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "#ff0000"
             },
             "description": "Hex color code, e.g. #ff0000 or ff0000. Provide exactly one of hex, rgb, or hsl."
           },
@@ -786,7 +794,8 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "255,0,0"
             },
             "description": "RGB color, e.g. 255,0,0. Provide exactly one of hex, rgb, or hsl."
           },
@@ -795,7 +804,8 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "0,100%,50%"
             },
             "description": "HSL color, e.g. 0,100%,50%. Provide exactly one of hex, rgb, or hsl."
           }
@@ -877,7 +887,8 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
             },
             "description": "User-Agent string to parse. If omitted, the request's own User-Agent header is parsed instead."
           }
@@ -946,7 +957,8 @@
             "schema": {
               "type": "integer",
               "default": 16,
-              "maximum": 128
+              "maximum": 128,
+              "example": "16"
             },
             "description": "Desired password length. Defaults to a reasonable secure length if omitted."
           },
@@ -959,7 +971,8 @@
               "enum": [
                 "0",
                 "1"
-              ]
+              ],
+              "example": "1"
             },
             "description": "Whether to include symbol characters. 1 for yes, 0 for no."
           },
@@ -972,7 +985,8 @@
               "enum": [
                 "0",
                 "1"
-              ]
+              ],
+              "example": "1"
             },
             "description": "Whether to include uppercase letters. 1 for yes, 0 for no."
           },
@@ -985,7 +999,8 @@
               "enum": [
                 "0",
                 "1"
-              ]
+              ],
+              "example": "1"
             },
             "description": "Whether to include numeric digits. 1 for yes, 0 for no."
           },
@@ -998,7 +1013,8 @@
               "enum": [
                 "0",
                 "1"
-              ]
+              ],
+              "example": "0"
             },
             "description": "Whether to exclude visually ambiguous characters (e.g. 0/O, 1/l). 1 for yes, 0 for no."
           }
@@ -1043,7 +1059,8 @@
             "in": "query",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "test@example.com"
             },
             "description": "Email address to validate for correct syntax and a resolvable domain."
           }
@@ -1103,7 +1120,8 @@
             "in": "query",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "example.com"
             },
             "description": "Domain to fetch the favicon URL for, e.g. example.com."
           }
@@ -1150,7 +1168,8 @@
               "enum": [
                 "json-to-csv",
                 "csv-to-json"
-              ]
+              ],
+              "example": "csv-to-json"
             },
             "description": "Either \"csv-to-json\" or \"json-to-csv\"."
           },
@@ -1159,7 +1178,8 @@
             "in": "query",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "name,age\nAlice,30"
             },
             "description": "The CSV or JSON text to convert, matching the chosen direction."
           }
@@ -1255,7 +1275,8 @@
             "in": "query",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "correcthorsebatterystaple"
             },
             "description": "Password to check against known data-breach corpora. Checked via k-anonymity (only a partial hash prefix is sent) -- the full password is never transmitted."
           }
@@ -1384,7 +1405,8 @@
             "in": "query",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "test@mailinator.com"
             },
             "description": "Email address to check against a list of known disposable/temporary email domains."
           }
@@ -1429,7 +1451,8 @@
             "in": "query",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "test@example.com"
             },
             "description": "Email address to run through combined syntax, disposable-domain, and MX-record checks."
           }
@@ -1506,7 +1529,8 @@
             "in": "query",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "+14155552671"
             },
             "description": "Phone number to validate and format, ideally in E.164 format (e.g. +14155552671)."
           },
@@ -1516,7 +1540,8 @@
             "required": false,
             "description": "ISO 3166-1 alpha-2 country code (e.g. US, FR), used to interpret a number with no leading +.",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "US"
             }
           }
         ],
@@ -1605,7 +1630,8 @@
             "in": "query",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "example.com"
             },
             "description": "Domain to check SPF, DKIM, and DMARC records for, e.g. example.com."
           }
@@ -1675,7 +1701,8 @@
             "in": "query",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "https://example.com"
             },
             "description": "URL to run a combined security posture check against (headers, reputation, and related signals)."
           }
@@ -1985,7 +2012,8 @@
             "in": "query",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "https://example.com"
             },
             "description": "URL to audit HTTP security headers for (CSP, HSTS, X-Frame-Options, etc.)."
           }
@@ -2123,7 +2151,8 @@
             "in": "query",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "https://example.com"
             },
             "description": "URL to check against known phishing/malware URL databases."
           }
@@ -2172,7 +2201,8 @@
             "in": "query",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "example.com"
             },
             "description": "Domain to passively discover subdomains for via Certificate Transparency logs, e.g. example.com."
           }
@@ -2342,7 +2372,8 @@
             "in": "query",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "example.com"
             },
             "description": "Domain to check, e.g. example.com. robots.txt is fetched from https://<domain>/robots.txt."
           }
@@ -2796,7 +2827,8 @@
             "in": "query",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "example.com"
             },
             "description": "Domain to look up, e.g. example.com."
           },
@@ -2813,7 +2845,8 @@
                 "MX",
                 "TXT",
                 "NS"
-              ]
+              ],
+              "example": "A"
             },
             "description": "Narrow to a single record type. Omit to get all 6 at once."
           }
@@ -2967,7 +3000,8 @@
             "in": "query",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "example.com"
             },
             "description": "Domain to look up registration details for via RDAP, e.g. example.com."
           }
@@ -3069,7 +3103,8 @@
             "in": "query",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "lodash"
             },
             "description": "Package name to check against OSV.dev for known CVEs."
           },
@@ -3078,7 +3113,8 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "4.17.15"
             },
             "description": "Omit to check all versions of the package."
           }
@@ -3224,7 +3260,8 @@
               "enum": [
                 "npm",
                 "PyPI"
-              ]
+              ],
+              "example": "npm"
             },
             "description": "Package ecosystem, e.g. npm or PyPI."
           },
@@ -3233,7 +3270,8 @@
             "in": "query",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "lodahs"
             },
             "description": "Package name to check for likely typosquatting of a well-known package in the given ecosystem."
           }
@@ -3372,7 +3410,8 @@
             "in": "query",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "https://bit.ly/example"
             },
             "description": "URL to follow the full redirect chain for, hop by hop."
           }
@@ -3578,7 +3617,8 @@
             "in": "query",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "npm"
             },
             "description": "Currently only \"npm\" is supported."
           },
@@ -3587,7 +3627,8 @@
             "in": "query",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "lodash"
             },
             "description": "Package name, e.g. lodash"
           }
