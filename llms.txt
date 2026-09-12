@@ -16,12 +16,13 @@ Unlike most online file converters and editors, Presend never uploads your files
 
 Presend also exposes an MCP (Model Context Protocol) server at
 https://presend.pages.dev/mcp -- Streamable HTTP transport, no
-authentication, no signup. It exposes 7 of our security/verification
-endpoints as callable tools for AI agents and assistants:
-whois_lookup, dns_lookup, vulnerability_check, typosquat_check,
-ip_reputation, redirect_trace, and repo_health_check. Send a
-JSON-RPC 2.0 `initialize` request to discover the protocol version,
-then `tools/list` to see full schemas, then `tools/call` to invoke.
+authentication, no signup. It exposes 32 of our 39 API endpoints as
+callable tools for AI agents and assistants (all except 7 binary/file
+endpoints -- hash, clean-image, malware-check, file-type,
+image-similarity, merge-and-compress-pdf, qr-scan -- which don't fit
+an AI agent's text context well). Send a JSON-RPC 2.0 `initialize`
+request to discover the protocol version, then `tools/list` to see
+all 32 tools with full schemas, then `tools/call` to invoke.
 
 ## Tools by category
 
