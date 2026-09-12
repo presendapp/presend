@@ -1,0 +1,33 @@
+name: Check Mastodon token validity
+
+on:
+  schedule:
+    - cron: '0 8 * * 1'
+  workflow_dispatch: {}
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Verifier le jeton
+        id: check
+        run: node .github/scripts/check-mastodon-token.js
+        env:
+          MASTODON_TOKEN: ${{ secrets.MASTODON_TOKEN }}
+          MASTODON_INSTANCE: https://mastodon.social
+        continue-on-error: true
+
+      - name: Alerter si le jeton est invalide
+        if: steps.check.outcome == 'failure'
+        run: bash .github/scripts/alert-mastodon-token.sh
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+
+      - name: Echouer le workflow si le jeton est invalide
+        if: steps.check.outcome == 'failure'
+        run: exit 1
