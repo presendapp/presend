@@ -12,6 +12,17 @@ Unlike most online file converters and editors, Presend never uploads your files
 - **No tracking**: No cookies, no analytics, no data collection
 - **Works offline**: Once loaded, tools work without an internet connection
 
+## MCP Server (for AI agents)
+
+Presend also exposes an MCP (Model Context Protocol) server at
+https://presend.pages.dev/mcp -- Streamable HTTP transport, no
+authentication, no signup. It exposes 7 of our security/verification
+endpoints as callable tools for AI agents and assistants:
+whois_lookup, dns_lookup, vulnerability_check, typosquat_check,
+ip_reputation, redirect_trace, and repo_health_check. Send a
+JSON-RPC 2.0 `initialize` request to discover the protocol version,
+then `tools/list` to see full schemas, then `tools/call` to invoke.
+
 ## Tools by category
 
 ### Clean & Protect (Privacy Tools)
