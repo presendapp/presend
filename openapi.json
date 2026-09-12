@@ -216,7 +216,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "URL to strip tracking parameters from (utm_*, fbclid, gclid, and similar)."
           }
         ],
         "responses": {
@@ -270,7 +271,8 @@
                     "items": {
                       "type": "string"
                     },
-                    "maxItems": 100
+                    "maxItems": 100,
+                    "description": "Array of URLs to strip tracking parameters from in a single batch request."
                   }
                 },
                 "required": [
@@ -350,7 +352,8 @@
               "type": "integer",
               "default": 1,
               "maximum": 100
-            }
+            },
+            "description": "Number of UUIDs (v4) to generate. Defaults to 1 if omitted."
           }
         ],
         "responses": {
@@ -402,7 +405,8 @@
                 "encode",
                 "decode"
               ]
-            }
+            },
+            "description": "Either \"encode\" or \"decode\"."
           },
           {
             "name": "text",
@@ -411,7 +415,8 @@
             "schema": {
               "type": "string",
               "maxLength": 10000
-            }
+            },
+            "description": "Text to encode, or Base64 string to decode."
           }
         ],
         "responses": {
@@ -461,7 +466,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "The JWT to decode. Decodes header and payload only -- does not verify the signature (use /jwt-verify for that)."
           }
         ],
         "responses": {
@@ -523,7 +529,8 @@
                 ],
                 "properties": {
                   "token": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The JWT to verify. Checks the cryptographic signature -- use /jwt-decode if you only need to read the header and payload."
                   },
                   "secret": {
                     "type": "string",
@@ -709,7 +716,8 @@
             "required": false,
             "schema": {
               "type": "integer"
-            }
+            },
+            "description": "Unix timestamp (seconds since epoch) to convert to a human-readable date. Provide either unix or date, not both."
           },
           {
             "name": "date",
@@ -717,7 +725,8 @@
             "required": false,
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "Date/time string to convert to a Unix timestamp. Provide either unix or date, not both."
           }
         ],
         "responses": {
@@ -769,7 +778,8 @@
             "required": false,
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "Hex color code, e.g. #ff0000 or ff0000. Provide exactly one of hex, rgb, or hsl."
           },
           {
             "name": "rgb",
@@ -777,7 +787,8 @@
             "required": false,
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "RGB color, e.g. 255,0,0. Provide exactly one of hex, rgb, or hsl."
           },
           {
             "name": "hsl",
@@ -785,7 +796,8 @@
             "required": false,
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "HSL color, e.g. 0,100%,50%. Provide exactly one of hex, rgb, or hsl."
           }
         ],
         "responses": {
@@ -866,7 +878,8 @@
             "required": false,
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "User-Agent string to parse. If omitted, the request's own User-Agent header is parsed instead."
           }
         ],
         "responses": {
@@ -934,7 +947,8 @@
               "type": "integer",
               "default": 16,
               "maximum": 128
-            }
+            },
+            "description": "Desired password length. Defaults to a reasonable secure length if omitted."
           },
           {
             "name": "symbols",
@@ -946,7 +960,8 @@
                 "0",
                 "1"
               ]
-            }
+            },
+            "description": "Whether to include symbol characters. 1 for yes, 0 for no."
           },
           {
             "name": "uppercase",
@@ -958,7 +973,8 @@
                 "0",
                 "1"
               ]
-            }
+            },
+            "description": "Whether to include uppercase letters. 1 for yes, 0 for no."
           },
           {
             "name": "numbers",
@@ -970,7 +986,8 @@
                 "0",
                 "1"
               ]
-            }
+            },
+            "description": "Whether to include numeric digits. 1 for yes, 0 for no."
           },
           {
             "name": "exclude_ambiguous",
@@ -982,7 +999,8 @@
                 "0",
                 "1"
               ]
-            }
+            },
+            "description": "Whether to exclude visually ambiguous characters (e.g. 0/O, 1/l). 1 for yes, 0 for no."
           }
         ],
         "responses": {
@@ -1026,7 +1044,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "Email address to validate for correct syntax and a resolvable domain."
           }
         ],
         "responses": {
@@ -1085,7 +1104,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "Domain to fetch the favicon URL for, e.g. example.com."
           }
         ],
         "responses": {
@@ -1131,7 +1151,8 @@
                 "json-to-csv",
                 "csv-to-json"
               ]
-            }
+            },
+            "description": "Either \"csv-to-json\" or \"json-to-csv\"."
           },
           {
             "name": "data",
@@ -1139,7 +1160,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "The CSV or JSON text to convert, matching the chosen direction."
           }
         ],
         "responses": {
@@ -1177,10 +1199,12 @@
                     "enum": [
                       "json-to-csv",
                       "csv-to-json"
-                    ]
+                    ],
+                    "description": "Either \"csv-to-json\" or \"json-to-csv\"."
                   },
                   "data": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The CSV or JSON text to convert, matching the chosen direction."
                   }
                 },
                 "required": [
@@ -1232,7 +1256,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "Password to check against known data-breach corpora. Checked via k-anonymity (only a partial hash prefix is sent) -- the full password is never transmitted."
           }
         ],
         "responses": {
@@ -1276,11 +1301,13 @@
                 ],
                 "properties": {
                   "password": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Password to evaluate for strength (length, character variety, common patterns)."
                   },
                   "check_breach": {
                     "type": "boolean",
-                    "default": true
+                    "default": true,
+                    "description": "Whether to also check the password against known data-breach corpora via k-anonymity. true or false."
                   }
                 }
               }
@@ -1358,7 +1385,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "Email address to check against a list of known disposable/temporary email domains."
           }
         ],
         "responses": {
@@ -1402,7 +1430,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "Email address to run through combined syntax, disposable-domain, and MX-record checks."
           }
         ],
         "responses": {
@@ -1478,7 +1507,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "Phone number to validate and format, ideally in E.164 format (e.g. +14155552671)."
           },
           {
             "name": "country",
@@ -1576,7 +1606,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "Domain to check SPF, DKIM, and DMARC records for, e.g. example.com."
           }
         ],
         "responses": {
@@ -1645,7 +1676,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "URL to run a combined security posture check against (headers, reputation, and related signals)."
           }
         ],
         "responses": {
@@ -1954,7 +1986,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "URL to audit HTTP security headers for (CSP, HSTS, X-Frame-Options, etc.)."
           }
         ],
         "responses": {
@@ -2091,7 +2124,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "URL to check against known phishing/malware URL databases."
           }
         ],
         "responses": {
@@ -2139,7 +2173,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "Domain to passively discover subdomains for via Certificate Transparency logs, e.g. example.com."
           }
         ],
         "responses": {
@@ -2308,7 +2343,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "Domain to check, e.g. example.com. robots.txt is fetched from https://<domain>/robots.txt."
           }
         ],
         "responses": {
@@ -2761,7 +2797,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "Domain to look up, e.g. example.com."
           },
           {
             "name": "type",
@@ -2931,7 +2968,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "Domain to look up registration details for via RDAP, e.g. example.com."
           }
         ],
         "responses": {
@@ -3023,7 +3061,8 @@
             "schema": {
               "type": "string",
               "example": "npm"
-            }
+            },
+            "description": "Package ecosystem, e.g. npm, PyPI, Go, crates.io, Maven, RubyGems, Packagist, or NuGet."
           },
           {
             "name": "package",
@@ -3031,7 +3070,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "Package name to check against OSV.dev for known CVEs."
           },
           {
             "name": "version",
@@ -3185,7 +3225,8 @@
                 "npm",
                 "PyPI"
               ]
-            }
+            },
+            "description": "Package ecosystem, e.g. npm or PyPI."
           },
           {
             "name": "package",
@@ -3193,7 +3234,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "Package name to check for likely typosquatting of a well-known package in the given ecosystem."
           }
         ],
         "responses": {
@@ -3270,7 +3312,8 @@
             "schema": {
               "type": "string",
               "example": "1.2.3.4"
-            }
+            },
+            "description": "IPv4 address to check against the Spamhaus DROP list of known spam/hijacker netblocks."
           }
         ],
         "responses": {
@@ -3330,7 +3373,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "URL to follow the full redirect chain for, hop by hop."
           }
         ],
         "responses": {
@@ -3426,7 +3470,8 @@
             "schema": {
               "type": "string",
               "example": "lodash/lodash"
-            }
+            },
+            "description": "GitHub repository in owner/name format, e.g. lodash/lodash."
           }
         ],
         "responses": {
