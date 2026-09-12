@@ -3522,6 +3522,37 @@
           }
         }
       }
+    },
+    "/maintainer-change-check": {
+      "get": {
+        "summary": "Detect a suspicious npm package maintainer change",
+        "description": "Flags a new package publisher appearing after a long period of dormancy -- a documented supply-chain attack pattern (event-stream, ua-parser-js, colors.js). Distinguishes a genuinely new publisher from a known one returning after a gap. npm only for now.",
+        "parameters": [
+          {
+            "name": "ecosystem",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Currently only \"npm\" is supported."
+          },
+          {
+            "name": "package",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Package name, e.g. lodash"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Maintainer change analysis for the package"
+          }
+        }
+      }
     }
   }
 }

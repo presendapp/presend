@@ -1,5 +1,5 @@
 // GET /mcp -> info; POST /mcp -> JSON-RPC 2.0 (protocole MCP, transport Streamable HTTP sans état)
-// Expose 32 des 39 endpoints comme "tools" MCP -- tous sauf les 7 endpoints
+// Expose 33 des 39 endpoints comme "tools" MCP -- tous sauf les 7 endpoints
 // binaires/fichiers (hash, clean-image, malware-check, file-type, image-similarity,
 // merge-and-compress-pdf, qr-scan), délibérément exclus : faire transiter du contenu
 // binaire encodé en base64 dans le contexte d'un agent IA est généralement peu pratique,
@@ -102,6 +102,12 @@ const TOOLS = [
     description: "Verify a JWT's cryptographic signature",
     inputSchema: {"type": "object", "properties": {"token": {"type": "string", "description": ""}, "secret": {"type": "string", "description": "Required for HS256/384/512."}, "jwk": {"type": "object", "description": "Public key in JWK format, for RS/PS/ES algorithms."}, "jwks_url": {"type": "string", "description": "URL to a JWKS document; the key is matched by the token's \"kid\" header."}}, "required": ["token"]},
     request: (args) => ({ method: 'POST', url: `${API_BASE}/jwt-verify`, body: JSON.stringify(args) }),
+  },
+  {
+    name: 'maintainer_change_check',
+    description: "Detect a suspicious npm package maintainer change",
+    inputSchema: {"type": "object", "properties": {"ecosystem": {"type": "string", "description": "Currently only \\\"npm\\\" is supported."}, "package": {"type": "string", "description": "Package name, e.g. lodash"}}, "required": ["ecosystem", "package"]},
+    request: (args) => ({ method: 'GET', url: `${API_BASE}/maintainer-change-check?${new URLSearchParams(args).toString()}` }),
   },
   {
     name: 'password',
