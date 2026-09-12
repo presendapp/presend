@@ -1,6 +1,13 @@
 // GET /api/subdomains?domain=example.com
 // Découverte PASSIVE de sous-domaines via Certificate Transparency (crt.sh).
 // Aucun scan actif. Usage prévu : audit de sa propre surface d'attaque.
+//
+// crt.sh est un service public gratuit connu pour être occasionnellement lent
+// ou instable sous charge -- observé empiriquement le 12/09/2026 (échec, échec,
+// succès sur 3 tentatives consécutives). Une seule tentative de nouvel essai
+// avec un délai plus court par tentative (7s x2 au lieu de 12s x1) améliore
+// le taux de succès réel sans dépasser les limites de temps raisonnables
+// côté plateforme.
 
 async function checkRateLimit(env, clientIP, bucket) {
   if (!env.PRESEND_ANALYTICS) return true;
@@ -10,13 +17,10 @@ async function checkRateLimit(env, clientIP, bucket) {
     let count = await env.PRESEND_ANALYTICS.get(rateKey);
     count = count ? parseInt(count) : 0;
     if (count >= 10) return false;
-    // Écriture échantillonnée (1 sur 3) pour économiser le quota KV --
-    // légèrement moins précis en rafale, mais protège toujours contre un abus soutenu.
     if (Math.random() < 1 / 3) {
       await env.PRESEND_ANALYTICS.put(rateKey, (count + 3).toString(), { expirationTtl: 120 });
     }
   } catch (e) {
-    // KV en panne ou quota dépassé -- ne doit jamais faire planter la requête.
     return true;
   }
   return true;
@@ -27,6 +31,42 @@ function corsHeaders(extra = {}) {
 }
 
 const DOMAIN_RE = /^[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?(\.[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?)+$/i;
+
+async function fetchWithTimeout(url, timeoutMs) {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    const res = await fetch(url, {
+      signal: controller.signal,
+      headers: { 'User-Agent': 'Mozilla/5.0 (compatible; PresendBot/1.0; +https://presend.pages.dev)' },
+    });
+    clearTimeout(timeout);
+    return res;
+  } catch (e) {
+    clearTimeout(timeout);
+    throw e;
+  }
+}
+
+async function queryCrtSh(domain) {
+  const url = `https://crt.sh/?q=${encodeURIComponent('%.' + domain)}&output=json`;
+  const attempts = [7000, 7000];
+  let lastError;
+
+  for (let i = 0; i < attempts.length; i++) {
+    try {
+      const res = await fetchWithTimeout(url, attempts[i]);
+      if (!res.ok) throw new Error(`crt.sh error: HTTP ${res.status}`);
+      return await res.json();
+    } catch (e) {
+      lastError = e;
+      if (i < attempts.length - 1) {
+        await new Promise((r) => setTimeout(r, 500));
+      }
+    }
+  }
+  throw lastError;
+}
 
 export async function onRequestOptions() {
   return new Response(null, { headers: corsHeaders() });
@@ -58,18 +98,8 @@ export async function onRequestGet(context) {
     });
   }
 
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 12000);
-
   try {
-    const res = await fetch(`https://crt.sh/?q=${encodeURIComponent('%.' + domain)}&output=json`, {
-      signal: controller.signal,
-      headers: { 'User-Agent': 'Mozilla/5.0 (compatible; PresendBot/1.0; +https://presend.pages.dev)' },
-    });
-    clearTimeout(timeout);
-
-    if (!res.ok) throw new Error(`crt.sh error: HTTP ${res.status}`);
-    const data = await res.json();
+    const data = await queryCrtSh(domain);
 
     const subdomains = new Set();
     for (const entry of data) {
@@ -93,13 +123,12 @@ export async function onRequestGet(context) {
       headers: { 'Content-Type': 'application/json', 'Cache-Control': 'public, max-age=3600', ...corsHeaders() },
     });
   } catch (e) {
-    clearTimeout(timeout);
     if (e.name === 'AbortError') {
-      return new Response(JSON.stringify({ error: 'crt.sh request timed out. Try again shortly.' }), {
+      return new Response(JSON.stringify({ error: 'crt.sh request timed out after 2 attempts. Try again shortly.' }), {
         status: 504, headers: { 'Content-Type': 'application/json', ...corsHeaders() },
       });
     }
-    return new Response(JSON.stringify({ error: 'Could not query certificate transparency logs.', detail: e.message }), {
+    return new Response(JSON.stringify({ error: 'Could not query certificate transparency logs after 2 attempts.', detail: e.message }), {
       status: 502, headers: { 'Content-Type': 'application/json', ...corsHeaders() },
     });
   }
