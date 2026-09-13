@@ -61,8 +61,18 @@ with MCPServerAdapter({
     agent = Agent(role="Researcher", goal="...", tools=tools)
 ```
 
-The same URL works with Claude Desktop, Cursor, ChatGPT, AutoGen/AG2, and any
-other MCP-compatible client -- no signup, no API key.
+Verified working example with LlamaIndex (`pip install llama-index-tools-mcp`):
+
+```python
+from llama_index.tools.mcp import BasicMCPClient, McpToolSpec
+
+client = BasicMCPClient("https://presend.pages.dev/mcp")
+tools = await McpToolSpec(client=client).to_tool_list_async()
+# 33 tools, ready to pass into any LlamaIndex FunctionAgent
+```
+
+The same URL works with Claude Desktop, Cursor, ChatGPT, and any other
+MCP-compatible client -- no signup, no API key.
 
 ## Tools by category
 
