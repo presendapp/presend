@@ -48,8 +48,21 @@ async def main():
 asyncio.run(main())
 ```
 
-The same URL works with Claude Desktop, Cursor, ChatGPT, CrewAI (via its own
-MCP adapter), and any other MCP-compatible client -- no signup, no API key.
+Verified working example with CrewAI (`pip install "crewai-tools[mcp]"`):
+
+```python
+from crewai_tools import MCPServerAdapter
+
+with MCPServerAdapter({
+    "url": "https://presend.pages.dev/mcp",
+    "transport": "streamable-http",
+}) as tools:
+    # 33 tools, ready to pass into any CrewAI Agent
+    agent = Agent(role="Researcher", goal="...", tools=tools)
+```
+
+The same URL works with Claude Desktop, Cursor, ChatGPT, AutoGen/AG2, and any
+other MCP-compatible client -- no signup, no API key.
 
 ## Tools by category
 
