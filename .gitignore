@@ -60,6 +60,7 @@ venv/
 !bing_submit.py
 !gsc_submit.py
 !check_broken_links.py
+!scripts/generate-rss.py
 node_modules/
 
 # Cache Python compilé -- ne doit jamais être versionné
