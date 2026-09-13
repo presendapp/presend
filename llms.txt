@@ -84,6 +84,20 @@ async with MCPServerStreamableHttp(
     result = await server.call_tool("whois_lookup", {"domain": "github.com"})
 ```
 
+Verified working example with Google's Agent Development Kit (`pip install google-adk mcp`):
+
+```python
+from google.adk.tools.mcp_tool.mcp_toolset import McpToolset
+from google.adk.tools.mcp_tool.mcp_session_manager import StreamableHTTPConnectionParams
+
+toolset = McpToolset(
+    connection_params=StreamableHTTPConnectionParams(
+        url="https://presend.pages.dev/mcp",
+    ),
+)
+tools = await toolset.get_tools()  # 33 tools, ready for any ADK Agent
+```
+
 No-code option: n8n's built-in "MCP Client Tool" node connects directly
 (Server Transport: HTTP Streamable, MCP Endpoint URL:
 https://presend.pages.dev/mcp, Authentication: None) -- no package install
