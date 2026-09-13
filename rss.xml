@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Presend Blog</title>
     <link>https://presend.pages.dev/blog/</link>
+    <atom:link href="https://presend.pages.dev/rss.xml" rel="self" type="application/rss+xml" />
     <description>Guides and comparisons for Presend's free privacy tools and API</description>
     <language>en</language>
-    <lastBuildDate>Sun, 13 Sep 2026 19:36:54 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 13 Sep 2026 19:43:15 +0000</lastBuildDate>
     <item>
       <title>EXIF Remover vs Alternatives — Which One Is Best? — Presend Blog</title>
       <link>https://presend.pages.dev/blog/exif-remover-comparison/</link>

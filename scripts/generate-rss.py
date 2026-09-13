@@ -43,10 +43,11 @@ for url, title, desc in items:
     </item>"""
 
 rss = f"""<?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Presend Blog</title>
     <link>{SITE}/blog/</link>
+    <atom:link href="{SITE}/rss.xml" rel="self" type="application/rss+xml" />
     <description>Guides and comparisons for Presend's free privacy tools and API</description>
     <language>en</language>
     <lastBuildDate>{now}</lastBuildDate>{rss_items}
