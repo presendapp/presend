@@ -50,3 +50,8 @@
 /*.html
   Cache-Control: public, max-age=3600
   Link: </style.min.css>; rel=preload; as=style, </sw-register.js>; rel=preload; as=script
+
+/.well-known/ard.json
+  Content-Type: application/json
+  Access-Control-Allow-Origin: *
+  Cache-Control: public, max-age=3600
