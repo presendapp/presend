@@ -21,8 +21,8 @@ async function checkRateLimit(env, clientIP, bucket) {
     let count = await env.PRESEND_ANALYTICS.get(rateKey);
     count = count ? parseInt(count) : 0;
     if (count >= 10) return false;
-    if (Math.random() < 1 / 3) {
-      await env.PRESEND_ANALYTICS.put(rateKey, (count + 3).toString(), { expirationTtl: 120 });
+    if (Math.random() < 1 / 5) {
+      await env.PRESEND_ANALYTICS.put(rateKey, (count + 5).toString(), { expirationTtl: 120 });
     }
   } catch (e) {
     return true;
