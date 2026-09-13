@@ -1,4 +1,4 @@
-google-auth==2.57.0
+google-auth==2.57.1
 google-auth-oauthlib==1.4.1
 beautifulsoup4==4.15.0
 lxml==6.1.2
