@@ -108,6 +108,19 @@ documentation for the node, not independently verified against this URL.
 The same URL works with Claude Desktop, Cursor, ChatGPT, and any other
 MCP-compatible client -- no signup, no API key.
 
+## Embeddable security badge for READMEs
+
+Any GitHub project can embed a live, real-time badge showing a package's
+security status (checked via vulnerability-check and, for npm,
+maintainer-change-check):
+
+[![presend](https://img.shields.io/endpoint?url=https://presend.pages.dev/api/badge?ecosystem=npm%26package=YOUR-PACKAGE-NAME)](https://presend.pages.dev)
+
+The badge re-checks live on every render (subject to shields.io's own
+caching), not a static snapshot -- and doubles as free, ongoing
+distribution: every render of the badge is a real visit to the API from
+wherever it's displayed.
+
 ## Tools by category
 
 ### Clean & Protect (Privacy Tools)
