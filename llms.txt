@@ -24,6 +24,33 @@ an AI agent's text context well). Send a JSON-RPC 2.0 `initialize`
 request to discover the protocol version, then `tools/list` to see
 all 33 tools with full schemas, then `tools/call` to invoke.
 
+## Using Presend with LangChain (or any MCP-compatible framework)
+
+Presend's MCP server (https://presend.pages.dev/mcp) works out of the box
+with any MCP-compatible AI framework -- no submission or dedicated
+integration package needed, since MCP itself is the integration layer.
+
+Verified working example with LangChain (`pip install langchain-mcp-adapters`):
+
+```python
+import asyncio
+from langchain_mcp_adapters.client import MultiServerMCPClient
+
+async def main():
+    client = MultiServerMCPClient({
+        "presend": {
+            "url": "https://presend.pages.dev/mcp",
+            "transport": "streamable_http",
+        }
+    })
+    tools = await client.get_tools()  # 33 tools, ready to pass into any LangChain agent
+
+asyncio.run(main())
+```
+
+The same URL works with Claude Desktop, Cursor, ChatGPT, CrewAI (via its own
+MCP adapter), and any other MCP-compatible client -- no signup, no API key.
+
 ## Tools by category
 
 ### Clean & Protect (Privacy Tools)
