@@ -71,6 +71,19 @@ tools = await McpToolSpec(client=client).to_tool_list_async()
 # 33 tools, ready to pass into any LlamaIndex FunctionAgent
 ```
 
+Verified working example with OpenAI's Agents SDK (`pip install openai-agents`):
+
+```python
+from agents.mcp import MCPServerStreamableHttp
+
+async with MCPServerStreamableHttp(
+    params={"url": "https://presend.pages.dev/mcp"},
+    name="presend",
+) as server:
+    tools = await server.list_tools()  # 33 tools
+    result = await server.call_tool("whois_lookup", {"domain": "github.com"})
+```
+
 No-code option: n8n's built-in "MCP Client Tool" node connects directly
 (Server Transport: HTTP Streamable, MCP Endpoint URL:
 https://presend.pages.dev/mcp, Authentication: None) -- no package install
