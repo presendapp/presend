@@ -71,6 +71,13 @@ tools = await McpToolSpec(client=client).to_tool_list_async()
 # 33 tools, ready to pass into any LlamaIndex FunctionAgent
 ```
 
+No-code option: n8n's built-in "MCP Client Tool" node connects directly
+(Server Transport: HTTP Streamable, MCP Endpoint URL:
+https://presend.pages.dev/mcp, Authentication: None) -- no package install
+needed. This specific node config was not run end-to-end in an actual n8n
+instance, unlike the three code examples above; it's based on n8n's own
+documentation for the node, not independently verified against this URL.
+
 The same URL works with Claude Desktop, Cursor, ChatGPT, and any other
 MCP-compatible client -- no signup, no API key.
 
