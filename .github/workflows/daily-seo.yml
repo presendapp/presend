@@ -29,6 +29,9 @@ jobs:
         # Search Relations clarification. sitemap.xml and IndexNow (separate
         # workflow) cover indexing legitimately and without content-type
         # restrictions.
+      - name: Generate RSS feed from blog pages
+        run: python3 scripts/generate-rss.py
+
       - name: Decode Google service account credentials
         env:
           GOOGLE_CREDS_B64: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
@@ -51,6 +54,6 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add sitemap.xml blog/ .indexing_quota_state.pkl .indexing_rotation_state.pkl 2>/dev/null || true
+          git add sitemap.xml blog/ rss.xml .indexing_quota_state.pkl .indexing_rotation_state.pkl 2>/dev/null || true
           git diff --staged --quiet || git commit -m "chore: daily SEO auto-update"
           git push
