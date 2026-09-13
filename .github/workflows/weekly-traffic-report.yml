@@ -1,0 +1,17 @@
+name: Weekly traffic report
+
+on:
+  schedule:
+    - cron: '0 9 * * 1'
+  workflow_dispatch: {}
+
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Post weekly traffic report
+        run: bash scripts/post-traffic-report.sh
+        env:
+          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
