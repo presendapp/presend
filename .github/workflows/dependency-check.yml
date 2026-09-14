@@ -1,0 +1,21 @@
+name: Dependency security check (self-check)
+
+on:
+  push:
+    paths:
+      - 'requirements.txt'
+  schedule:
+    - cron: '0 8 * * 1'
+  workflow_dispatch: {}
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Check requirements.txt for known vulnerabilities
+        uses: presendapp/presend-check-action@v1
+        with:
+          ecosystem: 'pypi'
+          manifest-path: 'requirements.txt'
+          fail-on-issue: 'true'
