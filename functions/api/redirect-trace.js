@@ -10,6 +10,15 @@
 // malicious" nor "how old is the final domain" alone would catch --
 // checking the destination doesn't tell you about the path taken to
 // get there.
+//
+// SSRF: every hop (initial URL and every redirect target) is resolved
+// and validated via safe-fetch's validateAndResolve() BEFORE being
+// fetched, and the actual connection is pinned to that validated IP
+// (cf.resolveOverride) -- checking only the hostname string would miss
+// DNS rebinding, where a hostname resolves to a public IP at check time
+// and a private one at connect time. See functions/_lib/safe-fetch.js.
+
+import { validateAndResolve } from '../_lib/safe-fetch.js';
 
 async function checkRateLimit(env, clientIP, bucket) {
   if (!env.PRESEND_ANALYTICS) return true;
@@ -19,13 +28,10 @@ async function checkRateLimit(env, clientIP, bucket) {
     let count = await env.PRESEND_ANALYTICS.get(rateKey);
     count = count ? parseInt(count) : 0;
     if (count >= 10) return false;
-    // Écriture échantillonnée (1 sur 5) pour économiser le quota KV --
-    // légèrement moins précis en rafale, mais protège toujours contre un abus soutenu.
     if (Math.random() < 1 / 5) {
       await env.PRESEND_ANALYTICS.put(rateKey, (count + 5).toString(), { expirationTtl: 120 });
     }
   } catch (e) {
-    // KV en panne ou quota dépassé -- ne doit jamais faire planter la requête.
     return true;
   }
   return true;
@@ -33,16 +39,6 @@ async function checkRateLimit(env, clientIP, bucket) {
 
 function corsHeaders(extra = {}) {
   return { 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'GET, OPTIONS', ...extra };
-}
-
-const BLOCKED_HOSTNAME_PATTERNS = [
-  /^localhost$/i, /^127\./, /^10\./, /^192\.168\./,
-  /^172\.(1[6-9]|2\d|3[01])\./, /^169\.254\./, /^0\.0\.0\.0$/,
-  /^\[?::1\]?$/, /^\[?fc00:/i, /^\[?fe80:/i,
-  /\.local$/i, /^metadata\./i,
-];
-function isBlockedHostname(hostname) {
-  return BLOCKED_HOSTNAME_PATTERNS.some((re) => re.test(hostname));
 }
 
 const MAX_HOPS = 15;
@@ -80,7 +76,7 @@ export async function onRequestGet(context) {
       status: 400, headers: { 'Content-Type': 'application/json', ...corsHeaders() },
     });
   }
-  if (!['http:', 'https:'].includes(currentUrl.protocol) || isBlockedHostname(currentUrl.hostname)) {
+  if (!['http:', 'https:'].includes(currentUrl.protocol)) {
     return new Response(JSON.stringify({ error: 'Invalid or disallowed URL' }), {
       status: 400, headers: { 'Content-Type': 'application/json', ...corsHeaders() },
     });
@@ -103,11 +99,20 @@ export async function onRequestGet(context) {
       }
       seen.add(urlStr);
 
+      let validatedIp;
+      try {
+        validatedIp = await validateAndResolve(currentUrl.hostname);
+      } catch (e) {
+        error = `Disallowed hop: ${e.message}`;
+        break;
+      }
+
       const res = await fetch(urlStr, {
         method: 'GET',
         redirect: 'manual',
         signal: controller.signal,
         headers: { 'User-Agent': 'Mozilla/5.0 (compatible; PresendBot/1.0; +https://presend.pages.dev)' },
+        cf: { resolveOverride: validatedIp },
       });
 
       const isRedirect = res.status >= 300 && res.status < 400;
@@ -127,8 +132,8 @@ export async function onRequestGet(context) {
         error = 'Malformed Location header, could not follow further';
         break;
       }
-      if (!['http:', 'https:'].includes(nextUrl.protocol) || isBlockedHostname(nextUrl.hostname)) {
-        error = 'Redirect target is disallowed (private/internal address)';
+      if (!['http:', 'https:'].includes(nextUrl.protocol)) {
+        error = 'Redirect target uses a disallowed protocol';
         break;
       }
       currentUrl = nextUrl;
