@@ -1,29 +1,41 @@
-# Presend — Free Privacy Tools That Run in Your Browser
+# Presend — Free Privacy Tools, a Security API, and an MCP Server for AI Agents
 
 [![Live Site](https://img.shields.io/badge/Live-presend.pages.dev-0066cc?style=flat-square)](https://presend.pages.dev)
 [![API Tests](https://github.com/presendapp/presend/actions/workflows/api-tests.yml/badge.svg)](https://github.com/presendapp/presend/actions/workflows/api-tests.yml)
-[![Tools](https://img.shields.io/badge/Tools-48-1F3A5F?style=flat-square)](https://presend.pages.dev)
-[![API](https://img.shields.io/badge/API-39_endpoints-1F3A5F?style=flat-square)](https://presend.pages.dev/api)
+[![Tools](https://img.shields.io/badge/Browser_Tools-48-1F3A5F?style=flat-square)](https://presend.pages.dev)
+[![API](https://img.shields.io/badge/API-40_endpoints-1F3A5F?style=flat-square)](https://presend.pages.dev/api)
+[![MCP Server](https://img.shields.io/badge/MCP-33_tools-6c47ff?style=flat-square)](https://presend.pages.dev/mcp)
+[![npm](https://img.shields.io/npm/v/presend-api?style=flat-square&label=npm&color=cb3837)](https://www.npmjs.com/package/presend-api)
+[![GitHub Marketplace](https://img.shields.io/badge/Marketplace-presend--check--action-2ea44f?style=flat-square)](https://github.com/marketplace/actions/presend-dependency-security-check)
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://god.gw.postman.com/run-collection/57808683-783f3f64-0f9f-433e-95f6-518520d14ccf?action=collection%2Ffork&collection-url=entityId%3D57808683-783f3f64-0f9f-433e-95f6-518520d14ccf%26entityType%3Dcollection%26workspaceId%3D8ffb507b-4140-4e42-8a44-fd6926d0b25b)
 [![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)](LICENSE)
 [![PWA](https://img.shields.io/badge/PWA-Enabled-orange?style=flat-square)](https://presend.pages.dev)
 [![Privacy](https://img.shields.io/badge/Privacy-First-ff6b6b?style=flat-square)](https://presend.pages.dev/privacy)
 
-**48 free browser-based tools to clean, compress, convert and check your files before you share them. Nothing is ever uploaded.**
+**Presend is three things: 48 free browser-based file tools (nothing ever uploaded), a free 40-endpoint security/utility API (no signup, no key), and an MCP server exposing 33 of those endpoints to AI agents.**
 
-[Open Presend](https://presend.pages.dev)
+[Open Presend](https://presend.pages.dev) · [API docs](https://presend.pages.dev/api) · [OpenAPI spec](https://presend.pages.dev/openapi.json) · [MCP server](https://presend.pages.dev/mcp)
 
 ## Why Presend?
 
-Unlike most online tools, **Presend processes everything locally in your browser**. Your files, photos, and documents never leave your device. No account, no upload, no tracking, no ads.
+Unlike most online tools, **Presend processes files entirely locally in your browser** -- your files never leave your device. And unlike most free API directories, the API layer has no signup wall or aggressive rate limits gating basic use.
 
-- **100% Private** — Web Crypto API, Canvas API, FileReader — all client-side
-- **Instant** — Cloudflare CDN, loads in under 1 second globally
-- **PWA** — Install on mobile/desktop, works offline
-- **SEO-Optimized** — Schema.org markup (HowTo, FAQPage, SoftwareApplication), dynamic sitemap, Open Graph images
-- **Free Forever** — No freemium, no watermarks, no limits
+- **100% Private (browser tools)** -- Web Crypto API, Canvas API, FileReader -- all client-side
+- **Real supply-chain security (API)** -- `maintainer-change-check` flags a package whose publisher changed after a long dormancy, the pattern behind event-stream, ua-parser-js, colors.js
+- **Instant** -- Cloudflare CDN, loads in under 1 second globally
+- **PWA** -- Install on mobile/desktop, works offline
+- **Free Forever** -- No freemium, no watermarks, no limits
 
-## Tools (22)
+## API & MCP Server
+
+- **[REST API](https://presend.pages.dev/api)** -- 40 free endpoints: security & verification (WHOIS/DNS, package vulnerability & typosquat checks, malware scanning, JWT decode/verify, GitHub repo health, maintainer-change detection), file & image processing, and everyday utilities. Full [OpenAPI 3.0 spec](https://presend.pages.dev/openapi.json).
+- **[MCP server](https://presend.pages.dev/mcp)** -- 33 tools over Streamable HTTP, no signup, no key. Verified working with LangChain, CrewAI, LlamaIndex, OpenAI's Agents SDK, and Google's ADK.
+- **[npm client](https://www.npmjs.com/package/presend-api)** -- `npm install presend-api`, zero-dependency, wraps 42 methods.
+- **[GitHub Action](https://github.com/marketplace/actions/presend-dependency-security-check)** -- drop-in dependency security scanning (npm + PyPI) for any CI pipeline.
+- **[Browser extension](https://github.com/presendapp/presend-extension)** -- "Presend — Clean Photos", strips EXIF/GPS on right-click.
+
+## Browser Tools (48 total, 22 shown below)
+
 
 | Tool | What it does | Link |
 |---|---|---|
@@ -80,4 +92,3 @@ Add a Presend tool to your website or link back to us:
 MIT — free to use, modify, and embed.
 
 [Open Presend](https://presend.pages.dev)
-# build trigger ven. 21 août 2026 10:18:19 CEST
