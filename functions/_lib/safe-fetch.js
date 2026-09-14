@@ -76,3 +76,30 @@ export async function safeFetch(url, options = {}) {
 }
 
 export { isBlocked as isBlockedHostname };
+
+// Suit une chaine de redirections en validant + epinglant chaque saut
+// manuellement, renvoie la reponse finale -- reutilisable par tout
+// endpoint qui veut juste "le resultat final, en toute securite" sans
+// reimplementer la boucle lui-meme.
+export async function safeFetchFollowingRedirects(url, options = {}, maxHops = 10) {
+  let currentUrl = url;
+  for (let i = 0; i < maxHops; i++) {
+    const parsed = new URL(currentUrl);
+    if (!['http:', 'https:'].includes(parsed.protocol)) {
+      throw new Error(`Blocked protocol: ${parsed.protocol}`);
+    }
+    const validatedIp = await validateAndResolve(parsed.hostname);
+    const res = await fetch(currentUrl, {
+      ...options,
+      redirect: 'manual',
+      cf: { ...(options.cf || {}), resolveOverride: validatedIp },
+    });
+    const isRedirect = res.status >= 300 && res.status < 400;
+    const location = res.headers.get('Location');
+    if (!isRedirect || !location) {
+      return res;
+    }
+    currentUrl = new URL(location, currentUrl).toString();
+  }
+  throw new Error(`Stopped after ${maxHops} redirect hops (possible loop)`);
+}

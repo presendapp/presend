@@ -1,36 +1,27 @@
-const MAX_RESPONSE_BYTES = 2 * 1024 * 1024; // 2MB, largement suffisant pour du HTML de head
+// GET /api/scrape?url=https://example.com
+//
+// SSRF: every redirect hop is resolved, validated, and pinned via
+// safe-fetch's safeFetchFollowingRedirects(). See functions/_lib/safe-fetch.js.
 
-const BLOCKED_HOSTNAME_PATTERNS = [
-  /^localhost$/i, /^127\./, /^10\./, /^192\.168\./,
-  /^172\.(1[6-9]|2\d|3[01])\./, /^169\.254\./, /^0\.0\.0\.0$/,
-  /^\[?::1\]?$/, /^\[?fc00:/i, /^\[?fe80:/i,
-  /\.local$/i, /^metadata\./i,
-];
+import { validateAndResolve, safeFetchFollowingRedirects } from '../_lib/safe-fetch.js';
 
-function isBlockedHostname(hostname) {
-  return BLOCKED_HOSTNAME_PATTERNS.some((re) => re.test(hostname));
-}
+const MAX_RESPONSE_BYTES = 2 * 1024 * 1024;
 
 async function checkRateLimit(env, clientIP, isTest = false) {
-  if (!env.PRESEND_ANALYTICS) return true; // fail-open si KV absent en dev
+  if (!env.PRESEND_ANALYTICS) return true;
   try {
     const now = Math.floor(Date.now() / 60000);
     const rateKey = `rate:scrape:${clientIP}:${now}`;
     let count = await env.PRESEND_ANALYTICS.get(rateKey);
     count = count ? parseInt(count) : 0;
     if (count >= 15) return false;
-    // Écriture échantillonnée (1 sur 5) pour économiser le quota KV --
-    // légèrement moins précis en rafale, mais protège toujours contre un abus soutenu.
     if (Math.random() < 1 / 5) {
       await env.PRESEND_ANALYTICS.put(rateKey, (count + 5).toString(), { expirationTtl: 120 });
     }
   } catch (e) {
-    // KV en panne ou quota dépassé -- ne doit jamais faire planter la requête.
     return true;
   }
 
-  // Tracking d'usage échantillonné (1 requête sur 10, multiplié par 10) pour économiser
-  // le quota d'écritures KV — best-effort, ne bloque jamais la requête si ça échoue.
   try {
     if (!isTest && Math.random() < 0.1) {
       const today = new Date().toISOString().split('T')[0];
@@ -71,9 +62,7 @@ export async function onRequestGet(context) {
     if (!['http:', 'https:'].includes(parsedUrl.protocol)) {
       throw new Error('Invalid protocol');
     }
-    if (isBlockedHostname(parsedUrl.hostname)) {
-      throw new Error('Blocked hostname');
-    }
+    await validateAndResolve(parsedUrl.hostname);
   } catch (e) {
     return new Response(JSON.stringify({ error: 'Invalid or disallowed URL' }), {
       status: 400,
@@ -85,7 +74,7 @@ export async function onRequestGet(context) {
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 10000);
 
-    const response = await fetch(targetUrl, {
+    const response = await safeFetchFollowingRedirects(targetUrl, {
       method: 'GET',
       headers: {
         'User-Agent': 'Mozilla/5.0 (compatible; PresendBot/1.0; +https://presend.pages.dev)',
@@ -96,19 +85,9 @@ export async function onRequestGet(context) {
         'Connection': 'keep-alive',
       },
       signal: controller.signal,
-      redirect: 'follow',
     });
 
     clearTimeout(timeout);
-
-    // Re-vérifie l'hôte final après redirections (SSRF via redirect)
-    const finalUrl = new URL(response.url);
-    if (isBlockedHostname(finalUrl.hostname)) {
-      return new Response(JSON.stringify({ error: 'Blocked hostname after redirect' }), {
-        status: 400,
-        headers: { 'Content-Type': 'application/json' }
-      });
-    }
 
     if (!response.ok) {
       return new Response(JSON.stringify({ error: `HTTP ${response.status}` }), {
@@ -133,7 +112,6 @@ export async function onRequestGet(context) {
       });
     }
 
-    // Lit au maximum MAX_RESPONSE_BYTES même sans content-length fiable
     const reader = response.body.getReader();
     let received = 0;
     let chunks = [];

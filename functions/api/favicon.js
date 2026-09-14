@@ -1,4 +1,9 @@
 // GET /api/favicon?domain=example.com  -> { favicon: "https://example.com/favicon.ico" }
+//
+// SSRF: every redirect hop is resolved, validated, and pinned via
+// safe-fetch's safeFetchFollowingRedirects(). See functions/_lib/safe-fetch.js.
+
+import { validateAndResolve, safeFetchFollowingRedirects } from '../_lib/safe-fetch.js';
 
 async function checkRateLimit(env, clientIP, bucket, isTest = false) {
   if (!env.PRESEND_ANALYTICS) return true;
@@ -8,18 +13,13 @@ async function checkRateLimit(env, clientIP, bucket, isTest = false) {
     let count = await env.PRESEND_ANALYTICS.get(rateKey);
     count = count ? parseInt(count) : 0;
     if (count >= 30) return false;
-    // Écriture échantillonnée (1 sur 5) pour économiser le quota KV --
-    // légèrement moins précis en rafale, mais protège toujours contre un abus soutenu.
     if (Math.random() < 1 / 5) {
       await env.PRESEND_ANALYTICS.put(rateKey, (count + 5).toString(), { expirationTtl: 120 });
     }
   } catch (e) {
-    // KV en panne ou quota dépassé -- ne doit jamais faire planter la requête.
     return true;
   }
 
-  // Tracking d'usage échantillonné (1 requête sur 10, multiplié par 10) pour économiser
-  // le quota d'écritures KV — best-effort, ne bloque jamais la requête si ça échoue.
   try {
     if (!isTest && Math.random() < 0.1) {
       const today = new Date().toISOString().split('T')[0];
@@ -34,16 +34,6 @@ async function checkRateLimit(env, clientIP, bucket, isTest = false) {
 
 function corsHeaders(extra = {}) {
   return { 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'GET, OPTIONS', ...extra };
-}
-
-const BLOCKED_HOSTNAME_PATTERNS = [
-  /^localhost$/i, /^127\./, /^10\./, /^192\.168\./,
-  /^172\.(1[6-9]|2\d|3[01])\./, /^169\.254\./, /^0\.0\.0\.0$/,
-  /^\[?::1\]?$/, /^\[?fc00:/i, /^\[?fe80:/i,
-  /\.local$/i, /^metadata\./i,
-];
-function isBlockedHostname(hostname) {
-  return BLOCKED_HOSTNAME_PATTERNS.some((re) => re.test(hostname));
 }
 
 export async function onRequestOptions() {
@@ -71,7 +61,10 @@ export async function onRequestGet(context) {
   }
 
   domain = domain.replace(/^https?:\/\//, '').split('/')[0];
-  if (isBlockedHostname(domain)) {
+
+  try {
+    await validateAndResolve(domain);
+  } catch (e) {
     return new Response(JSON.stringify({ error: 'Disallowed domain' }), {
       status: 400, headers: { 'Content-Type': 'application/json', ...corsHeaders() },
     });
@@ -82,18 +75,13 @@ export async function onRequestGet(context) {
   const timeout = setTimeout(() => controller.abort(), 6000);
 
   try {
-    const res = await fetch(targetUrl, {
+    const res = await safeFetchFollowingRedirects(targetUrl, {
       signal: controller.signal,
       headers: { 'User-Agent': 'Mozilla/5.0 (compatible; PresendBot/1.0; +https://presend.pages.dev)' },
     });
     clearTimeout(timeout);
 
     const finalUrl = new URL(res.url);
-    if (isBlockedHostname(finalUrl.hostname)) {
-      return new Response(JSON.stringify({ error: 'Disallowed domain after redirect' }), {
-        status: 400, headers: { 'Content-Type': 'application/json', ...corsHeaders() },
-      });
-    }
 
     let faviconPath = '/favicon.ico';
     const contentType = res.headers.get('content-type') || '';

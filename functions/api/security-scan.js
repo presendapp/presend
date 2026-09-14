@@ -4,11 +4,13 @@
 // HTTP security headers, malware/phishing reputation (URLhaus), and
 // passive attack-surface visibility (subdomains via crt.sh).
 //
-// Combines them once instead of requiring 3 separate calls -- same
-// chaining philosophy as merge-and-compress-pdf, clean-image, and
-// email-verify.
+// SSRF: every hop of the headers-check fetch is resolved, validated,
+// and pinned via safe-fetch's safeFetchFollowingRedirects() -- checking
+// only the hostname string (before or after fetching) would miss DNS
+// rebinding. See functions/_lib/safe-fetch.js.
 
 import { checkReputation } from '../_shared/url-reputation-check.js';
+import { validateAndResolve, safeFetchFollowingRedirects } from '../_lib/safe-fetch.js';
 
 async function checkRateLimit(env, clientIP, bucket) {
   if (!env.PRESEND_ANALYTICS) return true;
@@ -17,14 +19,11 @@ async function checkRateLimit(env, clientIP, bucket) {
     const rateKey = `rate:${bucket}:${clientIP}:${now}`;
     let count = await env.PRESEND_ANALYTICS.get(rateKey);
     count = count ? parseInt(count) : 0;
-    if (count >= 10) return false; // le plus coûteux des endpoints (3 appels externes), quota conservateur
-    // Écriture échantillonnée (1 sur 5) pour économiser le quota KV --
-    // légèrement moins précis en rafale, mais protège toujours contre un abus soutenu.
+    if (count >= 10) return false;
     if (Math.random() < 1 / 5) {
       await env.PRESEND_ANALYTICS.put(rateKey, (count + 5).toString(), { expirationTtl: 120 });
     }
   } catch (e) {
-    // KV en panne ou quota dépassé -- ne doit jamais faire planter la requête.
     return true;
   }
 
@@ -42,16 +41,6 @@ async function checkRateLimit(env, clientIP, bucket) {
 
 function corsHeaders(extra = {}) {
   return { 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'GET, OPTIONS', ...extra };
-}
-
-const BLOCKED_HOSTNAME_PATTERNS = [
-  /^localhost$/i, /^127\./, /^10\./, /^192\.168\./,
-  /^172\.(1[6-9]|2\d|3[01])\./, /^169\.254\./, /^0\.0\.0\.0$/,
-  /^\[?::1\]?$/, /^\[?fc00:/i, /^\[?fe80:/i,
-  /\.local$/i, /^metadata\./i,
-];
-function isBlockedHostname(hostname) {
-  return BLOCKED_HOSTNAME_PATTERNS.some((re) => re.test(hostname));
 }
 
 const HEADER_CHECKS = [
@@ -74,21 +63,15 @@ function grade(score) {
   return 'F';
 }
 
-// --- Check 1: HTTP security headers ---
 async function checkHeaders(targetUrl) {
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 8000);
   try {
-    const res = await fetch(targetUrl, {
+    const res = await safeFetchFollowingRedirects(targetUrl, {
       signal: controller.signal,
       headers: { 'User-Agent': 'Mozilla/5.0 (compatible; PresendBot/1.0; +https://presend.pages.dev)' },
     });
     clearTimeout(timeout);
-
-    const finalUrl = new URL(res.url);
-    if (isBlockedHostname(finalUrl.hostname)) {
-      return { checked: false, error: 'Disallowed domain after redirect' };
-    }
 
     let score = 0;
     let maxScore = 0;
@@ -113,7 +96,6 @@ async function checkHeaders(targetUrl) {
   }
 }
 
-// --- Check 3: attack surface (subdomains via crt.sh) ---
 async function checkAttackSurface(domain) {
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 10000);
@@ -171,7 +153,7 @@ export async function onRequestGet(context) {
   try {
     parsedUrl = new URL(targetUrl);
     if (!['http:', 'https:'].includes(parsedUrl.protocol)) throw new Error('bad protocol');
-    if (isBlockedHostname(parsedUrl.hostname)) throw new Error('blocked hostname');
+    await validateAndResolve(parsedUrl.hostname);
   } catch (e) {
     return new Response(JSON.stringify({ error: 'Invalid or disallowed URL' }), {
       status: 400, headers: { 'Content-Type': 'application/json', ...corsHeaders() },
@@ -186,9 +168,6 @@ export async function onRequestGet(context) {
     checkAttackSurface(domain),
   ]);
 
-  // Overall score: starts from the headers score (0 if that check failed),
-  // then a confirmed malicious listing overrides everything -- an active
-  // malware/phishing flag matters more than any header configuration.
   let overallScore = headersResult.checked ? headersResult.score : 0;
   let verdict = 'No major issues found.';
 
