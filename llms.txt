@@ -16,17 +16,17 @@ Unlike most online file converters and editors, Presend never uploads your files
 
 ## MCP Server (for AI agents)
 
-- [MCP endpoint](https://presend.pages.dev/mcp): Streamable HTTP, no signup, 33 tools
+- [MCP endpoint](https://presend.pages.dev/mcp): Streamable HTTP, no signup, 34 tools
 
 Presend also exposes an MCP (Model Context Protocol) server at
 https://presend.pages.dev/mcp -- Streamable HTTP transport, no
-authentication, no signup. It exposes 33 of our 40 API endpoints as
+authentication, no signup. It exposes 34 of our 41 API endpoints as
 callable tools for AI agents and assistants (all except 7 binary/file
 endpoints -- hash, clean-image, malware-check, file-type,
 image-similarity, merge-and-compress-pdf, qr-scan -- which don't fit
 an AI agent's text context well). Send a JSON-RPC 2.0 `initialize`
 request to discover the protocol version, then `tools/list` to see
-all 33 tools with full schemas, then `tools/call` to invoke.
+all 34 tools with full schemas, then `tools/call` to invoke.
 
 ## Using Presend with LangChain (or any MCP-compatible framework)
 
@@ -47,7 +47,7 @@ async def main():
             "transport": "streamable_http",
         }
     })
-    tools = await client.get_tools()  # 33 tools, ready to pass into any LangChain agent
+    tools = await client.get_tools()  # 34 tools, ready to pass into any LangChain agent
 
 asyncio.run(main())
 ```
@@ -61,7 +61,7 @@ with MCPServerAdapter({
     "url": "https://presend.pages.dev/mcp",
     "transport": "streamable-http",
 }) as tools:
-    # 33 tools, ready to pass into any CrewAI Agent
+    # 34 tools, ready to pass into any CrewAI Agent
     agent = Agent(role="Researcher", goal="...", tools=tools)
 ```
 
@@ -72,7 +72,7 @@ from llama_index.tools.mcp import BasicMCPClient, McpToolSpec
 
 client = BasicMCPClient("https://presend.pages.dev/mcp")
 tools = await McpToolSpec(client=client).to_tool_list_async()
-# 33 tools, ready to pass into any LlamaIndex FunctionAgent
+# 34 tools, ready to pass into any LlamaIndex FunctionAgent
 ```
 
 Verified working example with OpenAI's Agents SDK (`pip install openai-agents`):
@@ -84,7 +84,7 @@ async with MCPServerStreamableHttp(
     params={"url": "https://presend.pages.dev/mcp"},
     name="presend",
 ) as server:
-    tools = await server.list_tools()  # 33 tools
+    tools = await server.list_tools()  # 34 tools
     result = await server.call_tool("whois_lookup", {"domain": "github.com"})
 ```
 
@@ -99,7 +99,7 @@ toolset = McpToolset(
         url="https://presend.pages.dev/mcp",
     ),
 )
-tools = await toolset.get_tools()  # 33 tools, ready for any ADK Agent
+tools = await toolset.get_tools()  # 34 tools, ready for any ADK Agent
 ```
 
 No-code option: n8n's built-in "MCP Client Tool" node connects directly
