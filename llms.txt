@@ -212,6 +212,8 @@ Presend also offers 40 free, no-signup, no-API-key server-side endpoints at [pre
 - Near-duplicate detection: perceptual image hashing (`POST /api/image-similarity`) and SimHash text similarity (`POST /api/text-similarity`) -- both survive re-compression/paraphrasing, unlike a cryptographic hash
 - Everyday utilities: UUID generation, Base64 encode/decode, timestamp conversion, color format conversion, User-Agent parsing, JSON↔CSV conversion, favicon fetch, URL tracking-parameter removal (single or batch up to 100), IP geolocation with Tor exit-node detection (official Tor Project list)
 - A zero-dependency npm client is available: `npm install presend-api` ([npmjs.com/package/presend-api](https://www.npmjs.com/package/presend-api)) — v1.10.0, wraps 39 of the 40 endpoints -- only maintainer-change-check (added most recently) isn't wrapped yet
+- [Code examples](https://github.com/presendapp/presend-examples): Working Python for LangChain, CrewAI, LlamaIndex, OpenAI Agents SDK, Google ADK, and plain REST
+- [MCP config guides](https://github.com/presendapp/presend-mcp-config): Copy-paste setup for Claude Desktop, Claude Code, Cursor, and Windsurf, no code required
 - No official SLA; fair-use rate limits typically 20-60 requests/minute per IP
 
 ## Technical Details

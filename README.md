@@ -32,6 +32,8 @@ Unlike most online tools, **Presend processes files entirely locally in your bro
 - **[MCP server](https://presend.pages.dev/mcp)** -- 33 tools over Streamable HTTP, no signup, no key. Verified working with LangChain, CrewAI, LlamaIndex, OpenAI's Agents SDK, and Google's ADK.
 - **[npm client](https://www.npmjs.com/package/presend-api)** -- `npm install presend-api`, zero-dependency, wraps 42 methods.
 - **[GitHub Action](https://github.com/marketplace/actions/presend-dependency-security-check)** -- drop-in dependency security scanning (npm + PyPI) for any CI pipeline.
+- **[Code examples](https://github.com/presendapp/presend-examples)** -- working Python for LangChain, CrewAI, LlamaIndex, OpenAI Agents SDK, Google ADK, and plain REST.
+- **[MCP config guides](https://github.com/presendapp/presend-mcp-config)** -- copy-paste setup for Claude Desktop, Claude Code, Cursor, and Windsurf, no code required.
 - **[Browser extension](https://github.com/presendapp/presend-extension)** -- "Presend — Clean Photos", strips EXIF/GPS on right-click.
 
 ## Browser Tools (48 total, 22 shown below)
