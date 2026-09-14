@@ -4,7 +4,7 @@
 [![Live Site](https://img.shields.io/badge/Live-presend.pages.dev-0066cc?style=flat-square)](https://presend.pages.dev)
 [![API Tests](https://github.com/presendapp/presend/actions/workflows/api-tests.yml/badge.svg)](https://github.com/presendapp/presend/actions/workflows/api-tests.yml)
 [![Tools](https://img.shields.io/badge/Browser_Tools-48-1F3A5F?style=flat-square)](https://presend.pages.dev)
-[![API](https://img.shields.io/badge/API-40_endpoints-1F3A5F?style=flat-square)](https://presend.pages.dev/api)
+[![API](https://img.shields.io/badge/API-41_endpoints-1F3A5F?style=flat-square)](https://presend.pages.dev/api)
 [![MCP Server](https://img.shields.io/badge/MCP-33_tools-6c47ff?style=flat-square)](https://presend.pages.dev/mcp)
 [![npm](https://img.shields.io/npm/v/presend-api?style=flat-square&label=npm&color=cb3837)](https://www.npmjs.com/package/presend-api)
 [![GitHub Marketplace](https://img.shields.io/badge/Marketplace-presend--check--action-2ea44f?style=flat-square)](https://github.com/marketplace/actions/presend-dependency-security-check)
@@ -13,7 +13,7 @@
 [![PWA](https://img.shields.io/badge/PWA-Enabled-orange?style=flat-square)](https://presend.pages.dev)
 [![Privacy](https://img.shields.io/badge/Privacy-First-ff6b6b?style=flat-square)](https://presend.pages.dev/privacy)
 
-**Presend is three things: 48 free browser-based file tools (nothing ever uploaded), a free 40-endpoint security/utility API (no signup, no key), and an MCP server exposing 33 of those endpoints to AI agents.**
+**Presend is three things: 48 free browser-based file tools (nothing ever uploaded), a free 41-endpoint security/utility API (no signup, no key), and an MCP server exposing 33 of those endpoints to AI agents.**
 
 [Open Presend](https://presend.pages.dev) · [API docs](https://presend.pages.dev/api) · [OpenAPI spec](https://presend.pages.dev/openapi.json) · [MCP server](https://presend.pages.dev/mcp)
 
