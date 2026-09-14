@@ -26,6 +26,12 @@ Use the [bug report issue template](.github/ISSUE_TEMPLATE/bug_report.md). Inclu
 
 Use the [feature request issue template](.github/ISSUE_TEMPLATE/feature_request.md). Explain the use case, not just the feature -- it helps evaluate whether it fits the project's scope (free, no-signup, privacy-first).
 
+## Quick start (GitHub Codespaces)
+
+Click **Code -> Codespaces -> Create codespace** on this repo. Node 20, Python 3.11, and Wrangler CLI are installed automatically. Once ready, run `wrangler pages dev .` to serve the site + API locally on port 8788.
+
+Not independently tested end-to-end by us -- the devcontainer config is new and hasn't been verified in an actual live Codespace, only checked for valid JSON syntax. If it breaks, please open an issue.
+
 ## Code contributions
 
 1. Fork the repo, create a branch

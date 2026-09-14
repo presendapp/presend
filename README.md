@@ -1,5 +1,6 @@
 # Presend — Free Privacy Tools, a Security API, and an MCP Server for AI Agents
 
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/presendapp/presend)
 [![Live Site](https://img.shields.io/badge/Live-presend.pages.dev-0066cc?style=flat-square)](https://presend.pages.dev)
 [![API Tests](https://github.com/presendapp/presend/actions/workflows/api-tests.yml/badge.svg)](https://github.com/presendapp/presend/actions/workflows/api-tests.yml)
 [![Tools](https://img.shields.io/badge/Browser_Tools-48-1F3A5F?style=flat-square)](https://presend.pages.dev)

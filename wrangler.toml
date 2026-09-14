@@ -1,0 +1,10 @@
+name = "presend"
+compatibility_date = "2024-01-01"
+pages_build_output_dir = "."
+
+# Pas de liaison KV de production ici intentionnellement -- ce fichier
+# est public. Les fonctions de l'API traitent deja gracieusement
+# l'absence de KV (limitation de debit simplement ignoree localement,
+# jamais de plantage). Pour tester la limitation de debit en local,
+# ajoute ta propre liaison KV de developpement :
+#   wrangler pages dev . --kv PRESEND_ANALYTICS
