@@ -164,6 +164,12 @@ const TOOLS = [
     request: (args) => ({ method: 'GET', url: `${API_BASE}/subdomains?${new URLSearchParams(args).toString()}` }),
   },
   {
+    name: 'supply_chain_check',
+    description: "Combined supply-chain risk check (maintainer-change + vulnerability + typosquat + repo-health)",
+    inputSchema: {"type": "object", "properties": {"ecosystem": {"type": "string", "description": "Package ecosystem, e.g. npm. maintainer-change-check only runs for npm."}, "package": {"type": "string", "description": "Package name to check."}}, "required": ["ecosystem", "package"]},
+    request: (args) => ({ method: 'GET', url: `${API_BASE}/supply-chain-check?${new URLSearchParams(args).toString()}` }),
+  },
+  {
     name: 'text_similarity',
     description: "Text similarity via SimHash (1 or 2 texts)",
     inputSchema: {"type": "object", "properties": {"texts": {"type": "array", "description": "1 text (hash only) or 2 texts (compare). Max 200,000 characters each."}}, "required": ["texts"]},
