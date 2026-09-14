@@ -59,6 +59,7 @@ venv/
 .dev.vars
 !bing_submit.py
 !gsc_submit.py
+!gsc_query.py
 !check_broken_links.py
 !scripts/generate-rss.py
 node_modules/
