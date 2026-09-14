@@ -30,9 +30,7 @@ all 33 tools with full schemas, then `tools/call` to invoke.
 
 ## Using Presend with LangChain (or any MCP-compatible framework)
 
-- [MCP endpoint](https://presend.pages.dev/mcp): Same URL used by every framework below
-
-Presend's MCP server (https://presend.pages.dev/mcp) works out of the box
+Same MCP endpoint as above. Presend's MCP server (https://presend.pages.dev/mcp) works out of the box
 with any MCP-compatible AI framework -- no submission or dedicated
 integration package needed, since MCP itself is the integration layer.
 
@@ -120,7 +118,7 @@ Any GitHub project can embed a live, real-time badge showing a package's
 security status (checked via vulnerability-check and, for npm,
 maintainer-change-check):
 
-- [Badge example](https://presend.pages.dev): [![presend](https://img.shields.io/endpoint?url=https://presend.pages.dev/api/badge?ecosystem=npm%26package=YOUR-PACKAGE-NAME)](https://presend.pages.dev)
+- [Badge endpoint](https://presend.pages.dev/api/badge): [![presend](https://img.shields.io/endpoint?url=https://presend.pages.dev/api/badge?ecosystem=npm%26package=YOUR-PACKAGE-NAME)](https://presend.pages.dev)
 
 The badge re-checks live on every render (subject to shields.io's own
 caching), not a static snapshot -- and doubles as free, ongoing
