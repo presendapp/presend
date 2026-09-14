@@ -128,9 +128,18 @@ export async function onRequestGet(context) {
       }
       chunks.push(value);
     }
-    const html = new TextDecoder().decode(
-      chunks.reduce((acc, c) => new Uint8Array([...acc, ...c]), new Uint8Array())
-    );
+    // Concatenation efficace en une seule passe -- l'ancienne version
+    // (reduce + spread) recopiait tout le tableau a chaque morceau recu,
+    // un comportement O(n**2) qui devenait couteux sur de grandes pages
+    // et pouvait a lui seul depasser la limite de temps CPU du niveau gratuit.
+    const totalLength = chunks.reduce((sum, c) => sum + c.length, 0);
+    const combined = new Uint8Array(totalLength);
+    let offset = 0;
+    for (const c of chunks) {
+      combined.set(c, offset);
+      offset += c.length;
+    }
+    const html = new TextDecoder().decode(combined);
 
     const result = {
       url: targetUrl,
