@@ -35,17 +35,26 @@ function isBlocked(value) {
   return BLOCKED_PATTERNS.some((re) => re.test(value));
 }
 
-async function resolveHostname(hostname) {
-  if (/^\d+\.\d+\.\d+\.\d+$/.test(hostname) || hostname.includes(':')) {
-    return [hostname];
-  }
+async function queryDns(hostname, type) {
   const res = await fetch(
-    `https://cloudflare-dns.com/dns-query?name=${encodeURIComponent(hostname)}&type=A`,
+    `https://cloudflare-dns.com/dns-query?name=${encodeURIComponent(hostname)}&type=${type}`,
     { headers: { Accept: 'application/dns-json' } }
   );
   if (!res.ok) return [];
   const data = await res.json();
-  return (data.Answer || []).filter((a) => a.type === 1).map((a) => a.data);
+  const recordType = type === 'AAAA' ? 28 : 1;
+  return (data.Answer || []).filter((a) => a.type === recordType).map((a) => a.data);
+}
+
+async function resolveHostname(hostname) {
+  if (/^\d+\.\d+\.\d+\.\d+$/.test(hostname) || hostname.includes(':')) {
+    return [hostname];
+  }
+  const [ipv4, ipv6] = await Promise.all([
+    queryDns(hostname, 'A'),
+    queryDns(hostname, 'AAAA'),
+  ]);
+  return [...ipv4, ...ipv6];
 }
 
 export async function validateAndResolve(hostname) {
