@@ -29,6 +29,15 @@ const BLOCKED_PATTERNS = [
   /^172\.(1[6-9]|2\d|3[01])\./, /^169\.254\./, /^0\.0\.0\.0$/,
   /^\[?::1\]?$/, /^\[?fc00:/i, /^\[?fe80:/i,
   /\.local$/i, /^metadata\./i,
+  // Defense-in-depth, low-cost addition (found reading Countly's
+  // ssrf-protection.js): .internal is GCP's internal-DNS TLD, and
+  // kubernetes.default(.svc) is the standard in-cluster API server
+  // name. Neither is publicly resolvable via Cloudflare's own DoH
+  // resolver in our setup -- we're likely already fail-closed on
+  // these via "could not resolve hostname" -- but naming them
+  // explicitly costs nothing and doesn't depend on that behavior
+  // staying true.
+  /\.internal$/i, /^kubernetes(\.default(\.svc)?)?$/i,
 ];
 
 function isBlocked(value) {
