@@ -32,7 +32,17 @@ const BLOCKED_PATTERNS = [
 ];
 
 function isBlocked(value) {
-  return BLOCKED_PATTERNS.some((re) => re.test(value));
+  if (BLOCKED_PATTERNS.some((re) => re.test(value))) return true;
+  // Adresse IPv6 mappee en IPv4 (::ffff:x.x.x.x ou ::ffff:0:x.x.x.x) --
+  // un contournement reel si on ne verifie que la forme IPv6 brute sans
+  // jamais examiner l'adresse IPv4 qu'elle encode. Trouve en lisant
+  // l'implementation ssrf-protection.js de Countly/countly-server, qui
+  // gere ce cas explicitement et la notre non.
+  const v4MappedMatch = value.match(/^\[?::ffff:(?:0:)?(\d+\.\d+\.\d+\.\d+)\]?$/i);
+  if (v4MappedMatch) {
+    return BLOCKED_PATTERNS.some((re) => re.test(v4MappedMatch[1]));
+  }
+  return false;
 }
 
 async function queryDns(hostname, type) {
