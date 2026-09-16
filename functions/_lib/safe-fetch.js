@@ -42,14 +42,23 @@ const BLOCKED_PATTERNS = [
 
 function isBlocked(value) {
   if (BLOCKED_PATTERNS.some((re) => re.test(value))) return true;
-  // Adresse IPv6 mappee en IPv4 (::ffff:x.x.x.x ou ::ffff:0:x.x.x.x) --
-  // un contournement reel si on ne verifie que la forme IPv6 brute sans
-  // jamais examiner l'adresse IPv4 qu'elle encode. Trouve en lisant
-  // l'implementation ssrf-protection.js de Countly/countly-server, qui
-  // gere ce cas explicitement et la notre non.
+  // Adresse IPv6 mappee en IPv4, forme decimale a points
+  // (::ffff:x.x.x.x ou ::ffff:0:x.x.x.x). Trouve en lisant Countly's
+  // ssrf-protection.js.
   const v4MappedMatch = value.match(/^\[?::ffff:(?:0:)?(\d+\.\d+\.\d+\.\d+)\]?$/i);
   if (v4MappedMatch) {
     return BLOCKED_PATTERNS.some((re) => re.test(v4MappedMatch[1]));
+  }
+  // Meme chose, mais forme hexadecimale (::ffff:7f00:1 == 127.0.0.1) --
+  // un deuxieme contournement reel, trouve en lisant urlSecurity.js de
+  // RunOnFlux/flux, qui gere les deux formes alors qu'on ne gerait que
+  // la premiere.
+  const v4MappedHexMatch = value.match(/^\[?::ffff:([0-9a-f]{1,4}):([0-9a-f]{1,4})\]?$/i);
+  if (v4MappedHexMatch) {
+    const high = parseInt(v4MappedHexMatch[1], 16);
+    const low = parseInt(v4MappedHexMatch[2], 16);
+    const decoded = `${(high >> 8) & 0xff}.${high & 0xff}.${(low >> 8) & 0xff}.${low & 0xff}`;
+    return BLOCKED_PATTERNS.some((re) => re.test(decoded));
   }
   return false;
 }
