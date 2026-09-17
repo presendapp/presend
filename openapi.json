@@ -3400,6 +3400,71 @@
         }
       }
     },
+    "/address-risk": {
+      "get": {
+        "summary": "Crypto address risk check (OFAC SDN)",
+        "description": "Checks an EVM-format crypto address (Ethereum, BSC, Arbitrum, and other EVM chains) against the OFAC Specially Designated Nationals (SDN) sanctions list. Cosmos SDK (bech32) addresses are format-detected but not yet checked against a sanctions source. Free, no signup.",
+        "parameters": [
+          {
+            "name": "address",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+            },
+            "description": "EVM address (0x + 40 hex chars) or Cosmos SDK bech32 address to check."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Address risk check result",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "address": {
+                      "type": "string"
+                    },
+                    "format": {
+                      "type": "string"
+                    },
+                    "sanctioned": {
+                      "type": "boolean"
+                    },
+                    "lists_checked": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "list_size": {
+                      "type": "integer"
+                    },
+                    "source": {
+                      "type": "string"
+                    },
+                    "note": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+                  "format": "evm",
+                  "sanctioned": false,
+                  "lists_checked": ["ETH", "BSC", "ARB"],
+                  "list_size": 122,
+                  "source": "OFAC Specially Designated Nationals (SDN) list, digital currency addresses (ETH/BSC/ARB), republished nightly by 0xB10C/ofac-sanctioned-digital-currency-addresses from the official sdn_advanced.xml.",
+                  "note": "Not on the checked OFAC SDN lists. This is one specific, US-government sanctions list -- not a full risk score, and a clean result here does not mean the address is otherwise trustworthy."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/redirect-trace": {
       "get": {
         "summary": "Full redirect chain trace",

@@ -1,5 +1,5 @@
 // GET /mcp -> info; POST /mcp -> JSON-RPC 2.0 (protocole MCP, transport Streamable HTTP sans état)
-// Expose 33 des 39 endpoints comme "tools" MCP -- tous sauf les 7 endpoints
+// Expose 34 des 40 endpoints comme "tools" MCP -- tous sauf les 7 endpoints
 // binaires/fichiers (hash, clean-image, malware-check, file-type, image-similarity,
 // merge-and-compress-pdf, qr-scan), délibérément exclus : faire transiter du contenu
 // binaire encodé en base64 dans le contexte d'un agent IA est généralement peu pratique,
@@ -19,6 +19,12 @@ const PROTOCOL_VERSION = '2025-06-18';
 const API_BASE = 'https://presend.pages.dev/api';
 
 const TOOLS = [
+  {
+    name: 'address_risk',
+    description: "Check a crypto address against the OFAC sanctions list (EVM)",
+    inputSchema: {"type": "object", "properties": {"address": {"type": "string", "description": "EVM address (0x + 40 hex chars) or Cosmos SDK bech32 address to check against the OFAC SDN sanctions list."}}, "required": ["address"]},
+    request: (args) => ({ method: 'GET', url: `${API_BASE}/address-risk?${new URLSearchParams(args).toString()}` }),
+  },
   {
     name: 'ai_crawler_check',
     description: "Check which AI crawlers are allowed by robots.txt",
