@@ -67,3 +67,4 @@ node_modules/
 # Cache Python compilé -- ne doit jamais être versionné
 __pycache__/
 *.pyc
+node_modules/.mf/
