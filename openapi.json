@@ -3465,6 +3465,98 @@
         }
       }
     },
+    "/tx-decode": {
+      "get": {
+        "summary": "Cosmos SDK transaction decoder",
+        "description": "Decodes a raw, signed Cosmos SDK transaction (protobuf TxRaw bytes, base64-encoded) into readable JSON -- messages, fee, gas, signer info, and signatures. Hand-rolled protobuf reader, no external dependency. Message contents are decoded for common bank/staking/gov/authz types (including recursive MsgExec, up to a depth cap); other types are returned as their type URL plus raw hex. Free, no signup.",
+        "parameters": [
+          {
+            "name": "tx",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Base64-encoded Cosmos SDK TxRaw protobuf bytes, as returned by any chain's CometBFT RPC /block (result.block.data.txs[]) or /tx_search endpoints."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Decoded transaction",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "tx_bytes_length": {
+                      "type": "integer"
+                    },
+                    "body": {
+                      "type": "object"
+                    },
+                    "auth_info": {
+                      "type": "object"
+                    },
+                    "signatures": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "tx_bytes_length": 329,
+                  "body": {
+                    "messages": [
+                      {
+                        "type": "/cosmos.bank.v1beta1.MsgSend",
+                        "decoded": true,
+                        "from_address": "cosmos1j2ryq6rjmat3f33lwmqzqgtnmen5xx5c8kt2cx",
+                        "to_address": "cosmos10ravwpzftfrapd60v94lmc9m5rw4lqzw42t3np",
+                        "amount": [
+                          {
+                            "denom": "uatom",
+                            "amount": "31669466"
+                          }
+                        ]
+                      }
+                    ],
+                    "memo": "283677",
+                    "timeout_height": "0"
+                  },
+                  "auth_info": {
+                    "signer_infos": [
+                      {
+                        "public_key": {
+                          "type": "/cosmos.crypto.secp256k1.PubKey",
+                          "key_hex": "0349cdc3ac24fa7d5cee997afe7593f3b3698d1efb8a0f56b14287e6ed8fb096f0"
+                        },
+                        "sequence": "3"
+                      }
+                    ],
+                    "fee": {
+                      "amount": [
+                        {
+                          "denom": "uatom",
+                          "amount": "534"
+                        }
+                      ],
+                      "gas_limit": "106619",
+                      "payer": "",
+                      "granter": ""
+                    }
+                  },
+                  "signatures": [
+                    "631ce1c45a2c8121d4c3a0aae76598ff8f0a8b0145f59b6cd037aff90685d2e7115fe85e316184af2f238a597bd002cc76f6ad052c36f51feba9315774c7402c"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/redirect-trace": {
       "get": {
         "summary": "Full redirect chain trace",

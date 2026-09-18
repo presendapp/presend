@@ -1,5 +1,5 @@
 // GET /mcp -> info; POST /mcp -> JSON-RPC 2.0 (protocole MCP, transport Streamable HTTP sans état)
-// Expose 34 des 40 endpoints comme "tools" MCP -- tous sauf les 7 endpoints
+// Expose 35 des 41 endpoints comme "tools" MCP -- tous sauf les 7 endpoints
 // binaires/fichiers (hash, clean-image, malware-check, file-type, image-similarity,
 // merge-and-compress-pdf, qr-scan), délibérément exclus : faire transiter du contenu
 // binaire encodé en base64 dans le contexte d'un agent IA est généralement peu pratique,
@@ -186,6 +186,12 @@ const TOOLS = [
     description: "Convert timestamps",
     inputSchema: {"type": "object", "properties": {"unix": {"type": "string", "description": "Unix timestamp (seconds since epoch) to convert to a human-readable date. Provide either unix or date, not both."}, "date": {"type": "string", "description": "Date/time string to convert to a Unix timestamp. Provide either unix or date, not both."}}, "required": []},
     request: (args) => ({ method: 'GET', url: `${API_BASE}/timestamp?${new URLSearchParams(args).toString()}` }),
+  },
+  {
+    name: 'tx_decode',
+    description: "Decode a raw signed Cosmos SDK transaction (protobuf)",
+    inputSchema: {"type": "object", "properties": {"tx": {"type": "string", "description": "Base64-encoded Cosmos SDK TxRaw protobuf bytes, as returned by a chain's CometBFT RPC /block or /tx_search endpoints."}}, "required": ["tx"]},
+    request: (args) => ({ method: 'GET', url: `${API_BASE}/tx-decode?${new URLSearchParams(args).toString()}` }),
   },
   {
     name: 'typosquat_check',
