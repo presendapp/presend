@@ -1164,7 +1164,7 @@
                     "request": {
                         "name": "Get caller IP geolocation",
                         "description": {
-                            "content": "Returns the caller's IP with city, country, currency, language, EU flag, and Tor exit-node detection (official Tor Project public list). Geolocation is read directly from Cloudflare's edge — no third-party API call.",
+                            "content": "Returns the caller's IP with city, country, currency, language, EU flag, and Tor exit-node detection (official Tor Project public list). Geolocation is read directly from Cloudflare's edge \u2014 no third-party API call.",
                             "type": "text/plain"
                         },
                         "url": {
@@ -2039,7 +2039,7 @@
                     "request": {
                         "name": "Check if a password has been breached",
                         "description": {
-                            "content": "Uses HIBP k-anonymity — only 5 hash chars are sent externally.",
+                            "content": "Uses HIBP k-anonymity \u2014 only 5 hash chars are sent externally.",
                             "type": "text/plain"
                         },
                         "url": {
@@ -2394,7 +2394,7 @@
                     "request": {
                         "name": "Validate and format a phone number",
                         "description": {
-                            "content": "Validates and formats via libphonenumber-js. If “country” is omitted for a number without a leading +, the caller's IP-derived country (Cloudflare edge geolocation) is used as the default.",
+                            "content": "Validates and formats via libphonenumber-js. If \u201ccountry\u201d is omitted for a number without a leading +, the caller's IP-derived country (Cloudflare edge geolocation) is used as the default.",
                             "type": "text/plain"
                         },
                         "url": {
@@ -3143,7 +3143,7 @@
                     "request": {
                         "name": "Merge and compress PDFs",
                         "description": {
-                            "content": "Merges 2+ PDF files into one document, then compresses the result and strips metadata (title, author, producer). Chains two operations in a single call — most free APIs require calling merge and compress separately and gluing the results together yourself.",
+                            "content": "Merges 2+ PDF files into one document, then compresses the result and strips metadata (title, author, producer). Chains two operations in a single call \u2014 most free APIs require calling merge and compress separately and gluing the results together yourself.",
                             "type": "text/plain"
                         },
                         "url": {
@@ -3254,7 +3254,7 @@
                     "request": {
                         "name": "Strip image metadata (EXIF/GPS)",
                         "description": {
-                            "content": "Removes EXIF/GPS data from JPEG (APP1 segment) and text metadata from PNG (tEXt/zTXt/iTXt/eXIf/tIME chunks) via direct binary parsing. Pixel data is never re-encoded, so there is zero quality loss — unlike canvas-based approaches, which always recompress.",
+                            "content": "Removes EXIF/GPS data from JPEG (APP1 segment) and text metadata from PNG (tEXt/zTXt/iTXt/eXIf/tIME chunks) via direct binary parsing. Pixel data is never re-encoded, so there is zero quality loss \u2014 unlike canvas-based approaches, which always recompress.",
                             "type": "text/plain"
                         },
                         "url": {
@@ -3536,6 +3536,297 @@
                                 }
                             ],
                             "body": "{}",
+                            "cookie": [],
+                            "_postman_previewlanguage": "json"
+                        }
+                    ],
+                    "event": [],
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    }
+                }
+            ]
+        },
+        {
+            "name": "address-risk",
+            "description": "",
+            "item": [
+                {
+                    "id": "ae4f0664-9867-4f4c-9117-94549c12910c",
+                    "name": "Check an EVM-format address against the OFAC sanctions list. Free, no signup.",
+                    "request": {
+                        "name": "address-risk",
+                        "description": {
+                            "content": "Check an EVM-format address against the OFAC sanctions list. Free, no signup.",
+                            "type": "text/plain"
+                        },
+                        "url": {
+                            "path": [
+                                "address-risk"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [
+                                {
+                                    "disabled": false,
+                                    "description": {
+                                        "content": "(Required) ",
+                                        "type": "text/plain"
+                                    },
+                                    "key": "address",
+                                    "value": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+                                }
+                            ],
+                            "variable": []
+                        },
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "method": "GET",
+                        "body": {},
+                        "auth": null
+                    },
+                    "response": [
+                        {
+                            "id": "f788eca5-ead3-49d0-bd44-fa983178b9a3",
+                            "name": "Example response",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "address-risk"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [
+                                        {
+                                            "disabled": false,
+                                            "description": {
+                                                "content": "(Required) ",
+                                                "type": "text/plain"
+                                            },
+                                            "key": "address",
+                                            "value": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+                                        }
+                                    ],
+                                    "variable": []
+                                },
+                                "header": [
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "method": "GET",
+                                "body": {}
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n  \"address\": \"0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2\",\n  \"format\": \"evm\",\n  \"sanctioned\": false,\n  \"lists_checked\": [\n    \"ETH\",\n    \"BSC\",\n    \"ARB\"\n  ],\n  \"list_size\": 122,\n  \"source\": \"OFAC Specially Designated Nationals (SDN) list, digital currency addresses (ETH/BSC/ARB), republished nightly by 0xB10C/ofac-sanctioned-digital-currency-addresses from the official sdn_advanced.xml.\",\n  \"note\": \"Not on the checked OFAC SDN lists. This is one specific, US-government sanctions list -- not a full risk score, and a clean result here does not mean the address is otherwise trustworthy.\"\n}",
+                            "cookie": [],
+                            "_postman_previewlanguage": "json"
+                        }
+                    ],
+                    "event": [],
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    }
+                }
+            ]
+        },
+        {
+            "name": "tx-decode",
+            "description": "",
+            "item": [
+                {
+                    "id": "1bb7f4ae-850c-46ff-be81-945138cbe348",
+                    "name": "Decode a raw signed Cosmos SDK transaction (protobuf TxRaw, base64) into readable JSON.",
+                    "request": {
+                        "name": "tx-decode",
+                        "description": {
+                            "content": "Decode a raw signed Cosmos SDK transaction (protobuf TxRaw, base64) into readable JSON.",
+                            "type": "text/plain"
+                        },
+                        "url": {
+                            "path": [
+                                "tx-decode"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [
+                                {
+                                    "disabled": false,
+                                    "description": {
+                                        "content": "(Required) ",
+                                        "type": "text/plain"
+                                    },
+                                    "key": "tx",
+                                    "value": "CpwBCpEBChwvY29zbW9zLmJhbmsudjFiZXRhMS5Nc2dTZW5kEnEK..."
+                                }
+                            ],
+                            "variable": []
+                        },
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "method": "GET",
+                        "body": {},
+                        "auth": null
+                    },
+                    "response": [
+                        {
+                            "id": "64c87a4b-cfc1-40fe-bafb-5c94a4e2e9d4",
+                            "name": "Example response",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "tx-decode"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [
+                                        {
+                                            "disabled": false,
+                                            "description": {
+                                                "content": "(Required) ",
+                                                "type": "text/plain"
+                                            },
+                                            "key": "tx",
+                                            "value": "CpwBCpEBChwvY29zbW9zLmJhbmsudjFiZXRhMS5Nc2dTZW5kEnEK..."
+                                        }
+                                    ],
+                                    "variable": []
+                                },
+                                "header": [
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "method": "GET",
+                                "body": {}
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n  \"tx_bytes_length\": 329,\n  \"body\": {\n    \"messages\": [\n      {\n        \"type\": \"/cosmos.bank.v1beta1.MsgSend\",\n        \"decoded\": true,\n        \"from_address\": \"cosmos1j2ryq6rjmat3f33lwmqzqgtnmen5xx5c8kt2cx\",\n        \"to_address\": \"cosmos10ravwpzftfrapd60v94lmc9m5rw4lqzw42t3np\",\n        \"amount\": [\n          {\n            \"denom\": \"uatom\",\n            \"amount\": \"31669466\"\n          }\n        ]\n      }\n    ],\n    \"memo\": \"283677\",\n    \"timeout_height\": \"0\"\n  },\n  \"auth_info\": {\n    \"signer_infos\": [\n      {\n        \"public_key\": {\n          \"type\": \"/cosmos.crypto.secp256k1.PubKey\",\n          \"key_hex\": \"0349cdc3ac24fa7d5cee997afe7593f3b3698d1efb8a0f56b14287e6ed8fb096f0\"\n        },\n        \"sequence\": \"3\"\n      }\n    ],\n    \"fee\": {\n      \"amount\": [\n        {\n          \"denom\": \"uatom\",\n          \"amount\": \"534\"\n        }\n      ],\n      \"gas_limit\": \"106619\",\n      \"payer\": \"\",\n      \"granter\": \"\"\n    }\n  },\n  \"signatures\": [\n    \"631ce1c45a2c8121d4c3a0aae76598ff8f0a8b0145f59b6cd037aff90685d2e7115fe85e316184af2f238a597bd002cc76f6ad052c36f51feba9315774c7402c\"\n  ]\n}",
+                            "cookie": [],
+                            "_postman_previewlanguage": "json"
+                        }
+                    ],
+                    "event": [],
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    }
+                }
+            ]
+        },
+        {
+            "name": "rpc-check",
+            "description": "",
+            "item": [
+                {
+                    "id": "9938158f-c4f4-4851-aeda-15897c5b1d73",
+                    "name": "Audit a CometBFT RPC endpoint: status, health, peers, unsafe-method exposure.",
+                    "request": {
+                        "name": "rpc-check",
+                        "description": {
+                            "content": "Audit a CometBFT RPC endpoint: status, health, peers, unsafe-method exposure.",
+                            "type": "text/plain"
+                        },
+                        "url": {
+                            "path": [
+                                "rpc-check"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [
+                                {
+                                    "disabled": false,
+                                    "description": {
+                                        "content": "(Required) ",
+                                        "type": "text/plain"
+                                    },
+                                    "key": "url",
+                                    "value": "https://cosmos-rpc.publicnode.com"
+                                }
+                            ],
+                            "variable": []
+                        },
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "method": "GET",
+                        "body": {},
+                        "auth": null
+                    },
+                    "response": [
+                        {
+                            "id": "6e0437fd-8d97-4473-8fbe-5f83b0203a94",
+                            "name": "Example response",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "rpc-check"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [
+                                        {
+                                            "disabled": false,
+                                            "description": {
+                                                "content": "(Required) ",
+                                                "type": "text/plain"
+                                            },
+                                            "key": "url",
+                                            "value": "https://cosmos-rpc.publicnode.com"
+                                        }
+                                    ],
+                                    "variable": []
+                                },
+                                "header": [
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "method": "GET",
+                                "body": {}
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n  \"url\": \"https://cosmos-rpc.publicnode.com\",\n  \"reachable\": true,\n  \"verdict\": \"Node reachable, no major issues found.\",\n  \"tls\": {\n    \"used\": true,\n    \"note\": null\n  },\n  \"status\": {\n    \"checked\": true,\n    \"chain_id\": \"cosmoshub-4\",\n    \"moniker\": \"Tendermint\",\n    \"node_version\": \"0.38.22\",\n    \"catching_up\": false,\n    \"latest_block_height\": \"33024358\",\n    \"latest_block_time\": \"2026-09-18T08:27:15.65595602Z\"\n  },\n  \"health\": {\n    \"checked\": true,\n    \"healthy\": true,\n    \"error\": null\n  },\n  \"net_info\": {\n    \"checked\": true,\n    \"listening\": true,\n    \"n_peers\": \"63\"\n  },\n  \"abci_info\": {\n    \"checked\": true,\n    \"app_version\": \"v28.1.0\",\n    \"last_block_height\": \"33024358\"\n  },\n  \"unsafe_methods\": {\n    \"checked\": true,\n    \"exposed\": false,\n    \"methods_found\": [],\n    \"note\": \"No unsafe RPC methods found in this node's route listing.\"\n  }\n}",
                             "cookie": [],
                             "_postman_previewlanguage": "json"
                         }
