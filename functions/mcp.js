@@ -1,5 +1,5 @@
 // GET /mcp -> info; POST /mcp -> JSON-RPC 2.0 (protocole MCP, transport Streamable HTTP sans état)
-// Expose 35 des 41 endpoints comme "tools" MCP -- tous sauf les 7 endpoints
+// Expose 36 des 42 endpoints comme "tools" MCP -- tous sauf les 7 endpoints
 // binaires/fichiers (hash, clean-image, malware-check, file-type, image-similarity,
 // merge-and-compress-pdf, qr-scan), délibérément exclus : faire transiter du contenu
 // binaire encodé en base64 dans le contexte d'un agent IA est généralement peu pratique,
@@ -150,6 +150,12 @@ const TOOLS = [
     description: "GitHub repository health signals",
     inputSchema: {"type": "object", "properties": {"repo": {"type": "string", "description": "GitHub repository in owner/name format, e.g. lodash/lodash."}}, "required": ["repo"]},
     request: (args) => ({ method: 'GET', url: `${API_BASE}/repo-health-check?${new URLSearchParams(args).toString()}` }),
+  },
+  {
+    name: 'rpc_check',
+    description: "Audit a CometBFT RPC endpoint (health, peers, unsafe-method exposure)",
+    inputSchema: {"type": "object", "properties": {"url": {"type": "string", "description": "Base URL of a CometBFT RPC endpoint to audit, e.g. https://rpc.cosmos.network:443."}}, "required": ["url"]},
+    request: (args) => ({ method: 'GET', url: `${API_BASE}/rpc-check?${new URLSearchParams(args).toString()}` }),
   },
   {
     name: 'security_headers',

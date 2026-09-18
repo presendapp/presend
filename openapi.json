@@ -3654,6 +3654,104 @@
         }
       }
     },
+    "/rpc-check": {
+      "get": {
+        "summary": "CometBFT RPC health and safety audit",
+        "description": "Audits a public CometBFT RPC endpoint for a Cosmos SDK chain: node status, health, peer connectivity, and whether unsafe administrative RPC methods (dial_seeds, dial_peers, unsafe_flush_mempool) appear to be publicly exposed. Read-only -- never invokes any unsafe method itself; exposure is detected by inspecting the node's own passive route listing. Free, no signup.",
+        "parameters": [
+          {
+            "name": "url",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "https://rpc.cosmos.network:443"
+            },
+            "description": "Base URL of a CometBFT RPC endpoint to audit."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "RPC audit result",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "url": {
+                      "type": "string"
+                    },
+                    "reachable": {
+                      "type": "boolean"
+                    },
+                    "verdict": {
+                      "type": "string"
+                    },
+                    "tls": {
+                      "type": "object"
+                    },
+                    "status": {
+                      "type": "object"
+                    },
+                    "health": {
+                      "type": "object"
+                    },
+                    "net_info": {
+                      "type": "object"
+                    },
+                    "abci_info": {
+                      "type": "object"
+                    },
+                    "unsafe_methods": {
+                      "type": "object"
+                    }
+                  }
+                },
+                "example": {
+                  "url": "https://cosmos-rpc.publicnode.com",
+                  "reachable": true,
+                  "verdict": "Node reachable, no major issues found.",
+                  "tls": {
+                    "used": true,
+                    "note": null
+                  },
+                  "status": {
+                    "checked": true,
+                    "chain_id": "cosmoshub-4",
+                    "moniker": "Tendermint",
+                    "node_version": "0.38.22",
+                    "catching_up": false,
+                    "latest_block_height": "33024358",
+                    "latest_block_time": "2026-09-18T08:27:15.65595602Z"
+                  },
+                  "health": {
+                    "checked": true,
+                    "healthy": true,
+                    "error": null
+                  },
+                  "net_info": {
+                    "checked": true,
+                    "listening": true,
+                    "n_peers": "63"
+                  },
+                  "abci_info": {
+                    "checked": true,
+                    "app_version": "v28.1.0",
+                    "last_block_height": "33024358"
+                  },
+                  "unsafe_methods": {
+                    "checked": true,
+                    "exposed": false,
+                    "methods_found": [],
+                    "note": "No unsafe RPC methods found in this node's route listing."
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/repo-health-check": {
       "get": {
         "summary": "GitHub repository health signals",
