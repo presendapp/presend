@@ -14,7 +14,7 @@
   "@context": "https://schema.org",
   "@type": "WebAPI",
   "name": "Presend API",
-  "description": "Free security, verification and developer-utility API -- 41 endpoints including npm maintainer-change detection, OSV.dev vulnerability checks, typosquat detection, WHOIS/DNS lookups, and an MCP server for AI agents. No signup, no API key required.",
+  "description": "Free security, verification and developer-utility API -- 42 endpoints including npm maintainer-change detection, OSV.dev vulnerability checks, typosquat detection, WHOIS/DNS lookups, Cosmos SDK transaction decoding, and an MCP server for AI agents. No signup, no API key required.",
   "url": "https://presend.pages.dev/api",
   "documentation": "https://presend.pages.dev/openapi.json",
   "provider": {
@@ -164,6 +164,20 @@
   <p style="color:var(--color-muted); max-width:60ch;">Fetches robots.txt and reports which known AI crawlers (GPTBot, ClaudeBot, PerplexityBot, Google-Extended, CCBot, etc.) are allowed or blocked. Free, no signup required.</p>
   <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/ai-crawler-check?domain=example.com"</pre>
 
+  <h2>Blockchain</h2>
+  <p style="color:var(--color-muted); max-width:60ch;">
+    Free tools for the Cosmos and EVM ecosystems. No signup, no API key.
+  </p>
+  <h3>GET /api/address-risk</h3>
+  <p style="color:var(--color-muted); max-width:60ch;">Checks an EVM-format address (Ethereum, BSC, Arbitrum) against the OFAC Specially Designated Nationals (SDN) sanctions list. Cosmos SDK (bech32) addresses are format-detected but not yet checked against a sanctions source.</p>
+  <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/address-risk?address=0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"</pre>
+  <h3>GET /api/tx-decode</h3>
+  <p style="color:var(--color-muted); max-width:60ch;">Decodes a raw, signed Cosmos SDK transaction (protobuf TxRaw bytes, base64) into readable JSON -- messages, fee, gas, signer info, signatures. No external dependency, decodes common bank/staking/gov/authz message types including nested MsgExec.</p>
+  <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/tx-decode?tx=CpwBCpEBChwvY29zbW9zLmJhbmsudjFiZXRhMS5Nc2dTZW5kEnEK..."</pre>
+  <h3>GET /api/rpc-check</h3>
+  <p style="color:var(--color-muted); max-width:60ch;">Audits a public CometBFT RPC endpoint for a Cosmos SDK chain: node status, health, peer connectivity, and whether unsafe administrative methods (dial_seeds, dial_peers, unsafe_flush_mempool) appear to be exposed. Read-only -- never invokes any unsafe method itself.</p>
+  <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/rpc-check?url=https://cosmos-rpc.publicnode.com"</pre>
+
   <h2>Chained workflows</h2>
   <p style="color:var(--color-muted); max-width:60ch;">
     These two endpoints chain multiple operations server-side in a single call — no other free API we know of does this. Processing is stateless: nothing is written to disk, nothing is logged, the file is discarded the moment the response is sent.
@@ -213,6 +227,9 @@
     <a class="tool-card" href="/api"><div><h3>Security Headers Analyzer</h3><p>CSP, HSTS grade — server API</p></div><span class="go">Docs →</span></a>
     <a class="tool-card" href="/api"><div><h3>URL Reputation Check</h3><p>Malware/phishing lookup — server API</p></div><span class="go">Docs →</span></a>
     <a class="tool-card" href="/api"><div><h3>Attack Surface Discovery</h3><p>Passive subdomain enum — server API</p></div><span class="go">Docs →</span></a>
+    <a class="tool-card" href="/api"><div><h3>Address Risk Check</h3><p>OFAC sanctions check for EVM addresses — server API</p></div><span class="go">Docs →</span></a>
+    <a class="tool-card" href="/api"><div><h3>Cosmos Tx Decoder</h3><p>Decode raw Cosmos SDK transactions — server API</p></div><span class="go">Docs →</span></a>
+    <a class="tool-card" href="/api"><div><h3>RPC Check</h3><p>Audit a CometBFT RPC endpoint — server API</p></div><span class="go">Docs →</span></a>
     <a class="tool-card" href="/tools/exif-remover"><div><h3>EXIF Remover</h3><p>Strip GPS and metadata from photos (client-side)</p></div><span class="go">Docs →</span></a>
     <a class="tool-card" href="/tools/pdf-compress"><div><h3>PDF Compress</h3><p>Reduce PDF file size (client-side)</p></div><span class="go">Docs →</span></a>
     <a class="tool-card" href="/tools/password-generator"><div><h3>Password Generator</h3><p>Cryptographically secure passwords (client-side)</p></div><span class="go">Docs →</span></a>
