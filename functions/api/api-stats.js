@@ -23,6 +23,16 @@ async function checkRateLimit(env, clientIP, bucket) {
 export async function onRequestGet(context) {
   const { env } = context;
 
+  if (!env.PRESEND_ANALYTICS) {
+    return new Response(JSON.stringify({
+      total: null,
+      endpoints: {},
+      message: 'Usage tracking is not configured for this environment (no KV binding).',
+    }), {
+      headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
+    });
+  }
+
   try {
     const { keys } = await env.PRESEND_ANALYTICS.list({ prefix: 'api-visits:' });
     const stats = {};
