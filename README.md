@@ -4,8 +4,8 @@
 [![Live Site](https://img.shields.io/badge/Live-presend.pages.dev-0066cc?style=flat-square)](https://presend.pages.dev)
 [![API Tests](https://github.com/presendapp/presend/actions/workflows/api-tests.yml/badge.svg)](https://github.com/presendapp/presend/actions/workflows/api-tests.yml)
 [![Tools](https://img.shields.io/badge/Browser_Tools-48-1F3A5F?style=flat-square)](https://presend.pages.dev)
-[![API](https://img.shields.io/badge/API-41_endpoints-1F3A5F?style=flat-square)](https://presend.pages.dev/api)
-[![MCP Server](https://img.shields.io/badge/MCP-33_tools-6c47ff?style=flat-square)](https://presend.pages.dev/mcp)
+[![API](https://img.shields.io/badge/API-42_endpoints-1F3A5F?style=flat-square)](https://presend.pages.dev/api)
+[![MCP Server](https://img.shields.io/badge/MCP-36_tools-6c47ff?style=flat-square)](https://presend.pages.dev/mcp)
 [![npm](https://img.shields.io/npm/v/presend-api?style=flat-square&label=npm&color=cb3837)](https://www.npmjs.com/package/presend-api)
 [![GitHub Marketplace](https://img.shields.io/badge/Marketplace-presend--check--action-2ea44f?style=flat-square)](https://github.com/marketplace/actions/presend-dependency-security-check)
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://god.gw.postman.com/run-collection/57808683-783f3f64-0f9f-433e-95f6-518520d14ccf?action=collection%2Ffork&collection-url=entityId%3D57808683-783f3f64-0f9f-433e-95f6-518520d14ccf%26entityType%3Dcollection%26workspaceId%3D8ffb507b-4140-4e42-8a44-fd6926d0b25b)
@@ -13,7 +13,7 @@
 [![PWA](https://img.shields.io/badge/PWA-Enabled-orange?style=flat-square)](https://presend.pages.dev)
 [![Privacy](https://img.shields.io/badge/Privacy-First-ff6b6b?style=flat-square)](https://presend.pages.dev/privacy)
 
-**Presend is three things: 48 free browser-based file tools (nothing ever uploaded), a free 41-endpoint security/utility API (no signup, no key), and an MCP server exposing 33 of those endpoints to AI agents.**
+**Presend is three things: 48 free browser-based file tools (nothing ever uploaded), a free 42-endpoint security/utility API (no signup, no key), and an MCP server exposing 36 of those endpoints to AI agents.**
 
 [Open Presend](https://presend.pages.dev) · [API docs](https://presend.pages.dev/api) · [OpenAPI spec](https://presend.pages.dev/openapi.json) · [MCP server](https://presend.pages.dev/mcp)
 
