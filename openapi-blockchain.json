@@ -187,7 +187,7 @@
             "required": true,
             "schema": {
               "type": "string",
-              "example": "https://rpc.cosmos.network:443"
+              "example": "https://cosmos-rpc.publicnode.com"
             },
             "description": "Base URL of a CometBFT RPC endpoint to audit."
           }
