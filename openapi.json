@@ -3936,10 +3936,8 @@
                       "type": "string"
                     },
                     "github_repo_resolved": {
-                      "type": [
-                        "string",
-                        "null"
-                      ]
+                      "type": "string",
+                      "nullable": true
                     },
                     "overall_risk": {
                       "type": "string"
