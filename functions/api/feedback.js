@@ -23,7 +23,7 @@ export async function onRequestPost(context) {
     
     const verifyData = await verifyRes.json();
     if (!verifyData.success) {
-      return new Response(JSON.stringify({ error: "Turnstile verification failed", debug_error_codes: verifyData["error-codes"] || [] }), {
+      return new Response(JSON.stringify({ error: "Turnstile verification failed" }), {
         status: 403,
         headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
       });
