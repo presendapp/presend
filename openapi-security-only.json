@@ -2,7 +2,7 @@
   "openapi": "3.0.3",
   "info": {
     "title": "Presend API",
-    "description": "Free security & developer-security API: 24 endpoints for verification, supply-chain security, and web/file security checks. No signup, no API key required.",
+    "description": "Free security & verification API -- 24 endpoints for supply-chain, web, and file security checks. No signup, no API key.",
     "version": "1.0.0",
     "contact": {
       "url": "https://presend.pages.dev/api"
@@ -2401,7 +2401,106 @@
         ],
         "responses": {
           "200": {
-            "description": "Maintainer change analysis for the package"
+            "description": "Maintainer change analysis for the package",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "package": {
+                      "type": "string"
+                    },
+                    "ecosystem": {
+                      "type": "string"
+                    },
+                    "found": {
+                      "type": "boolean"
+                    },
+                    "current_maintainers": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "total_distinct_publishers": {
+                      "type": "integer"
+                    },
+                    "latest_version": {
+                      "type": "object",
+                      "properties": {
+                        "version": {
+                          "type": "string"
+                        },
+                        "publisher": {
+                          "type": "string"
+                        },
+                        "published": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "suspicious": {
+                      "type": "boolean"
+                    },
+                    "flagged_events": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "version": {
+                            "type": "string"
+                          },
+                          "publisher": {
+                            "type": "string"
+                          },
+                          "published": {
+                            "type": "string"
+                          },
+                          "previous_publisher": {
+                            "type": "string"
+                          },
+                          "dormancy_days": {
+                            "type": "integer"
+                          },
+                          "reason": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    },
+                    "note": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "package": "lodash",
+                  "ecosystem": "npm",
+                  "found": true,
+                  "current_maintainers": [
+                    "jdalton"
+                  ],
+                  "total_distinct_publishers": 3,
+                  "latest_version": {
+                    "version": "4.18.1",
+                    "publisher": "jdalton",
+                    "published": "2026-04-01"
+                  },
+                  "suspicious": true,
+                  "flagged_events": [
+                    {
+                      "version": "4.17.16",
+                      "publisher": "mathias",
+                      "published": "2020-07-08",
+                      "previous_publisher": "jdalton",
+                      "dormancy_days": 355,
+                      "reason": "New publisher took over after a long period of inactivity."
+                    }
+                  ],
+                  "note": "Heuristic signal for manual review, not proof of compromise. A flagged event can be a legitimate maintainer handoff."
+                }
+              }
+            }
           }
         }
       }
