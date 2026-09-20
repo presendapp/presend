@@ -38,6 +38,16 @@ async function checkRateLimit(env, clientIP, bucket) {
     // KV en panne ou quota dépassé -- ne doit jamais faire planter la requête.
     return true;
   }
+
+  try {
+    if (Math.random() < 0.1) {
+      const today = new Date().toISOString().split('T')[0];
+      const visitKey = `api-visits:address-risk:${today}`;
+      const visits = await env.PRESEND_ANALYTICS.get(visitKey);
+      await env.PRESEND_ANALYTICS.put(visitKey, ((visits ? parseInt(visits) : 0) + 10).toString());
+    }
+  } catch (e) { /* tracking best-effort */ }
+
   return true;
 }
 
