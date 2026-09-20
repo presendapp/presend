@@ -198,6 +198,15 @@ function decodeMsgCancelUnbondingDelegation(bytes) {
 
 const VOTE_OPTIONS = { 0: 'UNSPECIFIED', 1: 'YES', 2: 'ABSTAIN', 3: 'NO', 4: 'NO_WITH_VETO' };
 
+function decodeMsgWithdrawDelegatorReward(bytes) {
+  const f = parseFields(bytes);
+  return {
+    delegator_address: str(f, 1),
+    validator_address: str(f, 2),
+    note: 'The actual withdrawn amount is not carried in this message -- it is emitted as a transaction event, not decodable from the message bytes alone.',
+  };
+}
+
 function decodeMsgVote(bytes) {
   const f = parseFields(bytes);
   const optionNum = firstValue(f, 3);
@@ -243,6 +252,7 @@ const MSG_DECODERS = {
   '/cosmos.staking.v1beta1.MsgUndelegate': decodeMsgDelegateLike,
   '/cosmos.staking.v1beta1.MsgBeginRedelegate': decodeMsgBeginRedelegate,
   '/cosmos.staking.v1beta1.MsgCancelUnbondingDelegation': decodeMsgCancelUnbondingDelegation,
+  '/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward': decodeMsgWithdrawDelegatorReward,
   '/cosmos.gov.v1beta1.MsgVote': decodeMsgVote,
   '/cosmos.gov.v1.MsgVote': decodeMsgVote,
   '/cosmos.authz.v1beta1.MsgGrant': decodeMsgGrant,
