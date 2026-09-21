@@ -3340,8 +3340,8 @@
     },
     "/ip-reputation": {
       "get": {
-        "summary": "IP reputation check (Spamhaus DROP)",
-        "description": "Checks an IPv4 address against Spamhaus DROP -- netblocks known to be entirely spam/hijacker-controlled. Free, no signup, unlike every dedicated IP reputation service we could find.",
+        "summary": "IP reputation check against a curated blocklist",
+        "description": "Checks an IPv4 address against a curated list of netblocks known to be entirely spam/hijacker-controlled. Free, no signup.",
         "parameters": [
           {
             "name": "ip",
@@ -3351,7 +3351,7 @@
               "type": "string",
               "example": "1.2.3.4"
             },
-            "description": "IPv4 address to check against the Spamhaus DROP list of known spam/hijacker netblocks."
+            "description": "IPv4 address to check against a curated list of known spam/hijacker netblocks."
           }
         ],
         "responses": {

@@ -93,8 +93,8 @@ const TOOLS = [
   },
   {
     name: 'ip_reputation',
-    description: "IP reputation check (Spamhaus DROP)",
-    inputSchema: {"type": "object", "properties": {"ip": {"type": "string", "description": "IPv4 address to check against the Spamhaus DROP list of known spam/hijacker netblocks."}}, "required": ["ip"]},
+    description: "IP reputation check against a curated list of known spam/hijacker netblocks",
+    inputSchema: {"type": "object", "properties": {"ip": {"type": "string", "description": "IPv4 address to check against a curated list of known spam/hijacker netblocks."}}, "required": ["ip"]},
     request: (args) => ({ method: 'GET', url: `${API_BASE}/ip-reputation?${new URLSearchParams(args).toString()}` }),
   },
   {
