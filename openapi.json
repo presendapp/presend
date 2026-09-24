@@ -205,6 +205,52 @@
         }
       }
     },
+    "/iban-validate": {
+      "get": {
+        "summary": "Validate an IBAN",
+        "description": "Validates an IBAN via the ISO 7064 mod-97 checksum, with country-specific length checks. No external data source -- pure algorithm.",
+        "parameters": [
+          {
+            "name": "iban",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "DE89370400440532013000"
+            },
+            "description": "IBAN to validate. Spaces are ignored."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Validation result",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "iban": {"type": "string"},
+                    "valid": {"type": "boolean"},
+                    "country_code": {"type": "string"},
+                    "formatted": {"type": "string"},
+                    "reason": {"type": "string"}
+                  }
+                },
+                "example": {
+                  "iban": "DE89370400440532013000",
+                  "valid": true,
+                  "country_code": "DE",
+                  "formatted": "DE89 3704 0044 0532 0130 00"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          }
+        }
+      }
+    },
     "/url-clean": {
       "get": {
         "summary": "Clean a single URL",
