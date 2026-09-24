@@ -251,6 +251,67 @@
         }
       }
     },
+    "/link-metadata": {
+      "get": {
+        "summary": "Extract Open Graph / Twitter Card metadata from a URL",
+        "description": "Extracts title, description, canonical URL, Open Graph tags, and Twitter Card tags from a page's <head> -- the same data used to render a link preview card in a chat app.",
+        "parameters": [
+          {
+            "name": "url",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "https://github.com/presendapp/presend"
+            },
+            "description": "URL to extract metadata from."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Extracted metadata",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "url": {"type": "string"},
+                    "title": {"type": "string"},
+                    "description": {"type": "string"},
+                    "canonical_url": {"type": "string"},
+                    "open_graph": {"type": "object"},
+                    "twitter_card": {"type": "object"}
+                  }
+                },
+                "example": {
+                  "url": "https://github.com/presendapp/presend",
+                  "title": "GitHub - presendapp/presend",
+                  "description": "Free privacy-first browser tools + a security API",
+                  "canonical_url": null,
+                  "open_graph": {
+                    "title": "GitHub - presendapp/presend",
+                    "description": "Free privacy-first browser tools + a security API",
+                    "image": "https://repository-images.githubusercontent.com/1290162882/c4785be5-6cef-415e-b278-9744d2dbc57d",
+                    "type": "object",
+                    "site_name": "GitHub",
+                    "url": "https://github.com/presendapp/presend"
+                  },
+                  "twitter_card": {
+                    "card": "summary_large_image",
+                    "title": "GitHub - presendapp/presend",
+                    "description": "Free privacy-first browser tools + a security API",
+                    "image": "https://repository-images.githubusercontent.com/1290162882/c4785be5-6cef-415e-b278-9744d2dbc57d"
+                  }
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          }
+        }
+      }
+    },
     "/url-clean": {
       "get": {
         "summary": "Clean a single URL",
