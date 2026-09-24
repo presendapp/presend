@@ -312,6 +312,67 @@
         }
       }
     },
+    "/vat-validate": {
+      "get": {
+        "summary": "Validate an EU VAT number",
+        "description": "Validates an EU VAT number in real time via the official European Commission VIES (VAT Information Exchange System) service -- returns the registered company name and address when valid.",
+        "parameters": [
+          {
+            "name": "country",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "example": "IE"
+            },
+            "description": "2-letter EU country code (EL for Greece, XI for Northern Ireland). Optional if vat includes the prefix."
+          },
+          {
+            "name": "vat",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "6388047V"
+            },
+            "description": "VAT number, with or without the country prefix (e.g. \"6388047V\" with country=IE, or \"IE6388047V\" alone)."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Validation result",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "country_code": {"type": "string"},
+                    "vat_number": {"type": "string"},
+                    "valid": {"type": "boolean"},
+                    "name": {"type": "string", "nullable": true},
+                    "address": {"type": "string", "nullable": true},
+                    "request_date": {"type": "string"},
+                    "source": {"type": "string"}
+                  }
+                },
+                "example": {
+                  "country_code": "IE",
+                  "vat_number": "6388047V",
+                  "valid": true,
+                  "name": "GOOGLE IRELAND LIMITED",
+                  "address": "3RD FLOOR, GORDON HOUSE, BARROW STREET, DUBLIN 4",
+                  "request_date": "2026-09-24T20:44:05.415Z",
+                  "source": "European Commission VIES (VAT Information Exchange System), official."
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          }
+        }
+      }
+    },
     "/url-clean": {
       "get": {
         "summary": "Clean a single URL",
