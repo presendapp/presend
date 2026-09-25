@@ -1,5 +1,5 @@
 // GET /mcp -> info; POST /mcp -> JSON-RPC 2.0 (protocole MCP, transport Streamable HTTP sans état)
-// Expose 36 des 42 endpoints comme "tools" MCP -- tous sauf les 7 endpoints
+// Expose 41 des 48 endpoints comme "tools" MCP -- tous sauf les 7 endpoints
 // binaires/fichiers (hash, clean-image, malware-check, file-type, image-similarity,
 // merge-and-compress-pdf, qr-scan), délibérément exclus : faire transiter du contenu
 // binaire encodé en base64 dans le contexte d'un agent IA est généralement peu pratique,
@@ -50,6 +50,12 @@ const TOOLS = [
     request: (args) => ({ method: 'GET', url: `${API_BASE}/csv-json?${new URLSearchParams(args).toString()}` }),
   },
   {
+    name: 'cve_lookup',
+    description: "Direct CVE/GHSA vulnerability lookup by identifier",
+    inputSchema: {"type": "object", "properties": {"id": {"type": "string", "description": "CVE, GHSA, or other OSV-native identifier, e.g. CVE-2021-44228."}}, "required": ["id"]},
+    request: (args) => ({ method: 'GET', url: `${API_BASE}/cve-lookup?${new URLSearchParams(args).toString()}` }),
+  },
+  {
     name: 'dns_lookup',
     description: "DNS record lookup (A, AAAA, CNAME, MX, TXT, NS)",
     inputSchema: {"type": "object", "properties": {"domain": {"type": "string", "description": "Domain to look up, e.g. example.com."}, "type": {"type": "string", "description": "Narrow to a single record type. Omit to get all 6 at once."}}, "required": ["domain"]},
@@ -86,6 +92,12 @@ const TOOLS = [
     request: (args) => ({ method: 'GET', url: `${API_BASE}/favicon?${new URLSearchParams(args).toString()}` }),
   },
   {
+    name: 'iban_validate',
+    description: "Validate an IBAN (ISO 7064 mod-97 checksum)",
+    inputSchema: {"type": "object", "properties": {"iban": {"type": "string", "description": "IBAN to validate. Spaces are ignored."}}, "required": ["iban"]},
+    request: (args) => ({ method: 'GET', url: `${API_BASE}/iban-validate?${new URLSearchParams(args).toString()}` }),
+  },
+  {
     name: 'ip',
     description: "Get caller IP geolocation",
     inputSchema: {"type": "object", "properties": {}, "required": []},
@@ -108,6 +120,12 @@ const TOOLS = [
     description: "Verify a JWT's cryptographic signature",
     inputSchema: {"type": "object", "properties": {"token": {"type": "string", "description": "The JWT to verify. Checks the cryptographic signature -- use /jwt-decode if you only need to read the header and payload."}, "secret": {"type": "string", "description": "Required for HS256/384/512."}, "jwk": {"type": "object", "description": "Public key in JWK format, for RS/PS/ES algorithms."}, "jwks_url": {"type": "string", "description": "URL to a JWKS document; the key is matched by the token's \"kid\" header."}}, "required": ["token"]},
     request: (args) => ({ method: 'POST', url: `${API_BASE}/jwt-verify`, body: JSON.stringify(args) }),
+  },
+  {
+    name: 'link_metadata',
+    description: "Extract Open Graph / Twitter Card metadata from a URL",
+    inputSchema: {"type": "object", "properties": {"url": {"type": "string", "description": "URL to extract title, description, and Open Graph / Twitter Card metadata from."}}, "required": ["url"]},
+    request: (args) => ({ method: 'GET', url: `${API_BASE}/link-metadata?${new URLSearchParams(args).toString()}` }),
   },
   {
     name: 'maintainer_change_check',
@@ -228,6 +246,12 @@ const TOOLS = [
     description: "Generate UUIDs",
     inputSchema: {"type": "object", "properties": {"count": {"type": "string", "description": "Number of UUIDs (v4) to generate. Defaults to 1 if omitted."}}, "required": []},
     request: (args) => ({ method: 'GET', url: `${API_BASE}/uuid?${new URLSearchParams(args).toString()}` }),
+  },
+  {
+    name: 'vat_validate',
+    description: "Validate an EU VAT number via the official VIES service",
+    inputSchema: {"type": "object", "properties": {"country": {"type": "string", "description": "2-letter EU country code (EL for Greece, XI for Northern Ireland). Optional if vat includes the prefix."}, "vat": {"type": "string", "description": "VAT number, with or without the country prefix."}}, "required": ["vat"]},
+    request: (args) => ({ method: 'GET', url: `${API_BASE}/vat-validate?${new URLSearchParams(args).toString()}` }),
   },
   {
     name: 'vulnerability_check',
