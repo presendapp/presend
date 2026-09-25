@@ -12,12 +12,12 @@
 - [x] Documentation projet (ce fichier + PROJECT_CONTEXT.md + STRUCTURE.md + WORKFLOW.md) entièrement réécrite après un premier jet incomplet/inexact
 
 ## Conversations GitHub actives — à suivre, ne pas re-pitcher
-- **rennf93/fastapi-guard #137** : mainteneur intéressé, demande une intégration dans `guard-core` (pas ce repo). Prochaine étape **de notre côté** : ouvrir une note de conception dans guard-core. Pas encore fait.
+- **rennf93/fastapi-guard #137** : mainteneur intéressé, demande une intégration dans `guard-core` (pas ce repo). Prochaine étape **de notre côté** : ouvrir une note de conception dans guard-core. Pas encore fait -- **reporté à la prochaine session** (25 sept. consacré à tripwire). Avant de rédiger : appliquer la leçon n°8 (tester sur paquets sains) à tout check proposé.
 - **bunkerity/bunkerweb #3941** : mainteneur dit que la demande revient souvent, va "brainstormer" en interne. Rien à faire de notre côté, attendre leur retour.
 - **intelowlproject/IntelOwl #4014** : un contributeur (`AnshSinghal`) construit activement un PR pour `Presend_AddressRisk` (le seul des 4 endpoints pitchés qui n'était pas redondant avec leurs intégrations directes existantes). Rien à faire sauf répondre si questions.
-- **neomatrix369/tripwire #143** : mainteneur donne le feu vert explicite ("please go ahead and apply your changes and create a PR"), propose de vérifier l'interface `scanners.py` en attendant. Prochaine étape **de notre côté** : construire le PR en suivant le pattern des autres scanners existants. Pas encore fait.
+- **neomatrix369/tripwire #143** : feu vert du mainteneur. Fork `presendapp/tripwire` cloné dans `github-contributions/tripwire`. Le 25 sept., commentaire posté (https://github.com/neomatrix369/tripwire/issues/143#issuecomment-5838814495) : `vulnerability-check` retiré (doublon de DepShield), corrections qualité annoncées, et **4 questions en attente de réponse** : (1) OK pour un 1er adaptateur HTTP malgré ADR-0005 (sous-processus CLI) ? (2) budget temps : DEPSHIELD 110 + CARGO_AUDIT 40 + OSSPREY 90 = SCAN_TIMEOUT 240 déjà saturé, où prendre ~20 s (proposé : OSSPREY 90->70) ? (3) actif par défaut ou opt-in (confidentialité des noms de paquets) ? (4) slice stub n°78 vague R ou le mainteneur l'insère lui-même ? **Ne pas coder avant sa réponse.** Design prévu : `run_presend` + `_run_presend_group` en fin de `SCANNER_GROUPS` (`applies_to: both`), réutilise `_find_manifests`, findings `amber` uniquement, erreurs -> `unreachable`, pas de manifeste -> `not_applicable`, `urllib` stdlib, POST batch Presend, maintainer plafonné à 100 paquets (troncature signalée), addendum ADR-0017 + `scanner-output-adapters.md` + DECISIONS, **aucune mention README (règle trust-strip)**, couverture ≥ 95 %, `check-scanner-timeout-budget.sh` à mettre à jour. `partial-failed` est traité comme terminé par `guard/status.py` : une panne Presend ne bloque pas les agents.
 
-## Démarchage GitHub : 46 cibles contactées depuis le 21 sept., objectif 100-200 sur plusieurs semaines
+## Démarchage GitHub : 48 cibles contactées (vérifié par session-check.sh le 25 sept.) depuis le 21 sept., objectif 100-200 sur plusieurs semaines
 - Méthode éprouvée : `gh api "search/code?q=<CLE_API_CONCURRENT>+in:file"`, filtrer par étoiles/activité, vérifier l'usage exact avant de pitcher, ne jamais deviner le code sans voir l'interface réelle.
 - **Leçon appliquée depuis le 24 sept.** : privilégier `maintainer-change-check`/`typosquat-check`/`address-risk`/`tx-decode`/`supply-chain-check` (vrais différenciateurs) plutôt que `ip-reputation`/`url-reputation`/`malware-check` (souvent redondants chez les outils de sécurité matures).
 - Diversifier les termes de recherche à chaque session plutôt que d'épuiser un même filon (plusieurs lots faibles observés quand on insiste trop sur une même piste).
@@ -33,6 +33,13 @@
 - [x] punkpeye/awesome-mcp-servers #14651 : badge de score Glama ajouté + compteur d'outils corrige (36 -> 41), mainteneur informe
 - [x] Fiche Glama Connectors revendiquee (verification GitHub) : https://glama.ai/mcp/connectors/io.github.presendapp/presend-mcp
 
+## Fait aujourd'hui (25 sept., soir) -- qualité supply-chain + tripwire
+- [x] **typosquat-check** : 12 paquets npm très populaires sur 25 testés sortaient "suspects" (ms, qs à 1 édition de ws...). Seuil désormais proportionnel à la longueur (<=3 car. : pas de comparaison approx. ; 4-7 : 1 édition ; 8+ : 2). Résultat : 0 faux positif / 35 légitimes, 17/18 typosquats détectés (seul raté : electorn, car electron absent de la liste).
+- [x] **maintainer-change-check** : 17 paquets sains sur 22 sortaient "suspects" (passations légitimes parfois de 2013). Désormais : seuls les événements des 365 derniers jours ; publieurs CI (GitHub Actions, *-bot...) et pré-versions rapportés à part sans lever le drapeau. Résultat : 0/25 suspects aujourd'hui, event-stream toujours détecté en rejouant au 2018-11-26. Timeout (8 s) couvre maintenant le corps de la réponse (typescript = 15,7 Mo).
+- [x] **Mode batch POST** sur les deux endpoints (typosquat max 100, maintainer max 20 avec 6 fetchs simultanés), 1 unité de rate limit par lot. Validé en prod : 20 paquets lourds en 1,6 s sans erreur.
+- [x] openapi.json + openapi-security-only.json (POST, descriptions, exemple lodash qui montrait à tort `suspicious: true`), README, commentaire de code corrigés.
+- [x] Affirmation "event-stream, ua-parser-js, colors.js" corrigée dans **11 issues/PR** (note d'édition datée visible) + ligne du fichier dans la PR bureado #111. Au passage, 3 issues disaient encore maintainer-change-check "npm/PyPI" ou "crates.io-adjacent" (SkillSpector #602, devguard #3083, typomania #36) : corrigé.
+
 ## Piste d'amelioration produit identifiee (retour Glama TDQS, score C 2.6/5.0)
 Retour independant sur la qualite des definitions d'outils MCP, pas urgent mais a garder en tete :
 - Chevauchements ambigus pour un agent IA : email_validate vs email_verify, cve_lookup vs vulnerability_check, verifications individuelles vs versions combinees (security_scan, supply_chain_check)
@@ -41,6 +48,12 @@ Retour independant sur la qualite des definitions d'outils MCP, pas urgent mais 
 - Piste : envisager de scinder le serveur MCP par domaine (comme les 4 fiches RapidAPI), ou renommer pour une convention plus coherente
 
 ## Prochaines étapes suggérées
+- **tripwire #143** : attendre la réponse aux 4 questions, puis coder l'adaptateur (voir design ci-dessus)
+- **guard-core** (fastapi-guard #137) : note de conception, prochaine session
+- Resynchroniser la collection Postman (POST batch des 2 endpoints) ; ajouter des méthodes batch au client npm `presend-api`
+- Lint Redocly : 52+ erreurs `security-defined` préexistantes (API sans clé) rendent l'étape de lint inutile -- déclarer `"security": []` à la racine d'openapi.json
+- Rate limit : `url-clean` annonce 60/min mais le seuil réel est ~30/min (count >= 30, +5 échantillonné 1/5) -- vérifier ce décalage message/seuil sur tous les endpoints
+- typosquat-check : enrichir la liste organisée (electron, etc.)
 - Continuer le démarchage (nouveaux termes de recherche à chaque session)
 - Ouvrir la note de conception guard-core pour fastapi-guard
 - Envisager d'étendre address-risk aux adresses Cosmos SDK (bech32) — cohérent avec le reste du catalogue, déjà demandé indirectement 2 fois

@@ -41,8 +41,8 @@ Sans cette étape, les fichiers de contexte se dégradent vite (exactement le pr
 5. Committer et pousser ces fichiers, puis vérifier avec `gh api "repos/presendapp/presend/contents/<fichier>" --jq '.sha'` comparé à `git rev-parse HEAD:<fichier>` que c'est bien en ligne avant de considérer la session terminée.
 
 ## Commandes utiles
-- Dev local : `npx --yes wrangler pages dev . --port 8788`
+- Dev local : `npx --yes wrangler pages dev . --port 8788` -- la 1re fois npx télécharge wrangler : attendre que le port réponde (boucle curl) plutôt qu'un `sleep` fixe
 - Déploiement : automatique via git push sur main (Cloudflare Pages)
 - Tests : `./tests/run-tests.sh` (existe, jamais utilisé pendant cette session — vérifier son contenu avant de s'y fier)
 - SEO : `python3 daily_seo.py`
-- Lint OpenAPI : `npx --yes @redocly/cli lint openapi.json`
+- Lint OpenAPI : `npx --yes @redocly/cli lint openapi.json` -- échoue actuellement sur 52+ erreurs `security-defined` préexistantes (API sans clé) : filtrer les problèmes sur les chemins modifiés (`--format=json`) tant que `"security": []` n'est pas déclaré à la racine
