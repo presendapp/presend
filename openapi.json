@@ -3464,9 +3464,89 @@
       }
     },
     "/typosquat-check": {
+      "post": {
+        "summary": "Batch package name typosquatting check",
+        "description": "Checks up to 100 package names in one request, counted as a single request for rate limiting. Same analysis as GET; an invalid entry yields {package, error} instead of failing the batch.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "ecosystem",
+                  "packages"
+                ],
+                "properties": {
+                  "ecosystem": {
+                    "type": "string",
+                    "enum": [
+                      "npm",
+                      "PyPI"
+                    ],
+                    "example": "npm"
+                  },
+                  "packages": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 100,
+                    "items": {
+                      "type": "string"
+                    },
+                    "example": [
+                      "lodas",
+                      "expres",
+                      "react"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Batch results",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ecosystem": {
+                      "type": "string"
+                    },
+                    "count": {
+                      "type": "integer"
+                    },
+                    "suspicious_count": {
+                      "type": "integer"
+                    },
+                    "source": {
+                      "type": "string"
+                    },
+                    "results": {
+                      "type": "array",
+                      "description": "One entry per input name, in input order. Same fields as the GET response, or {package, error} for an invalid entry.",
+                      "items": {
+                        "type": "object"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid JSON body, unsupported ecosystem, empty list, or more than 100 names"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          }
+        }
+      },
       "get": {
         "summary": "Package name typosquatting check",
-        "description": "Flags package names within Damerau-Levenshtein edit distance 1-2 of a curated list of well-known npm/PyPI packages -- the classic typosquatting pattern.",
+        "description": "Flags package names that are a near-miss of a curated list of well-known npm/PyPI packages (Damerau-Levenshtein: 1 edit for 4-7 character names, 2 for 8+; names of 3 characters or fewer are not fuzzy-matched) -- the classic typosquatting pattern. A batch POST variant is available.",
         "parameters": [
           {
             "name": "ecosystem",
@@ -4080,9 +4160,91 @@
       }
     },
     "/maintainer-change-check": {
+      "post": {
+        "summary": "Batch npm maintainer change check",
+        "description": "Checks up to 20 npm packages in one request, counted as a single request for rate limiting. Same analysis as GET; a missing package yields found=false and a registry failure or invalid entry yields an error field, without failing the batch.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "ecosystem",
+                  "packages"
+                ],
+                "properties": {
+                  "ecosystem": {
+                    "type": "string",
+                    "enum": [
+                      "npm"
+                    ],
+                    "example": "npm"
+                  },
+                  "packages": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 20,
+                    "items": {
+                      "type": "string"
+                    },
+                    "example": [
+                      "lodash",
+                      "express",
+                      "event-stream"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Batch results",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ecosystem": {
+                      "type": "string"
+                    },
+                    "count": {
+                      "type": "integer"
+                    },
+                    "suspicious_count": {
+                      "type": "integer"
+                    },
+                    "error_count": {
+                      "type": "integer"
+                    },
+                    "recent_window_days": {
+                      "type": "integer"
+                    },
+                    "results": {
+                      "type": "array",
+                      "description": "One entry per input name, in input order. Same fields as the GET response, or {package, error} for an invalid entry.",
+                      "items": {
+                        "type": "object"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid JSON body, unsupported ecosystem, empty list, or more than 20 names"
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          }
+        }
+      },
       "get": {
         "summary": "Detect a suspicious npm package maintainer change",
-        "description": "Flags a new package publisher appearing after a long period of dormancy -- a documented supply-chain attack pattern (event-stream, ua-parser-js, colors.js). Distinguishes a genuinely new publisher from a known one returning after a gap. npm only for now.",
+        "description": "Flags a previously unseen human publisher taking over an npm package after 180+ days of inactivity, within the last 365 days -- the pattern behind the event-stream compromise (2018). Older handoffs are counted but not flagged; transitions to CI/trusted-publishing identities and pre-release versions are reported separately without raising the flag. Does NOT detect a hijacked existing maintainer account (ua-parser-js, 2021) or a malicious release by an existing maintainer (colors.js, 2022). A batch POST variant is available. npm only for now.",
         "parameters": [
           {
             "name": "ecosystem",
@@ -4141,7 +4303,7 @@
                         }
                       }
                     },
-                    "note": {"type": "string"}
+                    "ci_publisher_events": {"type": "array", "items": {"type": "object", "properties": {"version": {"type": "string"}, "publisher": {"type": "string"}, "published": {"type": "string"}, "previous_publisher": {"type": "string"}, "dormancy_days": {"type": "integer"}, "reason": {"type": "string"}}}}, "prerelease_events": {"type": "array", "items": {"type": "object", "properties": {"version": {"type": "string"}, "publisher": {"type": "string"}, "published": {"type": "string"}, "previous_publisher": {"type": "string"}, "dormancy_days": {"type": "integer"}, "reason": {"type": "string"}}}}, "historical_events_count": {"type": "integer"}, "recent_window_days": {"type": "integer"}, "note": {"type": "string"}
                   }
                 },
                 "example": {
@@ -4151,18 +4313,7 @@
                   "current_maintainers": ["jdalton"],
                   "total_distinct_publishers": 3,
                   "latest_version": {"version": "4.18.1", "publisher": "jdalton", "published": "2026-04-01"},
-                  "suspicious": true,
-                  "flagged_events": [
-                    {
-                      "version": "4.17.16",
-                      "publisher": "mathias",
-                      "published": "2020-07-08",
-                      "previous_publisher": "jdalton",
-                      "dormancy_days": 355,
-                      "reason": "New publisher took over after a long period of inactivity."
-                    }
-                  ],
-                  "note": "Heuristic signal for manual review, not proof of compromise. A flagged event can be a legitimate maintainer handoff."
+                  "suspicious": false, "flagged_events": [], "ci_publisher_events": [], "prerelease_events": [], "historical_events_count": 1, "recent_window_days": 365, "note": "Flags a previously unseen human publisher taking over after 180+ days of inactivity, within the last 365 days. Heuristic signal for manual review, not proof of compromise. Does not detect a hijacked existing account or a malicious release by an existing maintainer."
                 }
               }
             }

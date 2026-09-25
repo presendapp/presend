@@ -22,7 +22,7 @@
 Unlike most online tools, **Presend processes files entirely locally in your browser** -- your files never leave your device. And unlike most free API directories, the API layer has no signup wall or aggressive rate limits gating basic use.
 
 - **100% Private (browser tools)** -- Web Crypto API, Canvas API, FileReader -- all client-side
-- **Real supply-chain security (API)** -- `maintainer-change-check` flags a package whose publisher changed after a long dormancy, the pattern behind event-stream, ua-parser-js, colors.js
+- **Real supply-chain security (API)** -- `maintainer-change-check` flags a package recently taken over by a previously unseen publisher after a long dormancy (the event-stream pattern; it does not detect hijacked existing accounts)
 - **Instant** -- Cloudflare CDN, loads in under 1 second globally
 - **PWA** -- Install on mobile/desktop, works offline
 - **Free Forever** -- No freemium, no watermarks, no limits

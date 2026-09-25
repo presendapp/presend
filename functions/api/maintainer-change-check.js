@@ -3,8 +3,9 @@
 //
 // Détecte un signal réel de risque de chaîne d'approvisionnement : un nouveau
 // publieur qui prend le relais d'un paquet après une longue période de
-// dormance -- le schéma exact de plusieurs attaques documentées (event-stream,
-// ua-parser-js, colors.js). Distingue un publieur "nouveau" (jamais vu dans
+// dormance -- le schéma de l'attaque event-stream (2018).
+// NE détecte PAS un compte existant piraté (ua-parser-js, 2021) ni un
+// mainteneur existant malveillant (colors.js, 2022) : même identité de publieur. Distingue un publieur "nouveau" (jamais vu dans
 // l'historique de ce paquet) d'un publieur "de retour" (déjà connu), pour
 // éviter de signaler à tort les transitions légitimes entre mainteneurs établis.
 //
