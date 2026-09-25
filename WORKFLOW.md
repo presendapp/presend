@@ -36,6 +36,14 @@ gh search issues --author=presendapp --json repository,title,number,state,url,up
 4. Toujours divulguer l'affiliation en premier, ne jamais deviner le code sans voir l'interface réelle du projet cible
 5. `gh issue create` avec le message rédigé
 
+## En fin de session (avant de clore la conversation)
+Sans cette étape, les fichiers de contexte se dégradent vite (exactement le problème corrigé le 25 sept. -- documentation qui ne reflétait plus la réalité du projet). Avant de terminer :
+1. Mettre à jour **ROADMAP.md** : déplacer ce qui a été fait aujourd'hui vers "Fait récemment", ajouter toute nouvelle conversation GitHub active, retirer ce qui est résolu/périmé.
+2. Si de nouveaux chiffres clés ont changé (endpoints, outils, langues...) : mettre à jour **PROJECT_CONTEXT.md** et/ou **STRUCTURE.md**, en les régénérant depuis la source de vérité (openapi.json, etc.) plutôt qu'en devinant.
+3. Si une nouvelle divulgation de sécurité a été envoyée, ou qu'une existante a eu une réponse : mettre à jour **SECURITY_DISCLOSURES.md**.
+4. Si une nouvelle leçon a été apprise (erreur trouvée et corrigée, limite technique découverte) : l'ajouter à la section correspondante de **PROJECT_CONTEXT.md**, pour ne pas la refaire plus tard.
+5. Committer et pousser ces fichiers, puis vérifier avec `gh api "repos/presendapp/presend/contents/<fichier>" --jq '.sha'` comparé à `git rev-parse HEAD:<fichier>` que c'est bien en ligne avant de considérer la session terminée.
+
 ## Commandes utiles
 - Dev local : `npx --yes wrangler pages dev . --port 8788`
 - Déploiement : automatique via git push sur main (Cloudflare Pages)
