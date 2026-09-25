@@ -2,7 +2,7 @@
   "openapi": "3.0.3",
   "info": {
     "title": "Presend API",
-    "description": "Presend's free API: 42 endpoints for security, verification, blockchain/crypto compliance, and everyday developer utilities. No signup, no API key, no rate-limit tier walls. Covers file hashing & malware/phishing checks, JWT decode/verify, DNS & WHOIS lookup, package vulnerability and typosquatting checks, IP reputation, redirect-chain tracing, GitHub repo health signals, Cosmos SDK transaction decoding, OFAC sanctions screening for crypto addresses, CometBFT RPC auditing, PDF/image tools, and more.",
+    "description": "Presend's free API: 48 endpoints for security, verification, blockchain/crypto compliance, and everyday developer utilities. No signup, no API key, no rate-limit tier walls. Covers file hashing & malware/phishing checks, JWT decode/verify, DNS & WHOIS lookup, package vulnerability and typosquatting checks, IP reputation, redirect-chain tracing, GitHub repo health signals, Cosmos SDK transaction decoding, OFAC sanctions screening for crypto addresses, CometBFT RPC auditing, IBAN/VAT validation, link metadata extraction, direct CVE lookup, PDF/image tools, and more.",
     "version": "1.1.0",
     "contact": {
       "url": "https://presend.pages.dev/api"

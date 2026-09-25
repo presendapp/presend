@@ -11,7 +11,7 @@
       "displayName": "Presend Security & Utility API",
       "type": "application/openapi+json",
       "url": "https://presend.pages.dev/openapi.json",
-      "description": "Free security, verification and developer-utility REST API -- 42 endpoints, no signup, no API key required.",
+      "description": "Free security, verification and developer-utility REST API -- 48 endpoints, no signup, no API key required.",
       "capabilities": [
         "whois-lookup",
         "dns-lookup",

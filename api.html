@@ -14,7 +14,7 @@
   "@context": "https://schema.org",
   "@type": "WebAPI",
   "name": "Presend API",
-  "description": "Free security, verification and developer-utility API -- 42 endpoints including npm maintainer-change detection, OSV.dev vulnerability checks, typosquat detection, WHOIS/DNS lookups, Cosmos SDK transaction decoding, and an MCP server for AI agents. No signup, no API key required.",
+  "description": "Free security, verification and developer-utility API -- 48 endpoints including npm maintainer-change detection, OSV.dev vulnerability checks, typosquat detection, WHOIS/DNS lookups, Cosmos SDK transaction decoding, and an MCP server for AI agents. No signup, no API key required.",
   "url": "https://presend.pages.dev/api",
   "documentation": "https://presend.pages.dev/openapi.json",
   "provider": {
@@ -177,6 +177,23 @@
   <h3>GET /api/rpc-check</h3>
   <p style="color:var(--color-muted); max-width:60ch;">Audits a public CometBFT RPC endpoint for a Cosmos SDK chain: node status, health, peer connectivity, and whether unsafe administrative methods (dial_seeds, dial_peers, unsafe_flush_mempool) appear to be exposed. Read-only -- never invokes any unsafe method itself.</p>
   <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/rpc-check?url=https://cosmos-rpc.publicnode.com"</pre>
+
+  <h2>Utilities</h2>
+  <p style="color:var(--color-muted); max-width:60ch;">
+    Small, focused tools with no external dependency wherever possible.
+  </p>
+  <h3>GET /api/iban-validate</h3>
+  <p style="color:var(--color-muted); max-width:60ch;">Validates an IBAN via the ISO 7064 mod-97 checksum, with country-specific length checks. Pure algorithm -- no external data source.</p>
+  <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/iban-validate?iban=DE89370400440532013000"</pre>
+  <h3>GET /api/vat-validate</h3>
+  <p style="color:var(--color-muted); max-width:60ch;">Validates an EU VAT number in real time via the official European Commission VIES service -- returns the registered company name and address when valid.</p>
+  <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/vat-validate?country=IE&vat=6388047V"</pre>
+  <h3>GET /api/link-metadata</h3>
+  <p style="color:var(--color-muted); max-width:60ch;">Extracts Open Graph, Twitter Card, and basic &lt;head&gt; metadata from a URL -- the same data used to render a link preview card in a chat app.</p>
+  <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/link-metadata?url=https://github.com/presendapp/presend"</pre>
+  <h3>GET /api/cve-lookup</h3>
+  <p style="color:var(--color-muted); max-width:60ch;">Direct CVE/GHSA lookup by identifier via OSV.dev. Complements vulnerability-check (which needs package+ecosystem+version) for when you already have an identifier from a scanner report.</p>
+  <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/cve-lookup?id=CVE-2021-44228"</pre>
 
   <h2>Chained workflows</h2>
   <p style="color:var(--color-muted); max-width:60ch;">

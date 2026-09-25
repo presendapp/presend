@@ -13,7 +13,7 @@
 [![PWA](https://img.shields.io/badge/PWA-Enabled-orange?style=flat-square)](https://presend.pages.dev)
 [![Privacy](https://img.shields.io/badge/Privacy-First-ff6b6b?style=flat-square)](https://presend.pages.dev/privacy)
 
-**Presend is three things: 48 free browser-based file tools (nothing ever uploaded), a free 42-endpoint security/utility API (no signup, no key), and an MCP server exposing 36 of those endpoints to AI agents.**
+**Presend is three things: 48 free browser-based file tools (nothing ever uploaded), a free 48-endpoint security/utility API (no signup, no key), and an MCP server exposing 41 of those endpoints to AI agents.**
 
 [Open Presend](https://presend.pages.dev) · [API docs](https://presend.pages.dev/api) · [OpenAPI spec](https://presend.pages.dev/openapi.json) · [MCP server](https://presend.pages.dev/mcp)
 
