@@ -373,6 +373,55 @@
         }
       }
     },
+    "/cve-lookup": {
+      "get": {
+        "summary": "Direct CVE/GHSA lookup by identifier",
+        "description": "Looks up a CVE or GHSA identifier directly via OSV.dev. Complements vulnerability-check (which needs package+ecosystem+version) for when you already have an identifier from a scanner report or advisory.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "CVE-2021-44228"
+            },
+            "description": "CVE, GHSA, or other OSV-native identifier."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Vulnerability details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {"type": "string"},
+                    "found": {"type": "boolean"},
+                    "summary": {"type": "string"},
+                    "severity": {"type": "array"},
+                    "affected": {"type": "array"},
+                    "references": {"type": "array"}
+                  }
+                },
+                "example": {
+                  "id": "CVE-2021-44228",
+                  "found": true,
+                  "summary": "Apache Log4j2 JNDI features do not protect against attacker controlled LDAP",
+                  "severity": [{"type": "CVSS_V3", "score": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H"}],
+                  "affected": [{"ecosystem": "Maven", "package": "org.apache.logging.log4j:log4j-core", "fixed_in": "2.15.0"}],
+                  "url": "https://osv.dev/vulnerability/CVE-2021-44228"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limit exceeded"
+          }
+        }
+      }
+    },
     "/url-clean": {
       "get": {
         "summary": "Clean a single URL",
