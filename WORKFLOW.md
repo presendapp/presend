@@ -19,7 +19,7 @@ Stack : Cloudflare Pages + Workers, HTML/CSS/JS, Python SEO
 6. Commit
 
 ## Commandes utiles
-- Dev local : npx wrangler dev
-- Deploy : npx wrangler deploy
+- Dev local : npx wrangler pages dev --port 8787
+- Deploy : npx wrangler pages deploy
 - Tests : ./tests/run-tests.sh
 - SEO : python3 daily_seo.py
