@@ -45,4 +45,4 @@ Sans cette étape, les fichiers de contexte se dégradent vite (exactement le pr
 - Déploiement : automatique via git push sur main (Cloudflare Pages)
 - Tests : `./tests/run-tests.sh` (existe, jamais utilisé pendant cette session — vérifier son contenu avant de s'y fier)
 - SEO : `python3 daily_seo.py`
-- Lint OpenAPI : `npx --yes @redocly/cli lint openapi.json` -- échoue actuellement sur 52+ erreurs `security-defined` préexistantes (API sans clé) : filtrer les problèmes sur les chemins modifiés (`--format=json`) tant que `"security": []` n'est pas déclaré à la racine
+- Lint OpenAPI : `npx --yes @redocly/cli lint openapi.json --max-problems 2000` -- **0 erreur attendue** depuis le 25 sept. (`"security": []` déclaré à la racine, exemples corrigés). Avertissements restants connus : `operation-operationId` et `operation-4xx-response` (dette de doc). Tout AUTRE avertissement ou erreur vient d'une modification récente.

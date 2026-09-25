@@ -54,7 +54,7 @@ Retour independant sur la qualite des definitions d'outils MCP, pas urgent mais 
 - **tripwire #143** : attendre la réponse aux 4 questions, puis coder l'adaptateur (voir design ci-dessus)
 - **guard-core #119** : attendre la réponse du mainteneur aux 4 questions, puis forker et écrire le PR
 - Resynchroniser la collection Postman (POST batch des 2 endpoints) ; ajouter des méthodes batch au client npm `presend-api`
-- Lint Redocly : 52+ erreurs `security-defined` préexistantes (API sans clé) rendent l'étape de lint inutile -- déclarer `"security": []` à la racine d'openapi.json
+- [x] Lint Redocly réparé (25 sept.) : `"security": []` à la racine (0 erreur au lieu de 52) + 9 exemples/schémas incohérents corrigés (champs `url`, `note`, `wildcard_rules_note` absents du schéma, `null` non déclarés, exemples de paramètres en texte). Reste : `operationId` manquants (52) et réponses 4xx non documentées (39) -- vérifier l'effet d'un `operationId` sur le réimport RapidAPI avant de les ajouter.
 - Rate limit : `url-clean` annonce 60/min mais le seuil réel est ~30/min (count >= 30, +5 échantillonné 1/5) -- vérifier ce décalage message/seuil sur tous les endpoints
 - typosquat-check : enrichir la liste organisée (electron, etc.)
 - Continuer le démarchage (nouveaux termes de recherche à chaque session)

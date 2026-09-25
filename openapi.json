@@ -1,5 +1,6 @@
 {
   "openapi": "3.0.3",
+  "security": [],
   "info": {
     "title": "Presend API",
     "description": "Presend's free API: 48 endpoints for security, verification, blockchain/crypto compliance, and everyday developer utilities. No signup, no API key, no rate-limit tier walls. Covers file hashing & malware/phishing checks, JWT decode/verify, DNS & WHOIS lookup, package vulnerability and typosquatting checks, IP reputation, redirect-chain tracing, GitHub repo health signals, Cosmos SDK transaction decoding, OFAC sanctions screening for crypto addresses, CometBFT RPC auditing, IBAN/VAT validation, link metadata extraction, direct CVE lookup, PDF/image tools, and more.",
@@ -278,7 +279,7 @@
                     "url": {"type": "string"},
                     "title": {"type": "string"},
                     "description": {"type": "string"},
-                    "canonical_url": {"type": "string"},
+                    "canonical_url": {"type": "string", "nullable": true},
                     "open_graph": {"type": "object"},
                     "twitter_card": {"type": "object"}
                   }
@@ -396,7 +397,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "properties": {
+                  "properties": { "url": {"type": "string"},
                     "id": {"type": "string"},
                     "found": {"type": "boolean"},
                     "summary": {"type": "string"},
@@ -570,7 +571,7 @@
               "type": "integer",
               "default": 1,
               "maximum": 100,
-              "example": "3"
+              "example": 3
             },
             "description": "Number of UUIDs (v4) to generate. Defaults to 1 if omitted."
           }
@@ -699,7 +700,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "properties": {
+                  "properties": { "note": {"type": "string"},
                     "header": {
                       "type": "object"
                     },
@@ -938,7 +939,7 @@
             "required": false,
             "schema": {
               "type": "integer",
-              "example": "1700000000"
+              "example": 1700000000
             },
             "description": "Unix timestamp (seconds since epoch) to convert to a human-readable date. Provide either unix or date, not both."
           },
@@ -1175,7 +1176,7 @@
               "type": "integer",
               "default": 16,
               "maximum": 128,
-              "example": "16"
+              "example": 16
             },
             "description": "Desired password length. Defaults to a reasonable secure length if omitted."
           },
@@ -2264,7 +2265,7 @@
                             "type": "boolean"
                           },
                           "value": {
-                            "type": "string"
+                            "type": "string", "nullable": true
                           },
                           "points": {
                             "type": "integer"
@@ -2602,7 +2603,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "properties": {
+                  "properties": { "wildcard_rules_note": {"type": "string"},
                     "domain": {
                       "type": "string"
                     },

@@ -1,5 +1,6 @@
 {
   "openapi": "3.0.3",
+  "security": [],
   "info": {
     "title": "Presend API",
     "description": "Free security & verification API -- 24 endpoints for supply-chain, web, and file security checks. No signup, no API key.",
@@ -224,7 +225,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "properties": {
+                  "properties": { "note": {"type": "string"},
                     "header": {
                       "type": "object"
                     },
@@ -357,7 +358,7 @@
               "type": "integer",
               "default": 16,
               "maximum": 128,
-              "example": "16"
+              "example": 16
             },
             "description": "Desired password length. Defaults to a reasonable secure length if omitted."
           },
@@ -1006,7 +1007,7 @@
                             "type": "boolean"
                           },
                           "value": {
-                            "type": "string"
+                            "type": "string", "nullable": true
                           },
                           "points": {
                             "type": "integer"
@@ -1344,7 +1345,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "properties": {
+                  "properties": { "wildcard_rules_note": {"type": "string"},
                     "domain": {
                       "type": "string"
                     },
