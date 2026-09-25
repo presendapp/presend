@@ -55,7 +55,8 @@ Retour independant sur la qualite des definitions d'outils MCP, pas urgent mais 
 - **guard-core #119** : attendre la réponse du mainteneur aux 4 questions, puis forker et écrire le PR
 - Resynchroniser la collection Postman (POST batch des 2 endpoints) ; ajouter des méthodes batch au client npm `presend-api`
 - [x] Lint Redocly réparé (25 sept.) : `"security": []` à la racine (0 erreur au lieu de 52) + 9 exemples/schémas incohérents corrigés (champs `url`, `note`, `wildcard_rules_note` absents du schéma, `null` non déclarés, exemples de paramètres en texte). Reste : `operationId` manquants (52) et réponses 4xx non documentées (39) -- vérifier l'effet d'un `operationId` sur le réimport RapidAPI avant de les ajouter.
-- Rate limit : `url-clean` annonce 60/min mais le seuil réel est ~30/min (count >= 30, +5 échantillonné 1/5) -- vérifier ce décalage message/seuil sur tous les endpoints
+- [x] Audit rate limit (25 sept.) : 48 endpoints publics cohérents seuil/message sauf `url-clean` (seuil 30, message 60) -> seuil relevé à 60. Mécanisme commun : écriture KV échantillonnée 1/5 avec +5, donc limite effective = seuil `count >= N`.
+- **A vérifier -- quota d'écritures KV** : `track.js` écrit dans KV à CHAQUE appel, deux fois (rate limit + compteur), sans échantillonnage. Plan gratuit Cloudflare = 1 000 écritures KV/jour, espace KV partagé par tous les endpoints : si `track` est appelé à chaque usage d'un outil, le quota peut être épuisé et casser tous les rate limits/stats. Vérifier la fréquence d'appel (grep `/api/track` dans tools/) et l'usage KV dans le dashboard Cloudflare avant de modifier.
 - typosquat-check : enrichir la liste organisée (electron, etc.)
 - Continuer le démarchage (nouveaux termes de recherche à chaque session)
 - Ouvrir la note de conception guard-core pour fastapi-guard
