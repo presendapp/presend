@@ -1,4 +1,5 @@
-// GET /api/maintainer-change-check?ecosystem=npm&package=lodash
+// GET  /api/maintainer-change-check?ecosystem=npm&package=lodash
+// POST /api/maintainer-change-check  { "ecosystem": "npm", "packages": ["lodash", ...] }  (batch, max MAX_BATCH)
 //
 // Détecte un signal réel de risque de chaîne d'approvisionnement : un nouveau
 // publieur qui prend le relais d'un paquet après une longue période de
@@ -31,7 +32,7 @@ async function checkRateLimit(env, clientIP, bucket) {
 }
 
 function corsHeaders(extra = {}) {
-  return { 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'GET, OPTIONS', ...extra };
+  return { 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'GET, POST, OPTIONS', 'Access-Control-Allow-Headers': 'Content-Type', ...extra };
 }
 
 const DORMANCY_THRESHOLD_DAYS = 180;
@@ -117,6 +118,48 @@ function analyzeNpm(data, now = Date.now()) {
   };
 }
 
+const MAX_BATCH = 20;
+// Cloudflare limite à 6 le nombre de connexions sortantes simultanées par invocation.
+const FETCH_CONCURRENCY = 6;
+const FETCH_TIMEOUT_MS = 8000;
+const JSON_HEADERS = { 'Content-Type': 'application/json' };
+
+function jsonResponse(obj, status = 200, extra = {}, pretty = false) {
+  return new Response(JSON.stringify(obj, null, pretty ? 2 : 0), { status, headers: { ...JSON_HEADERS, ...corsHeaders(), ...extra } });
+}
+
+// Le timeout couvre toute la réponse, corps compris (certains documents du
+// registre dépassent 15 Mo) -- et pas seulement la réception des en-têtes.
+async function checkPackage(pkg) {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
+  try {
+    const res = await fetch(`https://registry.npmjs.org/${encodeURIComponent(pkg)}`, { signal: controller.signal });
+    if (res.status === 404) return { status: 200, body: { package: pkg, found: false, note: 'Package not found on npm.' } };
+    if (!res.ok) return { status: 502, body: { package: pkg, error: `npm registry error (HTTP ${res.status})` } };
+    const data = await res.json();
+    return { status: 200, body: { package: pkg, ecosystem: 'npm', found: true, ...analyzeNpm(data) } };
+  } catch (e) {
+    if (e.name === 'AbortError') return { status: 504, body: { package: pkg, error: 'npm registry request timed out. Try again shortly.' } };
+    return { status: 502, body: { package: pkg, error: 'Could not complete maintainer change check.', detail: e.message } };
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
+async function mapPool(items, limit, fn) {
+  const out = new Array(items.length);
+  let next = 0;
+  const workers = Array.from({ length: Math.min(limit, items.length) }, async () => {
+    while (next < items.length) {
+      const i = next++;
+      out[i] = await fn(items[i]);
+    }
+  });
+  await Promise.all(workers);
+  return out;
+}
+
 export async function onRequestOptions() {
   return new Response(null, { headers: corsHeaders() });
 }
@@ -126,59 +169,60 @@ export async function onRequestGet(context) {
   const clientIP = request.headers.get('CF-Connecting-IP') || 'unknown';
 
   const allowed = await checkRateLimit(env, clientIP, 'maintainerchangecheck');
-  if (!allowed) {
-    return new Response(JSON.stringify({ error: 'Rate limit exceeded. Max 10 requests per minute.' }), {
-      status: 429, headers: { 'Content-Type': 'application/json', ...corsHeaders() },
-    });
-  }
+  if (!allowed) return jsonResponse({ error: 'Rate limit exceeded. Max 10 requests per minute.' }, 429);
 
   const { searchParams } = new URL(request.url);
   const ecosystem = (searchParams.get('ecosystem') || '').toLowerCase();
   const pkg = (searchParams.get('package') || '').trim();
 
   if (!ecosystem || !pkg) {
-    return new Response(JSON.stringify({
+    return jsonResponse({
       usage: 'GET /api/maintainer-change-check?ecosystem=npm&package=lodash',
-      note: 'Flags a new package publisher appearing after a long period of dormancy -- a documented supply-chain attack pattern (event-stream, ua-parser-js, colors.js). Currently npm only.',
+      batch_usage: `POST /api/maintainer-change-check with {"ecosystem":"npm","packages":["lodash","express"]} (max ${MAX_BATCH} packages, counts as one request)`,
+      note: `Flags a previously unseen human publisher taking over a package after ${DORMANCY_THRESHOLD_DAYS}+ days of inactivity, within the last ${RECENT_WINDOW_DAYS} days (the event-stream pattern). Does not detect a hijacked existing account or a malicious release by an existing maintainer. Currently npm only.`,
       supported_ecosystems: ['npm'],
-    }, null, 2), { headers: { 'Content-Type': 'application/json', ...corsHeaders() } });
+    }, 200, {}, true);
   }
+  if (ecosystem !== 'npm') return jsonResponse({ error: `Ecosystem "${ecosystem}" is not yet supported. Currently supported: npm.` }, 400);
 
-  if (ecosystem !== 'npm') {
-    return new Response(JSON.stringify({
-      error: `Ecosystem "${ecosystem}" is not yet supported. Currently supported: npm.`,
-    }), { status: 400, headers: { 'Content-Type': 'application/json', ...corsHeaders() } });
-  }
+  const { status, body } = await checkPackage(pkg);
+  return jsonResponse(body, status, status === 200 ? { 'Cache-Control': 'public, max-age=3600' } : {}, true);
+}
 
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 8000);
+export async function onRequestPost(context) {
+  const { request, env } = context;
+  const clientIP = request.headers.get('CF-Connecting-IP') || 'unknown';
 
+  const allowed = await checkRateLimit(env, clientIP, 'maintainerchangecheck');
+  if (!allowed) return jsonResponse({ error: 'Rate limit exceeded. Max 10 requests per minute.' }, 429);
+
+  let body;
   try {
-    const res = await fetch(`https://registry.npmjs.org/${encodeURIComponent(pkg)}`, { signal: controller.signal });
-    clearTimeout(timeout);
-
-    if (res.status === 404) {
-      return new Response(JSON.stringify({ package: pkg, found: false, note: 'Package not found on npm.' }), {
-        headers: { 'Content-Type': 'application/json', ...corsHeaders() },
-      });
-    }
-    if (!res.ok) throw new Error(`npm registry error (HTTP ${res.status})`);
-
-    const data = await res.json();
-    const analysis = analyzeNpm(data);
-
-    return new Response(JSON.stringify({ package: pkg, ecosystem: 'npm', found: true, ...analysis }, null, 2), {
-      headers: { 'Content-Type': 'application/json', 'Cache-Control': 'public, max-age=3600', ...corsHeaders() },
-    });
+    body = await request.json();
   } catch (e) {
-    clearTimeout(timeout);
-    if (e.name === 'AbortError') {
-      return new Response(JSON.stringify({ error: 'npm registry request timed out. Try again shortly.' }), {
-        status: 504, headers: { 'Content-Type': 'application/json', ...corsHeaders() },
-      });
-    }
-    return new Response(JSON.stringify({ error: 'Could not complete maintainer change check.', detail: e.message }), {
-      status: 502, headers: { 'Content-Type': 'application/json', ...corsHeaders() },
-    });
+    return jsonResponse({ error: 'Invalid JSON body.' }, 400);
   }
+
+  const usage = `Send {"ecosystem":"npm","packages":["name", ...]} (max ${MAX_BATCH} packages).`;
+  const ecosystem = typeof body?.ecosystem === 'string' ? body.ecosystem.trim().toLowerCase() : '';
+  if (ecosystem !== 'npm') return jsonResponse({ error: 'Missing or unsupported ecosystem. Currently supported: npm.', usage }, 400);
+  const packages = Array.isArray(body?.packages) ? body.packages : null;
+  if (!packages || packages.length === 0) return jsonResponse({ error: 'Missing or empty "packages" array.', usage }, 400);
+  if (packages.length > MAX_BATCH) return jsonResponse({ error: `Too many packages: ${packages.length} (max ${MAX_BATCH} per request).`, usage }, 400);
+
+  const results = await mapPool(packages, FETCH_CONCURRENCY, async (raw) => {
+    const pkg = typeof raw === 'string' ? raw.trim() : '';
+    // 214 = longueur max d'un nom de paquet npm.
+    if (!pkg || pkg.length > 214) return { package: raw, error: 'Invalid package name.' };
+    return (await checkPackage(pkg)).body;
+  });
+
+  return jsonResponse({
+    ecosystem: 'npm',
+    count: results.length,
+    suspicious_count: results.filter((r) => r.suspicious).length,
+    error_count: results.filter((r) => r.error).length,
+    results,
+    recent_window_days: RECENT_WINDOW_DAYS,
+  }, 200, { 'Cache-Control': 'no-store' });
 }
