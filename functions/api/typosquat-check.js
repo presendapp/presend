@@ -1,4 +1,5 @@
-// GET /api/typosquat-check?ecosystem=npm&package=lodas
+// GET  /api/typosquat-check?ecosystem=npm&package=lodas
+// POST /api/typosquat-check  { "ecosystem": "npm", "packages": ["lodas", ...] }  (batch, max MAX_BATCH)
 //
 // Checks a package name against a curated list of well-known npm/PyPI
 // packages using Damerau-Levenshtein edit distance. Flags names that
@@ -42,25 +43,30 @@ async function checkRateLimit(env, clientIP, bucket) {
 }
 
 function corsHeaders(extra = {}) {
-  return { 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'GET, OPTIONS', ...extra };
+  return { 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'GET, POST, OPTIONS', 'Access-Control-Allow-Headers': 'Content-Type', ...extra };
 }
 
+// Trois lignes glissantes réutilisées (au lieu d'une matrice allouée à chaque
+// comparaison) : le mode batch fait ~150 comparaisons par nom, le coût CPU
+// par requête est limité sur Cloudflare.
+let rowA = new Int32Array(64), rowB = new Int32Array(64), rowC = new Int32Array(64);
 function damerauLevenshtein(a, b) {
   const al = a.length, bl = b.length;
   if (Math.abs(al - bl) > 3) return 99; // trop différent, pas la peine de calculer
-  const d = Array.from({ length: al + 1 }, () => new Array(bl + 1).fill(0));
-  for (let i = 0; i <= al; i++) d[i][0] = i;
-  for (let j = 0; j <= bl; j++) d[0][j] = j;
+  if (bl + 1 > rowA.length) { rowA = new Int32Array(bl + 1); rowB = new Int32Array(bl + 1); rowC = new Int32Array(bl + 1); }
+  let prev2 = rowA, prev = rowB, cur = rowC;
+  for (let j = 0; j <= bl; j++) prev[j] = j;
   for (let i = 1; i <= al; i++) {
+    cur[0] = i;
     for (let j = 1; j <= bl; j++) {
       const cost = a[i - 1] === b[j - 1] ? 0 : 1;
-      d[i][j] = Math.min(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + cost);
-      if (i > 1 && j > 1 && a[i - 1] === b[j - 2] && a[i - 2] === b[j - 1]) {
-        d[i][j] = Math.min(d[i][j], d[i - 2][j - 2] + 1);
-      }
+      let v = Math.min(prev[j] + 1, cur[j - 1] + 1, prev[j - 1] + cost);
+      if (i > 1 && j > 1 && a[i - 1] === b[j - 2] && a[i - 2] === b[j - 1]) v = Math.min(v, prev2[j - 2] + 1);
+      cur[j] = v;
     }
+    const t = prev2; prev2 = prev; prev = cur; cur = t;
   }
-  return d[al][bl];
+  return prev[bl];
 }
 
 // Seuil proportionnel à la longueur (plus court des deux noms) : sur un nom
@@ -131,58 +137,109 @@ export async function onRequestOptions() {
   return new Response(null, { headers: corsHeaders() });
 }
 
-export async function onRequestGet(context) {
-  const { request, env } = context;
-  const clientIP = request.headers.get('CF-Connecting-IP') || 'unknown';
+const MAX_BATCH = 100;
+const JSON_HEADERS = { 'Content-Type': 'application/json' };
 
-  const allowed = await checkRateLimit(env, clientIP, 'typosquat-check');
-  if (!allowed) {
-    return new Response(JSON.stringify({ error: 'Rate limit exceeded. Max 10 requests per minute.' }), {
-      status: 429, headers: { 'Content-Type': 'application/json', ...corsHeaders() },
-    });
-  }
+function jsonResponse(obj, status = 200, extra = {}) {
+  return new Response(JSON.stringify(obj), { status, headers: { ...JSON_HEADERS, ...corsHeaders(), ...extra } });
+}
 
-  const { searchParams } = new URL(request.url);
-  const pkg = (searchParams.get('package') || '').trim().toLowerCase();
-  const ecosystemRaw = (searchParams.get('ecosystem') || '').trim();
-  const ecosystem = ecosystemRaw.toLowerCase() === 'npm' ? 'npm'
-    : ['pypi', 'python', 'pip'].includes(ecosystemRaw.toLowerCase()) ? 'PyPI'
-    : null;
+function normalizeEcosystem(raw) {
+  const v = (typeof raw === 'string' ? raw : '').trim().toLowerCase();
+  if (v === 'npm') return 'npm';
+  if (['pypi', 'python', 'pip'].includes(v)) return 'PyPI';
+  return null;
+}
 
-  if (!pkg || !ecosystemRaw) {
-    return new Response(JSON.stringify({
-      usage: 'GET /api/typosquat-check?ecosystem=npm&package=lodas',
-      note: 'Checks the package name against a curated list of well-known packages using edit distance. Supported ecosystems: npm, PyPI.',
-      list_size: { npm: POPULAR.npm.length, PyPI: POPULAR.PyPI.length },
-    }, null, 2), { headers: { 'Content-Type': 'application/json', ...corsHeaders() } });
-  }
-  if (!ecosystem) {
-    return new Response(JSON.stringify({ error: `Unsupported ecosystem "${ecosystemRaw}". Supported: npm, PyPI.` }), {
-      status: 400, headers: { 'Content-Type': 'application/json', ...corsHeaders() },
-    });
-  }
-
+function analyzeName(pkg, ecosystem) {
   const list = POPULAR[ecosystem];
   const matches = [];
   for (const name of list) {
+    const maxD = maxDistanceFor(pkg, name);
+    if (maxD === 0 || Math.abs(pkg.length - name.length) > maxD) continue; // ne peut pas passer le seuil
     const d = damerauLevenshtein(pkg, name);
-    if (d > 0 && d <= maxDistanceFor(pkg, name)) matches.push({ name, distance: d });
+    if (d > 0 && d <= maxD) matches.push({ name, distance: d });
   }
   matches.sort((a, b) => a.distance - b.distance);
-
   const exactMatch = list.includes(pkg);
-
-  return new Response(JSON.stringify({
+  return {
     package: pkg,
     ecosystem,
     is_known_popular_package: exactMatch,
     suspicious: !exactMatch && matches.length > 0,
     similar_to: matches.slice(0, 5),
-    note: exactMatch
-      ? 'This name IS one of the well-known packages checked against -- not a typo.'
-      : matches.length > 0
-        ? 'Name is a near-miss of a well-known package (1 edit for 4-7 character names, 2 for 8+). Verify this is the package you meant to install, not a look-alike.'
-        : 'No close match to any well-known package on this curated list. This does NOT mean the package is safe -- only that it does not resemble a famous name. Pair with vulnerability-check for known CVEs.',
-    source: `Curated list of ~${list.length} well-known ${ecosystem} packages, checked via Damerau-Levenshtein edit distance (transpositions, omissions, insertions, substitutions), threshold scaled to name length; names of 3 characters or fewer are not fuzzy-matched. Not an exhaustive top-N-by-downloads feed.`,
-  }), { headers: { 'Content-Type': 'application/json', 'Cache-Control': 'public, max-age=3600', ...corsHeaders() } });
+  };
+}
+
+function noteFor(r) {
+  if (r.is_known_popular_package) return 'This name IS one of the well-known packages checked against -- not a typo.';
+  if (r.suspicious) return 'Name is a near-miss of a well-known package (1 edit for 4-7 character names, 2 for 8+). Verify this is the package you meant to install, not a look-alike.';
+  return 'No close match to any well-known package on this curated list. This does NOT mean the package is safe -- only that it does not resemble a famous name. Pair with vulnerability-check for known CVEs.';
+}
+
+function sourceFor(ecosystem) {
+  return `Curated list of ~${POPULAR[ecosystem].length} well-known ${ecosystem} packages, checked via Damerau-Levenshtein edit distance (transpositions, omissions, insertions, substitutions), threshold scaled to name length; names of 3 characters or fewer are not fuzzy-matched. Not an exhaustive top-N-by-downloads feed.`;
+}
+
+export async function onRequestGet(context) {
+  const { request, env } = context;
+  const clientIP = request.headers.get('CF-Connecting-IP') || 'unknown';
+
+  const allowed = await checkRateLimit(env, clientIP, 'typosquat-check');
+  if (!allowed) return jsonResponse({ error: 'Rate limit exceeded. Max 10 requests per minute.' }, 429);
+
+  const { searchParams } = new URL(request.url);
+  const pkg = (searchParams.get('package') || '').trim().toLowerCase();
+  const ecosystemRaw = (searchParams.get('ecosystem') || '').trim();
+  const ecosystem = normalizeEcosystem(ecosystemRaw);
+
+  if (!pkg || !ecosystemRaw) {
+    return new Response(JSON.stringify({
+      usage: 'GET /api/typosquat-check?ecosystem=npm&package=lodas',
+      batch_usage: `POST /api/typosquat-check with {"ecosystem":"npm","packages":["lodas","expres"]} (max ${MAX_BATCH} names, counts as one request)`,
+      note: 'Checks the package name against a curated list of well-known packages using edit distance. Supported ecosystems: npm, PyPI.',
+      list_size: { npm: POPULAR.npm.length, PyPI: POPULAR.PyPI.length },
+    }, null, 2), { headers: { ...JSON_HEADERS, ...corsHeaders() } });
+  }
+  if (!ecosystem) return jsonResponse({ error: `Unsupported ecosystem "${ecosystemRaw}". Supported: npm, PyPI.` }, 400);
+
+  const r = analyzeName(pkg, ecosystem);
+  return jsonResponse({ ...r, note: noteFor(r), source: sourceFor(ecosystem) }, 200, { 'Cache-Control': 'public, max-age=3600' });
+}
+
+export async function onRequestPost(context) {
+  const { request, env } = context;
+  const clientIP = request.headers.get('CF-Connecting-IP') || 'unknown';
+
+  const allowed = await checkRateLimit(env, clientIP, 'typosquat-check');
+  if (!allowed) return jsonResponse({ error: 'Rate limit exceeded. Max 10 requests per minute.' }, 429);
+
+  let body;
+  try {
+    body = await request.json();
+  } catch (e) {
+    return jsonResponse({ error: 'Invalid JSON body.' }, 400);
+  }
+
+  const usage = `Send {"ecosystem":"npm"|"pypi","packages":["name", ...]} (max ${MAX_BATCH} names).`;
+  const ecosystem = normalizeEcosystem(body && body.ecosystem);
+  if (!ecosystem) return jsonResponse({ error: 'Missing or unsupported ecosystem. Supported: npm, PyPI.', usage }, 400);
+  const packages = body && Array.isArray(body.packages) ? body.packages : null;
+  if (!packages || packages.length === 0) return jsonResponse({ error: 'Missing or empty "packages" array.', usage }, 400);
+  if (packages.length > MAX_BATCH) return jsonResponse({ error: `Too many packages: ${packages.length} (max ${MAX_BATCH} per request).`, usage }, 400);
+
+  const results = packages.map((raw) => {
+    const pkg = typeof raw === 'string' ? raw.trim().toLowerCase() : '';
+    // 214 = longueur max d'un nom de paquet npm ; borne aussi le coût CPU.
+    if (!pkg || pkg.length > 214) return { package: raw, error: 'Invalid package name.' };
+    return analyzeName(pkg, ecosystem);
+  });
+
+  return jsonResponse({
+    ecosystem,
+    count: results.length,
+    suspicious_count: results.filter((r) => r.suspicious).length,
+    results,
+    source: sourceFor(ecosystem),
+  }, 200, { 'Cache-Control': 'no-store' });
 }
