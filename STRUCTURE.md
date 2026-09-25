@@ -1,45 +1,55 @@
 # Architecture Presend
 
 ## Vue d'ensemble
-Site statique + API serverless sur Cloudflare Pages/Workers.
+Site statique + API serverless sur Cloudflare Pages/Functions (pas de Workers autonomes séparés).
+
+## Source de vérité
+**openapi.json** est la source de vérité pour la liste des endpoints. En cas de doute sur le nombre ou la liste exacte, régénérer depuis ce fichier plutôt que de se fier à un chiffre mentionné dans un document :
+```bash
+python3 -c "import json; d=json.load(open('openapi.json')); print(len(d['paths']))"
+```
 
 ## Frontend (tools/)
-49 outils client-side, HTML/CSS/JS vanilla.
+48 outils client-side, HTML/CSS/JS vanilla, rien n'est envoyé à un serveur pour ces outils-là.
 
-## API (functions/api/)
-57 endpoints par domaine :
+## API (functions/api/) — 48 endpoints (vérifié 25 sept. 2026)
 
-### Email (4)
-email-validate, email-verify, email-disposable, email-security
+### Sécurité & supply-chain
+maintainer-change-check (npm uniquement), vulnerability-check (OSV.dev), typosquat-check, supply-chain-check (combine les 3 précédents + repo-health-check), repo-health-check, malware-check (POST), cve-lookup (recherche directe OSV.dev par ID)
 
-### Securite (7)
-security-scan, security-headers, password-check, password-breach, malware-check, vulnerability-check, cve-lookup
+### Web & réseau
+security-scan, security-headers, url-reputation, ip-reputation, subdomains, redirect-trace, ai-crawler-check, dns-lookup, whois-lookup, link-metadata (Open Graph/Twitter Card)
 
-### Blockchain (3)
-tx-decode, rpc-check, address-risk
+### Email & téléphone
+email-validate, email-verify, email-disposable, email-security, phone-verify
 
-### Reseau (7)
-dns-lookup, whois-lookup, ip, ip-reputation, redirect-trace, subdomains
+### Authentification & mots de passe
+jwt-decode, jwt-verify (POST), password, password-check (POST), password-breach
 
-### Donnees (6)
-csv-json, base64, hash, uuid, timestamp, file-type
+### Blockchain (Cosmos SDK / EVM)
+address-risk (OFAC, **EVM uniquement**), tx-decode (Cosmos SDK, sans dépendance externe), rpc-check (audit CometBFT)
 
-### URL/Web (7)
-url-clean, link-metadata, scrape, favicon, og, qr-scan
+### Fichiers & images
+hash (POST), file-type (POST), clean-image (POST), image-similarity (POST), merge-and-compress-pdf (POST), qr-scan (POST)
 
-### Validation (3)
-iban-validate, vat-validate, phone-verify
+### Validation sans dépendance externe
+iban-validate (ISO 7064 mod-97), vat-validate (VIES officiel UE)
 
-### Divers (20+)
-jwt-decode, jwt-verify, color, image-similarity, text-similarity, etc.
+### Utilitaires divers
+uuid, base64, csv-json (GET+POST), timestamp, color, ip, url-clean (GET+POST), user-agent, favicon, text-similarity (POST)
 
-## Librairies partagees
-- functions/_lib/safe-fetch.js
-- functions/_shared/ : perceptual-hash, simhash, disposable-domains, url-reputation-check
+## Endpoints exclus du MCP (7, binaires/fichiers)
+hash, clean-image, malware-check, file-type, image-similarity, merge-and-compress-pdf, qr-scan — faire transiter du binaire encodé en base64 dans le contexte d'un agent IA est peu pratique.
+
+## Librairies partagées
+- functions/_lib/safe-fetch.js : `validateAndResolve()` — protection SSRF (résolution + validation IP avant fetch, pinning via `cf.resolveOverride`). **Obligatoire** pour tout endpoint qui fetch une URL fournie par l'utilisateur (redirect-trace, link-metadata, security-scan, etc.)
+- functions/mcp.js : serveur MCP, généré/maintenu manuellement en miroir de openapi.json (pas de script de génération automatique retrouvé — vérifier avant d'en supposer un)
 
 ## SEO
-- daily_seo.py, gsc_query.py, gsc_submit.py, indexnow_submit.py
-- sitemap.xml : 162 KB genere automatiquement
+- daily_seo.py, gsc_query.py, gsc_submit.py, indexnow_submit.py, generate-rss.py
 
 ## i18n
-8 langues : fr, en, de, es, ja, pt, ru, hi
+8 langues : en (racine) + fr, de, es, ja, pt, ru, hi. Les traductions ont un historique de retard par rapport à la version anglaise (~17 sections d'écart signalé une fois) — vérifier avant de supposer une parité totale.
+
+## Distribution externe (voir PROJECT_CONTEXT.md pour les détails)
+4 fiches RapidAPI, client npm `presend-api`, serveur MCP au registre officiel, collection Postman synchronisée, page de statut BetterStack.
