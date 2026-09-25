@@ -56,20 +56,102 @@ function ipInCidr(ipInt, rangeInt, bits) {
   return (ipInt & mask) === (rangeInt & mask);
 }
 
-function parseDropList(text) {
-  const entries = [];
+// ---- Copie de la liste DROP -------------------------------------------------
+// Conditions Spamhaus (FAQ DROP) : téléchargements automatisés espacés d'au
+// moins une heure (une fois par jour suffit), sous peine de blocage de l'IP ;
+// la date et le copyright doivent accompagner les données. L'ancienne version
+// téléchargeait drop.txt avec un cache Cloudflare de 30 min PROPRE À CHAQUE
+// datacenter -- soit potentiellement des dizaines de téléchargements par heure.
+// Désormais : une copie globale dans KV, rafraîchie au plus toutes les 12 h,
+// avec un verrou KV d'une heure pour qu'un seul datacenter télécharge.
+const DROP_V4_URL = 'https://www.spamhaus.org/drop/drop_v4.json';
+const KV_DATA_KEY = 'spamhaus-drop:v4';
+const KV_LOCK_KEY = 'spamhaus-drop:v4:lock';
+const REFRESH_AFTER_MS = 12 * 3600 * 1000;
+const LOCK_TTL_S = 3600;
+const MEMORY_TTL_MS = 5 * 60 * 1000;
+const STALE_AFTER_MS = 36 * 3600 * 1000;
+
+let memo = null; // { loadedAt, data, entries } -- cache par instance
+
+function parseDropJson(text) {
+  const records = [];
+  let meta = null;
   for (const line of text.split('\n')) {
-    const trimmed = line.trim();
-    if (!trimmed || trimmed.startsWith(';')) continue;
-    const [cidr, sbl] = trimmed.split(/\s*;\s*/);
-    if (!cidr || !cidr.includes('/')) continue;
+    const t = line.trim();
+    if (!t) continue;
+    let obj;
+    try { obj = JSON.parse(t); } catch (e) { continue; }
+    if (obj.type === 'metadata') { meta = obj; continue; }
+    if (typeof obj.cidr === 'string') records.push([obj.cidr, obj.sblid || null]);
+  }
+  // Une réponse "200" sans métadonnées ni entrées n'est pas une liste vide
+  // valide : on refuse plutôt que de répondre "non listé" sur zéro donnée.
+  if (!meta || records.length === 0) throw new Error('Unexpected DROP JSON format');
+  return { records, timestamp: meta.timestamp || null, copyright: meta.copyright || null, terms: meta.terms || null };
+}
+
+function toEntries(records) {
+  const out = [];
+  for (const [cidr, sbl] of records) {
     const [range, bitsStr] = cidr.split('/');
     const rangeInt = ipToInt(range);
     const bits = parseInt(bitsStr, 10);
-    if (rangeInt === null || isNaN(bits)) continue;
-    entries.push({ cidr, rangeInt, bits, sbl: sbl || null });
+    if (rangeInt === null || isNaN(bits) || bits < 0 || bits > 32) continue;
+    out.push({ cidr, rangeInt, bits, sbl });
   }
-  return entries;
+  return out;
+}
+
+async function downloadDrop() {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 8000);
+  try {
+    const res = await fetch(DROP_V4_URL, {
+      signal: controller.signal,
+      headers: { 'User-Agent': 'Mozilla/5.0 (compatible; PresendBot/1.0; +https://presend.pages.dev)' },
+    });
+    if (!res.ok) throw new Error(`Spamhaus DROP fetch failed (HTTP ${res.status})`);
+    return { ...parseDropJson(await res.text()), fetched_at: Date.now() };
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
+async function loadDrop(env) {
+  const now = Date.now();
+  if (memo && now - memo.loadedAt < MEMORY_TTL_MS) return memo;
+  const kv = env.PRESEND_ANALYTICS;
+
+  let data = memo ? memo.data : null;
+  if (kv) {
+    try { const d = await kv.get(KV_DATA_KEY, 'json'); if (d) data = d; } catch (e) { /* KV indisponible */ }
+  }
+
+  if (!data || now - data.fetched_at > REFRESH_AFTER_MS) {
+    let mayFetch = true;
+    if (kv) {
+      try {
+        if (await kv.get(KV_LOCK_KEY)) mayFetch = false;
+        else await kv.put(KV_LOCK_KEY, String(now), { expirationTtl: LOCK_TTL_S });
+      } catch (e) {
+        mayFetch = !data; // pas de verrou possible : ne télécharger que si on n'a rien
+      }
+    }
+    if (mayFetch) {
+      try {
+        const fresh = await downloadDrop();
+        data = fresh;
+        if (kv) { try { await kv.put(KV_DATA_KEY, JSON.stringify(fresh)); } catch (e) { /* best-effort */ } }
+      } catch (e) {
+        if (!data) throw e; // aucune copie de secours
+      }
+    }
+  }
+
+  if (!data) throw new Error('DROP list not available yet (a refresh is in progress). Try again in a minute.');
+  memo = { loadedAt: now, data, entries: toEntries(data.records) };
+  return memo;
 }
 
 export async function onRequestOptions() {
@@ -104,42 +186,34 @@ export async function onRequestGet(context) {
     });
   }
 
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 8000);
-
+  let drop;
   try {
-    const res = await fetch('https://www.spamhaus.org/drop/drop.txt', {
-      signal: controller.signal,
-      headers: { 'User-Agent': 'Mozilla/5.0 (compatible; PresendBot/1.0; +https://presend.pages.dev)' },
-      cf: { cacheTtl: 1800, cacheEverything: true },
-    });
-    clearTimeout(timeout);
-    if (!res.ok) throw new Error(`Spamhaus DROP fetch failed (HTTP ${res.status})`);
-
-    const text = await res.text();
-    const entries = parseDropList(text);
-    const match = entries.find((e) => ipInCidr(ipInt, e.rangeInt, e.bits));
-
-    return new Response(JSON.stringify({
-      ip,
-      listed: !!match,
-      matched_range: match ? match.cidr : null,
-      reference: match ? match.sbl : null,
-      list_size: entries.length,
-      source: 'Spamhaus DROP (Don\'t Route Or Peer) -- netblocks known to be entirely spam/hijacker-controlled. IPv4 only, updated roughly hourly.',
-      note: match
-        ? 'This IP falls within a netblock Spamhaus lists as entirely controlled by spammers or hijackers.'
-        : 'Not on Spamhaus DROP. This is one specific list, not a full reputation score -- a clean result does not guarantee the IP is safe.',
-    }), { headers: { 'Content-Type': 'application/json', 'Cache-Control': 'public, max-age=900', ...corsHeaders() } });
+    drop = await loadDrop(env);
   } catch (e) {
-    clearTimeout(timeout);
-    if (e.name === 'AbortError') {
-      return new Response(JSON.stringify({ error: 'Spamhaus DROP request timed out. Try again shortly.' }), {
-        status: 504, headers: { 'Content-Type': 'application/json', ...corsHeaders() },
-      });
-    }
-    return new Response(JSON.stringify({ error: 'Could not complete IP reputation check.', detail: e.message }), {
-      status: 502, headers: { 'Content-Type': 'application/json', ...corsHeaders() },
-    });
+    const timedOut = e.name === 'AbortError';
+    return new Response(JSON.stringify({
+      error: timedOut ? 'Spamhaus DROP request timed out. Try again shortly.' : 'DROP list temporarily unavailable.',
+      detail: timedOut ? undefined : e.message,
+    }), { status: timedOut ? 504 : 503, headers: { 'Content-Type': 'application/json', ...corsHeaders() } });
   }
+
+  const match = drop.entries.find((e) => ipInCidr(ipInt, e.rangeInt, e.bits));
+  const ageMs = Date.now() - drop.data.fetched_at;
+
+  return new Response(JSON.stringify({
+    ip,
+    listed: !!match,
+    matched_range: match ? match.cidr : null,
+    reference: match ? match.sbl : null,
+    list_size: drop.entries.length,
+    list_date: drop.data.timestamp ? new Date(drop.data.timestamp * 1000).toISOString().slice(0, 10) : null,
+    data_age_hours: Math.round(ageMs / 360000) / 10,
+    stale: ageMs > STALE_AFTER_MS,
+    source: 'Spamhaus DROP (Don\'t Route Or Peer) -- netblocks known to be hijacked or controlled by spam/cyber-crime operations. IPv4 only. Spamhaus re-evaluates listings daily; this service refreshes its copy at most every 12 hours.',
+    attribution: drop.data.copyright,
+    terms: drop.data.terms,
+    note: match
+      ? 'This IP falls within a netblock Spamhaus lists as hijacked or controlled by spam/cyber-crime operations.'
+      : 'Not on Spamhaus DROP. This is one specific list, not a full reputation score -- a clean result does not guarantee the IP is safe.',
+  }), { headers: { 'Content-Type': 'application/json', 'Cache-Control': 'public, max-age=900', ...corsHeaders() } });
 }
