@@ -3777,7 +3777,7 @@
             "name": "tx",
             "in": "query",
             "required": true,
-            "schema": {
+            "schema": { "example": "CuYDCqEBCiUvY29zbW9zLnN0YWtpbmcudjFiZXRhMS5Nc2dVbmRlbGVnYXRlEngKLWNvc21vczFjNG16ajdhdTg3bm1qNHNzZWx4bGRwcWRrbjc5cHZ1ZXM2NHBtNxI0Y29zbW9zdmFsb3BlcjFmZjBkdzhrYXdzbnhrcmdqN3A2NWt2dzdqeHhha3lmOG41ODNneBoRCgV1YXRvbRIIMTAwMDc5OTgKnQEKJS9jb3Ntb3Muc3Rha2luZy52MWJldGExLk1zZ1VuZGVsZWdhdGUSdAotY29zbW9zMWM0bXpqN2F1ODdubWo0c3NlbHhsZHBxZGtuNzlwdnVlczY0cG03EjRjb3Ntb3N2YWxvcGVyMTAycnV2cHYyc3JtdW5mZmZ4YXZ0dHhuaGV6bG42Zm5jNTRhdDhjGg0KBXVhdG9tEgQyNTY1Cp8BCiUvY29zbW9zLnN0YWtpbmcudjFiZXRhMS5Nc2dVbmRlbGVnYXRlEnYKLWNvc21vczFjNG16ajdhdTg3bm1qNHNzZWx4bGRwcWRrbjc5cHZ1ZXM2NHBtNxI0Y29zbW9zdmFsb3BlcjEwd2xqeHBsMDMwNTNoOTY5MGFwbXllYWtseTN5bGhlanJ1Y3Z0bRoPCgV1YXRvbRIGMzQwMDAwEmgKUApGCh8vY29zbW9zLmNyeXB0by5zZWNwMjU2azEuUHViS2V5EiMKIQI7ZbLGHK+7zfRSXqRGcxwFlGQywiNxHSw6x98l8IROyxIECgIIARgPEhQKDgoFdWF0b20SBTIwMDg1EInLehpA1osMdhghyuDtm5Fo/mcBsv+mtq11yzWtJitfbuy2v1MFxllKQZ2iifqkJmtVwpwcjCDh8+JtBFHuD4k60938EA==",
               "type": "string"
             },
             "description": "Base64-encoded Cosmos SDK TxRaw protobuf bytes, as returned by any chain's CometBFT RPC /block (result.block.data.txs[]) or /tx_search endpoints."
