@@ -64,15 +64,59 @@ function ipInCidr(ipInt, rangeInt, bits) {
 // datacenter -- soit potentiellement des dizaines de téléchargements par heure.
 // Désormais : une copie globale dans KV, rafraîchie au plus toutes les 12 h,
 // avec un verrou KV d'une heure pour qu'un seul datacenter télécharge.
-const DROP_V4_URL = 'https://www.spamhaus.org/drop/drop_v4.json';
-const KV_DATA_KEY = 'spamhaus-drop:v4';
-const KV_LOCK_KEY = 'spamhaus-drop:v4:lock';
+// Une copie et un verrou par famille d'adresses. Les clés v4 sont inchangées
+// (changer leur structure déclencherait un nouveau téléchargement immédiat).
+// La liste v6 n'est téléchargée qu'à la première requête IPv6.
+const FAMILIES = {
+  4: { url: 'https://www.spamhaus.org/drop/drop_v4.json', kvKey: 'spamhaus-drop:v4', lockKey: 'spamhaus-drop:v4:lock' },
+  6: { url: 'https://www.spamhaus.org/drop/drop_v6.json', kvKey: 'spamhaus-drop:v6', lockKey: 'spamhaus-drop:v6:lock' },
+};
 const REFRESH_AFTER_MS = 12 * 3600 * 1000;
 const LOCK_TTL_S = 3600;
 const MEMORY_TTL_MS = 5 * 60 * 1000;
 const STALE_AFTER_MS = 36 * 3600 * 1000;
 
-let memo = null; // { loadedAt, data, entries } -- cache par instance
+const memos = { 4: null, 6: null }; // { loadedAt, data, entries } -- cache par instance
+
+// IPv6 -> BigInt (128 bits). Accepte la compression "::" et une adresse IPv4
+// finale (::ffff:1.2.3.4). Refuse zones (%eth0), crochets, groupes > 4 chiffres
+// hexadécimaux, "::" multiples, nombre de groupes incorrect.
+function ipv6ToBigInt(ip) {
+  if (typeof ip !== 'string' || ip.length < 2 || ip.length > 45 || !/^[0-9a-fA-F:.]+$/.test(ip)) return null;
+  if (ip.indexOf('::') !== ip.lastIndexOf('::')) return null;
+  let s = ip;
+  let tail4 = null;
+  let limit = 8;
+  if (s.includes('.')) {
+    const k = s.lastIndexOf(':');
+    if (k < 0) return null;
+    tail4 = ipToInt(s.slice(k + 1));
+    if (tail4 === null) return null;
+    s = s.slice(0, k + 1);
+    if (!s.endsWith('::')) s = s.slice(0, -1);
+    limit = 6;
+  }
+  const split = (part) => (part === '' ? [] : part.split(':'));
+  let groups;
+  if (s.includes('::')) {
+    const [l, r] = s.split('::');
+    const L = split(l);
+    const R = split(r);
+    const missing = limit - L.length - R.length;
+    if (missing < 1) return null;
+    groups = [...L, ...Array(missing).fill('0'), ...R];
+  } else {
+    groups = split(s);
+    if (groups.length !== limit) return null;
+  }
+  let v = 0n;
+  for (const g of groups) {
+    if (!/^[0-9a-fA-F]{1,4}$/.test(g)) return null;
+    v = (v << 16n) | BigInt(parseInt(g, 16));
+  }
+  if (tail4 !== null) v = (v << 32n) | BigInt(tail4);
+  return v;
+}
 
 function parseDropJson(text) {
   const records = [];
@@ -91,23 +135,31 @@ function parseDropJson(text) {
   return { records, timestamp: meta.timestamp || null, copyright: meta.copyright || null, terms: meta.terms || null };
 }
 
-function toEntries(records) {
+function toEntries(records, family) {
   const out = [];
   for (const [cidr, sbl] of records) {
     const [range, bitsStr] = cidr.split('/');
-    const rangeInt = ipToInt(range);
     const bits = parseInt(bitsStr, 10);
-    if (rangeInt === null || isNaN(bits) || bits < 0 || bits > 32) continue;
-    out.push({ cidr, rangeInt, bits, sbl });
+    if (family === 4) {
+      const rangeInt = ipToInt(range);
+      if (rangeInt === null || isNaN(bits) || bits < 0 || bits > 32) continue;
+      out.push({ cidr, sbl, match: (ip) => ipInCidr(ip, rangeInt, bits) });
+    } else {
+      const rangeBig = ipv6ToBigInt(range);
+      if (rangeBig === null || isNaN(bits) || bits < 0 || bits > 128) continue;
+      const shift = BigInt(128 - bits);
+      const prefix = rangeBig >> shift;
+      out.push({ cidr, sbl, match: (ip) => (ip >> shift) === prefix });
+    }
   }
   return out;
 }
 
-async function downloadDrop() {
+async function downloadDrop(url) {
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 8000);
   try {
-    const res = await fetch(DROP_V4_URL, {
+    const res = await fetch(url, {
       signal: controller.signal,
       headers: { 'User-Agent': 'Mozilla/5.0 (compatible; PresendBot/1.0; +https://presend.pages.dev)' },
     });
@@ -118,31 +170,33 @@ async function downloadDrop() {
   }
 }
 
-async function loadDrop(env) {
+async function loadDrop(env, family) {
+  const cfg = FAMILIES[family];
   const now = Date.now();
+  const memo = memos[family];
   if (memo && now - memo.loadedAt < MEMORY_TTL_MS) return memo;
   const kv = env.PRESEND_ANALYTICS;
 
   let data = memo ? memo.data : null;
   if (kv) {
-    try { const d = await kv.get(KV_DATA_KEY, 'json'); if (d) data = d; } catch (e) { /* KV indisponible */ }
+    try { const d = await kv.get(cfg.kvKey, 'json'); if (d) data = d; } catch (e) { /* KV indisponible */ }
   }
 
   if (!data || now - data.fetched_at > REFRESH_AFTER_MS) {
     let mayFetch = true;
     if (kv) {
       try {
-        if (await kv.get(KV_LOCK_KEY)) mayFetch = false;
-        else await kv.put(KV_LOCK_KEY, String(now), { expirationTtl: LOCK_TTL_S });
+        if (await kv.get(cfg.lockKey)) mayFetch = false;
+        else await kv.put(cfg.lockKey, String(now), { expirationTtl: LOCK_TTL_S });
       } catch (e) {
         mayFetch = !data; // pas de verrou possible : ne télécharger que si on n'a rien
       }
     }
     if (mayFetch) {
       try {
-        const fresh = await downloadDrop();
+        const fresh = await downloadDrop(cfg.url);
         data = fresh;
-        if (kv) { try { await kv.put(KV_DATA_KEY, JSON.stringify(fresh)); } catch (e) { /* best-effort */ } }
+        if (kv) { try { await kv.put(cfg.kvKey, JSON.stringify(fresh)); } catch (e) { /* best-effort */ } }
       } catch (e) {
         if (!data) throw e; // aucune copie de secours
       }
@@ -150,8 +204,8 @@ async function loadDrop(env) {
   }
 
   if (!data) throw new Error('DROP list not available yet (a refresh is in progress). Try again in a minute.');
-  memo = { loadedAt: now, data, entries: toEntries(data.records) };
-  return memo;
+  memos[family] = { loadedAt: now, data, entries: toEntries(data.records, family) };
+  return memos[family];
 }
 
 export async function onRequestOptions() {
@@ -175,20 +229,26 @@ export async function onRequestGet(context) {
   if (!ip) {
     return new Response(JSON.stringify({
       usage: 'GET /api/ip-reputation?ip=1.2.3.4',
-      note: 'Checks against Spamhaus DROP (known spam/hijacked netblocks). IPv4 only. A clean result means not on this specific list, not a full-spectrum safety guarantee.',
+      note: 'Checks against Spamhaus DROP (known spam/hijacked netblocks), IPv4 and IPv6. A clean result means not on this specific list, not a full-spectrum safety guarantee.',
     }, null, 2), { headers: { 'Content-Type': 'application/json', ...corsHeaders() } });
   }
 
-  const ipInt = ipToInt(ip);
-  if (ipInt === null) {
-    return new Response(JSON.stringify({ error: 'Invalid or unsupported IP format. IPv4 only, e.g. 1.2.3.4.' }), {
-      status: 400, headers: { 'Content-Type': 'application/json', ...corsHeaders() },
-    });
+  // IPv4, IPv6, ou IPv4 encapsulée (::ffff:1.2.3.4), vérifiée contre la liste v4.
+  let family = 4;
+  let value = ipToInt(ip);
+  if (value === null) {
+    const v6 = ipv6ToBigInt(ip);
+    if (v6 === null) {
+      return new Response(JSON.stringify({ error: 'Invalid IP address. Expected IPv4 (e.g. 1.2.3.4) or IPv6 (e.g. 2001:db8::1).' }), {
+        status: 400, headers: { 'Content-Type': 'application/json', ...corsHeaders() },
+      });
+    }
+    if ((v6 >> 32n) === 0xffffn) { value = Number(v6 & 0xffffffffn); } else { family = 6; value = v6; }
   }
 
   let drop;
   try {
-    drop = await loadDrop(env);
+    drop = await loadDrop(env, family);
   } catch (e) {
     const timedOut = e.name === 'AbortError';
     return new Response(JSON.stringify({
@@ -197,11 +257,12 @@ export async function onRequestGet(context) {
     }), { status: timedOut ? 504 : 503, headers: { 'Content-Type': 'application/json', ...corsHeaders() } });
   }
 
-  const match = drop.entries.find((e) => ipInCidr(ipInt, e.rangeInt, e.bits));
+  const match = drop.entries.find((e) => e.match(value));
   const ageMs = Date.now() - drop.data.fetched_at;
 
   return new Response(JSON.stringify({
     ip,
+    ip_version: family,
     listed: !!match,
     matched_range: match ? match.cidr : null,
     reference: match ? match.sbl : null,
@@ -209,7 +270,7 @@ export async function onRequestGet(context) {
     list_date: drop.data.timestamp ? new Date(drop.data.timestamp * 1000).toISOString().slice(0, 10) : null,
     data_age_hours: Math.round(ageMs / 360000) / 10,
     stale: ageMs > STALE_AFTER_MS,
-    source: 'Spamhaus DROP (Don\'t Route Or Peer) -- netblocks known to be hijacked or controlled by spam/cyber-crime operations. IPv4 only. Spamhaus re-evaluates listings daily; this service refreshes its copy at most every 12 hours.',
+    source: 'Spamhaus DROP (Don\'t Route Or Peer) -- netblocks known to be hijacked or controlled by spam/cyber-crime operations. IPv4 and IPv6 (separate lists). Spamhaus re-evaluates listings daily; this service refreshes its copy at most every 12 hours.',
     attribution: drop.data.copyright,
     terms: drop.data.terms,
     note: match

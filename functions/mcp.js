@@ -106,7 +106,7 @@ const TOOLS = [
   {
     name: 'ip_reputation',
     description: "IP reputation check against a curated list of known spam/hijacker netblocks",
-    inputSchema: {"type": "object", "properties": {"ip": {"type": "string", "description": "IPv4 address to check against a curated list of known spam/hijacker netblocks."}}, "required": ["ip"]},
+    inputSchema: {"type": "object", "properties": {"ip": {"type": "string", "description": "IPv4 or IPv6 address to check (IPv4-mapped IPv6 such as ::ffff:1.2.3.4 is checked against the IPv4 list) against a curated list of known hijacked or cyber-crime-controlled netblocks."}}, "required": ["ip"]},
     request: (args) => ({ method: 'GET', url: `${API_BASE}/ip-reputation?${new URLSearchParams(args).toString()}` }),
   },
   {

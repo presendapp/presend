@@ -3639,7 +3639,7 @@
     "/ip-reputation": {
       "get": {
         "summary": "IP reputation check against a curated blocklist",
-        "description": "Checks an IPv4 address against a curated list of netblocks known to be hijacked or controlled by spam/cyber-crime operations. The list copy is refreshed at most every 12 hours; the response includes the list date, attribution and a stale flag if the upstream source has been unreachable for over 36 hours. Free, no signup.",
+        "description": "Checks an IPv4 or IPv6 address against a curated list of netblocks known to be hijacked or controlled by spam/cyber-crime operations. The list copy is refreshed at most every 12 hours; the response includes the list date, attribution and a stale flag if the upstream source has been unreachable for over 36 hours. Free, no signup.",
         "parameters": [
           {
             "name": "ip",
@@ -3649,7 +3649,7 @@
               "type": "string",
               "example": "1.2.3.4"
             },
-            "description": "IPv4 address to check against a curated list of known spam/hijacker netblocks."
+            "description": "IPv4 or IPv6 address to check (IPv4-mapped IPv6 such as ::ffff:1.2.3.4 is checked against the IPv4 list) against a curated list of known hijacked or cyber-crime-controlled netblocks."
           }
         ],
         "responses": {
@@ -3663,7 +3663,7 @@
                     "ip": {
                       "type": "string"
                     },
-                    "listed": {
+                    "ip_version": {"type": "integer", "enum": [4, 6]}, "listed": {
                       "type": "boolean"
                     },
                     "matched_range": {
@@ -3684,7 +3684,7 @@
                   }
                 },
                 "example": {
-                  "ip": "1.19.100.100",
+                  "ip": "1.19.100.100", "ip_version": 4,
                   "listed": true,
                   "matched_range": "1.19.0.0/16",
                   "reference": "SBL434604",
@@ -3692,7 +3692,7 @@
                   "list_date": "2026-09-25",
                   "data_age_hours": 2.4,
                   "stale": false,
-                  "source": "Spamhaus DROP (Don't Route Or Peer) -- netblocks known to be hijacked or controlled by spam/cyber-crime operations. IPv4 only. Spamhaus re-evaluates listings daily; this service refreshes its copy at most every 12 hours.",
+                  "source": "Spamhaus DROP (Don't Route Or Peer) -- netblocks known to be hijacked or controlled by spam/cyber-crime operations. IPv4 and IPv6 (separate lists). Spamhaus re-evaluates listings daily; this service refreshes its copy at most every 12 hours.",
                   "attribution": "(c) 2026 The Spamhaus Project SLU",
                   "terms": "https://www.spamhaus.org/drop/terms/",
                   "note": "This IP falls within a netblock Spamhaus lists as entirely controlled by spammers or hijackers."
