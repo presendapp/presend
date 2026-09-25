@@ -35,8 +35,20 @@ function corsHeaders(extra = {}) {
 }
 
 const DORMANCY_THRESHOLD_DAYS = 180;
+// Seuls les événements récents rendent un paquet "suspicious" : sans fenêtre,
+// 17 paquets sains sur 22 testés (react, express, lodash, debug, ms...) étaient
+// signalés pour des passations légitimes datant parfois de 2013.
+const RECENT_WINDOW_DAYS = 365;
+// Publication par CI (trusted publishing OIDC, bots de release) : passer à la CI
+// après une pause est typiquement une amélioration de sécurité, pas une prise de
+// contrôle -- rapporté à part, sans déclencher "suspicious".
+const CI_PUBLISHER_RE = /^github actions$|(^|[-_])(bot|ci|ops|release|deploys?|actions)([-_]|$)/i;
 
-function analyzeNpm(data) {
+function isCiPublisher(name) {
+  return CI_PUBLISHER_RE.test(name || '');
+}
+
+function analyzeNpm(data, now = Date.now()) {
   const currentMaintainers = (data.maintainers || []).map((m) => m.name);
 
   const timeEntries = Object.entries(data.time || {})
@@ -45,7 +57,7 @@ function analyzeNpm(data) {
       const npmUser = data.versions?.[version]?._npmUser?.name || null;
       return { version, publishedAt: new Date(publishedAt), publisher: npmUser };
     })
-    .filter((v) => v.publisher)
+    .filter((v) => v.publisher && v.publishedAt.getTime() <= now)
     .sort((a, b) => a.publishedAt - b.publishedAt);
 
   if (timeEntries.length === 0) {
@@ -54,25 +66,38 @@ function analyzeNpm(data) {
 
   const seenPublishers = new Set();
   const flaggedEvents = [];
+  const ciEvents = [];
+  const prereleaseEvents = [];
+  let historicalCount = 0;
+  const windowStart = now - RECENT_WINDOW_DAYS * 86400000;
 
   for (let i = 0; i < timeEntries.length; i++) {
     const entry = timeEntries[i];
     const isNewPublisher = !seenPublishers.has(entry.publisher);
     seenPublishers.add(entry.publisher);
+    if (i === 0 || !isNewPublisher) continue;
 
-    if (i > 0 && isNewPublisher) {
-      const prev = timeEntries[i - 1];
-      const gapDays = Math.round((entry.publishedAt - prev.publishedAt) / 86400000);
-      if (gapDays >= DORMANCY_THRESHOLD_DAYS) {
-        flaggedEvents.push({
-          version: entry.version,
-          publisher: entry.publisher,
-          published: entry.publishedAt.toISOString().slice(0, 10),
-          previous_publisher: prev.publisher,
-          dormancy_days: gapDays,
-          reason: 'New publisher took over after a long period of inactivity.',
-        });
-      }
+    const prev = timeEntries[i - 1];
+    const gapDays = Math.round((entry.publishedAt - prev.publishedAt) / 86400000);
+    if (gapDays < DORMANCY_THRESHOLD_DAYS) continue;
+
+    const event = {
+      version: entry.version,
+      publisher: entry.publisher,
+      published: entry.publishedAt.toISOString().slice(0, 10),
+      previous_publisher: prev.publisher,
+      dormancy_days: gapDays,
+    };
+    if (entry.publishedAt.getTime() < windowStart) {
+      historicalCount++;
+    } else if (entry.version.includes('-')) {
+      // Pré-version semver : jamais résolue par une plage classique (^x.y.z),
+      // donc hors du chemin d'installation par défaut -- visible, pas "suspicious".
+      prereleaseEvents.push({ ...event, reason: 'New publisher on a pre-release version (not installed by default semver ranges).' });
+    } else if (isCiPublisher(entry.publisher)) {
+      ciEvents.push({ ...event, reason: 'Publishing moved to a CI/automation identity after inactivity (often trusted publishing adoption).' });
+    } else {
+      flaggedEvents.push({ ...event, reason: 'New publisher took over after a long period of inactivity.' });
     }
   }
 
@@ -84,7 +109,11 @@ function analyzeNpm(data) {
     latest_version: { version: latest.version, publisher: latest.publisher, published: latest.publishedAt.toISOString().slice(0, 10) },
     suspicious: flaggedEvents.length > 0,
     flagged_events: flaggedEvents,
-    note: 'Heuristic signal for manual review, not proof of compromise. A flagged event can be a legitimate maintainer handoff.',
+    ci_publisher_events: ciEvents,
+    prerelease_events: prereleaseEvents,
+    historical_events_count: historicalCount,
+    recent_window_days: RECENT_WINDOW_DAYS,
+    note: `Flags a previously unseen human publisher taking over after ${DORMANCY_THRESHOLD_DAYS}+ days of inactivity, within the last ${RECENT_WINDOW_DAYS} days. Heuristic signal for manual review, not proof of compromise. Does not detect a hijacked existing account or a malicious release by an existing maintainer.`,
   };
 }
 
