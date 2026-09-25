@@ -63,6 +63,18 @@ function damerauLevenshtein(a, b) {
   return d[al][bl];
 }
 
+// Seuil proportionnel à la longueur (plus court des deux noms) : sur un nom
+// de 2-3 lettres, 1-2 éditions changent la moitié du nom ou plus -- "ms" et
+// "qs" (parmi les paquets npm les plus téléchargés) sortaient "suspects" car à
+// 1 édition de "ws". Tradeoff assumé : les noms de 3 caractères ou moins ne
+// sont pas comparés approximativement.
+function maxDistanceFor(a, b) {
+  const len = Math.min(a.length, b.length);
+  if (len <= 3) return 0;
+  if (len <= 7) return 1;
+  return 2;
+}
+
 // Listes organisées manuellement -- paquets véritablement emblématiques,
 // pas un flux "top N par téléchargements" (voir note en tête de fichier).
 const POPULAR = {
@@ -154,7 +166,7 @@ export async function onRequestGet(context) {
   const matches = [];
   for (const name of list) {
     const d = damerauLevenshtein(pkg, name);
-    if (d > 0 && d <= 2) matches.push({ name, distance: d });
+    if (d > 0 && d <= maxDistanceFor(pkg, name)) matches.push({ name, distance: d });
   }
   matches.sort((a, b) => a.distance - b.distance);
 
@@ -169,8 +181,8 @@ export async function onRequestGet(context) {
     note: exactMatch
       ? 'This name IS one of the well-known packages checked against -- not a typo.'
       : matches.length > 0
-        ? 'Name is within edit-distance 2 of a well-known package. Verify this is the package you meant to install, not a look-alike.'
+        ? 'Name is a near-miss of a well-known package (1 edit for 4-7 character names, 2 for 8+). Verify this is the package you meant to install, not a look-alike.'
         : 'No close match to any well-known package on this curated list. This does NOT mean the package is safe -- only that it does not resemble a famous name. Pair with vulnerability-check for known CVEs.',
-    source: `Curated list of ~${list.length} well-known ${ecosystem} packages, checked via Damerau-Levenshtein edit distance (transpositions, omissions, insertions, substitutions). Not an exhaustive top-N-by-downloads feed.`,
+    source: `Curated list of ~${list.length} well-known ${ecosystem} packages, checked via Damerau-Levenshtein edit distance (transpositions, omissions, insertions, substitutions), threshold scaled to name length; names of 3 characters or fewer are not fuzzy-matched. Not an exhaustive top-N-by-downloads feed.`,
   }), { headers: { 'Content-Type': 'application/json', 'Cache-Control': 'public, max-age=3600', ...corsHeaders() } });
 }
