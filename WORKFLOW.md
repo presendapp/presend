@@ -6,6 +6,13 @@
 3. ROADMAP.md — état réel des choses en cours (conversations actives, démarchage, divulgations)
 4. Ce fichier (WORKFLOW.md)
 
+## En tout début de session (avant toute chose)
+La vraie liste des cibles de démarchage et leur état (réponses, fermetures) vit sur GitHub, pas dans un fichier statique qui deviendrait vite obsolète. Lancer systématiquement :
+```bash
+gh search issues --author=presendapp --json repository,title,number,state,url,updatedAt,commentsCount --limit 100
+```
+Ça donne la liste à jour de toutes les cibles déjà contactées (ne jamais re-démarcher une cible déjà présente dans cette liste) et permet de repérer d'éventuelles nouvelles réponses de mainteneurs à traiter avant de commencer une nouvelle tâche.
+
 ## Avant de commencer une tâche
 - Les chiffres (nombre d'endpoints, d'outils, etc.) peuvent devenir obsolètes vite sur ce projet — en cas de doute, régénérer depuis openapi.json plutôt que de faire confiance à un document.
 - Vérifier ROADMAP.md pour ne pas re-proposer quelque chose déjà en cours ailleurs (ex : ne pas re-contacter une cible de démarchage déjà traitée).
