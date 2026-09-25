@@ -15,7 +15,10 @@
 // même façon, donc pas encore supporté ici plutôt que de construire quelque
 // chose de moins fiable.
 
-async function checkRateLimit(env, clientIP, bucket) {
+// exact=true : écriture à chaque appel (+1). Utilisé pour les POST batch : peu
+// fréquents, et l'échantillonnage (+5 une fois sur 5) donnait ~18 % de 429
+// fantômes au 5e appel sous une limite de 10/min.
+async function checkRateLimit(env, clientIP, bucket, exact = false) {
   if (!env.PRESEND_ANALYTICS) return true;
   try {
     const now = Math.floor(Date.now() / 60000);
@@ -23,7 +26,9 @@ async function checkRateLimit(env, clientIP, bucket) {
     let count = await env.PRESEND_ANALYTICS.get(rateKey);
     count = count ? parseInt(count) : 0;
     if (count >= 10) return false;
-    if (Math.random() < 1 / 5) {
+    if (exact) {
+      await env.PRESEND_ANALYTICS.put(rateKey, (count + 1).toString(), { expirationTtl: 120 });
+    } else if (Math.random() < 1 / 5) {
       await env.PRESEND_ANALYTICS.put(rateKey, (count + 5).toString(), { expirationTtl: 120 });
     }
   } catch (e) {
@@ -194,7 +199,7 @@ export async function onRequestPost(context) {
   const { request, env } = context;
   const clientIP = request.headers.get('CF-Connecting-IP') || 'unknown';
 
-  const allowed = await checkRateLimit(env, clientIP, 'maintainerchangecheck');
+  const allowed = await checkRateLimit(env, clientIP, 'maintainerchangecheck', true);
   if (!allowed) return jsonResponse({ error: 'Rate limit exceeded. Max 10 requests per minute.' }, 429);
 
   let body;

@@ -22,7 +22,10 @@
 // risks with the same underlying question -- should I trust this
 // dependency name I'm about to install.
 
-async function checkRateLimit(env, clientIP, bucket) {
+// exact=true : écriture à chaque appel (+1). Utilisé pour les POST batch : peu
+// fréquents, et l'échantillonnage (+5 une fois sur 5) donnait ~18 % de 429
+// fantômes au 5e appel sous une limite de 10/min.
+async function checkRateLimit(env, clientIP, bucket, exact = false) {
   if (!env.PRESEND_ANALYTICS) return true;
   try {
     const now = Math.floor(Date.now() / 60000);
@@ -32,7 +35,9 @@ async function checkRateLimit(env, clientIP, bucket) {
     if (count >= 10) return false;
     // Écriture échantillonnée (1 sur 5) pour économiser le quota KV --
     // légèrement moins précis en rafale, mais protège toujours contre un abus soutenu.
-    if (Math.random() < 1 / 5) {
+    if (exact) {
+      await env.PRESEND_ANALYTICS.put(rateKey, (count + 1).toString(), { expirationTtl: 120 });
+    } else if (Math.random() < 1 / 5) {
       await env.PRESEND_ANALYTICS.put(rateKey, (count + 5).toString(), { expirationTtl: 120 });
     }
   } catch (e) {
@@ -211,7 +216,7 @@ export async function onRequestPost(context) {
   const { request, env } = context;
   const clientIP = request.headers.get('CF-Connecting-IP') || 'unknown';
 
-  const allowed = await checkRateLimit(env, clientIP, 'typosquat-check');
+  const allowed = await checkRateLimit(env, clientIP, 'typosquat-check', true);
   if (!allowed) return jsonResponse({ error: 'Rate limit exceeded. Max 10 requests per minute.' }, 429);
 
   let body;
