@@ -39,8 +39,8 @@ iban-validate (ISO 7064 mod-97), vat-validate (VIES officiel UE)
 ### Utilitaires divers
 uuid, base64, csv-json (GET+POST), timestamp, color, ip, url-clean (GET+POST), user-agent, favicon, text-similarity (POST)
 
-## Endpoints exclus du MCP (7, binaires/fichiers)
-hash, clean-image, malware-check, file-type, image-similarity, merge-and-compress-pdf, qr-scan — faire transiter du binaire encodé en base64 dans le contexte d'un agent IA est peu pratique.
+## Endpoints exclus du MCP (8 : 7 binaires/fichiers + `ip`)
+hash, clean-image, malware-check, file-type, image-similarity, merge-and-compress-pdf, qr-scan — faire transiter du binaire encodé en base64 dans le contexte d'un agent IA est peu pratique. Et `ip` (retiré le 25 sept.) : il renvoie l'IP de l'appelant, qui via MCP est notre propre serveur Cloudflare (voir leçon n°11).
 
 ## Librairies partagées
 - functions/_lib/safe-fetch.js : `validateAndResolve()` — protection SSRF (résolution + validation IP avant fetch, pinning via `cf.resolveOverride`). **Obligatoire** pour tout endpoint qui fetch une URL fournie par l'utilisateur (redirect-trace, link-metadata, security-scan, etc.)

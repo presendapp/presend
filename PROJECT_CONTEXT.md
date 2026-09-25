@@ -17,7 +17,7 @@ Presend propose des micro-outils IT gratuits, respectueux de la vie privée, san
 ## Chiffres clés (vérifiés le 25 septembre 2026 — toujours revérifier avant de les citer, ce projet a un historique de compteurs qui deviennent obsolètes)
 - **48 endpoints API** (functions/api/, voir openapi.json — source de vérité)
 - **48 outils navigateur** (tools/*.html)
-- **41 outils exposés côté MCP** (functions/mcp.js) — les 7 endpoints binaires/fichiers sont volontairement exclus (hash, clean-image, malware-check, file-type, image-similarity, merge-and-compress-pdf, qr-scan)
+- **40 outils exposés côté MCP** (functions/mcp.js, serveur v3.0.0 depuis le 25 sept.) -- 8 endpoints volontairement exclus : les 7 binaires/fichiers (hash, clean-image, malware-check, file-type, image-similarity, merge-and-compress-pdf, qr-scan) + `ip` (retiré le 25 sept. : via MCP il renvoyait l'IP Cloudflare de notre propre serveur, pas celle de l'utilisateur)
 - **8 langues** : en (racine) + fr, de, es, ja, pt, ru, hi
 
 ## Stack technique
@@ -48,6 +48,7 @@ Presend propose des micro-outils IT gratuits, respectueux de la vie privée, san
 9. **maintainer-change-check ne détecte QUE le schéma event-stream** (nouveau publieur après dormance). Ne jamais citer ua-parser-js (compte légitime piraté) ni colors.js (sabotage par le mainteneur d'origine) comme exemples : même identité de publieur, donc invisibles. L'affirmation inverse figurait dans 11 publications, corrigées le 25 sept.
 10. **Toute écriture KV doit être échantillonnée** (modèle : écriture 1 fois sur N avec +N). L'espace `PRESEND_ANALYTICS` est partagé par tous les endpoints (rate limits, stats, copie Spamhaus) et le plan gratuit Cloudflare plafonne KV à 1 000 écritures/jour : un seul endpoint non échantillonné appelé à chaque page vue (`track.js`, corrigé le 25 sept.) peut épuiser le quota et désactiver en silence tous les rate limits. Toute écriture KV doit aussi être dans un try/catch qui ne fait jamais échouer la requête.
    - Limite de l'échantillonnage : il donne la bonne limite EN MOYENNE mais avec une forte variance quand la limite est basse. Sous 10/min avec +5 une fois sur 5, 2 écritures suffisent à bloquer : ~18 % des clients bloqués à tort au 5e appel (constaté le 25 sept. sur les tests du client npm). Pour les appels rares et coûteux (POST batch), compter exactement (+1 à chaque appel) : `checkRateLimit(..., exact = true)` dans typosquat-check et maintainer-change-check.
+11. **Via MCP, "l'appelant" est notre propre serveur**, pas l'utilisateur ni même l'agent : tout endpoint qui se base par défaut sur l'IP, la géolocalisation ou les en-têtes de l'appelant donne un résultat faux s'il est exposé tel quel en MCP. Constaté le 25 sept. : `ip` renvoyait l'IP Cloudflare de Presend (retiré), `phone_verify` lisait 0612345678 comme un numéro suisse (le pays doit maintenant être fourni), `user_agent` sans `ua` échouait (`ua` désormais obligatoire). Pour tout nouvel outil MCP : aucune valeur par défaut dérivée de la requête.
 
 ## Décisions business en attente / prises
 - **Pas de palier payant RapidAPI pour l'instant** : décision consciente d'attendre d'avoir de vraies données d'usage avant de introduire du payant, pour rester cohérent avec le positionnement "gratuit" déjà largement communiqué.
