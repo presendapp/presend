@@ -29,6 +29,17 @@
 - Countly/countly-server PR #8041, unjs/ipx PR #336 : contributions de code réelles, en attente de review mainteneur
 - Cosmos SDK (Immunefi) : audit x/bank et x/authz commencé, interrompu, pas repris depuis
 
+## Fait aujourd'hui (25 sept., suite)
+- [x] punkpeye/awesome-mcp-servers #14651 : badge de score Glama ajouté + compteur d'outils corrige (36 -> 41), mainteneur informe
+- [x] Fiche Glama Connectors revendiquee (verification GitHub) : https://glama.ai/mcp/connectors/io.github.presendapp/presend-mcp
+
+## Piste d'amelioration produit identifiee (retour Glama TDQS, score C 2.6/5.0)
+Retour independant sur la qualite des definitions d'outils MCP, pas urgent mais a garder en tete :
+- Chevauchements ambigus pour un agent IA : email_validate vs email_verify, cve_lookup vs vulnerability_check, verifications individuelles vs versions combinees (security_scan, supply_chain_check)
+- Incoherence de nommage : suffixes varies (check/lookup/validate/verify/scan), noms a un mot (base64, color, ip, password, uuid) qui rompent le motif
+- 41 outils = trop charge pour un agent, utilitaires generiques melanges aux outils securite
+- Piste : envisager de scinder le serveur MCP par domaine (comme les 4 fiches RapidAPI), ou renommer pour une convention plus coherente
+
 ## Prochaines étapes suggérées
 - Continuer le démarchage (nouveaux termes de recherche à chaque session)
 - Ouvrir la note de conception guard-core pour fastapi-guard
