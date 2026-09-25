@@ -15,6 +15,7 @@
 - **rennf93/fastapi-guard #137** : mainteneur intéressé, demande une intégration dans `guard-core` (pas ce repo). Prochaine étape **de notre côté** : ouvrir une note de conception dans guard-core. Pas encore fait.
 - **bunkerity/bunkerweb #3941** : mainteneur dit que la demande revient souvent, va "brainstormer" en interne. Rien à faire de notre côté, attendre leur retour.
 - **intelowlproject/IntelOwl #4014** : un contributeur (`AnshSinghal`) construit activement un PR pour `Presend_AddressRisk` (le seul des 4 endpoints pitchés qui n'était pas redondant avec leurs intégrations directes existantes). Rien à faire sauf répondre si questions.
+- **neomatrix369/tripwire #143** : mainteneur donne le feu vert explicite ("please go ahead and apply your changes and create a PR"), propose de vérifier l'interface `scanners.py` en attendant. Prochaine étape **de notre côté** : construire le PR en suivant le pattern des autres scanners existants. Pas encore fait.
 
 ## Démarchage GitHub : 46 cibles contactées depuis le 21 sept., objectif 100-200 sur plusieurs semaines
 - Méthode éprouvée : `gh api "search/code?q=<CLE_API_CONCURRENT>+in:file"`, filtrer par étoiles/activité, vérifier l'usage exact avant de pitcher, ne jamais deviner le code sans voir l'interface réelle.
