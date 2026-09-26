@@ -2637,11 +2637,11 @@
                           },
                           "reason": {
                             "type": "string"
-                          }
+                          }, "publisher_check": {"type": "string", "enum": ["done", "unavailable"], "description": "Whether the new publisher's other packages could be looked up. unavailable (e.g. npm search rate limit): the event stays flagged without that check."}
                         }
                       }
                     },
-                    "ci_publisher_events": {"type": "array", "items": {"type": "object", "properties": {"version": {"type": "string"}, "publisher": {"type": "string"}, "published": {"type": "string"}, "previous_publisher": {"type": "string"}, "dormancy_days": {"type": "integer"}, "reason": {"type": "string"}}}}, "prerelease_events": {"type": "array", "items": {"type": "object", "properties": {"version": {"type": "string"}, "publisher": {"type": "string"}, "published": {"type": "string"}, "previous_publisher": {"type": "string"}, "dormancy_days": {"type": "integer"}, "reason": {"type": "string"}}}}, "historical_events_count": {"type": "integer"}, "recent_window_days": {"type": "integer"}, "note": {
+                    "ci_publisher_events": {"type": "array", "items": {"type": "object", "properties": {"version": {"type": "string"}, "publisher": {"type": "string"}, "published": {"type": "string"}, "previous_publisher": {"type": "string"}, "dormancy_days": {"type": "integer"}, "reason": {"type": "string"}}}}, "established_publisher_events": {"type": "array", "description": "Events whose new publisher already maintains another widely used npm package (100,000+ weekly downloads, excluding this one): most likely a legitimate maintainer handover. Reported, but they do not trigger suspicious.", "items": {"type": "object", "properties": {"version": {"type": "string"}, "publisher": {"type": "string"}, "published": {"type": "string"}, "previous_publisher": {"type": "string"}, "dormancy_days": {"type": "integer"}, "reason": {"type": "string"}, "publisher_other_package": {"type": "object", "properties": {"package": {"type": "string"}, "weekly_downloads": {"type": "integer"}}}}}}, "prerelease_events": {"type": "array", "items": {"type": "object", "properties": {"version": {"type": "string"}, "publisher": {"type": "string"}, "published": {"type": "string"}, "previous_publisher": {"type": "string"}, "dormancy_days": {"type": "integer"}, "reason": {"type": "string"}}}}, "historical_events_count": {"type": "integer"}, "recent_window_days": {"type": "integer"}, "note": {
                       "type": "string"
                     }
                   }
@@ -2659,7 +2659,7 @@
                     "publisher": "jdalton",
                     "published": "2026-04-01"
                   },
-                  "suspicious": false, "flagged_events": [], "ci_publisher_events": [], "prerelease_events": [], "historical_events_count": 1, "recent_window_days": 365, "note": "Flags a previously unseen human publisher taking over after 180+ days of inactivity, within the last 365 days. Heuristic signal for manual review, not proof of compromise. Does not detect a hijacked existing account or a malicious release by an existing maintainer."
+                  "suspicious": false, "flagged_events": [], "ci_publisher_events": [], "established_publisher_events": [], "prerelease_events": [], "historical_events_count": 1, "recent_window_days": 365, "note": "Flags a previously unseen human publisher taking over after 180+ days of inactivity, within the last 365 days. New publishers who already maintain another widely used package (100,000+ weekly downloads) are listed under established_publisher_events without triggering suspicious. Heuristic signal for manual review, not proof of compromise. Does not detect a hijacked existing account or a malicious release by an existing maintainer."
                 }
               }
             }

@@ -120,7 +120,7 @@ function analyzeNpm(data, now = Date.now()) {
     prerelease_events: prereleaseEvents,
     historical_events_count: historicalCount,
     recent_window_days: RECENT_WINDOW_DAYS,
-    note: `Flags a previously unseen human publisher taking over after ${DORMANCY_THRESHOLD_DAYS}+ days of inactivity, within the last ${RECENT_WINDOW_DAYS} days. Heuristic signal for manual review, not proof of compromise. Does not detect a hijacked existing account or a malicious release by an existing maintainer.`,
+    note: `Flags a previously unseen human publisher taking over after ${DORMANCY_THRESHOLD_DAYS}+ days of inactivity, within the last ${RECENT_WINDOW_DAYS} days. New publishers who already maintain another widely used package (${ESTABLISHED_WEEKLY_DOWNLOADS.toLocaleString('en-US')}+ weekly downloads) are listed under established_publisher_events without triggering suspicious. Heuristic signal for manual review, not proof of compromise. Does not detect a hijacked existing account or a malicious release by an existing maintainer.`,
   };
 }
 
@@ -129,6 +129,61 @@ const MAX_BATCH = 20;
 const FETCH_CONCURRENCY = 6;
 const FETCH_TIMEOUT_MS = 8000;
 const JSON_HEADERS = { 'Content-Type': 'application/json' };
+
+// Un nouveau publieur qui maintient déjà un AUTRE paquet largement utilisé (hors paquet évalué)
+// correspond presque toujours à une passation légitime (comité technique d'Express, ljharb...) ;
+// right9ctrl (event-stream, 2018) n'avait aucun autre paquet. Mesuré le 26 sept. 2026 sur le top 200
+// npm-high-impact (tests/maintainer-change/top-npm.mjs) : 12 événements signalés sur 15 relevaient
+// de ce cas. Contournable par un attaquant ayant déjà repris un paquet populaire : signal de tri,
+// pas une garantie. En cas d'échec de la recherche, l'événement reste signalé.
+const ESTABLISHED_WEEKLY_DOWNLOADS = 100000;
+
+// L'API de recherche du registre limite fortement le débit (~10 requêtes puis HTTP 429, constaté
+// le 26 sept.) : les paquets d'un publieur sont gardés 6 h en mémoire (succès uniquement), et un
+// échec laisse l'événement signalé avec publisher_check: 'unavailable'. Pas de KV (quota d'écritures).
+const PUBLISHER_CACHE_MS = 6 * 3600000;
+const publisherCache = new Map();
+
+async function publisherPackages(publisher) {
+  const hit = publisherCache.get(publisher);
+  if (hit && Date.now() - hit.at < PUBLISHER_CACHE_MS) return hit.packages;
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
+  try {
+    const url = `https://registry.npmjs.org/-/v1/search?text=maintainer:${encodeURIComponent(publisher)}&size=20`;
+    const res = await fetch(url, { signal: controller.signal });
+    if (!res.ok) return null;
+    const packages = ((await res.json()).objects || [])
+      .filter((o) => o.package?.name)
+      .map((o) => ({ package: o.package.name, weekly_downloads: o.downloads?.weekly || 0 }));
+    publisherCache.set(publisher, { at: Date.now(), packages });
+    return packages;
+  } catch {
+    return null;
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+async function classifyEstablishedPublishers(result, pkg) {
+  if (!result.flagged_events || result.flagged_events.length === 0) return { ...result, established_publisher_events: [] };
+  const kept = [];
+  const established = [];
+  for (const e of result.flagged_events) {
+    const packages = await publisherPackages(e.publisher);
+    if (packages === null) {
+      kept.push({ ...e, publisher_check: 'unavailable' });
+      continue;
+    }
+    const best = packages.filter((p) => p.package !== pkg).sort((a, b) => b.weekly_downloads - a.weekly_downloads)[0];
+    if (best && best.weekly_downloads >= ESTABLISHED_WEEKLY_DOWNLOADS) {
+      established.push({ ...e, publisher_other_package: best, reason: `New publisher already maintains another widely used package (${best.package}, ~${best.weekly_downloads.toLocaleString('en-US')} weekly downloads): most likely a legitimate maintainer handover.` });
+    } else {
+      kept.push({ ...e, publisher_check: 'done' });
+    }
+  }
+  return { ...result, suspicious: kept.length > 0, flagged_events: kept, established_publisher_events: established };
+}
 
 function jsonResponse(obj, status = 200, extra = {}, pretty = false) {
   return new Response(JSON.stringify(obj, null, pretty ? 2 : 0), { status, headers: { ...JSON_HEADERS, ...corsHeaders(), ...extra } });
@@ -144,7 +199,8 @@ async function checkPackage(pkg) {
     if (res.status === 404) return { status: 200, body: { package: pkg, found: false, note: 'Package not found on npm.' } };
     if (!res.ok) return { status: 502, body: { package: pkg, error: `npm registry error (HTTP ${res.status})` } };
     const data = await res.json();
-    return { status: 200, body: { package: pkg, ecosystem: 'npm', found: true, ...analyzeNpm(data) } };
+    const analysis = await classifyEstablishedPublishers(analyzeNpm(data), pkg);
+    return { status: 200, body: { package: pkg, ecosystem: 'npm', found: true, ...analysis } };
   } catch (e) {
     if (e.name === 'AbortError') return { status: 504, body: { package: pkg, error: 'npm registry request timed out. Try again shortly.' } };
     return { status: 502, body: { package: pkg, error: 'Could not complete maintainer change check.', detail: e.message } };
