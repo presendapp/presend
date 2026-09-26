@@ -44,13 +44,25 @@
   <p style="color:var(--color-muted); max-width:60ch;">
     Hébergés sur le réseau edge de Cloudflare, ils renvoient du JSON. Usage raisonnable uniquement — aucun SLA officiel, un trafic intensif ou automatisé peut être limité sans préavis.
   </p>
+  <p id="python-user-agent" style="color:var(--color-muted); max-width:60ch;">
+    <strong>Utilisateurs Python :</strong> les requêtes envoyées avec le User-Agent par défaut d'<code>urllib</code> (<code>Python-urllib/3.x</code>) sont refusées par Cloudflare avec une erreur <code>HTTP 403</code> et le corps <code>error code: 1010</code>. Définissez n'importe quel User-Agent explicite. <code>requests</code>, curl et Node en envoient un qui est accepté.
+  </p>
+  <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">import json, urllib.request
+req = urllib.request.Request("https://presend.pages.dev/api/uuid", headers={"User-Agent": "my-app/1.0"})
+print(json.load(urllib.request.urlopen(req)))</pre>
 
   <h3 id="POST-api-hash">POST /api/hash</h3>
-  <p style="color:var(--color-muted); max-width:60ch;">Returns SHA-256, SHA-1 and SHA-512 for any file up to 20MB.</p>
+  <p style="color:var(--color-muted); max-width:60ch;">Renvoie les empreintes SHA-256, SHA-1 et SHA-512 de n'importe quel fichier jusqu'à 20 Mo.</p>
   <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl -X POST --data-binary @file.pdf \
   https://presend.pages.dev/api/hash
 
 # {"size_bytes":17,"hashes":{"sha256":"...","sha1":"...","sha512":"..."}}</pre>
+  <h3 id="POST-api-file-type">POST /api/file-type</h3>
+  <p style="color:var(--color-muted); max-width:60ch;">Détecte le vrai type d'un fichier à partir de sa signature binaire et signale un écart avec le Content-Type annoncé : repère les fichiers déguisés (par exemple un exécutable renommé en photo) qui échappent aux filtres d'upload naïfs.</p>
+  <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl -X POST --data-binary @suspicious.jpg -H "Content-Type: image/jpeg" https://presend.pages.dev/api/file-type</pre>
+  <h3 id="POST-api-malware-check">POST /api/malware-check</h3>
+  <p style="color:var(--color-muted); max-width:60ch;">Calcule l'empreinte SHA-256 d'un fichier envoyé et la compare à MalwareBazaar (abuse.ch), une base gratuite d'échantillons de malwares connus : empreinte et vérification en un seul appel.</p>
+  <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl -X POST --data-binary @file.exe https://presend.pages.dev/api/malware-check</pre>
 
   <h3 id="GET-api-url-clean">GET /api/url-clean</h3>
   <p style="color:var(--color-muted); max-width:60ch;">Strips 60+ tracking parameters (utm_*, fbclid, gclid...) from a URL.</p>
@@ -79,6 +91,9 @@
   <h3 id="GET-api-jwt-decode">GET /api/jwt-decode</h3>
   <p style="color:var(--color-muted); max-width:60ch;">Decodes a JWT's header and payload (does not verify the signature).</p>
   <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/jwt-decode?token=eyJhbGci..."</pre>
+  <h3 id="POST-api-jwt-verify">POST /api/jwt-verify</h3>
+  <p style="color:var(--color-muted); max-width:60ch;">Vérifie réellement la signature cryptographique d'un JWT (HS256/384/512, RS/PS256/384/512, ES256/384/512) via l'API Web Crypto native des Workers, avec contrôle des claims exp/nbf. Fournir un « secret » pour HMAC, ou un « jwk »/« jwks_url » pour les algorithmes asymétriques.</p>
+  <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl -X POST -H "Content-Type: application/json" -d '{"token":"...","secret":"..."}' https://presend.pages.dev/api/jwt-verify</pre>
 
   <h3 id="GET-api-timestamp">GET /api/timestamp</h3>
   <p style="color:var(--color-muted); max-width:60ch;">Current time, or convert between Unix timestamp and ISO date.</p>
@@ -126,6 +141,15 @@
   <h3 id="GET-api-phone-verify">GET /api/phone-verify</h3>
   <p style="color:var(--color-muted); max-width:60ch;">Valide et formate un numéro de téléphone (E.164, international, national) via libphonenumber-js. Si aucun pays n'est fourni pour un numéro sans préfixe « + », le pays déduit de l'IP de l'appelant est utilisé automatiquement.</p>
   <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/phone-verify?number=%2B14155552671"</pre>
+  <h3 id="GET-api-email-security">GET /api/email-security</h3>
+  <p style="color:var(--color-muted); max-width:60ch;">Vérifie la configuration anti-usurpation e-mail d'un domaine : robustesse SPF, politique DMARC et recherche DKIM au mieux sur des sélecteurs courants.</p>
+  <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/email-security?domain=example.com"</pre>
+  <h3 id="GET-api-security-scan">GET /api/security-scan</h3>
+  <p style="color:var(--color-muted); max-width:60ch;">Combine security-headers, url-reputation et subdomains en un seul rapport avec un score global et un verdict : un appel au lieu de trois.</p>
+  <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/security-scan?url=https://example.com"</pre>
+  <h3 id="POST-api-qr-scan">POST /api/qr-scan</h3>
+  <p style="color:var(--color-muted); max-width:60ch;">Décode un QR code depuis une image envoyée et, s'il pointe vers une URL, la vérifie auprès d'URLhaus (indicateurs de malware ou de phishing) : décodage et vérification de réputation en un seul appel. Le phishing par QR code (« quishing ») est l'un des vecteurs de phishing en plus forte croissance.</p>
+  <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl -X POST -F "file=@qrcode.png" https://presend.pages.dev/api/qr-scan</pre>
 
   <h3 id="GET-api-security-headers">GET /api/security-headers</h3>
   <p style="color:var(--color-muted); max-width:60ch;">Audits HTTP security headers (CSP, HSTS, X-Frame-Options...) and gives a letter grade.</p>
@@ -138,6 +162,78 @@
   <h3 id="GET-api-subdomains">GET /api/subdomains</h3>
   <p style="color:var(--color-muted); max-width:60ch;">Passive subdomain discovery via Certificate Transparency logs (crt.sh) — for auditing your own attack surface. Note: depends on crt.sh, which has occasional downtime outside our control.</p>
   <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/subdomains?domain=example.com"</pre>
+  <h3 id="GET-api-ai-crawler-check">GET /api/ai-crawler-check</h3>
+  <p style="color:var(--color-muted); max-width:60ch;">Récupère le robots.txt et indique quels robots d'IA connus (GPTBot, ClaudeBot, PerplexityBot, Google-Extended, CCBot, etc.) sont autorisés ou bloqués. Gratuit, sans inscription.</p>
+  <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/ai-crawler-check?domain=example.com"</pre>
+  <h3 id="GET-api-ip-reputation">GET /api/ip-reputation</h3>
+  <p style="color:var(--color-muted); max-width:60ch;">Vérifie une adresse IPv4 ou IPv6 contre une liste de blocs réseau connus pour être détournés ou contrôlés par des opérations de spam ou de cybercriminalité. Une liste précise, pas un score de réputation complet. La copie est rafraîchie au plus toutes les 12 heures ; la réponse indique la date de la liste, l'attribution, et un indicateur <code>stale</code> si la source est injoignable depuis plus de 36 heures. Pour un contrôle à chaque requête dans votre propre middleware, charger la liste en local est généralement la meilleure conception.</p>
+  <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/ip-reputation?ip=1.2.3.4"</pre>
+  <h3 id="GET-api-dns-lookup">GET /api/dns-lookup</h3>
+  <p style="color:var(--color-muted); max-width:60ch;">Enregistrements A, AAAA, CNAME, MX, TXT et NS en un seul appel via le résolveur DNS-over-HTTPS de Cloudflare, ou un seul type avec <code>type=</code>.</p>
+  <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/dns-lookup?domain=example.com"</pre>
+  <h3 id="GET-api-whois-lookup">GET /api/whois-lookup</h3>
+  <p style="color:var(--color-muted); max-width:60ch;">Registraire, dates de création et d'expiration, âge du domaine et serveurs de noms via RDAP, le successeur HTTPS du WHOIS historique.</p>
+  <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/whois-lookup?domain=example.com"</pre>
+  <h3 id="GET-api-redirect-trace">GET /api/redirect-trace</h3>
+  <p style="color:var(--color-muted); max-width:60ch;">Suit toute la chaîne de redirections d'une URL (jusqu'à 15 sauts) et enregistre le code de statut et la destination de chaque saut, pas seulement l'URL finale.</p>
+  <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/redirect-trace?url=http://github.com"</pre>
+
+  <h2>Sécurité de la chaîne d'approvisionnement</h2>
+  <p style="color:var(--color-muted); max-width:60ch;">
+    Contrôles de risque sur les dépendances. typosquat-check et maintainer-change-check sont des heuristiques : des signaux de tri, pas des verdicts.
+  </p>
+  <h3 id="GET-api-typosquat-check">GET /api/typosquat-check</h3>
+  <p style="color:var(--color-muted); max-width:60ch;">Signale les noms de paquets très proches d'une liste de paquets npm et PyPI connus (1 modification pour les noms de 4 à 7 caractères, 2 à partir de 8 ; les noms de 3 caractères ou moins ne sont pas comparés de façon approchée). Les noms PyPI sont normalisés (PEP 503) ; les voisins légitimes revus sont marqués <code>known_legitimate</code>.</p>
+  <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/typosquat-check?ecosystem=npm&amp;package=lodahs"</pre>
+  <h3 id="POST-api-typosquat-check">POST /api/typosquat-check</h3>
+  <p style="color:var(--color-muted); max-width:60ch;">Mode lot : jusqu'à 100 noms par requête, comptés comme une seule requête pour la limite de débit. Une entrée invalide renvoie une erreur pour cette entrée sans faire échouer le lot.</p>
+  <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl -X POST -H "Content-Type: application/json" -d '{"ecosystem":"npm","packages":["lodahs","expres","react"]}' https://presend.pages.dev/api/typosquat-check</pre>
+  <h3 id="GET-api-maintainer-change-check">GET /api/maintainer-change-check</h3>
+  <p style="color:var(--color-muted); max-width:60ch;"><strong>npm uniquement.</strong> Signale la reprise d'un paquet par un publieur humain jamais vu auparavant, après au moins 180 jours d'inactivité, au cours des 365 derniers jours : le schéma de la compromission event-stream (2018). Les passations vers un publieur qui maintient déjà un autre paquet à plus de 100 000 téléchargements hebdomadaires, et les passages au trusted publishing npm, sont signalés à part sans lever l'alerte. Il ne détecte <strong>pas</strong> un compte de mainteneur existant piraté ni une version malveillante publiée par le mainteneur d'origine, puisque l'identité du publieur ne change pas.</p>
+  <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/maintainer-change-check?ecosystem=npm&amp;package=lodash"</pre>
+  <h3 id="POST-api-maintainer-change-check">POST /api/maintainer-change-check</h3>
+  <p style="color:var(--color-muted); max-width:60ch;">Mode lot : jusqu'à 20 paquets npm par requête, comptés comme une seule requête pour la limite de débit. Un paquet introuvable ou une panne du registre est signalé entrée par entrée, sans faire échouer le lot.</p>
+  <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl -X POST -H "Content-Type: application/json" -d '{"ecosystem":"npm","packages":["lodash","express"]}' https://presend.pages.dev/api/maintainer-change-check</pre>
+  <h3 id="GET-api-vulnerability-check">GET /api/vulnerability-check</h3>
+  <p style="color:var(--color-muted); max-width:60ch;">Vérifie la version d'un paquet auprès d'OSV.dev : npm, PyPI, Go, crates.io, Maven, RubyGems, Packagist, NuGet. Pour rechercher directement un identifiant CVE ou GHSA, utilisez cve-lookup.</p>
+  <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/vulnerability-check?ecosystem=npm&amp;package=lodash&amp;version=4.17.15"</pre>
+  <h3 id="GET-api-repo-health-check">GET /api/repo-health-check</h3>
+  <p style="color:var(--color-muted); max-width:60ch;">Étoiles, forks, issues ouvertes, licence, statut d'archivage et jours depuis le dernier push d'un dépôt GitHub, via l'API REST de GitHub.</p>
+  <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/repo-health-check?repo=lodash/lodash"</pre>
+  <h3 id="GET-api-supply-chain-check">GET /api/supply-chain-check</h3>
+  <p style="color:var(--color-muted); max-width:60ch;">Combine maintainer-change-check (npm uniquement), vulnerability-check, typosquat-check et repo-health-check (dépôt déduit des métadonnées du registre quand c'est possible) en un seul appel, avec un verdict global.</p>
+  <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/supply-chain-check?ecosystem=npm&amp;package=lodash"</pre>
+
+  <h2>Blockchain</h2>
+  <p style="color:var(--color-muted); max-width:60ch;">
+    Outils pour les chaînes Cosmos SDK et EVM : filtrage des sanctions, décodage de transactions et audit de nœuds RPC.
+  </p>
+  <h3 id="GET-api-address-risk">GET /api/address-risk</h3>
+  <p style="color:var(--color-muted); max-width:60ch;">Vérifie une adresse crypto contre toutes les listes d'adresses de monnaies numériques de la liste SDN de l'OFAC. Les adresses EVM (0x...) et Bitcoin (bc1..., 1..., 3...) sont entièrement couvertes ; celles des autres chaînes sont signalées si elles figurent sur une liste. Les adresses Cosmos SDK (bech32) renvoient <code>sanctioned: null</code> lorsqu'elles ne sont pas listées, l'OFAC n'ayant publié aucune entrée pour les chaînes Cosmos SDK.</p>
+  <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/address-risk?address=0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"</pre>
+  <h3 id="GET-api-tx-decode">GET /api/tx-decode</h3>
+  <p style="color:var(--color-muted); max-width:60ch;">Décode une transaction Cosmos SDK brute et signée (octets protobuf TxRaw, en base64) en JSON lisible : messages, frais, gas, informations du signataire, signatures. Sans dépendance externe ; décode les types de messages bank/staking/gov/authz courants, y compris les MsgExec imbriqués.</p>
+  <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/tx-decode?tx=CpwBCpEBChwvY29zbW9zLmJhbmsudjFiZXRhMS5Nc2dTZW5kEnEK..."</pre>
+  <h3 id="GET-api-rpc-check">GET /api/rpc-check</h3>
+  <p style="color:var(--color-muted); max-width:60ch;">Audite un endpoint RPC CometBFT public d'une chaîne Cosmos SDK : état du nœud, santé, connectivité aux pairs, et exposition éventuelle de méthodes d'administration non sûres (dial_seeds, dial_peers, unsafe_flush_mempool). En lecture seule : n'invoque jamais lui-même de méthode non sûre.</p>
+  <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/rpc-check?url=https://cosmos-rpc.publicnode.com"</pre>
+
+  <h2>Utilitaires</h2>
+  <p style="color:var(--color-muted); max-width:60ch;">
+    Petits outils ciblés, sans dépendance externe autant que possible.
+  </p>
+  <h3 id="GET-api-iban-validate">GET /api/iban-validate</h3>
+  <p style="color:var(--color-muted); max-width:60ch;">Valide un IBAN via la somme de contrôle ISO 7064 mod-97, avec vérification de la longueur propre à chaque pays. Pur algorithme, sans source de données externe.</p>
+  <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/iban-validate?iban=DE89370400440532013000"</pre>
+  <h3 id="GET-api-vat-validate">GET /api/vat-validate</h3>
+  <p style="color:var(--color-muted); max-width:60ch;">Valide un numéro de TVA intracommunautaire en temps réel via le service officiel VIES de la Commission européenne ; renvoie le nom et l'adresse de l'entreprise enregistrée lorsqu'il est valide.</p>
+  <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/vat-validate?country=IE&vat=6388047V"</pre>
+  <h3 id="GET-api-link-metadata">GET /api/link-metadata</h3>
+  <p style="color:var(--color-muted); max-width:60ch;">Extrait les métadonnées Open Graph, Twitter Card et &lt;head&gt; de base d'une URL : les données utilisées pour afficher l'aperçu d'un lien dans une messagerie.</p>
+  <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/link-metadata?url=https://github.com/presendapp/presend"</pre>
+  <h3 id="GET-api-cve-lookup">GET /api/cve-lookup</h3>
+  <p style="color:var(--color-muted); max-width:60ch;">Recherche directe d'une CVE ou d'un GHSA par identifiant via OSV.dev. Complète vulnerability-check (qui demande paquet, écosystème et version) lorsque vous disposez déjà d'un identifiant tiré d'un rapport de scanner.</p>
+  <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/cve-lookup?id=CVE-2021-44228"</pre>
 
   <h2>Workflows enchaînés</h2>
   <p style="color:var(--color-muted); max-width:60ch;">
@@ -149,6 +245,12 @@
   <h3 id="POST-api-clean-image">POST /api/clean-image</h3>
   <p style="color:var(--color-muted); max-width:60ch;">Supprime les EXIF/GPS d'un JPEG et les métadonnées textuelles d'un PNG par analyse binaire directe — les pixels ne sont jamais réencodés, donc aucune perte de qualité (contrairement aux approches par canvas, qui recompressent toujours).</p>
   <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl -X POST --data-binary @photo.jpg -H "Content-Type: image/jpeg" https://presend.pages.dev/api/clean-image -o clean.jpg</pre>
+  <h3 id="POST-api-image-similarity">POST /api/image-similarity</h3>
+  <p style="color:var(--color-muted); max-width:60ch;">Empreinte perceptuelle (dHash) pour 1 ou 2 images JPEG/PNG. Contrairement à une empreinte cryptographique, elle résiste à la recompression et aux retouches mineures ; envoyez 2 images pour les comparer directement, avec un score de similarité et un verdict.</p>
+  <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl -X POST -F "files=@a.jpg" -F "files=@b.png" https://presend.pages.dev/api/image-similarity</pre>
+  <h3 id="POST-api-text-similarity">POST /api/text-similarity</h3>
+  <p style="color:var(--color-muted); max-width:60ch;">SimHash pour 1 ou 2 textes, l'équivalent textuel d'image-similarity. Détecte les contenus quasi identiques, paraphrasés ou légèrement retouchés, contrairement à une empreinte cryptographique. Deux textes sans rapport obtiennent en général un score d'environ 50 % par hasard, et non 0 %.</p>
+  <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl -X POST -H "Content-Type: application/json" -d '{"texts":["text a","text b"]}' https://presend.pages.dev/api/text-similarity</pre>
 
   <h2>Outils côté client (à intégrer)</h2>
   <p style="color:var(--color-muted); max-width:60ch;">
