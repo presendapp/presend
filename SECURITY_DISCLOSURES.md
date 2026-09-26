@@ -56,7 +56,8 @@ Contexte : recherche de vulnérabilités menée sous les pseudonymes Presendapp/
 ### unjs/ipx — PR #336
 - Épinglage de connexion via undici pour fermer le TOCTOU dans `blockPrivateIPs`
 - Fix additionnel suite à review CodeRabbit : les 2 fallbacks de `getPinnedFetch()` retombaient silencieusement sur fetch non épinglée si `node:dns`/`undici` indisponibles → lèvent maintenant `IPX_IP_CHECK_UNAVAILABLE` (fail-closed)
-- Statut : mergé/en cours de review
+- Statut : **fermée sans merge le 25 sept. par le mainteneur (pi0x)**. Le TOCTOU est reconnu et reproduit, mais jugé acceptable : `blockPrivateIPs` est opt-in (l'allowlist `domains` est le contrôle principal), impact limité à du SSRF aveugle (GET/HEAD). Ils documenteront la limite (proxy de sortie recommandé). Objections au correctif : dépendance runtime `undici` pour tous (deps limitées à `sharp`/`srvx`) + hausse du minimum Node ; erreur brute `fetch failed` (500) au lieu de `403 IPX_FORBIDDEN_IP` ; no-op silencieux sur les runtimes qui ignorent `dispatcher` (Bun) ; écrase un dispatcher global (proxy de sortie). Pas de relance.
+- Leçon : avant de proposer un correctif de sécurité à une lib, vérifier sa politique de dépendances runtime, son mapping d'erreurs existant et le comportement sur tous les runtimes supportés. Pour une option opt-in de défense en profondeur, une PR de documentation peut être la contribution la plus adaptée.
 
 ## Piste interrompue
 
