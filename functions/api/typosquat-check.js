@@ -113,6 +113,9 @@ const POPULAR = {
     'sharp', 'jimp', 'canvas', 'pdfkit', 'pdf-lib', 'exceljs', 'xlsx',
     'aws-sdk', '@aws-sdk/client-s3', 'firebase', 'firebase-admin', 'stripe',
     'nodemailer', 'sendgrid', 'twilio', 'openai', 'langchain',
+    // Ajout 26 sept. 2026 : cibles réelles de typosquatting (crypto, Discord, Roblox, Electron) + faux positif sass-loader
+    'electron', 'discord.js', 'ethers', 'web3', '@solana/web3.js', 'hardhat', 'bootstrap', 'react-native',
+    'core-js', 'tslib', 'fs-extra', 'mongodb', 'chart.js', 'three', 'noblox.js', 'sass-loader',
   ],
   PyPI: [
     'requests', 'urllib3', 'numpy', 'pandas', 'scipy', 'matplotlib', 'seaborn',
@@ -131,10 +134,13 @@ const POPULAR = {
     'python-dateutil', 'pytz', 'arrow', 'pendulum',
     'six', 'attrs', 'dataclasses', 'typing-extensions',
     'openai', 'langchain', 'anthropic', 'huggingface-hub',
-    'matplotlib', 'plotly', 'bokeh', 'streamlit', 'gradio',
+    'plotly', 'bokeh', 'streamlit', 'gradio',
     'black', 'flake8', 'pylint', 'mypy', 'isort', 'autopep8',
     'gevent', 'greenlet', 'asyncio', 'aiohttp', 'httpx',
     'django-rest-framework', 'djangorestframework', 'graphene',
+    // Ajout 26 sept. 2026 : cibles réelles de typosquatting (crypto, Discord, outillage) + faux positif tomli
+    'discord.py', 'python-dotenv', 'pycryptodome', 'web3', 'solana', 'ccxt', 'python-binance',
+    'pyinstaller', 'pyautogui', 'certifi', 'psutil', 'openpyxl', 'pygame', 'tomli',
   ],
 };
 
@@ -156,28 +162,67 @@ function normalizeEcosystem(raw) {
   return null;
 }
 
+// Paquets légitimes vérifiés qui ressemblent à une cible de POPULAR : ne sont PAS signalés
+// (known_legitimate: true). Revue du 26 sept. 2026 sur le top 15 000 PyPI et ~17 000 paquets npm-high-impact
+// (tests/typosquat/top-pypi.mjs et top-npm.mjs) :
+// dépôt identifiable et historique réel. Les noms douteux (tdqm, pyyml, attr, scss...) restent signalés.
+const KNOWN_LEGIT = {
+  npm: [
+    'isarray', 'd3-array', 'gaxios', 'color', 'lz-string', 'commondir', 'enquirer', 'preact',
+    'colord', 'crypt', 'ts-loader', 'motion', 'yargs-unparser', 'dargs', 'ulid', 'less-loader',
+    'mquery', 'aws-cdk', 'react-dnd', '@apollo/server', 'mssql', 'jsdoc', 'tslint', 'args', 'blob',
+    'scrypt-js', 'as-array', 'to-array', 'emoticon', 'stylus-loader', 'minimisted',
+    'eslint-plugin-react-x', 'node-watch', 'x-is-string', 'revalidator', 'useragent', 'remotion',
+    'uid-number', 'chat', 'cuid', 'scriptjs', 'electrodb', 'ejs-loader', 'commoner', 'graphiql',
+    'crossvent', 'mimer', 'tslint-config-airbnb', 'ttypescript', 'test', 'jsx-loader', 'reqwest',
+    'compressing', 'scss-loader', 'angular2', 'expresso', 'jslint',
+  ],
+  PyPI: [
+    'httpx2', 'psycopg', 'installer', 'cattrs', 'pycryptodomex', 'pyaml', 'boto', 'pyte', 'scapy',
+    'tensorflowjs', 'usort', 'niquests', 'graphemeu', 'gsutil', 'grapheme', 'lkml',
+    'x-transformers', 'rtoml', 'gpytorch', 'unicorn', 'psycopg-c', 'nose2', 'willow', 'fastai',
+    'arnparse', 'pygam', 'pyautogen', 'grequests', 'crick', 'tombi', 'pqdm', 'scrypt', 'pytd',
+    'stqdm', 'torchx', 'jose', 'streamlink', 'hyper', 'vyper', 'graphyte', 'pyts', 'solara',
+    'pymantic', 'pylink', 'scipp', 'ipytest', 'toronado',
+  ],
+};
+
+// PyPI normalise les noms (PEP 503) : "typing_extensions", "Typing.Extensions" et
+// "typing-extensions" désignent le même paquet et ne doivent pas être signalés.
+function normalizeName(name, ecosystem) {
+  return ecosystem === 'PyPI' ? name.toLowerCase().replace(/[-_.]+/g, '-') : name;
+}
+
 function analyzeName(pkg, ecosystem) {
   const list = POPULAR[ecosystem];
+  const norm = normalizeName(pkg, ecosystem);
   const matches = [];
+  const scope = ecosystem === 'npm' && pkg.startsWith('@') ? pkg.split('/')[0] : null;
   for (const name of list) {
-    const maxD = maxDistanceFor(pkg, name);
-    if (maxD === 0 || Math.abs(pkg.length - name.length) > maxD) continue; // ne peut pas passer le seuil
-    const d = damerauLevenshtein(pkg, name);
+    // npm : un scope appartient à son propriétaire, un paquet du même scope que la cible n'est pas un typosquat.
+    if (scope && name.startsWith(scope + '/')) continue;
+    const target = normalizeName(name, ecosystem);
+    const maxD = maxDistanceFor(norm, target);
+    if (maxD === 0 || Math.abs(norm.length - target.length) > maxD) continue; // ne peut pas passer le seuil
+    const d = damerauLevenshtein(norm, target);
     if (d > 0 && d <= maxD) matches.push({ name, distance: d });
   }
   matches.sort((a, b) => a.distance - b.distance);
-  const exactMatch = list.includes(pkg);
+  const exactMatch = list.some((name) => normalizeName(name, ecosystem) === norm);
+  const knownLegit = !exactMatch && KNOWN_LEGIT[ecosystem].some((name) => normalizeName(name, ecosystem) === norm);
   return {
     package: pkg,
     ecosystem,
     is_known_popular_package: exactMatch,
-    suspicious: !exactMatch && matches.length > 0,
+    known_legitimate: knownLegit,
+    suspicious: !exactMatch && !knownLegit && matches.length > 0,
     similar_to: matches.slice(0, 5),
   };
 }
 
 function noteFor(r) {
   if (r.is_known_popular_package) return 'This name IS one of the well-known packages checked against -- not a typo.';
+  if (r.known_legitimate) return 'Name resembles a well-known package but is itself a known, legitimate package (manually reviewed) -- not flagged. Still make sure it is the one you meant.';
   if (r.suspicious) return 'Name is a near-miss of a well-known package (1 edit for 4-7 character names, 2 for 8+). Verify this is the package you meant to install, not a look-alike.';
   return 'No close match to any well-known package on this curated list. This does NOT mean the package is safe -- only that it does not resemble a famous name. Pair with vulnerability-check for known CVEs.';
 }
