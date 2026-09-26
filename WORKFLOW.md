@@ -35,6 +35,7 @@ Lancer `bash scripts/session-check.sh` -- une seule commande qui vérifie en un 
 
 ## Après chaque réponse d'un mainteneur
 - Relire le message ENTIER (pas un extrait tronqué) et déterminer à qui c'est le tour ; l'écrire en tête de la note dans `scripts/watch.txt` : `[A NOUS]` ou `[A EUX]`. `session-check.sh` ne voit que l'auteur du dernier message, pas qui doit agir (leçon n°19).
+- `session-check.sh` liste TOUTES les conversations ouvertes où un humain a répondu ; toute ligne « NON SUIVIE » doit être ajoutée à `watch.txt` (avec son marqueur) avant de passer à autre chose. Ne jamais dresser la liste des conversations en cours de mémoire.
 - S'il nous délègue des choix (« allez-y, ouvrez une PR, je relirai »), faire des choix prudents et les documenter dans la PR plutôt que lui renvoyer des questions : les questions bloquent la conversation.
 
 ## En fin de session (avant de clore la conversation)

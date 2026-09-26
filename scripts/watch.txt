@@ -2,15 +2,17 @@
 # Mettre a jour les compteurs en fin de session (NOUVEAU = compteur actuel > reference)
 neomatrix369/tripwire#143 2 [A NOUS] il a dit "ouvrez une PR" le 25 sept. ; nos 4 questions ont bloque -> ouvrir la PR (plan ROADMAP)
 rennf93/guard-core#119 1 [A NOUS puis A EUX] note = 1er pas invite par rennf93 ; poster le complement FAQ DROP (sa condition 3), puis PR si pas de reponse ~1 sem.
-rennf93/fastapi-guard#137 5 renvoi vers guard-core #119
-punkpeye/awesome-mcp-servers#14651 5 PR ; 26 sept. : question a punkpeye (badge connector accepte pour un serveur heberge ?)
-intelowlproject/IntelOwl#4014 8 issue d'origine Presend_AddressRisk
-intelowlproject/IntelOwl#4037 3 PR AnshSinghal ; 26 sept. : fix address-risk signale (mock perime, fixture proposee)
-HenriGrimm/Minnow#1222 3 divulgation, autres canaux proposes le 26 sept. (pas de Discord)
-duriantaco/skylos#894 0 feature request native (design + mesures), pas d'appel a Presend, PR proposee
-lirantal/npq#450 0 mesure du bruit du marshall author (65 -> 1 avec limite 21 j + exclusion trusted publishing), PR proposee, sans Presend
-sebadob/rauthy#1737 4 ip-reputation: doc manquante (corrigee 26 sept.), conseil de charger DROP en local via leur scheduler, Presend hors boucle
-wanaku-ai/wanaku-toolsets#9 0 filon EVA : outil MCP email-verification casse (API morte), Disify + Presend proposes, PR offerte
-darioreisjr/copadomundo2026#2 0 filon EVA : verification MX sautee en silence (fail-open), correctif res.ok + has_mx propose
-Chatujme/pLBOT-API#4 0 filon EVA : EVA dans un doc de planification, alternatives email + phone-verify (30/min, type de ligne non fiable CZ)
+rennf93/fastapi-guard#137 5 [A EUX] renvoi vers guard-core #119
+punkpeye/awesome-mcp-servers#14651 5 [A EUX] PR ; 26 sept. : question a punkpeye (badge connector accepte pour un serveur heberge ?)
+intelowlproject/IntelOwl#4014 8 [A EUX] issue d'origine Presend_AddressRisk
+intelowlproject/IntelOwl#4037 3 [A EUX] PR AnshSinghal ; 26 sept. : fix address-risk signale (mock perime, fixture proposee)
+HenriGrimm/Minnow#1222 3 [A EUX] divulgation, autres canaux proposes le 26 sept. (pas de Discord)
+duriantaco/skylos#894 0 [A EUX] feature request native (design + mesures), pas d'appel a Presend, PR proposee
+lirantal/npq#450 0 [A EUX] mesure du bruit du marshall author (65 -> 1 avec limite 21 j + exclusion trusted publishing), PR proposee, sans Presend
+sebadob/rauthy#1737 4 [A EUX] ip-reputation: doc manquante (corrigee 26 sept.), conseil de charger DROP en local via leur scheduler, Presend hors boucle
+wanaku-ai/wanaku-toolsets#9 0 [A EUX] filon EVA : outil MCP email-verification casse (API morte), Disify + Presend proposes, PR offerte
+darioreisjr/copadomundo2026#2 0 [A EUX] filon EVA : verification MX sautee en silence (fail-open), correctif res.ok + has_mx propose
+Chatujme/pLBOT-API#4 0 [A EUX] filon EVA : EVA dans un doc de planification, alternatives email + phone-verify (30/min, type de ligne non fiable CZ)
 bunkerity/bunkerweb#3941 2 [A EUX] brainstorming interne (21 sept.) ; verifier notre proposition : si appel Presend par requete -> proposer le design natif (lecon 3)
+dydxprotocol/v4-chain#3402 1 [A EUX] triee par dYdX (ticket Linear GH-216) ; address-risk ne couvre pas Cosmos (null) -> rien a proposer tant que l'OFAC ne publie rien
+Countly/countly-server#8041 0 [A EUX] PR de tests (NAT64, IPv4 mappe) sans relecture depuis le 16 sept. ; relance polie envisageable apres ~3 semaines
