@@ -45,97 +45,97 @@
     Cloudflareのエッジネットワーク上で動作し、JSONを返します。フェアユースのみ — 公式SLAはなく、大量または自動化されたトラフィックは予告なく制限される場合があります。
   </p>
 
-  <h3>POST /api/hash</h3>
+  <h3 id="POST-api-hash">POST /api/hash</h3>
   <p style="color:var(--color-muted); max-width:60ch;">Returns SHA-256, SHA-1 and SHA-512 for any file up to 20MB.</p>
   <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl -X POST --data-binary @file.pdf \
   https://presend.pages.dev/api/hash
 
 # {"size_bytes":17,"hashes":{"sha256":"...","sha1":"...","sha512":"..."}}</pre>
 
-  <h3>GET /api/url-clean</h3>
+  <h3 id="GET-api-url-clean">GET /api/url-clean</h3>
   <p style="color:var(--color-muted); max-width:60ch;">Strips 60+ tracking parameters (utm_*, fbclid, gclid...) from a URL.</p>
   <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/url-clean?url=https://example.com/?utm_source=x"
 
 # {"clean":"https://example.com/","removed":1,"valid":true}</pre>
 
-  <h3>POST /api/url-clean</h3>
+  <h3 id="POST-api-url-clean">POST /api/url-clean</h3>
   <p style="color:var(--color-muted); max-width:60ch;">Same, batched — up to 100 URLs per request.</p>
   <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl -X POST -H "Content-Type: application/json" \
   -d '{"urls":["https://a.com?fbclid=x","https://b.com?gclid=y"]}' \
   https://presend.pages.dev/api/url-clean</pre>
 
-  <h3>GET /api/ip</h3>
+  <h3 id="GET-api-ip">GET /api/ip</h3>
   <p style="color:var(--color-muted); max-width:60ch;">Returns the caller's IP with geolocation, currency, language and EU/VPN flags.</p>
   <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl https://presend.pages.dev/api/ip</pre>
 
-  <h3>GET /api/uuid</h3>
+  <h3 id="GET-api-uuid">GET /api/uuid</h3>
   <p style="color:var(--color-muted); max-width:60ch;">Generates random UUIDs (v4), up to 100 per request.</p>
   <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/uuid?count=5"</pre>
 
-  <h3>GET /api/base64</h3>
+  <h3 id="GET-api-base64">GET /api/base64</h3>
   <p style="color:var(--color-muted); max-width:60ch;">Encode or decode Base64 text.</p>
   <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/base64?action=encode&text=hello"</pre>
 
-  <h3>GET /api/jwt-decode</h3>
+  <h3 id="GET-api-jwt-decode">GET /api/jwt-decode</h3>
   <p style="color:var(--color-muted); max-width:60ch;">Decodes a JWT's header and payload (does not verify the signature).</p>
   <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/jwt-decode?token=eyJhbGci..."</pre>
 
-  <h3>GET /api/timestamp</h3>
+  <h3 id="GET-api-timestamp">GET /api/timestamp</h3>
   <p style="color:var(--color-muted); max-width:60ch;">Current time, or convert between Unix timestamp and ISO date.</p>
   <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/timestamp?unix=1700000000"</pre>
 
-  <h3>GET /api/color</h3>
+  <h3 id="GET-api-color">GET /api/color</h3>
   <p style="color:var(--color-muted); max-width:60ch;">Convert between hex, RGB and HSL color formats.</p>
   <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/color?hex=ff5733"</pre>
 
-  <h3>GET /api/user-agent</h3>
+  <h3 id="GET-api-user-agent">GET /api/user-agent</h3>
   <p style="color:var(--color-muted); max-width:60ch;">Parses a User-Agent string into browser, OS and device type.</p>
   <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/user-agent"</pre>
 
-  <h3>GET /api/password</h3>
+  <h3 id="GET-api-password">GET /api/password</h3>
   <p style="color:var(--color-muted); max-width:60ch;">Generates a cryptographically secure password with entropy estimate.</p>
   <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/password?length=20&symbols=1"</pre>
 
-  <h3>GET /api/email-validate</h3>
+  <h3 id="GET-api-email-validate">GET /api/email-validate</h3>
   <p style="color:var(--color-muted); max-width:60ch;">Validates email syntax and checks for a valid MX record (real deliverability check).</p>
   <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/email-validate?email=foo@example.com"</pre>
 
-  <h3>GET /api/favicon</h3>
+  <h3 id="GET-api-favicon">GET /api/favicon</h3>
   <p style="color:var(--color-muted); max-width:60ch;">Fetches the favicon URL for any domain.</p>
   <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/favicon?domain=github.com"</pre>
 
-  <h3>GET/POST /api/csv-json</h3>
+  <h3 id="GET-api-csv-json">GET/POST /api/csv-json</h3>
   <p style="color:var(--color-muted); max-width:60ch;">Converts between JSON and CSV. Nested objects are stringified, not flattened.</p>
   <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl -X POST -H "Content-Type: application/json" \
   -d '{"direction":"json-to-csv","data":"[{\"a\":1}]"}' \
   https://presend.pages.dev/api/csv-json</pre>
 
-  <h3>GET /api/password-breach</h3>
+  <h3 id="GET-api-password-breach">GET /api/password-breach</h3>
   <p style="color:var(--color-muted); max-width:60ch;">Checks if a password appears in known data breaches (HIBP k-anonymity — your password is never sent or logged in full).</p>
   <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/password-breach?password=..."</pre>
-  <h3>POST /api/password-check</h3>
+  <h3 id="POST-api-password-check">POST /api/password-check</h3>
   <p style="color:var(--color-muted); max-width:60ch;">強度・エントロピーのスコアリングと、任意の漏洩チェックを1回の呼び出しで組み合わせます。パスワードはPOSTボディで送信され、URLには含まれません。password-breachと同じk-匿名性保証を提供します。</p>
   <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl -X POST -H "Content-Type: application/json" -d '{"password":"..."}' https://presend.pages.dev/api/password-check</pre>
 
-  <h3>GET /api/email-disposable</h3>
+  <h3 id="GET-api-email-disposable">GET /api/email-disposable</h3>
   <p style="color:var(--color-muted); max-width:60ch;">Detects disposable/throwaway email providers from a list of 576+ known domains.</p>
   <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/email-disposable?email=foo@mailinator.com"</pre>
-  <h3>GET /api/email-verify</h3>
+  <h3 id="GET-api-email-verify">GET /api/email-verify</h3>
   <p style="color:var(--color-muted); max-width:60ch;">構文チェック、MXレコード検索、使い捨てドメイン検出、汎用アカウント検出（info@、admin@など）を1回の呼び出しで組み合わせます。ほとんどの無料メールAPIはこれらを個別の有料機能としてのみ提供しています。</p>
   <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/email-verify?email=foo@example.com"</pre>
-  <h3>GET /api/phone-verify</h3>
+  <h3 id="GET-api-phone-verify">GET /api/phone-verify</h3>
   <p style="color:var(--color-muted); max-width:60ch;">libphonenumber-jsを使用して電話番号を検証し、フォーマットします（E.164、国際形式、国内形式）。「+」が付いていない番号に国が指定されていない場合、発信者のIPから推定された国が自動的に使用されます。</p>
   <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/phone-verify?number=%2B14155552671"</pre>
 
-  <h3>GET /api/security-headers</h3>
+  <h3 id="GET-api-security-headers">GET /api/security-headers</h3>
   <p style="color:var(--color-muted); max-width:60ch;">Audits HTTP security headers (CSP, HSTS, X-Frame-Options...) and gives a letter grade.</p>
   <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/security-headers?url=https://example.com"</pre>
 
-  <h3>GET /api/url-reputation</h3>
+  <h3 id="GET-api-url-reputation">GET /api/url-reputation</h3>
   <p style="color:var(--color-muted); max-width:60ch;">Checks a URL against URLhaus, a public malware/phishing database.</p>
   <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/url-reputation?url=https://example.com"</pre>
 
-  <h3>GET /api/subdomains</h3>
+  <h3 id="GET-api-subdomains">GET /api/subdomains</h3>
   <p style="color:var(--color-muted); max-width:60ch;">Passive subdomain discovery via Certificate Transparency logs (crt.sh) — for auditing your own attack surface. Note: depends on crt.sh, which has occasional downtime outside our control.</p>
   <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/subdomains?domain=example.com"</pre>
 
@@ -143,10 +143,10 @@
   <p style="color:var(--color-muted); max-width:60ch;">
     これら2つのエンドポイントは、サーバー側で複数の処理を1回の呼び出しに連携させます — これを行う他の無料APIは知りません。処理はステートレスです：ディスクへの書き込みなし、ログなし、レスポンス送信直後にファイルは破棄されます。
   </p>
-  <h3>POST /api/merge-and-compress-pdf</h3>
+  <h3 id="POST-api-merge-and-compress-pdf">POST /api/merge-and-compress-pdf</h3>
   <p style="color:var(--color-muted); max-width:60ch;">2つ以上のPDFファイルを1つの文書に結合し、結果を圧縮してメタデータ（タイトル、作成者、作成ソフト）を削除します — 2回のリクエストではなく1回で完了します。</p>
   <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl -X POST -F "files=@a.pdf" -F "files=@b.pdf" https://presend.pages.dev/api/merge-and-compress-pdf -o merged.pdf</pre>
-  <h3>POST /api/clean-image</h3>
+  <h3 id="POST-api-clean-image">POST /api/clean-image</h3>
   <p style="color:var(--color-muted); max-width:60ch;">直接バイナリ解析により、JPEGのEXIF/GPSとPNGのテキストメタデータを削除します — ピクセルデータは再エンコードされないため、画質の劣化は一切ありません（常に再圧縮されるcanvasベースの方式とは異なります）。</p>
   <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl -X POST --data-binary @photo.jpg -H "Content-Type: image/jpeg" https://presend.pages.dev/api/clean-image -o clean.jpg</pre>
 
@@ -187,7 +187,7 @@
     <a class="tool-card" href="/ja/tools/password-generator"><div><h3>Password Generator</h3><p>Cryptographically secure passwords (client-side)</p></div><span class="go">Docs →</span></a>
   </div>
 
-  <h3>GET /api/api-stats</h3>
+  <h3 id="GET-api-api-stats">GET /api/api-stats</h3>
   <p style="color:var(--color-muted); max-width:60ch;">Public usage counters per endpoint, aggregated by day. No cookies, no IP stored.</p>
   <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/api-stats"</pre>
 
