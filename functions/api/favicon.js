@@ -84,13 +84,14 @@ export async function onRequestGet(context) {
     const finalUrl = new URL(res.url);
 
     let faviconPath = '/favicon.ico';
+    let source = 'default';
     const contentType = res.headers.get('content-type') || '';
     if (contentType.includes('text/html')) {
       const html = (await res.text()).slice(0, 100000);
       const m = html.match(/<link[^>]+rel=["'](?:shortcut\s+)?icon["'][^>]*>/i);
       if (m) {
         const hrefMatch = m[0].match(/href=["']([^"']*)["']/i);
-        if (hrefMatch) faviconPath = hrefMatch[1];
+        if (hrefMatch) { faviconPath = hrefMatch[1]; source = 'declared'; }
       }
     }
 
@@ -98,7 +99,10 @@ export async function onRequestGet(context) {
       ? faviconPath
       : new URL(faviconPath, finalUrl.origin).href;
 
-    return new Response(JSON.stringify({ domain, favicon: faviconUrl }), {
+    const body = source === 'declared'
+      ? { domain, favicon: faviconUrl, source }
+      : { domain, favicon: faviconUrl, source, note: 'The homepage declares no <link rel="icon">; returning the conventional /favicon.ico, not checked to exist.' };
+    return new Response(JSON.stringify(body), {
       headers: { 'Content-Type': 'application/json', 'Cache-Control': 'public, max-age=86400', ...corsHeaders() },
     });
   } catch (e) {
@@ -106,7 +110,8 @@ export async function onRequestGet(context) {
     return new Response(JSON.stringify({
       domain,
       favicon: 'https://' + domain + '/favicon.ico',
-      note: 'Could not verify, returning default guess.',
+      source: 'default',
+      note: 'Could not fetch the homepage; returning the conventional /favicon.ico as an unverified guess.',
     }), {
       headers: { 'Content-Type': 'application/json', 'Cache-Control': 'public, max-age=3600', ...corsHeaders() },
     });

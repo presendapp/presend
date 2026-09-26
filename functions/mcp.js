@@ -38,7 +38,7 @@ const TOOLS = [
   {
     name: 'base64',
     description: "Encodes text to Base64 or decodes a Base64 string back to text (action = encode or decode).",
-    inputSchema: {"type": "object", "properties": {"action": {"type": "string", "description": "Either \\\"encode\\\" or \\\"decode\\\"."}, "text": {"type": "string", "description": "Text to encode, or Base64 string to decode."}}, "required": ["action", "text"]},
+    inputSchema: {"type": "object", "properties": {"action": {"type": "string", "description": "Either 'encode' or 'decode'."}, "text": {"type": "string", "description": "Text to encode, or Base64 string to decode."}}, "required": ["action", "text"]},
     request: (args) => ({ method: 'GET', url: `${API_BASE}/base64?${new URLSearchParams(args).toString()}` }),
   },
   {
@@ -49,8 +49,8 @@ const TOOLS = [
   },
   {
     name: 'csv_json',
-    description: "Converts CSV text to JSON or JSON to CSV (direction = csv-to-json or json-to-csv), for data passed inline as text.",
-    inputSchema: {"type": "object", "properties": {"direction": {"type": "string", "description": "Either \\\"csv-to-json\\\" or \\\"json-to-csv\\\"."}, "data": {"type": "string", "description": "The CSV or JSON text to convert, matching the chosen direction."}}, "required": ["direction", "data"]},
+    description: "Converts CSV text to JSON or JSON to CSV (direction: csv-to-json or json-to-csv), for data passed inline. CSV must be comma-separated, with a header row and at least one data row; double-quoted fields may contain commas. Semicolon- or tab-separated input is not detected and comes back as a single column. JSON input must be an array of objects: the union of their keys becomes the CSV header and missing values are left empty. Returns result (the converted text), rows and cols. Max 500,000 characters.",
+    inputSchema: {"type": "object", "properties": {"direction": {"type": "string", "description": "Either 'csv-to-json' or 'json-to-csv'."}, "data": {"type": "string", "description": "The CSV or JSON text to convert, matching the chosen direction."}}, "required": ["direction", "data"]},
     request: (args) => ({ method: 'GET', url: `${API_BASE}/csv-json?${new URLSearchParams(args).toString()}` }),
   },
   {
@@ -91,7 +91,7 @@ const TOOLS = [
   },
   {
     name: 'favicon',
-    description: "Returns the favicon URL for a domain. If no icon can be verified, a default guess is returned with a note saying so.",
+    description: "Returns the favicon URL a website declares: fetches the homepage and takes the first <link rel='icon'> (or 'shortcut icon') href, resolved to an absolute URL, which may be a data: URI when the page inlines its icon (source: declared). If no icon is declared, or the homepage cannot be fetched, returns the conventional https://<domain>/favicon.ico with source: default and a note, without checking that it exists. Use it to display a site icon; it does not download or validate the image.",
     inputSchema: {"type": "object", "properties": {"domain": {"type": "string", "description": "Domain to fetch the favicon URL for, e.g. example.com."}}, "required": ["domain"]},
     request: (args) => ({ method: 'GET', url: `${API_BASE}/favicon?${new URLSearchParams(args).toString()}` }),
   },
@@ -128,7 +128,7 @@ const TOOLS = [
   {
     name: 'maintainer_change_check',
     description: "npm only. Flags a previously unseen human publisher taking over a package after 180+ days of inactivity, within the last 365 days (the event-stream attack pattern). CI/trusted-publishing, pre-release, and handovers to a publisher who already maintains another widely used package (100k+ weekly downloads) are reported but not flagged. Does not detect hijacked existing accounts; a heuristic for review, not proof.",
-    inputSchema: {"type": "object", "properties": {"ecosystem": {"type": "string", "description": "Currently only \\\"npm\\\" is supported."}, "package": {"type": "string", "description": "Package name, e.g. lodash"}}, "required": ["ecosystem", "package"]},
+    inputSchema: {"type": "object", "properties": {"ecosystem": {"type": "string", "description": "Currently only 'npm' is supported."}, "package": {"type": "string", "description": "Package name, e.g. lodash"}}, "required": ["ecosystem", "package"]},
     request: (args) => ({ method: 'GET', url: `${API_BASE}/maintainer-change-check?${new URLSearchParams(args).toString()}` }),
   },
   {
@@ -145,7 +145,7 @@ const TOOLS = [
   },
   {
     name: 'password_check',
-    description: "Scores a password's strength (length, character variety, entropy, common patterns) and can also check it against Have I Been Pwned breach data via k-anonymity. The password is sent in a POST body, never in a URL.",
+    description: "Scores a password's strength (length, character variety, entropy, common patterns) and, with check_breach=true, also looks it up in Have I Been Pwned breach data via k-anonymity (only a hash prefix is sent). Use it to evaluate a password someone is choosing; use password_breach when you only need the breach count, and password to generate a new one. The password travels in a POST body, never in a URL.",
     inputSchema: {"type": "object", "properties": {"password": {"type": "string", "description": "Password to evaluate for strength (length, character variety, common patterns)."}, "check_breach": {"type": "boolean", "description": "Whether to also check the password against known data-breach corpora via k-anonymity. true or false."}}, "required": ["password"]},
     request: (args) => ({ method: 'POST', url: `${API_BASE}/password-check`, body: JSON.stringify(args) }),
   },
@@ -168,7 +168,7 @@ const TOOLS = [
   },
   {
     name: 'repo_health_check',
-    description: "GitHub repository health signals from the GitHub API: stars, forks, open issues, license, archived status and days since last push. Input: owner/name.",
+    description: "Maintenance signals for a GitHub repository given as owner/name: stars, forks, open issues, license, archived and fork flags, creation date and age, days since last push, topics. Use it to judge whether a dependency looks maintained or abandoned. For an npm or PyPI package whose repository you do not know, supply_chain_check resolves it from registry metadata and includes these signals. GitHub only; missing or private repositories return found: false.",
     inputSchema: {"type": "object", "properties": {"repo": {"type": "string", "description": "GitHub repository in owner/name format, e.g. lodash/lodash."}}, "required": ["repo"]},
     request: (args) => ({ method: 'GET', url: `${API_BASE}/repo-health-check?${new URLSearchParams(args).toString()}` }),
   },
@@ -180,7 +180,7 @@ const TOOLS = [
   },
   {
     name: 'security_headers',
-    description: "Audits a URL's HTTP security headers (CSP, HSTS, X-Frame-Options, Permissions-Policy, cross-origin policies and others): per-header findings with advice, a score and a letter grade. Also included in security_scan.",
+    description: "Audits the HTTP security headers of one URL (CSP, HSTS, X-Frame-Options, Permissions-Policy, cross-origin policies and others) and returns per-header findings with fix advice, a score and a letter grade. Use it when you need header hardening advice; security_scan runs this audit together with URL reputation and subdomain discovery in one call.",
     inputSchema: {"type": "object", "properties": {"url": {"type": "string", "description": "URL to audit HTTP security headers for (CSP, HSTS, X-Frame-Options, etc.)."}}, "required": ["url"]},
     request: (args) => ({ method: 'GET', url: `${API_BASE}/security-headers?${new URLSearchParams(args).toString()}` }),
   },
