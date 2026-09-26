@@ -65,50 +65,50 @@ print(json.load(urllib.request.urlopen(req)))</pre>
   <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl -X POST --data-binary @file.exe https://presend.pages.dev/api/malware-check</pre>
 
   <h3 id="GET-api-url-clean">GET /api/url-clean</h3>
-  <p style="color:var(--color-muted); max-width:60ch;">Strips 60+ tracking parameters (utm_*, fbclid, gclid...) from a URL.</p>
+  <p style="color:var(--color-muted); max-width:60ch;">Supprime plus de 60 paramètres de suivi (utm_*, fbclid, gclid...) d'une URL.</p>
   <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/url-clean?url=https://example.com/?utm_source=x"
 
 # {"clean":"https://example.com/","removed":1,"valid":true}</pre>
 
   <h3 id="POST-api-url-clean">POST /api/url-clean</h3>
-  <p style="color:var(--color-muted); max-width:60ch;">Same, batched — up to 100 URLs per request.</p>
+  <p style="color:var(--color-muted); max-width:60ch;">Idem, en lot : jusqu'à 100 URL par requête.</p>
   <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl -X POST -H "Content-Type: application/json" \
   -d '{"urls":["https://a.com?fbclid=x","https://b.com?gclid=y"]}' \
   https://presend.pages.dev/api/url-clean</pre>
 
   <h3 id="GET-api-ip">GET /api/ip</h3>
-  <p style="color:var(--color-muted); max-width:60ch;">Returns the caller's IP with geolocation, currency, language and EU/VPN flags.</p>
+  <p style="color:var(--color-muted); max-width:60ch;">Renvoie l'IP de l'appelant avec sa géolocalisation, sa devise, sa langue et des indicateurs UE/VPN.</p>
   <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl https://presend.pages.dev/api/ip</pre>
 
   <h3 id="GET-api-uuid">GET /api/uuid</h3>
-  <p style="color:var(--color-muted); max-width:60ch;">Generates random UUIDs (v4), up to 100 per request.</p>
+  <p style="color:var(--color-muted); max-width:60ch;">Génère des UUID aléatoires (v4), jusqu'à 100 par requête.</p>
   <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/uuid?count=5"</pre>
 
   <h3 id="GET-api-base64">GET /api/base64</h3>
-  <p style="color:var(--color-muted); max-width:60ch;">Encode or decode Base64 text.</p>
+  <p style="color:var(--color-muted); max-width:60ch;">Encode ou décode du texte en Base64.</p>
   <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/base64?action=encode&text=hello"</pre>
 
   <h3 id="GET-api-jwt-decode">GET /api/jwt-decode</h3>
-  <p style="color:var(--color-muted); max-width:60ch;">Decodes a JWT's header and payload (does not verify the signature).</p>
+  <p style="color:var(--color-muted); max-width:60ch;">Décode l'en-tête et la charge utile d'un JWT (sans vérifier la signature ; pour cela, utilisez jwt-verify).</p>
   <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/jwt-decode?token=eyJhbGci..."</pre>
   <h3 id="POST-api-jwt-verify">POST /api/jwt-verify</h3>
   <p style="color:var(--color-muted); max-width:60ch;">Vérifie réellement la signature cryptographique d'un JWT (HS256/384/512, RS/PS256/384/512, ES256/384/512) via l'API Web Crypto native des Workers, avec contrôle des claims exp/nbf. Fournir un « secret » pour HMAC, ou un « jwk »/« jwks_url » pour les algorithmes asymétriques.</p>
   <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl -X POST -H "Content-Type: application/json" -d '{"token":"...","secret":"..."}' https://presend.pages.dev/api/jwt-verify</pre>
 
   <h3 id="GET-api-timestamp">GET /api/timestamp</h3>
-  <p style="color:var(--color-muted); max-width:60ch;">Current time, or convert between Unix timestamp and ISO date.</p>
+  <p style="color:var(--color-muted); max-width:60ch;">Heure actuelle, ou conversion entre timestamp Unix et date ISO.</p>
   <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/timestamp?unix=1700000000"</pre>
 
   <h3 id="GET-api-color">GET /api/color</h3>
-  <p style="color:var(--color-muted); max-width:60ch;">Convert between hex, RGB and HSL color formats.</p>
+  <p style="color:var(--color-muted); max-width:60ch;">Conversion entre les formats de couleur hex, RGB et HSL.</p>
   <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/color?hex=ff5733"</pre>
 
   <h3 id="GET-api-user-agent">GET /api/user-agent</h3>
-  <p style="color:var(--color-muted); max-width:60ch;">Parses a User-Agent string into browser, OS and device type.</p>
+  <p style="color:var(--color-muted); max-width:60ch;">Analyse une chaîne User-Agent : navigateur, système d'exploitation et type d'appareil.</p>
   <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/user-agent"</pre>
 
   <h3 id="GET-api-password">GET /api/password</h3>
-  <p style="color:var(--color-muted); max-width:60ch;">Generates a cryptographically secure password with entropy estimate.</p>
+  <p style="color:var(--color-muted); max-width:60ch;">Génère un mot de passe cryptographiquement sûr, avec une estimation de son entropie.</p>
   <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/password?length=20&symbols=1"</pre>
 
   <h3 id="GET-api-email-validate">GET /api/email-validate</h3>
@@ -116,11 +116,11 @@ print(json.load(urllib.request.urlopen(req)))</pre>
   <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/email-validate?email=foo@example.com"</pre>
 
   <h3 id="GET-api-favicon">GET /api/favicon</h3>
-  <p style="color:var(--color-muted); max-width:60ch;">Fetches the favicon URL for any domain.</p>
+  <p style="color:var(--color-muted); max-width:60ch;">Renvoie l'URL du favicon déclaré par un site ; si aucune icône n'est déclarée, une URL par défaut est renvoyée et signalée comme telle.</p>
   <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/favicon?domain=github.com"</pre>
 
   <h3 id="GET-api-csv-json">GET/POST /api/csv-json</h3>
-  <p style="color:var(--color-muted); max-width:60ch;">Converts between JSON and CSV. Nested objects are stringified, not flattened.</p>
+  <p style="color:var(--color-muted); max-width:60ch;">Convertit entre JSON et CSV. Les objets imbriqués sont sérialisés en chaîne, pas aplatis.</p>
   <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl -X POST -H "Content-Type: application/json" \
   -d '{"direction":"json-to-csv","data":"[{\"a\":1}]"}' \
   https://presend.pages.dev/api/csv-json</pre>
@@ -133,7 +133,7 @@ print(json.load(urllib.request.urlopen(req)))</pre>
   <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl -X POST -H "Content-Type: application/json" -d '{"password":"..."}' https://presend.pages.dev/api/password-check</pre>
 
   <h3 id="GET-api-email-disposable">GET /api/email-disposable</h3>
-  <p style="color:var(--color-muted); max-width:60ch;">Detects disposable/throwaway email providers from a list of 576+ known domains.</p>
+  <p style="color:var(--color-muted); max-width:60ch;">Détecte les fournisseurs d'e-mails jetables à partir d'une liste de 576 domaines connus.</p>
   <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/email-disposable?email=foo@mailinator.com"</pre>
   <h3 id="GET-api-email-verify">GET /api/email-verify</h3>
   <p style="color:var(--color-muted); max-width:60ch;">Combine la vérification de syntaxe, la recherche MX, la détection de domaine jetable et la détection de compte générique (info@, admin@...) en un seul appel, gratuit et sans clé. Ne sonde pas la boîte aux lettres.</p>
@@ -152,15 +152,15 @@ print(json.load(urllib.request.urlopen(req)))</pre>
   <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl -X POST -F "file=@qrcode.png" https://presend.pages.dev/api/qr-scan</pre>
 
   <h3 id="GET-api-security-headers">GET /api/security-headers</h3>
-  <p style="color:var(--color-muted); max-width:60ch;">Audits HTTP security headers (CSP, HSTS, X-Frame-Options...) and gives a letter grade.</p>
+  <p style="color:var(--color-muted); max-width:60ch;">Audite les en-têtes de sécurité HTTP (CSP, HSTS, X-Frame-Options...) et attribue une note sous forme de lettre.</p>
   <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/security-headers?url=https://example.com"</pre>
 
   <h3 id="GET-api-url-reputation">GET /api/url-reputation</h3>
-  <p style="color:var(--color-muted); max-width:60ch;">Checks a URL against URLhaus, a public malware/phishing database.</p>
+  <p style="color:var(--color-muted); max-width:60ch;">Vérifie une URL auprès d'URLhaus, une base publique de malwares et de phishing.</p>
   <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/url-reputation?url=https://example.com"</pre>
 
   <h3 id="GET-api-subdomains">GET /api/subdomains</h3>
-  <p style="color:var(--color-muted); max-width:60ch;">Passive subdomain discovery via Certificate Transparency logs (crt.sh) — for auditing your own attack surface. Note: depends on crt.sh, which has occasional downtime outside our control.</p>
+  <p style="color:var(--color-muted); max-width:60ch;">Découverte passive de sous-domaines via les journaux Certificate Transparency (crt.sh), pour auditer votre propre surface d'attaque. Dépend de crt.sh, qui connaît parfois des interruptions indépendantes de notre volonté.</p>
   <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/subdomains?domain=example.com"</pre>
   <h3 id="GET-api-ai-crawler-check">GET /api/ai-crawler-check</h3>
   <p style="color:var(--color-muted); max-width:60ch;">Récupère le robots.txt et indique quels robots d'IA connus (GPTBot, ClaudeBot, PerplexityBot, Google-Extended, CCBot, etc.) sont autorisés ou bloqués. Gratuit, sans inscription.</p>
@@ -266,31 +266,31 @@ print(json.load(urllib.request.urlopen(req)))</pre>
 
   <h2>Outils disponibles</h2>
   <div class="tool-grid">
-    <a class="tool-card" href="/fr/tools/file-hash-checker"><div><h3>File Hash Checker</h3><p>SHA-256 / SHA-1 / SHA-512 — server API available</p></div><span class="go">Docs →</span></a>
-    <a class="tool-card" href="/fr/tools/url-cleaner"><div><h3>URL Cleaner</h3><p>Strip tracking params — server API available</p></div><span class="go">Docs →</span></a>
-    <a class="tool-card" href="/fr/tools/ip-geolocation"><div><h3>IP Geolocation</h3><p>IP, location, currency — server API available</p></div><span class="go">Docs →</span></a>
-    <a class="tool-card" href="/fr/api"><div><h3>UUID Generator</h3><p>Random UUIDs — server API available</p></div><span class="go">Docs →</span></a>
-    <a class="tool-card" href="/fr/api"><div><h3>Base64 Encoder/Decoder</h3><p>Encode/decode text — server API available</p></div><span class="go">Docs →</span></a>
-    <a class="tool-card" href="/fr/api"><div><h3>JWT Decoder</h3><p>Decode JWT tokens — server API available</p></div><span class="go">Docs →</span></a>
-    <a class="tool-card" href="/fr/api"><div><h3>Timestamp Converter</h3><p>Unix/ISO date conversion — server API</p></div><span class="go">Docs →</span></a>
-    <a class="tool-card" href="/fr/api"><div><h3>Color Converter</h3><p>Hex/RGB/HSL — server API</p></div><span class="go">Docs →</span></a>
-    <a class="tool-card" href="/fr/api"><div><h3>User-Agent Parser</h3><p>Browser/OS detection — server API</p></div><span class="go">Docs →</span></a>
-    <a class="tool-card" href="/fr/api"><div><h3>Password Generator API</h3><p>Secure passwords with entropy — server API</p></div><span class="go">Docs →</span></a>
-    <a class="tool-card" href="/fr/api"><div><h3>Email Validator</h3><p>Syntax + MX record check — server API</p></div><span class="go">Docs →</span></a>
-    <a class="tool-card" href="/fr/api"><div><h3>Favicon Fetcher</h3><p>Get any site's favicon — server API</p></div><span class="go">Docs →</span></a>
-    <a class="tool-card" href="/fr/api"><div><h3>CSV/JSON Converter</h3><p>Bidirectional — server API</p></div><span class="go">Docs →</span></a>
-    <a class="tool-card" href="/fr/api"><div><h3>Password Breach Check</h3><p>HIBP-powered — server API</p></div><span class="go">Docs →</span></a>
-    <a class="tool-card" href="/fr/api"><div><h3>Disposable Email Detector</h3><p>576+ known domains — server API</p></div><span class="go">Docs →</span></a>
-    <a class="tool-card" href="/fr/api"><div><h3>Security Headers Analyzer</h3><p>CSP, HSTS grade — server API</p></div><span class="go">Docs →</span></a>
-    <a class="tool-card" href="/fr/api"><div><h3>URL Reputation Check</h3><p>Malware/phishing lookup — server API</p></div><span class="go">Docs →</span></a>
-    <a class="tool-card" href="/fr/api"><div><h3>Attack Surface Discovery</h3><p>Passive subdomain enum — server API</p></div><span class="go">Docs →</span></a>
-    <a class="tool-card" href="/fr/tools/exif-remover"><div><h3>EXIF Remover</h3><p>Strip GPS and metadata from photos (client-side)</p></div><span class="go">Docs →</span></a>
-    <a class="tool-card" href="/fr/tools/pdf-compress"><div><h3>PDF Compress</h3><p>Reduce PDF file size (client-side)</p></div><span class="go">Docs →</span></a>
-    <a class="tool-card" href="/fr/tools/password-generator"><div><h3>Password Generator</h3><p>Cryptographically secure passwords (client-side)</p></div><span class="go">Docs →</span></a>
+    <a class="tool-card" href="/fr/tools/file-hash-checker"><div><h3>Vérificateur d'empreintes</h3><p>SHA-256 / SHA-1 / SHA-512 — API serveur disponible</p></div><span class="go">Docs →</span></a>
+    <a class="tool-card" href="/fr/tools/url-cleaner"><div><h3>Nettoyeur d'URL</h3><p>Supprime les paramètres de suivi — API serveur disponible</p></div><span class="go">Docs →</span></a>
+    <a class="tool-card" href="/fr/tools/ip-geolocation"><div><h3>Géolocalisation IP</h3><p>IP, localisation, devise — API serveur disponible</p></div><span class="go">Docs →</span></a>
+    <a class="tool-card" href="/fr/api"><div><h3>Générateur d'UUID</h3><p>UUID aléatoires — API serveur disponible</p></div><span class="go">Docs →</span></a>
+    <a class="tool-card" href="/fr/api"><div><h3>Encodeur/décodeur Base64</h3><p>Encoder/décoder du texte — API serveur disponible</p></div><span class="go">Docs →</span></a>
+    <a class="tool-card" href="/fr/api"><div><h3>Décodeur JWT</h3><p>Décoder des jetons JWT — API serveur disponible</p></div><span class="go">Docs →</span></a>
+    <a class="tool-card" href="/fr/api"><div><h3>Convertisseur de timestamps</h3><p>Conversion de dates Unix/ISO — API serveur</p></div><span class="go">Docs →</span></a>
+    <a class="tool-card" href="/fr/api"><div><h3>Convertisseur de couleurs</h3><p>Hex/RGB/HSL — API serveur</p></div><span class="go">Docs →</span></a>
+    <a class="tool-card" href="/fr/api"><div><h3>Analyseur de User-Agent</h3><p>Détection navigateur/OS — API serveur</p></div><span class="go">Docs →</span></a>
+    <a class="tool-card" href="/fr/api"><div><h3>API de génération de mots de passe</h3><p>Mots de passe sûrs avec entropie — API serveur</p></div><span class="go">Docs →</span></a>
+    <a class="tool-card" href="/fr/api"><div><h3>Validateur d'e-mails</h3><p>Vérification syntaxe + MX — API serveur</p></div><span class="go">Docs →</span></a>
+    <a class="tool-card" href="/fr/api"><div><h3>Récupérateur de favicon</h3><p>Favicon de n'importe quel site — API serveur</p></div><span class="go">Docs →</span></a>
+    <a class="tool-card" href="/fr/api"><div><h3>Convertisseur CSV/JSON</h3><p>Dans les deux sens — API serveur</p></div><span class="go">Docs →</span></a>
+    <a class="tool-card" href="/fr/api"><div><h3>Vérification de fuite de mot de passe</h3><p>Basé sur HIBP — API serveur</p></div><span class="go">Docs →</span></a>
+    <a class="tool-card" href="/fr/api"><div><h3>Détecteur d'e-mails jetables</h3><p>576 domaines connus — API serveur</p></div><span class="go">Docs →</span></a>
+    <a class="tool-card" href="/fr/api"><div><h3>Analyseur d'en-têtes de sécurité</h3><p>Note CSP, HSTS — API serveur</p></div><span class="go">Docs →</span></a>
+    <a class="tool-card" href="/fr/api"><div><h3>Réputation d'URL</h3><p>Recherche malware/phishing — API serveur</p></div><span class="go">Docs →</span></a>
+    <a class="tool-card" href="/fr/api"><div><h3>Découverte de la surface d'attaque</h3><p>Énumération passive de sous-domaines — API serveur</p></div><span class="go">Docs →</span></a>
+    <a class="tool-card" href="/fr/tools/exif-remover"><div><h3>Suppression EXIF</h3><p>Supprime GPS et métadonnées des photos (côté client)</p></div><span class="go">Docs →</span></a>
+    <a class="tool-card" href="/fr/tools/pdf-compress"><div><h3>Compression PDF</h3><p>Réduit la taille des PDF (côté client)</p></div><span class="go">Docs →</span></a>
+    <a class="tool-card" href="/fr/tools/password-generator"><div><h3>Générateur de mots de passe</h3><p>Mots de passe cryptographiquement sûrs (côté client)</p></div><span class="go">Docs →</span></a>
   </div>
 
   <h3 id="GET-api-api-stats">GET /api/api-stats</h3>
-  <p style="color:var(--color-muted); max-width:60ch;">Public usage counters per endpoint, aggregated by day. No cookies, no IP stored.</p>
+  <p style="color:var(--color-muted); max-width:60ch;">Compteurs d'usage publics par point de terminaison, agrégés par jour. Aucun cookie, aucune IP stockée.</p>
   <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/api-stats"</pre>
 
   <h2>Paquet npm</h2>
@@ -301,7 +301,7 @@ print(json.load(urllib.request.urlopen(req)))</pre>
   <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">const presend = require('presend-api');
 const { uuids } = await presend.generateUuid(3);</pre>
   <p style="color:var(--color-muted); max-width:60ch; font-size:0.9rem;">
-    <a href="https://www.npmjs.com/package/presend-api">View on npm</a>
+    <a href="https://www.npmjs.com/package/presend-api">Voir sur npm</a>
   </p>
 
   <h2>Widget intégrable</h2>
