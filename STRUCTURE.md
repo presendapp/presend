@@ -18,6 +18,7 @@ python3 -c "import json; d=json.load(open('openapi.json')); print(len(d['paths']
 maintainer-change-check (npm uniquement), vulnerability-check (OSV.dev), typosquat-check, supply-chain-check (combine les 3 précédents + repo-health-check), repo-health-check, malware-check (POST), cve-lookup (recherche directe OSV.dev par ID)
 Batch : typosquat-check (max 100 noms, npm/PyPI) et maintainer-change-check (max 20, npm) acceptent aussi `POST {"ecosystem": ..., "packages": [...]}`, compté comme une seule requête pour le rate limit (depuis le 25 sept.).
 typosquat-check : noms PyPI normalisés (PEP 503), paquets npm du même scope que la cible jamais signalés, voisins légitimes revus dans `KNOWN_LEGIT` (`known_legitimate: true`). Tests : `tests/typosquat/` (`run.mjs` hors ligne ; `top-pypi.mjs` et `top-npm.mjs` avec réseau).
+maintainer-change-check : `analyzeNpm(data, now)` est pure (rejeu à une date passée possible) ; `classifyEstablishedPublishers` reclasse ensuite les passations vers des publieurs établis (recherche npm, cache 6 h). Test : `tests/maintainer-change/top-npm.mjs [N]` (réseau, ~3 min pour N=200, cache dans /tmp/mcc-cache).
 
 ### Web & réseau
 security-scan, security-headers, url-reputation, ip-reputation, subdomains, redirect-trace, ai-crawler-check, dns-lookup, whois-lookup, link-metadata (Open Graph/Twitter Card)

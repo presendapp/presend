@@ -47,6 +47,7 @@ Sans cette étape, les fichiers de contexte se dégradent vite (exactement le pr
 - Tests : `./tests/run-tests.sh` (existe, jamais utilisé pendant cette session — vérifier son contenu avant de s'y fier)
 - SEO : `python3 daily_seo.py`
 - Tests typosquat-check (obligatoires après toute modification de `POPULAR` ou `KNOWN_LEGIT`) : `node tests/typosquat/run.mjs && node tests/typosquat/top-pypi.mjs && node tests/typosquat/top-npm.mjs`
+- Test maintainer-change-check (après toute modification de sa logique) : `node tests/maintainer-change/top-npm.mjs 200` (~3 min, respecte la limite de l'API de recherche npm ; doit afficher event-stream DETECTE)
 
 ## Pièges rencontrés
 - **bash et `!`** : un `!` entre guillemets doubles déclenche l'expansion d'historique ("event not found", ou texte remplacé en silence, par ex. un `!s` de f-string Python devenu `grep`). Passer le code Python/JS par un heredoc entre apostrophes (`python3 - <<'EOF'`), jamais par `-c "..."`.
