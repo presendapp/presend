@@ -16,13 +16,17 @@ function corsHeaders(extra = {}) {
 }
 
 const PROTOCOL_VERSION = '2025-06-18';
+
+// Tools that compute locally without contacting any external service (openWorldHint: false).
+// Verified 2026-09-26: no fetch()/validateAndResolve()/connect() in their endpoint files or imports.
+const CLOSED_WORLD = new Set(['base64', 'color', 'csv_json', 'email_disposable', 'iban_validate', 'jwt_decode', 'password', 'phone_verify', 'text_similarity', 'timestamp', 'tx_decode', 'typosquat_check', 'url_clean', 'user_agent', 'uuid']);
 const API_BASE = 'https://presend.pages.dev/api';
 
 const TOOLS = [
   {
     name: 'address_risk',
     description: "Screens a crypto address against the OFAC SDN sanctions list. EVM addresses only (0x..., Ethereum, BSC, Arbitrum and other EVM chains); Cosmos bech32 addresses are recognized but not yet screened against any sanctions source.",
-    inputSchema: {"type": "object", "properties": {"address": {"type": "string", "description": "EVM address (0x + 40 hex chars) or Cosmos SDK bech32 address to check against the OFAC SDN sanctions list."}}, "required": ["address"]},
+    inputSchema: {"type": "object", "properties": {"address": {"type": "string", "description": "EVM address (0x + 40 hex chars) to screen against the OFAC SDN list. Cosmos SDK bech32 addresses are accepted but not screened: they return sanctioned: null (unchecked, not clean)."}}, "required": ["address"]},
     request: (args) => ({ method: 'GET', url: `${API_BASE}/address-risk?${new URLSearchParams(args).toString()}` }),
   },
   {
@@ -280,7 +284,7 @@ async function handleRequest(body) {
     return jsonRpcResult(id, {
       protocolVersion: PROTOCOL_VERSION,
       capabilities: { tools: {} },
-      serverInfo: { name: 'presend-mcp', version: '3.0.0' },
+      serverInfo: { name: 'presend-mcp', version: '3.1.0' },
     });
   }
 
@@ -290,7 +294,10 @@ async function handleRequest(body) {
 
   if (method === 'tools/list') {
     return jsonRpcResult(id, {
-      tools: TOOLS.map(({ name, description, inputSchema }) => ({ name, description, inputSchema })),
+      tools: TOOLS.map(({ name, description, inputSchema }) => ({
+        name, description, inputSchema,
+        annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: !CLOSED_WORLD.has(name) },
+      })),
     });
   }
 

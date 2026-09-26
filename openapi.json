@@ -3716,7 +3716,7 @@
               "type": "string",
               "example": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
             },
-            "description": "EVM address (0x + 40 hex chars) or Cosmos SDK bech32 address to check."
+            "description": "EVM address (0x + 40 hex chars) to screen against the OFAC SDN list. Cosmos SDK bech32 addresses are accepted but not screened: they return sanctioned: null (unchecked, not clean)."
           }
         ],
         "responses": {
