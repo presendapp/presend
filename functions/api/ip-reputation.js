@@ -62,7 +62,7 @@ function ipInCidr(ipInt, rangeInt, bits) {
 // la date et le copyright doivent accompagner les données. L'ancienne version
 // téléchargeait drop.txt avec un cache Cloudflare de 30 min PROPRE À CHAQUE
 // datacenter -- soit potentiellement des dizaines de téléchargements par heure.
-// Désormais : une copie globale dans KV, rafraîchie au plus toutes les 12 h,
+// Désormais : une copie globale dans KV, rafraîchie au plus une fois par jour (FAQ DROP ; 12 h jusqu'au 26 sept.),
 // avec un verrou KV d'une heure pour qu'un seul datacenter télécharge.
 // Une copie et un verrou par famille d'adresses. Les clés v4 sont inchangées
 // (changer leur structure déclencherait un nouveau téléchargement immédiat).
@@ -71,10 +71,10 @@ const FAMILIES = {
   4: { url: 'https://www.spamhaus.org/drop/drop_v4.json', kvKey: 'spamhaus-drop:v4', lockKey: 'spamhaus-drop:v4:lock' },
   6: { url: 'https://www.spamhaus.org/drop/drop_v6.json', kvKey: 'spamhaus-drop:v6', lockKey: 'spamhaus-drop:v6:lock' },
 };
-const REFRESH_AFTER_MS = 12 * 3600 * 1000;
+const REFRESH_AFTER_MS = 24 * 3600 * 1000; // DROP FAQ: no more than one download per day
 const LOCK_TTL_S = 3600;
 const MEMORY_TTL_MS = 5 * 60 * 1000;
-const STALE_AFTER_MS = 36 * 3600 * 1000;
+const STALE_AFTER_MS = 48 * 3600 * 1000;
 
 const memos = { 4: null, 6: null }; // { loadedAt, data, entries } -- cache par instance
 
@@ -270,7 +270,7 @@ export async function onRequestGet(context) {
     list_date: drop.data.timestamp ? new Date(drop.data.timestamp * 1000).toISOString().slice(0, 10) : null,
     data_age_hours: Math.round(ageMs / 360000) / 10,
     stale: ageMs > STALE_AFTER_MS,
-    source: 'Spamhaus DROP (Don\'t Route Or Peer) -- netblocks known to be hijacked or controlled by spam/cyber-crime operations. IPv4 and IPv6 (separate lists). Spamhaus re-evaluates listings daily; this service refreshes its copy at most every 12 hours.',
+    source: 'Spamhaus DROP (Don\'t Route Or Peer) -- netblocks known to be hijacked or controlled by spam/cyber-crime operations. IPv4 and IPv6 (separate lists). Spamhaus re-evaluates listings daily; this service refreshes its copy at most once a day.',
     attribution: drop.data.copyright,
     terms: drop.data.terms,
     note: match

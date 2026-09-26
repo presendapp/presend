@@ -3644,7 +3644,7 @@
     "/ip-reputation": {
       "get": {
         "summary": "IP reputation check against a curated blocklist",
-        "description": "Checks an IPv4 or IPv6 address against a curated list of netblocks known to be hijacked or controlled by spam/cyber-crime operations. The list copy is refreshed at most every 12 hours; the response includes the list date, attribution and a stale flag if the upstream source has been unreachable for over 36 hours. Free, no signup.",
+        "description": "Checks an IPv4 or IPv6 address against a curated list of netblocks known to be hijacked or controlled by spam/cyber-crime operations. The list copy is refreshed at most once a day; the response includes the list date, attribution and a stale flag if the upstream source has been unreachable long enough for the copy to be over 48 hours old. Free, no signup.",
         "parameters": [
           {
             "name": "ip",
@@ -3679,7 +3679,7 @@
                     },
                     "list_size": {
                       "type": "integer"
-                    }, "list_date": {"type": "string", "description": "Date of the list version used (YYYY-MM-DD)"}, "data_age_hours": {"type": "number"}, "stale": {"type": "boolean", "description": "True if the list copy is older than 36 hours (upstream unreachable)"}, "attribution": {"type": "string"}, "terms": {"type": "string"},
+                    }, "list_date": {"type": "string", "description": "Date of the list version used (YYYY-MM-DD)"}, "data_age_hours": {"type": "number"}, "stale": {"type": "boolean", "description": "True if the list copy is older than 48 hours (upstream unreachable)"}, "attribution": {"type": "string"}, "terms": {"type": "string"},
                     "source": {
                       "type": "string"
                     },
@@ -3697,7 +3697,7 @@
                   "list_date": "2026-09-25",
                   "data_age_hours": 2.4,
                   "stale": false,
-                  "source": "Spamhaus DROP (Don't Route Or Peer) -- netblocks known to be hijacked or controlled by spam/cyber-crime operations. IPv4 and IPv6 (separate lists). Spamhaus re-evaluates listings daily; this service refreshes its copy at most every 12 hours.",
+                  "source": "Spamhaus DROP (Don't Route Or Peer) -- netblocks known to be hijacked or controlled by spam/cyber-crime operations. IPv4 and IPv6 (separate lists). Spamhaus re-evaluates listings daily; this service refreshes its copy at most once a day.",
                   "attribution": "(c) 2026 The Spamhaus Project SLU",
                   "terms": "https://www.spamhaus.org/drop/terms/",
                   "note": "This IP falls within a netblock Spamhaus lists as entirely controlled by spammers or hijackers."
