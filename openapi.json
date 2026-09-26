@@ -1357,12 +1357,12 @@
                     },
                     "favicon": {
                       "type": "string"
-                    }
+                    }, "source": {"type": "string", "enum": ["declared", "default"], "description": "declared: the homepage declares this icon in a <link rel=\"icon\"> tag. default: none declared (or homepage unreachable), so the conventional /favicon.ico is returned without being checked."}, "note": {"type": "string", "description": "Present when source is default: explains that the URL is an unverified guess."}
                   }
                 },
                 "example": {
                   "domain": "github.com",
-                  "favicon": "https://github.githubassets.com/favicons/favicon.svg"
+                  "favicon": "https://github.githubassets.com/favicons/favicon.svg", "source": "declared"
                 }
               }
             }
