@@ -46,4 +46,10 @@ Sans cette étape, les fichiers de contexte se dégradent vite (exactement le pr
 - Déploiement : automatique via git push sur main (Cloudflare Pages)
 - Tests : `./tests/run-tests.sh` (existe, jamais utilisé pendant cette session — vérifier son contenu avant de s'y fier)
 - SEO : `python3 daily_seo.py`
+- Tests typosquat-check (obligatoires après toute modification de `POPULAR` ou `KNOWN_LEGIT`) : `node tests/typosquat/run.mjs && node tests/typosquat/top-pypi.mjs && node tests/typosquat/top-npm.mjs`
+
+## Pièges rencontrés
+- **bash et `!`** : un `!` entre guillemets doubles déclenche l'expansion d'historique ("event not found", ou texte remplacé en silence, par ex. un `!s` de f-string Python devenu `grep`). Passer le code Python/JS par un heredoc entre apostrophes (`python3 - <<'EOF'`), jamais par `-c "..."`.
+- **Modifier openapi.json** : ne pas le réécrire avec `json.dump` (reformate des centaines de lignes). Faire des remplacements textuels ciblés, puis valider avec `json.loads` et vérifier que `git diff --stat` ne montre que les lignes attendues.
+- **Appels à la prod depuis Python** : `urllib` sans `User-Agent` explicite reçoit un 403 Cloudflare (leçon n°12).
 - Lint OpenAPI : `npx --yes @redocly/cli lint openapi.json --max-problems 2000` -- **0 erreur attendue** depuis le 25 sept. (`"security": []` déclaré à la racine, exemples corrigés). Avertissements restants connus : `operation-operationId` et `operation-4xx-response` (dette de doc). Tout AUTRE avertissement ou erreur vient d'une modification récente.
