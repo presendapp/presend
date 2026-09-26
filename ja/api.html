@@ -121,7 +121,7 @@
   <p style="color:var(--color-muted); max-width:60ch;">Detects disposable/throwaway email providers from a list of 576+ known domains.</p>
   <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/email-disposable?email=foo@mailinator.com"</pre>
   <h3 id="GET-api-email-verify">GET /api/email-verify</h3>
-  <p style="color:var(--color-muted); max-width:60ch;">構文チェック、MXレコード検索、使い捨てドメイン検出、汎用アカウント検出（info@、admin@など）を1回の呼び出しで組み合わせます。ほとんどの無料メールAPIはこれらを個別の有料機能としてのみ提供しています。</p>
+  <p style="color:var(--color-muted); max-width:60ch;">構文チェック、MXレコード検索、使い捨てドメイン検出、汎用アカウント検出（info@、admin@など）を1回の呼び出しで組み合わせます。</p>
   <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/email-verify?email=foo@example.com"</pre>
   <h3 id="GET-api-phone-verify">GET /api/phone-verify</h3>
   <p style="color:var(--color-muted); max-width:60ch;">libphonenumber-jsを使用して電話番号を検証し、フォーマットします（E.164、国際形式、国内形式）。「+」が付いていない番号に国が指定されていない場合、発信者のIPから推定された国が自動的に使用されます。</p>
@@ -141,7 +141,7 @@
 
   <h2>連携ワークフロー</h2>
   <p style="color:var(--color-muted); max-width:60ch;">
-    これら2つのエンドポイントは、サーバー側で複数の処理を1回の呼び出しに連携させます — これを行う他の無料APIは知りません。処理はステートレスです：ディスクへの書き込みなし、ログなし、レスポンス送信直後にファイルは破棄されます。
+    これら2つのエンドポイントは、サーバー側で複数の処理を1回の呼び出しに連携させます 。処理はステートレスです：ディスクへの書き込みなし、ログなし、レスポンス送信直後にファイルは破棄されます。
   </p>
   <h3 id="POST-api-merge-and-compress-pdf">POST /api/merge-and-compress-pdf</h3>
   <p style="color:var(--color-muted); max-width:60ch;">2つ以上のPDFファイルを1つの文書に結合し、結果を圧縮してメタデータ（タイトル、作成者、作成ソフト）を削除します — 2回のリクエストではなく1回で完了します。</p>

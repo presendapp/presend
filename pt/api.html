@@ -121,7 +121,7 @@
   <p style="color:var(--color-muted); max-width:60ch;">Detects disposable/throwaway email providers from a list of 576+ known domains.</p>
   <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/email-disposable?email=foo@mailinator.com"</pre>
   <h3 id="GET-api-email-verify">GET /api/email-verify</h3>
-  <p style="color:var(--color-muted); max-width:60ch;">Combina verificação de sintaxe, consulta MX, detecção de domínio descartável e detecção de conta genérica (info@, admin@...) em uma única chamada — a maioria das APIs de email gratuitas oferece essas verificações apenas separadamente e pagas.</p>
+  <p style="color:var(--color-muted); max-width:60ch;">Combina verificação de sintaxe, consulta MX, detecção de domínio descartável e detecção de conta genérica (info@, admin@...) em uma única chamada .</p>
   <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/email-verify?email=foo@example.com"</pre>
   <h3 id="GET-api-phone-verify">GET /api/phone-verify</h3>
   <p style="color:var(--color-muted); max-width:60ch;">Valida e formata um número de telefone (E.164, internacional, nacional) via libphonenumber-js. Se nenhum país for informado para um número sem prefixo "+", o país inferido pelo IP do solicitante é usado automaticamente.</p>
@@ -141,7 +141,7 @@
 
   <h2>Fluxos encadeados</h2>
   <p style="color:var(--color-muted); max-width:60ch;">
-    Esses dois endpoints encadeiam múltiplas operações no servidor em uma única chamada — nenhuma outra API gratuita conhecida faz isso. O processamento não mantém estado: nada é gravado em disco, nada é registrado, o arquivo é descartado assim que a resposta é enviada.
+    Esses dois endpoints encadeiam múltiplas operações no servidor em uma única chamada . O processamento não mantém estado: nada é gravado em disco, nada é registrado, o arquivo é descartado assim que a resposta é enviada.
   </p>
   <h3 id="POST-api-merge-and-compress-pdf">POST /api/merge-and-compress-pdf</h3>
   <p style="color:var(--color-muted); max-width:60ch;">Combina 2 ou mais arquivos PDF em um único documento, depois comprime o resultado e remove metadados (título, autor, produtor) — em uma única requisição em vez de duas.</p>
