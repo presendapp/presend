@@ -30,7 +30,7 @@ email-validate, email-verify, email-disposable, email-security, phone-verify
 jwt-decode, jwt-verify (POST), password, password-check (POST), password-breach
 
 ### Blockchain (Cosmos SDK / EVM)
-address-risk (OFAC, **EVM uniquement**), tx-decode (Cosmos SDK, sans dépendance externe), rpc-check (audit CometBFT)
+address-risk (OFAC, toutes les listes par actif ; EVM et Bitcoin couverts, autres chaînes signalées si listées, Cosmos bech32 -> `null`), tx-decode (Cosmos SDK, sans dépendance externe), rpc-check (audit CometBFT)
 
 ### Fichiers & images
 hash (POST), file-type (POST), clean-image (POST), image-similarity (POST), merge-and-compress-pdf (POST), qr-scan (POST)

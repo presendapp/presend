@@ -25,8 +25,8 @@ const API_BASE = 'https://presend.pages.dev/api';
 const TOOLS = [
   {
     name: 'address_risk',
-    description: "Screens a crypto address against the OFAC SDN sanctions list. EVM addresses only (0x..., Ethereum, BSC, Arbitrum and other EVM chains); Cosmos bech32 addresses are recognized but not yet screened against any sanctions source.",
-    inputSchema: {"type": "object", "properties": {"address": {"type": "string", "description": "EVM address (0x + 40 hex chars) to screen against the OFAC SDN list. Cosmos SDK bech32 addresses are accepted but not screened: they return sanctioned: null (unchecked, not clean)."}}, "required": ["address"]},
+    description: "Screens a crypto address against every OFAC SDN digital currency address list. EVM (0x...) and Bitcoin (bc1..., 1..., 3...) addresses are fully covered (sanctioned true or false, with the matching lists). Addresses of other chains are flagged when listed; Cosmos SDK bech32 addresses return sanctioned: null when not listed, as OFAC publishes none. A sanctions signal only, not a full risk score.",
+    inputSchema: {"type": "object", "properties": {"address": {"type": "string", "description": "Address to screen: EVM (0x + 40 hex chars) or Bitcoin (bc1..., 1..., 3...), both fully covered. Addresses of other chains are matched against their lists too; bech32 addresses of other chains (e.g. cosmos1...) return sanctioned: null (unchecked, not clean) when not listed."}}, "required": ["address"]},
     request: (args) => ({ method: 'GET', url: `${API_BASE}/address-risk?${new URLSearchParams(args).toString()}` }),
   },
   {

@@ -214,7 +214,7 @@ print(json.load(urllib.request.urlopen(req)))</pre>
     Free tools for the Cosmos and EVM ecosystems. No signup, no API key.
   </p>
   <h3 id="GET-api-address-risk">GET /api/address-risk</h3>
-  <p style="color:var(--color-muted); max-width:60ch;">Checks an EVM-format address (Ethereum, BSC, Arbitrum) against the OFAC Specially Designated Nationals (SDN) sanctions list. Cosmos SDK (bech32) addresses are format-detected but not yet checked against a sanctions source.</p>
+  <p style="color:var(--color-muted); max-width:60ch;">Checks a crypto address against every OFAC Specially Designated Nationals (SDN) digital currency address list. EVM (0x...) and Bitcoin (bc1..., 1..., 3...) addresses are fully covered; addresses of other chains are flagged when listed. Cosmos SDK (bech32) addresses return <code>sanctioned: null</code> when not listed, since OFAC has published no entries for Cosmos SDK chains.</p>
   <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/address-risk?address=0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"</pre>
   <h3 id="GET-api-tx-decode">GET /api/tx-decode</h3>
   <p style="color:var(--color-muted); max-width:60ch;">Decodes a raw, signed Cosmos SDK transaction (protobuf TxRaw bytes, base64) into readable JSON -- messages, fee, gas, signer info, signatures. No external dependency, decodes common bank/staking/gov/authz message types including nested MsgExec.</p>
@@ -289,7 +289,7 @@ print(json.load(urllib.request.urlopen(req)))</pre>
     <a class="tool-card" href="/api"><div><h3>Security Headers Analyzer</h3><p>CSP, HSTS grade — server API</p></div><span class="go">Docs →</span></a>
     <a class="tool-card" href="/api"><div><h3>URL Reputation Check</h3><p>Malware/phishing lookup — server API</p></div><span class="go">Docs →</span></a>
     <a class="tool-card" href="/api"><div><h3>Attack Surface Discovery</h3><p>Passive subdomain enum — server API</p></div><span class="go">Docs →</span></a>
-    <a class="tool-card" href="/api"><div><h3>Address Risk Check</h3><p>OFAC sanctions check for EVM addresses — server API</p></div><span class="go">Docs →</span></a>
+    <a class="tool-card" href="/api"><div><h3>Address Risk Check</h3><p>OFAC sanctions check (EVM, Bitcoin) — server API</p></div><span class="go">Docs →</span></a>
     <a class="tool-card" href="/api"><div><h3>Cosmos Tx Decoder</h3><p>Decode raw Cosmos SDK transactions — server API</p></div><span class="go">Docs →</span></a>
     <a class="tool-card" href="/api"><div><h3>RPC Check</h3><p>Audit a CometBFT RPC endpoint — server API</p></div><span class="go">Docs →</span></a>
     <a class="tool-card" href="/tools/exif-remover"><div><h3>EXIF Remover</h3><p>Strip GPS and metadata from photos (client-side)</p></div><span class="go">Docs →</span></a>
