@@ -5,8 +5,11 @@ rennf93/guard-core#119 1 note de conception, 4 questions en attente
 rennf93/fastapi-guard#137 5 renvoi vers guard-core #119
 punkpeye/awesome-mcp-servers#14651 4 PR, dernier = nous
 intelowlproject/IntelOwl#4014 8 issue d'origine Presend_AddressRisk
-intelowlproject/IntelOwl#4037 2 PR AnshSinghal, suggestion timeout postee le 26 sept.
+intelowlproject/IntelOwl#4037 3 PR AnshSinghal ; 26 sept. : fix address-risk signale (mock perime, fixture proposee)
 HenriGrimm/Minnow#1222 3 divulgation, autres canaux proposes le 26 sept. (pas de Discord)
 duriantaco/skylos#894 0 feature request native (design + mesures), pas d'appel a Presend, PR proposee
 lirantal/npq#450 0 mesure du bruit du marshall author (65 -> 1 avec limite 21 j + exclusion trusted publishing), PR proposee, sans Presend
 sebadob/rauthy#1737 2 ip-reputation: doc manquante (corrigee 26 sept.), conseil de charger DROP en local via leur scheduler, Presend hors boucle
+wanaku-ai/wanaku-toolsets#9 0 filon EVA : outil MCP email-verification casse (API morte), Disify + Presend proposes, PR offerte
+darioreisjr/copadomundo2026#2 0 filon EVA : verification MX sautee en silence (fail-open), correctif res.ok + has_mx propose
+Chatujme/pLBOT-API#4 0 filon EVA : EVA dans un doc de planification, alternatives email + phone-verify (30/min, type de ligne non fiable CZ)
