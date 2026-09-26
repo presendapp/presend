@@ -26,11 +26,12 @@ Lancer `bash scripts/session-check.sh` -- une seule commande qui vérifie en un 
 9. Mettre à jour les compteurs partout où ils apparaissent (site, README, profil GitHub) — chercher avec grep plutôt que de deviner où
 
 ## Workflow type pour du démarchage GitHub
-1. `gh api "search/code?q=<TERME>+in:file"` pour trouver des candidats
+1. `gh api "search/code?q=<TERME>+in:file"` pour trouver des candidats, puis **toujours** filtrer la liste : `... | bash scripts/filter-candidates.sh` (retire les dépôts déjà contactés, y compris par un simple commentaire, et ceux de `scripts/no-contact.txt`)
 2. Vérifier étoiles/activité/pertinence avant de contacter (`gh api "repos/<owner>/<repo>"`)
 3. Vérifier l'usage exact du terme recherché dans le repo cible avant de rédiger (`gh api "search/code?q=<TERME>+repo:<owner>/<repo>"`)
 4. Toujours divulguer l'affiliation en premier, ne jamais deviner le code sans voir l'interface réelle du projet cible
 5. `gh issue create` avec le message rédigé
+6. Règles issues de l'audit du 26 sept. : **jamais** de re-soumission après un refus (même silencieux : ajouter le dépôt à `scripts/no-contact.txt`) ; **une seule** entrée par liste (pas de deuxième catégorie) ; avant de soumettre à une liste, vérifier l'historique du fichier cible (`gh api "repos/<o>/<r>/commits?path=README.md"`) : une entrée Presend retirée ou annulée (revert) = refus.
 
 ## En fin de session (avant de clore la conversation)
 Sans cette étape, les fichiers de contexte se dégradent vite (exactement le problème corrigé le 25 sept. -- documentation qui ne reflétait plus la réalité du projet). Avant de terminer :
