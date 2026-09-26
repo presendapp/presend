@@ -462,7 +462,7 @@
               "type": "string",
               "example": "correcthorsebatterystaple"
             },
-            "description": "Password to check against known data-breach corpora. Checked via k-anonymity (only a partial hash prefix is sent) -- the full password is never transmitted."
+            "description": "Password to check against known data-breach corpora. Only a 5-character SHA-1 hash prefix is sent to HIBP (k-anonymity), but the password itself travels in this request's URL; for real passwords, prefer the password-check endpoint (POST body)."
           }
         ],
         "responses": {

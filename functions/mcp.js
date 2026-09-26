@@ -140,7 +140,7 @@ const TOOLS = [
   {
     name: 'password_breach',
     description: "Checks whether a password appears in known data breaches (Have I Been Pwned) and how many times, using k-anonymity towards HIBP. Breach check only; password_check adds strength scoring and sends the password in a POST body.",
-    inputSchema: {"type": "object", "properties": {"password": {"type": "string", "description": "Password to check against known data-breach corpora. Checked via k-anonymity (only a partial hash prefix is sent) -- the full password is never transmitted."}}, "required": ["password"]},
+    inputSchema: {"type": "object", "properties": {"password": {"type": "string", "description": "Password to check against known data-breach corpora. Only a 5-character SHA-1 hash prefix is sent to HIBP (k-anonymity), but the password itself travels in this request's URL; for real passwords, prefer password_check, which takes it in a POST body."}}, "required": ["password"]},
     request: (args) => ({ method: 'GET', url: `${API_BASE}/password-breach?${new URLSearchParams(args).toString()}` }),
   },
   {

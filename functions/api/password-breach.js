@@ -68,7 +68,7 @@ export async function onRequestGet(context) {
   if (!password) {
     return new Response(JSON.stringify({
       usage: 'GET /api/password-breach?password=...',
-      note: 'Uses k-anonymity: only the first 5 chars of the SHA-1 hash are sent externally. Your password is never logged or transmitted in full.',
+      note: 'Uses k-anonymity: only the first 5 chars of the SHA-1 hash are sent to HIBP, and Presend does not log the password. It does travel in this GET request's URL, where browsers, proxies or server logs may record it: for real passwords, use POST /api/password-check.',
     }, null, 2), { headers: { 'Content-Type': 'application/json', ...corsHeaders() } });
   }
   if (password.length > 256) {

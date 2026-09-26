@@ -126,7 +126,7 @@ print(json.load(urllib.request.urlopen(req)))</pre>
   https://presend.pages.dev/api/csv-json</pre>
 
   <h3 id="GET-api-password-breach">GET /api/password-breach</h3>
-  <p style="color:var(--color-muted); max-width:60ch;">Checks if a password appears in known data breaches (HIBP k-anonymity — your password is never sent or logged in full).</p>
+  <p style="color:var(--color-muted); max-width:60ch;">Vérifie si un mot de passe figure dans des fuites de données connues (Have I Been Pwned). Seuls les 5 premiers caractères de son empreinte SHA-1 sont envoyés à HIBP (k-anonymat), et Presend ne l'enregistre pas. Mais c'est une requête GET : le mot de passe circule dans l'URL, que navigateurs, proxys ou journaux serveur peuvent conserver. Pour de vrais mots de passe, utilisez POST /api/password-check.</p>
   <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/password-breach?password=..."</pre>
   <h3 id="POST-api-password-check">POST /api/password-check</h3>
   <p style="color:var(--color-muted); max-width:60ch;">Combine l'estimation de force/entropie avec une vérification optionnelle de fuite en un seul appel — le mot de passe transite dans le corps de la requête POST, jamais dans une URL. Même garantie de k-anonymat que password-breach.</p>

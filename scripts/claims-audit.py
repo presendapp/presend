@@ -18,6 +18,7 @@ PATTERNS = {  # nom -> (motif, motif de contexte qui rend l'occurrence correcte)
     "concurrents 'separement et payants'": (r"separately and (paid|for a fee)|only separately[^.]{0,30}paid|s[ée]par[ée]ment et payant|separat und kostenpflichtig|por separado y de pago|separadamente e pagas|по отдельности и платно|個別の有料|अलग-अलग और भुगतान", NEVER),
     "exclusivite ('aucune autre API gratuite')": (r"no other free api|aucune autre api gratuite|keine andere uns bekannte kostenlose|ninguna otra api gratuita|nenhuma outra api gratuita|ни один другой известный нам бесплатный|他の無料APIは知りません|कोई अन्य मुफ़्त API", NEVER),
     "pas d'endpoint serveur pour les outils fichiers (faux)": (r"pas de point de terminaison serveur", NEVER),
+    "mot de passe 'jamais transmis en entier' (faux en GET)": (r"never (sent|transmitted|logged)[^.]{0,25}(in full|full)|(sent|transmitted) in full|full password is never|jamais (envoy|transmis)[^.]{0,25}(en entier|complet)", NEVER),
 }
 INTERNAL = {'PROJECT_CONTEXT.md', 'STRUCTURE.md', 'ROADMAP.md', 'WORKFLOW.md', 'SECURITY_DISCLOSURES.md'}
 def gh(a):

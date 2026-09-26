@@ -111,7 +111,7 @@
   https://presend.pages.dev/api/csv-json</pre>
 
   <h3 id="GET-api-password-breach">GET /api/password-breach</h3>
-  <p style="color:var(--color-muted); max-width:60ch;">Checks if a password appears in known data breaches (HIBP k-anonymity — your password is never sent or logged in full).</p>
+  <p style="color:var(--color-muted); max-width:60ch;">Checks if a password appears in known data breaches (Have I Been Pwned). Only the first 5 characters of its SHA-1 hash are sent to HIBP (k-anonymity), and Presend does not log it. But this is a GET request, so the password travels in the URL, where browsers, proxies or server logs may record it: for real passwords, use POST /api/password-check.</p>
   <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/password-breach?password=..."</pre>
   <h3 id="POST-api-password-check">POST /api/password-check</h3>
   <p style="color:var(--color-muted); max-width:60ch;">Combina pontuação de força/entropia com uma verificação opcional de vazamento em uma única chamada — a senha viaja no corpo da requisição POST, nunca em uma URL. Mesma garantia de k-anonimato do password-breach.</p>
