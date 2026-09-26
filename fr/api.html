@@ -112,7 +112,7 @@ print(json.load(urllib.request.urlopen(req)))</pre>
   <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/password?length=20&symbols=1"</pre>
 
   <h3 id="GET-api-email-validate">GET /api/email-validate</h3>
-  <p style="color:var(--color-muted); max-width:60ch;">Validates email syntax and checks for a valid MX record (real deliverability check).</p>
+  <p style="color:var(--color-muted); max-width:60ch;">Valide la syntaxe d'un e-mail et vérifie que le domaine possède un enregistrement MX. Ne sonde pas la boîte aux lettres : cela ne prouve donc pas que l'adresse existe. Pour détecter aussi les domaines jetables et les comptes génériques, utilisez email-verify.</p>
   <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/email-validate?email=foo@example.com"</pre>
 
   <h3 id="GET-api-favicon">GET /api/favicon</h3>
@@ -136,7 +136,7 @@ print(json.load(urllib.request.urlopen(req)))</pre>
   <p style="color:var(--color-muted); max-width:60ch;">Detects disposable/throwaway email providers from a list of 576+ known domains.</p>
   <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/email-disposable?email=foo@mailinator.com"</pre>
   <h3 id="GET-api-email-verify">GET /api/email-verify</h3>
-  <p style="color:var(--color-muted); max-width:60ch;">Combine la vérification de syntaxe, la recherche MX, la détection de domaine jetable et la détection de compte générique (info@, admin@...) en un seul appel — la plupart des API email gratuites ne proposent ces vérifications que séparément et payantes.</p>
+  <p style="color:var(--color-muted); max-width:60ch;">Combine la vérification de syntaxe, la recherche MX, la détection de domaine jetable et la détection de compte générique (info@, admin@...) en un seul appel, gratuit et sans clé. Ne sonde pas la boîte aux lettres.</p>
   <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/email-verify?email=foo@example.com"</pre>
   <h3 id="GET-api-phone-verify">GET /api/phone-verify</h3>
   <p style="color:var(--color-muted); max-width:60ch;">Valide et formate un numéro de téléphone (E.164, international, national) via libphonenumber-js. Si aucun pays n'est fourni pour un numéro sans préfixe « + », le pays déduit de l'IP de l'appelant est utilisé automatiquement.</p>
@@ -237,7 +237,7 @@ print(json.load(urllib.request.urlopen(req)))</pre>
 
   <h2>Workflows enchaînés</h2>
   <p style="color:var(--color-muted); max-width:60ch;">
-    Ces deux points de terminaison enchaînent plusieurs opérations côté serveur en un seul appel — aucune autre API gratuite connue ne le propose. Le traitement est sans état : rien n'est écrit sur disque, rien n'est journalisé, le fichier est supprimé dès l'envoi de la réponse.
+    Ces points de terminaison traitent des fichiers ou du texte côté serveur en un seul appel. Le traitement est sans état : rien n'est écrit sur disque, rien n'est journalisé, et les données envoyées sont supprimées dès l'envoi de la réponse.
   </p>
   <h3 id="POST-api-merge-and-compress-pdf">POST /api/merge-and-compress-pdf</h3>
   <p style="color:var(--color-muted); max-width:60ch;">Fusionne 2 fichiers PDF ou plus en un seul document, puis compresse le résultat et supprime les métadonnées (titre, auteur, producteur) — en une seule requête plutôt que deux.</p>
@@ -254,7 +254,7 @@ print(json.load(urllib.request.urlopen(req)))</pre>
 
   <h2>Outils côté client (à intégrer)</h2>
   <p style="color:var(--color-muted); max-width:60ch;">
-    Les outils de traitement de fichiers (suppression EXIF, compression PDF, etc.) s'exécutent entièrement dans le navigateur — rien n'est envoyé, il n'y a donc pas de point de terminaison serveur pour ceux-ci. Intégrez-les directement :
+    La plupart des outils de traitement de fichiers (suppression EXIF, compression PDF, etc.) existent aussi en version navigateur, sous forme de widgets autonomes : rien n'est envoyé. Préférez-les à l'API ci-dessus si vous voulez une interface prête à l'emploi plutôt qu'un appel serveur. Intégrez-les directement :
   </p>
   <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">
 &lt;iframe 

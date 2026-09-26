@@ -97,7 +97,7 @@
   <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/password?length=20&symbols=1"</pre>
 
   <h3 id="GET-api-email-validate">GET /api/email-validate</h3>
-  <p style="color:var(--color-muted); max-width:60ch;">Validates email syntax and checks for a valid MX record (real deliverability check).</p>
+  <p style="color:var(--color-muted); max-width:60ch;">Validates email syntax and checks that the domain has an MX record. It does not probe the mailbox, so it cannot confirm the address exists; use email-verify to also detect disposable domains and role accounts.</p>
   <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">curl "https://presend.pages.dev/api/email-validate?email=foo@example.com"</pre>
 
   <h3 id="GET-api-favicon">GET /api/favicon</h3>
