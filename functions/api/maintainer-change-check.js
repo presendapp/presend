@@ -255,7 +255,7 @@ export async function onRequestPost(context) {
   const { request, env } = context;
   const clientIP = request.headers.get('CF-Connecting-IP') || 'unknown';
 
-  const allowed = await checkRateLimit(env, clientIP, 'maintainerchangecheck', true);
+  const allowed = await checkRateLimit(env, clientIP, 'maintainerchangecheck-batch', true);
   if (!allowed) return jsonResponse({ error: 'Rate limit exceeded. Max 10 requests per minute.' }, 429);
 
   let body;
