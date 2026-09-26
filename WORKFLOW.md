@@ -35,6 +35,7 @@ Lancer `bash scripts/session-check.sh` -- une seule commande qui vérifie en un 
 ## En fin de session (avant de clore la conversation)
 Sans cette étape, les fichiers de contexte se dégradent vite (exactement le problème corrigé le 25 sept. -- documentation qui ne reflétait plus la réalité du projet). Avant de terminer :
 1. Mettre à jour **ROADMAP.md** : déplacer ce qui a été fait aujourd'hui vers "Fait récemment", ajouter toute nouvelle conversation GitHub active, retirer ce qui est résolu/périmé.
+   - Mettre à jour les compteurs de référence dans **scripts/watch.txt** : nouvelles conversations actives (y compris les PR d'autres auteurs qui nous concernent), conversations closes retirées.
 2. Si de nouveaux chiffres clés ont changé (endpoints, outils, langues...) : mettre à jour **PROJECT_CONTEXT.md** et/ou **STRUCTURE.md**, en les régénérant depuis la source de vérité (openapi.json, etc.) plutôt qu'en devinant.
 3. Si une nouvelle divulgation de sécurité a été envoyée, ou qu'une existante a eu une réponse : mettre à jour **SECURITY_DISCLOSURES.md**.
 4. Si une nouvelle leçon a été apprise (erreur trouvée et corrigée, limite technique découverte) : l'ajouter à la section correspondante de **PROJECT_CONTEXT.md**, pour ne pas la refaire plus tard.

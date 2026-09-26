@@ -43,9 +43,12 @@ Contexte : recherche de vulnérabilités menée sous les pseudonymes Presendapp/
 - Statut : envoyé, sans réponse confirmée
 
 ### HenriGrimm/Minnow — vulnérabilité webhook
-- Détail non rendu public (app locale mono-utilisateur, gravité modérée)
+- Faille (reconstituée le 26 sept. : le détail d'origine n'avait jamais été consigné) : fenêtre de DNS rebinding dans `server/webhooks/emit.js` (`postWebhook`). `validateWebhookUrl()` (`server/webhooks/ssrf.js`) résout et valide les IP, puis renvoie l'URL d'origine ; `http(s).request` refait sa propre résolution DNS. Code inchangé depuis le 27 juillet.
+- Gravité revue à **faible** (et non modérée) : création d'abonnement protégée par le jeton par démarrage (`server/runtime/auth-middleware.js`, depuis le 6 juillet, + validation `Host`), URL choisie par l'utilisateur, HTTPS seul vers l'extérieur (la vérification TLS échoue avant tout envoi vers un service interne), pas de redirections suivies. Reste une sonde de joignabilité via le journal des livraisons. Piste CSRF vérifiée et écartée (jeton exigé, même si `readJsonBody` ignore le Content-Type).
+- Correctif suggéré : option `lookup` personnalisée sur `http(s).request` qui valide chaque IP résolue avec `isPrivateIpAddress()`, sans nouvelle dépendance. Rapport prêt : `archive/minnow_discord_2026-09-26.md`. Clone lecture seule : `github-contributions/minnow`.
 - Canal : issue GitHub publique #1222 demandant un contact privé
-- Statut : ouverte, pas de contact privé obtenu (Linear bot seulement)
+- Statut : le 26 sept., Henri a demandé un contact sur Discord (@Henri_Grimm). Pas de compte Discord de notre côté : réponse sur l'issue (https://github.com/HenriGrimm/Minnow/issues/1222#issuecomment-5844462026) proposant d'activer le signalement privé GitHub (désactivé au 26 sept.), un email, ou une publication directe dans l'issue vu la faible gravité. En attente de son choix, rien de technique publié.
+- Leçon : consigner le détail technique de chaque finding (fichier, lignes, raisonnement, gravité) dans un fichier non public au moment de l'envoi. Sans ça, il a fallu tout reconstituer neuf jours plus tard, et la gravité notée s'est révélée surévaluée.
 
 ## Contributions de code réelles (pas des divulgations privées)
 
