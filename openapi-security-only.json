@@ -2549,7 +2549,7 @@
       },
       "get": {
         "summary": "Detect a suspicious npm package maintainer change",
-        "description": "Flags a previously unseen human publisher taking over an npm package after 180+ days of inactivity, within the last 365 days -- the pattern behind the event-stream compromise (2018). Older handoffs are counted but not flagged; transitions to CI/trusted-publishing identities and pre-release versions are reported separately without raising the flag. Does NOT detect a hijacked existing maintainer account (ua-parser-js, 2021) or a malicious release by an existing maintainer (colors.js, 2022). A batch POST variant is available. npm only for now.",
+        "description": "Flags a previously unseen human publisher taking over an npm package after 180+ days of inactivity, within the last 365 days -- the pattern behind the event-stream compromise (2018). Older handoffs are counted but not flagged; transitions to npm trusted publishing (verified OIDC identity, not just a bot-like account name) and pre-release versions are reported separately without raising the flag. Does NOT detect a hijacked existing maintainer account (ua-parser-js, 2021) or a malicious release by an existing maintainer (colors.js, 2022). A batch POST variant is available. npm only for now.",
         "parameters": [
           {
             "name": "ecosystem",

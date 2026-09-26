@@ -24,7 +24,7 @@
 - [x] **Réimporter la fiche RapidAPI "Presend API"** (export resynchronisé ci-dessus) et vérifier que les deux POST lot ont gardé leur corps JSON.
 - [x] Relire la présentation longue de la fiche RapidAPI "Presend API" (texte saisi dans le dashboard, hors fichiers) : chercher "ua-parser-js" / "colors.js".
 - [x] Rate limit : compteurs GET/POST séparés le 26 sept. pour maintainer-change-check ET typosquat-check (`*-batch`), vérifié en local (GET épuisé -> POST toujours accepté). Contexte : GET et POST partageaient le même compteur ; avec l'échantillonnage du GET (+5 une fois sur 5), deux GET peuvent bloquer un POST dans la même minute (constaté en local). Séparer les compteurs.
-- [ ] Dette : la règle CI de maintainer-change-check se fie au NOM du compte (`CI_PUBLISHER_RE`), n'importe qui peut s'appeler `foo-bot`. Piste : se fier plutôt à la provenance/trusted publishing (`_npmUser` = GitHub Actions + attestation) quand elle existe.
+- [x] (corrigé le 26 sept. : seul `_npmUser.trustedPublisher` exempte désormais, 11/14 exemptions mesurées l'utilisaient déjà, aucun cas légitime perdu) Dette : la règle CI de maintainer-change-check se fiait au NOM du compte (`CI_PUBLISHER_RE`), n'importe qui peut s'appeler `foo-bot`. Piste : se fier plutôt à la provenance/trusted publishing (`_npmUser` = GitHub Actions + attestation) quand elle existe.
 - [x] Réimport RapidAPI de la fiche "Presend API" fait le 26 sept. (schéma typosquat-check à jour).
 - [ ] Vérifier dans le dashboard Cloudflare si le Browser Integrity Check (erreur 1010 sur `Python-urllib`) est réglable pour `presend.pages.dev` (leçon n°12).
 - [x] Réimport RapidAPI des 2 fiches fait le 26 sept. (description du paramètre `address` à jour).

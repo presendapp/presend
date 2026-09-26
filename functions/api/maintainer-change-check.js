@@ -46,14 +46,14 @@ const DORMANCY_THRESHOLD_DAYS = 180;
 // 17 paquets sains sur 22 testés (react, express, lodash, debug, ms...) étaient
 // signalés pour des passations légitimes datant parfois de 2013.
 const RECENT_WINDOW_DAYS = 365;
-// Publication par CI (trusted publishing OIDC, bots de release) : passer à la CI
-// après une pause est typiquement une amélioration de sécurité, pas une prise de
-// contrôle -- rapporté à part, sans déclencher "suspicious".
-const CI_PUBLISHER_RE = /^github actions$|(^|[-_])(bot|ci|ops|release|deploys?|actions)([-_]|$)/i;
-
-function isCiPublisher(name) {
-  return CI_PUBLISHER_RE.test(name || '');
-}
+// Trusted publishing npm (OIDC depuis un workflow CI) : passer à la CI après une pause est
+// typiquement une amélioration de sécurité, pas une prise de contrôle -- rapporté à part, sans
+// déclencher "suspicious". Seul le signal VÉRIFIABLE compte (_npmUser.trustedPublisher, posé par
+// le registre) : l'ancienne règle sur le NOM du compte (bot, ci, release...) était contournable en
+// s'appelant "foo-release". Mesuré le 26 sept. 2026 sur le top 200 : 11 des 14 exemptions reposaient
+// déjà sur trustedPublisher ; les 3 autres (npm-cli-ops, vercel-release-bot) sont couvertes par les
+// règles pré-version et publieur établi. Limite : un mainteneur malveillant peut configurer le
+// trusted publishing, mais depuis un dépôt et un workflow identifiables.
 
 function analyzeNpm(data, now = Date.now()) {
   const currentMaintainers = (data.maintainers || []).map((m) => m.name);
@@ -61,8 +61,9 @@ function analyzeNpm(data, now = Date.now()) {
   const timeEntries = Object.entries(data.time || {})
     .filter(([v]) => v !== 'created' && v !== 'modified')
     .map(([version, publishedAt]) => {
-      const npmUser = data.versions?.[version]?._npmUser?.name || null;
-      return { version, publishedAt: new Date(publishedAt), publisher: npmUser };
+      const user = data.versions?.[version]?._npmUser;
+      const trusted = user?.trustedPublisher?.id || null;
+      return { version, publishedAt: new Date(publishedAt), publisher: user?.name || null, trustedPublisher: trusted };
     })
     .filter((v) => v.publisher && v.publishedAt.getTime() <= now)
     .sort((a, b) => a.publishedAt - b.publishedAt);
@@ -101,8 +102,8 @@ function analyzeNpm(data, now = Date.now()) {
       // Pré-version semver : jamais résolue par une plage classique (^x.y.z),
       // donc hors du chemin d'installation par défaut -- visible, pas "suspicious".
       prereleaseEvents.push({ ...event, reason: 'New publisher on a pre-release version (not installed by default semver ranges).' });
-    } else if (isCiPublisher(entry.publisher)) {
-      ciEvents.push({ ...event, reason: 'Publishing moved to a CI/automation identity after inactivity (often trusted publishing adoption).' });
+    } else if (entry.trustedPublisher) {
+      ciEvents.push({ ...event, trusted_publisher: entry.trustedPublisher, reason: 'Publishing moved to npm trusted publishing (verified OIDC identity from a CI workflow) after inactivity.' });
     } else {
       flaggedEvents.push({ ...event, reason: 'New publisher took over after a long period of inactivity.' });
     }
