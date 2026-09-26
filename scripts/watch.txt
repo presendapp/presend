@@ -3,7 +3,7 @@
 neomatrix369/tripwire#143 2 4 questions en attente (adaptateur HTTP, budget temps, opt-in, slice)
 rennf93/guard-core#119 1 note de conception, 4 questions en attente
 rennf93/fastapi-guard#137 5 renvoi vers guard-core #119
-punkpeye/awesome-mcp-servers#14651 4 PR, dernier = nous
+punkpeye/awesome-mcp-servers#14651 5 PR ; 26 sept. : question a punkpeye (badge connector accepte pour un serveur heberge ?)
 intelowlproject/IntelOwl#4014 8 issue d'origine Presend_AddressRisk
 intelowlproject/IntelOwl#4037 3 PR AnshSinghal ; 26 sept. : fix address-risk signale (mock perime, fixture proposee)
 HenriGrimm/Minnow#1222 3 divulgation, autres canaux proposes le 26 sept. (pas de Discord)
