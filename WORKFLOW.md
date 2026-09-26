@@ -18,9 +18,9 @@ Lancer `bash scripts/session-check.sh` -- une seule commande qui vérifie en un 
 1. Regarder un endpoint existant similaire dans functions/api/ comme modèle (rate limit, tracking, CORS, format de réponse)
 2. Écrire le nouvel endpoint
 3. Tester en local : `npx wrangler pages dev . --port 8788` puis `curl localhost:8788/api/...`
-4. Vérifier la syntaxe : `node -c functions/api/nom.js`
+4. Vérifier la syntaxe : `npx --yes acorn --ecma2022 --module --silent functions/api/nom.js` -- **PAS `node -c`/`node --check`**, qui ne détecte pas les erreurs de syntaxe sur ces fichiers (prouvé le 26 sept., leçon n°18)
 5. Commit + push
-6. Attendre ~30-40s le déploiement, tester en production
+6. Attendre ~30-40s le déploiement, tester en production **en cherchant le nouveau comportement** (boucle curl + grep), pas seulement un code 200 : un build Cloudflare qui échoue ne prévient pas, l'ancienne version reste servie
 7. Ajouter la définition à openapi.json (vérifier avec `npx @redocly/cli lint openapi.json`)
 8. Ajouter comme outil MCP dans functions/mcp.js si pertinent (pas binaire/fichier)
 9. Mettre à jour les compteurs partout où ils apparaissent (site, README, profil GitHub) — chercher avec grep plutôt que de deviner où
