@@ -56,24 +56,49 @@ function corsHeaders(extra = {}) {
 }
 
 const EVM_RE = /^0x[0-9a-fA-F]{40}$/;
-// Loose bech32 shape check (human-readable prefix + '1' separator + data part).
-// Not a full bech32 checksum validation -- just enough to classify the format.
+// Bitcoin: bech32/bech32m (bc1...) or legacy base58 P2PKH/P2SH (1... / 3...).
+const BTC_BECH32_RE = /^bc1[023456789ac-hj-np-z]{11,71}$/i;
+const BTC_BASE58_RE = /^[13][1-9A-HJ-NP-Za-km-z]{25,34}$/;
+// Loose bech32 shape (human-readable prefix + '1' + data part), e.g. Cosmos SDK chains
+// (cosmos1..., osmo1...). Shape only, no checksum. Bech32 is never mixed-case, which keeps
+// base58 addresses of other chains (e.g. TRON) out of this class.
 const BECH32_RE = /^[a-z]{1,20}1[023456789ac-hj-np-z]{20,90}$/i;
+const INPUT_RE = /^[0-9A-Za-z:]{20,120}$/;
+
+function isBech32(a) {
+  return BECH32_RE.test(a) && (a === a.toLowerCase() || a === a.toUpperCase());
+}
 
 function detectFormat(address) {
   if (EVM_RE.test(address)) return 'evm';
-  if (BECH32_RE.test(address)) return 'cosmos-bech32';
-  return 'unknown';
+  if (BTC_BASE58_RE.test(address) || (BTC_BECH32_RE.test(address) && isBech32(address))) return 'bitcoin';
+  if (isBech32(address)) return 'bech32';
+  return 'other';
 }
 
-const EVM_LISTS = ['ETH', 'BSC', 'ARB'];
-const LIST_BASE = 'https://raw.githubusercontent.com/0xB10C/ofac-sanctioned-digital-currency-addresses/lists';
+// EVM hex and bech32 are case-insensitive; base58 is not.
+function normalize(a) {
+  return EVM_RE.test(a) || isBech32(a) ? a.toLowerCase() : a;
+}
 
-function parseAddressList(text) {
-  return text
-    .split('\n')
-    .map((l) => l.trim())
-    .filter((l) => l && l.startsWith('0x'));
+// Formats for which "not found" is a meaningful negative: OFAC files EVM and Bitcoin
+// addresses, and every published list is searched.
+const COVERED_FORMATS = new Set(['evm', 'bitcoin']);
+
+// Every per-asset list the source publishes. OFAC files EVM-format addresses under tokens
+// (USDT, USDC) and other chains (ETC), not only ETH/BSC/ARB, so ALL lists are searched for
+// every address. Until 26 Sept. 2026 only ETH/BSC/ARB were: 4 sanctioned 0x addresses
+// returned sanctioned: false. tests/address-risk/lists.mjs fails if the source adds or
+// removes a list.
+const ALL_LISTS = ['ARB', 'BCH', 'BSC', 'BSV', 'BTG', 'DASH', 'ETC', 'ETH', 'LTC', 'SOL', 'TRX', 'USDC', 'USDT', 'XBT', 'XMR', 'XRP', 'XVG', 'ZEC'];
+const LIST_BASE = 'https://raw.githubusercontent.com/0xB10C/ofac-sanctioned-digital-currency-addresses/lists';
+const SOURCE = 'OFAC Specially Designated Nationals (SDN) list, digital currency addresses (all per-asset lists), republished nightly by 0xB10C/ofac-sanctioned-digital-currency-addresses from the official sdn_advanced.xml.';
+const UNRECOGNIZED = 'Unrecognized address format. EVM (0x + 40 hex chars) and Bitcoin (bc1..., 1..., 3...) addresses are fully checked; bech32 addresses of other chains (e.g. cosmos1...) are recognized but unchecked. Addresses of other chains are reported only when they appear on an OFAC list.';
+
+function json(body, status = 200, extra = {}) {
+  return new Response(JSON.stringify(body), {
+    status, headers: { 'Content-Type': 'application/json', ...corsHeaders(), ...extra },
+  });
 }
 
 export async function onRequestOptions() {
@@ -85,11 +110,7 @@ export async function onRequestGet(context) {
   const clientIP = request.headers.get('CF-Connecting-IP') || 'unknown';
 
   const allowed = await checkRateLimit(env, clientIP, 'address-risk');
-  if (!allowed) {
-    return new Response(JSON.stringify({ error: 'Rate limit exceeded. Max 10 requests per minute.' }), {
-      status: 429, headers: { 'Content-Type': 'application/json', ...corsHeaders() },
-    });
-  }
+  if (!allowed) return json({ error: 'Rate limit exceeded. Max 10 requests per minute.' }, 429);
 
   const { searchParams } = new URL(request.url);
   const address = (searchParams.get('address') || '').trim();
@@ -97,70 +118,75 @@ export async function onRequestGet(context) {
   if (!address) {
     return new Response(JSON.stringify({
       usage: 'GET /api/address-risk?address=0x...',
-      note: 'Checks EVM-format addresses (Ethereum, BSC, Arbitrum, and other EVM chains) against the OFAC SDN sanctions list. Cosmos SDK (bech32) addresses are format-detected but not yet checked against a sanctions source.',
+      note: 'Checks an address against every OFAC SDN digital currency address list. EVM (0x...) and Bitcoin (bc1..., 1..., 3...) addresses are fully covered. Bech32 addresses of other chains (e.g. Cosmos SDK) return sanctioned: null unless listed, since OFAC has published no entries in that format.',
     }, null, 2), { headers: { 'Content-Type': 'application/json', ...corsHeaders() } });
   }
 
+  if (!INPUT_RE.test(address)) return json({ error: UNRECOGNIZED }, 400);
+
   const format = detectFormat(address);
-
-  if (format === 'unknown') {
-    return new Response(JSON.stringify({
-      error: 'Unrecognized address format. Expected an EVM address (0x + 40 hex chars) or a Cosmos SDK bech32 address (e.g. cosmos1...).',
-    }), { status: 400, headers: { 'Content-Type': 'application/json', ...corsHeaders() } });
-  }
-
-  if (format === 'cosmos-bech32') {
-    return new Response(JSON.stringify({
-      address,
-      format,
-      sanctioned: null,
-      note: 'Cosmos SDK (bech32) address format recognized, but no sanctions data source is wired up for this format yet. This is not a clean result -- it is an unchecked one.',
-    }), { headers: { 'Content-Type': 'application/json', ...corsHeaders() } });
-  }
-
+  const key = normalize(address);
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 8000);
 
-  try {
-    const responses = await Promise.all(
-      EVM_LISTS.map((ticker) =>
-        fetch(`${LIST_BASE}/sanctioned_addresses_${ticker}.txt`, {
-          signal: controller.signal,
-          headers: { 'User-Agent': 'Mozilla/5.0 (compatible; PresendBot/1.0; +https://presend.pages.dev)' },
-          cf: { cacheTtl: 1800, cacheEverything: true },
-        })
-      )
-    );
-    clearTimeout(timeout);
+  const results = await Promise.allSettled(ALL_LISTS.map((ticker) =>
+    fetch(`${LIST_BASE}/sanctioned_addresses_${ticker}.txt`, {
+      signal: controller.signal,
+      headers: { 'User-Agent': 'Mozilla/5.0 (compatible; PresendBot/1.0; +https://presend.pages.dev)' },
+      cf: { cacheTtl: 1800, cacheEverything: true },
+    }).then((r) => {
+      if (!r.ok) throw new Error(`HTTP ${r.status}`);
+      return r.text();
+    })
+  ));
+  clearTimeout(timeout);
 
-    const failed = responses.find((r) => !r.ok);
-    if (failed) throw new Error(`OFAC list fetch failed (HTTP ${failed.status})`);
+  const matched = [];
+  const failed = [];
+  let listSize = 0;
+  results.forEach((res, i) => {
+    if (res.status !== 'fulfilled') { failed.push(ALL_LISTS[i]); return; }
+    const lines = res.value.split('\n').map((l) => l.trim()).filter(Boolean);
+    listSize += lines.length;
+    if (lines.some((l) => normalize(l) === key)) matched.push(ALL_LISTS[i]);
+  });
 
-    const texts = await Promise.all(responses.map((r) => r.text()));
-    const allAddresses = texts.flatMap(parseAddressList);
-    const addressLower = address.toLowerCase();
-    const match = allAddresses.find((a) => a.toLowerCase() === addressLower);
+  const cache = { 'Cache-Control': 'public, max-age=900' };
 
-    return new Response(JSON.stringify({
-      address,
-      format,
-      sanctioned: !!match,
-      lists_checked: EVM_LISTS,
-      list_size: allAddresses.length,
-      source: 'OFAC Specially Designated Nationals (SDN) list, digital currency addresses (ETH/BSC/ARB), republished nightly by 0xB10C/ofac-sanctioned-digital-currency-addresses from the official sdn_advanced.xml.',
-      note: match
-        ? 'This address appears on the OFAC SDN sanctions list. US persons are generally prohibited from dealing with it.'
-        : 'Not on the checked OFAC SDN lists. This is one specific, US-government sanctions list -- not a full risk score, and a clean result here does not mean the address is otherwise trustworthy.',
-    }), { headers: { 'Content-Type': 'application/json', 'Cache-Control': 'public, max-age=900', ...corsHeaders() } });
-  } catch (e) {
-    clearTimeout(timeout);
-    if (e.name === 'AbortError') {
-      return new Response(JSON.stringify({ error: 'OFAC list request timed out. Try again shortly.' }), {
-        status: 504, headers: { 'Content-Type': 'application/json', ...corsHeaders() },
-      });
-    }
-    return new Response(JSON.stringify({ error: 'Could not complete address risk check.', detail: e.message }), {
-      status: 502, headers: { 'Content-Type': 'application/json', ...corsHeaders() },
-    });
+  if (matched.length) {
+    return json({
+      address, format, sanctioned: true, matched_lists: matched,
+      lists_checked: ALL_LISTS, list_size: listSize, source: SOURCE,
+      note: 'This address appears on the OFAC SDN sanctions list. US persons are generally prohibited from dealing with it.',
+    }, 200, cache);
   }
+
+  // Fail closed: without every list, a negative cannot be confirmed.
+  if (failed.length) {
+    const timedOut = results.some((r) => r.status === 'rejected' && r.reason && r.reason.name === 'AbortError');
+    return json({
+      error: timedOut
+        ? 'OFAC list request timed out. Try again shortly.'
+        : 'Could not load every OFAC list, so a negative result cannot be confirmed. Try again shortly.',
+      lists_unavailable: failed,
+    }, timedOut ? 504 : 502);
+  }
+
+  if (COVERED_FORMATS.has(format)) {
+    return json({
+      address, format, sanctioned: false, matched_lists: [],
+      lists_checked: ALL_LISTS, list_size: listSize, source: SOURCE,
+      note: 'Not on any OFAC SDN digital currency address list. This is one specific, US-government sanctions list -- not a full risk score, and a clean result here does not mean the address is otherwise trustworthy.',
+    }, 200, cache);
+  }
+
+  if (format === 'bech32') {
+    return json({
+      address, format, sanctioned: null, matched_lists: [],
+      lists_checked: ALL_LISTS, list_size: listSize, source: SOURCE,
+      note: 'Bech32 address (e.g. a Cosmos SDK chain) not found on any OFAC list. OFAC has published no sanctions entries for Cosmos SDK chains, so this is an unchecked result, not a clean one.',
+    }, 200, cache);
+  }
+
+  return json({ error: UNRECOGNIZED }, 400);
 }
