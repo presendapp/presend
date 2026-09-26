@@ -37,6 +37,8 @@ Unlike most online tools, **Presend processes files entirely locally in your bro
 - **[MCP config guides](https://github.com/presendapp/presend-mcp-config)** -- copy-paste setup for Claude Desktop, Claude Code, Cursor, and Windsurf, no code required.
 - **[Browser extension](https://github.com/presendapp/presend-extension)** -- "Presend — Clean Photos", strips EXIF/GPS on right-click.
 
+> **Python:** Cloudflare rejects the default `urllib` User-Agent (`Python-urllib/3.x`) with `403 error code: 1010`. Set an explicit one, e.g. `urllib.request.Request(url, headers={"User-Agent": "my-app/1.0"})`. `requests`, curl and Node are not affected.
+
 ## Browser Tools (48 total, 22 shown below)
 
 

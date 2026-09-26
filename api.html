@@ -45,6 +45,12 @@
   <p style="color:var(--color-muted); max-width:60ch;">
     These run on Cloudflare's edge network and return JSON. Fair-use only — no official SLA, and heavy or automated traffic may be throttled without notice.
   </p>
+  <p id="python-user-agent" style="color:var(--color-muted); max-width:60ch;">
+    <strong>Python users:</strong> requests sent with the default <code>urllib</code> User-Agent (<code>Python-urllib/3.x</code>) are rejected by Cloudflare with <code>HTTP 403</code> and the body <code>error code: 1010</code>. Set any explicit User-Agent. <code>requests</code>, curl and Node send one that is accepted.
+  </p>
+  <pre style="background:var(--color-surface); padding:1rem; border-radius:8px; overflow-x:auto;">import json, urllib.request
+req = urllib.request.Request("https://presend.pages.dev/api/uuid", headers={"User-Agent": "my-app/1.0"})
+print(json.load(urllib.request.urlopen(req)))</pre>
 
   <h3 id="POST-api-hash">POST /api/hash</h3>
   <p style="color:var(--color-muted); max-width:60ch;">Returns SHA-256, SHA-1 and SHA-512 for any file up to 20MB.</p>
