@@ -47,6 +47,7 @@ Sans cette étape, les fichiers de contexte se dégradent vite (exactement le pr
 - Déploiement : automatique via git push sur main (Cloudflare Pages)
 - Tests : `./tests/run-tests.sh` (existe, jamais utilisé pendant cette session — vérifier son contenu avant de s'y fier)
 - SEO : `python3 daily_seo.py`
+- Affirmations publiques interdites (leçons n°1, 2, 9) : `python3 scripts/claims-audit.py` après toute correction publique, et en début de session de démarchage (couvre issues/PR, nos commentaires, README et releases). Ajouter un motif au script à chaque nouvelle leçon de ce type.
 - Tests typosquat-check (obligatoires après toute modification de `POPULAR` ou `KNOWN_LEGIT`) : `node tests/typosquat/run.mjs && node tests/typosquat/top-pypi.mjs && node tests/typosquat/top-npm.mjs`
 - Test maintainer-change-check (après toute modification de sa logique) : `node tests/maintainer-change/top-npm.mjs 200` (~3 min, respecte la limite de l'API de recherche npm ; doit afficher event-stream DETECTE)
 
