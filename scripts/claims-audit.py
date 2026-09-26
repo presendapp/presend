@@ -7,8 +7,8 @@ import json, re, subprocess, base64
 PATTERNS = {  # nom -> (motif, motif de contexte qui rend l'occurrence correcte)
     "ua-parser/colors presentes comme detectes": (r"ua-parser-js|colors\.js", r"cannot|can't|not detect|does not|doesn't|invisible|Corrected|Correction|\*\*not\*\*"),
     "exclusivite ('nothing else free')": (r"nothing else (free|does)|unlike every|only free (tool|api)", r"we know of"),
-    "Spamhaus en contexte promotionnel": (r"spamhaus", r"terms|attribution|credit|licens|section 3\.2|fetch|download|drop_v4|spamhaus_drop|DROP Terms"),
-    "maintainer-change associe a PyPI": (r"npm/PyPI[^.\n]{0,40}maintainer|maintainer[^.\n]{0,60}(npm/PyPI|PyPI|crates)", r"npm-only|npm only|currently np|clarified"),
+    "Spamhaus en contexte promotionnel": (r"spamhaus", r"terms|attribution|credit|licens|promotional copy|section 3\.2|fetch|download|drop_v4|spamhaus_drop|DROP Terms"),
+    "maintainer-change associe a PyPI": (r"npm/PyPI[^.\n]{0,40}maintainer|maintainer[^.\n]{0,60}(npm/PyPI|PyPI|crates)", r"npm-only|npm only|currently np|clarified|npm maintainer-change|npm dependencies with"),
 }
 def gh(a):
     r = subprocess.run(['gh'] + a, capture_output=True, text=True)
