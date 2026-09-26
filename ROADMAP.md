@@ -1,5 +1,14 @@
 # ROADMAP Presend (mis à jour le 26 septembre 2026)
 
+## PROCHAINE SESSION (à lire en premier)
+1. `git pull --rebase origin main` (bot SEO quotidien), puis `bash scripts/session-check.sh` : lire et traiter toute réponse (rauthy #1737, punkpeye #14651, wanaku #9, copadomundo #2, pLBOT #4, IntelOwl #4037, Minnow #1222, skylos #894, npq #450). Pour chaque réponse : relire le message ENTIER et noter à qui c'est le tour ([A NOUS]/[A EUX]) dans `watch.txt` (leçon n°19).
+2. **[A NOUS] tripwire #143 : ouvrir la PR.** neomatrix369 a dit « allez-y, ouvrez une PR » le 25 sept. Trancher prudemment et l'expliquer dans la description : adaptateur désactivé par défaut (confidentialité des noms de paquets), ~20 s de budget prises sur OSSPREY, slice laissée au mainteneur, `urllib` avec `User-Agent` explicite (leçon n°12). Plan détaillé plus bas. Commencer par relire leur code, ADR-0005 et un scanner existant.
+3. **[A NOUS] guard-core #119 : poster un complément court** : exigences DROP réelles (FAQ, pas les conditions : crédit à The Spamhaus Project, date/copyright conservés, pas plus d'un téléchargement par jour) -> `threat_list_refresh_interval` minimum à relever (86400 plutôt que 3600). Répond à la condition n°3 de rennf93 (doc des conditions d'usage). Ses 3 conditions (fastapi-guard #137) : opt-in via `SecurityConfig`, fail-open rapide + cache Redis, doc de la source. Sans réponse d'ici ~1 semaine : ouvrir la PR (il a écrit qu'il la relirait volontiers).
+4. **bunkerweb #3941** : relire notre proposition initiale ; si elle consiste à appeler Presend à chaque requête, proposer plutôt le design natif (liste DROP chargée localement), comme pour rauthy et guard-core.
+5. Vérifier le contenu de ping-pub/explorer #699 (PR fusionnée, contenu inconnu) pour compléter le bilan du démarchage.
+6. Ensuite, au choix : traduction des pages API (de/es/hi/ja/pt/ru, méthode du français) ; release du client npm quand opportune (README corrigé) ; refaire le bilan chiffré du démarchage dans quelques semaines.
+
+
 ## Fait récemment (session du 25 sept.)
 - [x] 4 nouveaux endpoints créés, testés, déployés : iban-validate, link-metadata, vat-validate, cve-lookup
 - [x] Exposés côté MCP (41 outils au total désormais)

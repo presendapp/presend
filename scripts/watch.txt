@@ -1,7 +1,7 @@
 # Conversations suivies : repo#numero compteur_de_reference note
 # Mettre a jour les compteurs en fin de session (NOUVEAU = compteur actuel > reference)
-neomatrix369/tripwire#143 2 4 questions en attente (adaptateur HTTP, budget temps, opt-in, slice)
-rennf93/guard-core#119 1 note de conception, 4 questions en attente
+neomatrix369/tripwire#143 2 [A NOUS] il a dit "ouvrez une PR" le 25 sept. ; nos 4 questions ont bloque -> ouvrir la PR (plan ROADMAP)
+rennf93/guard-core#119 1 [A NOUS puis A EUX] note = 1er pas invite par rennf93 ; poster le complement FAQ DROP (sa condition 3), puis PR si pas de reponse ~1 sem.
 rennf93/fastapi-guard#137 5 renvoi vers guard-core #119
 punkpeye/awesome-mcp-servers#14651 5 PR ; 26 sept. : question a punkpeye (badge connector accepte pour un serveur heberge ?)
 intelowlproject/IntelOwl#4014 8 issue d'origine Presend_AddressRisk
@@ -13,3 +13,4 @@ sebadob/rauthy#1737 4 ip-reputation: doc manquante (corrigee 26 sept.), conseil 
 wanaku-ai/wanaku-toolsets#9 0 filon EVA : outil MCP email-verification casse (API morte), Disify + Presend proposes, PR offerte
 darioreisjr/copadomundo2026#2 0 filon EVA : verification MX sautee en silence (fail-open), correctif res.ok + has_mx propose
 Chatujme/pLBOT-API#4 0 filon EVA : EVA dans un doc de planification, alternatives email + phone-verify (30/min, type de ligne non fiable CZ)
+bunkerity/bunkerweb#3941 2 [A EUX] brainstorming interne (21 sept.) ; verifier notre proposition : si appel Presend par requete -> proposer le design natif (lecon 3)

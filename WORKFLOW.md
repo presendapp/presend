@@ -33,6 +33,10 @@ Lancer `bash scripts/session-check.sh` -- une seule commande qui vérifie en un 
 5. `gh issue create` avec le message rédigé
 6. Règles issues de l'audit du 26 sept. : **jamais** de re-soumission après un refus (même silencieux : ajouter le dépôt à `scripts/no-contact.txt`) ; **une seule** entrée par liste (pas de deuxième catégorie) ; avant de soumettre à une liste, vérifier l'historique du fichier cible (`gh api "repos/<o>/<r>/commits?path=README.md"`) : une entrée Presend retirée ou annulée (revert) = refus.
 
+## Après chaque réponse d'un mainteneur
+- Relire le message ENTIER (pas un extrait tronqué) et déterminer à qui c'est le tour ; l'écrire en tête de la note dans `scripts/watch.txt` : `[A NOUS]` ou `[A EUX]`. `session-check.sh` ne voit que l'auteur du dernier message, pas qui doit agir (leçon n°19).
+- S'il nous délègue des choix (« allez-y, ouvrez une PR, je relirai »), faire des choix prudents et les documenter dans la PR plutôt que lui renvoyer des questions : les questions bloquent la conversation.
+
 ## En fin de session (avant de clore la conversation)
 Sans cette étape, les fichiers de contexte se dégradent vite (exactement le problème corrigé le 25 sept. -- documentation qui ne reflétait plus la réalité du projet). Avant de terminer :
 1. Mettre à jour **ROADMAP.md** : déplacer ce qui a été fait aujourd'hui vers "Fait récemment", ajouter toute nouvelle conversation GitHub active, retirer ce qui est résolu/périmé.
